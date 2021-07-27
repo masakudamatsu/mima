@@ -1,0 +1,129 @@
+{
+  "name": "mina",
+  "version": "0.0.0-development",
+  "description": "Source code for Translating Japanese Gardens, a website that hosts a collection of essays on historical landscape design in Japan",
+  "main": "pages/index.js",
+  "scripts": {
+    "build": "next build && next export",
+    "ci": "start-server-and-test start http://localhost:3000 ci:tests",
+    "ci:tests": "npm-run-all --parallel lint test:coverage:unit test:coverage:e2e",
+    "postci:tests": "npm run report:combined",
+    "commit": "git-cz",
+    "cy:open": "cypress open --env coverage=false",
+    "cy:run": "cypress run",
+    "precy:run": "npm run remove:report",
+    "dev": "next dev",
+    "format": "prettier --ignore-path .gitignore --write \"**/*.+(js|json)\"",
+    "lint": "eslint --ignore-path .gitignore .",
+    "snapshot": "percy exec -- cypress run --spec \"cypress/e2e/snapshot.js\"",
+    "presnapshot": "npm run remove:report",
+    "start": "next start",
+    "subset": "start-server-and-test start http://localhost:3000 subset:all",
+    "presubset": "npm run build",
+    "subset:all": "npm-run-all subset:reforma1918:*",
+    "subset:reforma1918:blanca": "npx glyphhanger http://localhost:3000 --spider --subset=public/fonts/Reforma1918-Blanca.ttf --family='Reforma 1918 Blanca'",
+    "subset:reforma1918:gris": "npx glyphhanger http://localhost:3000 --spider --subset=public/fonts/Reforma1918-Gris.ttf --family='Reforma 1918 Gris'",
+    "subset:reforma1918:grisItalica": "npx glyphhanger http://localhost:3000 --spider --subset=public/fonts/Reforma1918-GrisItalica.ttf --family='Reforma 1918 Gris Italica'",
+    "test": "jest --watch",
+    "test:coverage": "npm-run-all --parallel test:coverage:unit test:coverage:e2e",
+    "posttest:coverage": "npm run report:combined",
+    "test:coverage:unit": "jest --coverage",
+    "test:coverage:e2e": "is-ci \"cy:run\" \"test:coverage:e2e:local\"",
+    "test:coverage:e2e:local": "start-server-and-test dev http://localhost:3000 cy:run",
+    "test:e2e": "start-server-and-test dev http://localhost:3000 cy:open",
+    "pretest:e2e:run": "npm run build",
+    "test:e2e:run": "start-server-and-test start http://localhost:3000 cy:run",
+    "mkdir:reports": "mkdir .nyc_tempdir || true",
+    "precopy:reports": "npm run mkdir:reports",
+    "copy:reports": "cp coverage-cypress/coverage-final.json .nyc_tempdir/from-cypress.json && cp coverage-jest/coverage-final.json .nyc_tempdir/from-jest.json",
+    "precombine:reports": "npm run copy:reports && mkdir .nyc_output || true",
+    "combine:reports": "npx nyc merge .nyc_tempdir && mv coverage.json .nyc_output/out.json",
+    "prereport:combined": "npm run combine:reports",
+    "report:combined": "is-ci \"report:combined:ci\" \"report:combined:local\"",
+    "report:combined:ci": "npx nyc report --reporter lcov --reporter text --report-dir coverage --check-coverage",
+    "report:combined:local": "npm run report:combined:ci && open coverage/lcov-report/index.html",
+    "remove:report": "rm -r .nyc_output || true",
+    "prepare": "husky install",
+    "semantic-release": "semantic-release --branches main"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/masakudamatsu/translating-japanese-gardens.git"
+  },
+  "keywords": [
+    "Japanese gardens",
+    "Landscape design"
+  ],
+  "author": "Masa Kudamatsu <masakudamatsu@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/masakudamatsu/translating-japanese-gardens/issues"
+  },
+  "homepage": "https://github.com/masakudamatsu/translating-japanese-gardens",
+  "dependencies": {
+    "@googlemaps/js-api-loader": "1.12.1",
+    "body-scroll-lock": "3.1.5",
+    "next": "10.2.3",
+    "prop-types": "^15.7.2",
+    "react": "^17.0.1",
+    "react-dom": "^17.0.1",
+    "react-error-boundary": "3.1.0",
+    "react-focus-lock": "2.5.1",
+    "styled-components": "^5.2.1"
+  },
+  "devDependencies": {
+    "@cypress/code-coverage": "3.9.7",
+    "@percy/cli": "1.0.0-beta.57",
+    "@percy/cypress": "3.1.0",
+    "@testing-library/cypress": "^7.0.2",
+    "@testing-library/jest-dom": "^5.11.6",
+    "@testing-library/react": "^11.2.2",
+    "@testing-library/user-event": "^12.2.2",
+    "@typescript-eslint/eslint-plugin": "^4.8.2",
+    "@typescript-eslint/parser": "^4.8.2",
+    "babel-eslint": "^10.1.0",
+    "babel-jest": "^26.6.3",
+    "babel-plugin-istanbul": "6.0.0",
+    "babel-plugin-styled-components": "^1.12.0",
+    "commitizen": "4.2.4",
+    "cypress": "^6.0.1",
+    "cz-conventional-changelog": "3.3.0",
+    "eslint": "^7.14.0",
+    "eslint-config-prettier": "^6.15.0",
+    "eslint-config-react-app": "^6.0.0",
+    "eslint-plugin-cypress": "^2.11.2",
+    "eslint-plugin-flowtype": "^5.2.0",
+    "eslint-plugin-import": "^2.22.1",
+    "eslint-plugin-jest": "^24.1.3",
+    "eslint-plugin-jsx-a11y": "^6.4.1",
+    "eslint-plugin-react": "^7.21.5",
+    "eslint-plugin-react-hooks": "^4.2.0",
+    "eslint-plugin-testing-library": "^3.10.1",
+    "husky": "^7.0.0",
+    "is-ci-cli": "2.2.0",
+    "jest": "27.0.6",
+    "jest-axe": "^4.1.0",
+    "jest-in-case": "^1.0.2",
+    "jest-styled-components": "^7.0.3",
+    "lint-staged": "10.5.4",
+    "npm-run-all": "^4.1.5",
+    "prettier": "^2.2.0",
+    "scroll-to-bottomjs": "1.1.0",
+    "semantic-release": "^17.4.4",
+    "start-server-and-test": "1.12.0"
+  },
+  "lint-staged": {
+    "*.+(js|ts|tsx)": [
+      "eslint"
+    ],
+    "*.+(js|json|css|html|md)": [
+      "prettier --list-different",
+      "jest --findRelatedTests"
+    ]
+  },
+  "config": {
+    "commitizen": {
+      "path": "cz-conventional-changelog"
+    }
+  }
+}
