@@ -6,13 +6,12 @@ import {index} from 'src/utils/metadata';
 import DivMap from 'src/elements/DivMap';
 import Noscript from 'src/components/Noscript';
 
-
 function HomePage() {
   const googlemap = useRef(null);
 
   useEffect(() => {
     const loader = new Loader({
-      apiKey: process.env.NEXT_PUBLIC_API_KEY,
+      apiKey: process.env.API_KEY,
       version: 'weekly',
     });
 
