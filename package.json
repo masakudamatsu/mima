@@ -44,7 +44,10 @@
     "report:combined:local": "npm run report:combined:ci && open coverage/lcov-report/index.html",
     "remove:report": "rm -r .nyc_output || true",
     "prepare": "husky install",
-    "semantic-release": "semantic-release --branches main"
+    "semantic-release": "semantic-release --branches main",
+    "storybook": "start-storybook -p 6006 -s ./public",
+    "build-storybook": "build-storybook -s ./public",
+    "chromatic": "chromatic"
   },
   "repository": {
     "type": "git",
@@ -72,9 +75,14 @@
     "styled-components": "^5.2.1"
   },
   "devDependencies": {
+    "@babel/core": "7.15.0",
     "@cypress/code-coverage": "3.9.7",
     "@percy/cli": "1.0.0-beta.57",
     "@percy/cypress": "3.1.0",
+    "@storybook/addon-actions": "6.3.7",
+    "@storybook/addon-essentials": "6.3.7",
+    "@storybook/addon-links": "6.3.7",
+    "@storybook/react": "6.3.7",
     "@testing-library/cypress": "^7.0.2",
     "@testing-library/jest-dom": "^5.11.6",
     "@testing-library/react": "^11.2.2",
@@ -83,8 +91,10 @@
     "@typescript-eslint/parser": "^4.8.2",
     "babel-eslint": "^10.1.0",
     "babel-jest": "^26.6.3",
+    "babel-loader": "8.2.2",
     "babel-plugin-istanbul": "6.0.0",
     "babel-plugin-styled-components": "^1.12.0",
+    "chromatic": "5.9.2",
     "commitizen": "4.2.4",
     "cypress": "^6.0.1",
     "cz-conventional-changelog": "3.3.0",
