@@ -16,7 +16,11 @@
  * @type {Cypress.PluginConfig}
  */
 
+require('dotenv').config();
+
 module.exports = (on, config) => {
+  // Extract Google Maps API key from the environment variable
+  config.env.apikey = process.env.API_KEY;
   // Cypress code-coverage plugin
   require('@cypress/code-coverage/task')(on, config);
   on(
