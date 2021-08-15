@@ -10,7 +10,7 @@
     "postci:tests": "npm run report:combined",
     "commit": "git-cz",
     "cy:open": "cypress open --env coverage=false",
-    "cy:run": "cypress run",
+    "cy:run": "cypress run --config ignoreTestFiles=**/snapshot.js",
     "precy:run": "npm run remove:report",
     "dev": "next dev",
     "format": "prettier --ignore-path .gitignore --write \"**/*.+(js|json)\"",
