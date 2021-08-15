@@ -22,6 +22,11 @@ function HomePage() {
       map = new google.maps.Map(googlemap.current, {
         center: {lat: -34.397, lng: 150.644},
         zoom: 8,
+        // Disable the default UI control buttons
+        fullscreenControl: false,
+        mapTypeControl: false,
+        streetViewControl: false,
+        zoomControl: false,
       });
     });
   });
