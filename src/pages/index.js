@@ -22,6 +22,7 @@ function HomePage() {
       map = new google.maps.Map(googlemap.current, {
         center: {lat: 35.011636, lng: 135.768029}, // Kyoto (https://www.countrycoordinate.com/city-kyoto-japan/)
         zoom: 17,
+        mapId: '83a67631594fbfff',
         // Disable the default UI control buttons
         fullscreenControl: false,
         mapTypeControl: false,
