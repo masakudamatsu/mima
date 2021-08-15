@@ -1,7 +1,7 @@
 {
-  "name": "mina",
+  "name": "my-ideal-map-app",
   "version": "0.0.0-development",
-  "description": "Source code for Translating Japanese Gardens, a website that hosts a collection of essays on historical landscape design in Japan",
+  "description": "Source code for My Ideal Map App, a progressive web app that allows you to customize Google Maps with placemarks of your own interest that can be linked to web pages of your choice",
   "main": "pages/index.js",
   "scripts": {
     "build": "next build && next export",
@@ -51,18 +51,17 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/masakudamatsu/translating-japanese-gardens.git"
+    "url": "https://github.com/masakudamatsu/mima.git"
   },
   "keywords": [
-    "Japanese gardens",
-    "Landscape design"
+    "Google Maps"
   ],
   "author": "Masa Kudamatsu <masakudamatsu@gmail.com>",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/masakudamatsu/translating-japanese-gardens/issues"
+    "url": "https://github.com/masakudamatsu/mima/issues"
   },
-  "homepage": "https://github.com/masakudamatsu/translating-japanese-gardens",
+  "homepage": "https://mima.pages.dev",
   "dependencies": {
     "@googlemaps/js-api-loader": "1.12.1",
     "body-scroll-lock": "3.1.5",
