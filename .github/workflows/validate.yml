@@ -17,5 +17,3 @@ jobs:
         run: npm run build
       - name: 'Start the server and run tests'
         run: npm run ci
-        env: 
-          API_KEY: ${{ secrets.API_KEY }}
