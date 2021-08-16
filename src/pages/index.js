@@ -20,8 +20,14 @@ function HomePage() {
       const google = window.google;
       // eslint-disable-next-line no-unused-vars
       map = new google.maps.Map(googlemap.current, {
-        center: {lat: -34.397, lng: 150.644},
-        zoom: 8,
+        center: {lat: 35.011636, lng: 135.768029}, // Kyoto (https://www.countrycoordinate.com/city-kyoto-japan/)
+        zoom: 17,
+        mapId: '83a67631594fbfff',
+        // Disable the default UI control buttons
+        fullscreenControl: false,
+        mapTypeControl: false,
+        streetViewControl: false,
+        zoomControl: false,
       });
     });
   });
