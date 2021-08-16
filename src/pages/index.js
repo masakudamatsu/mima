@@ -11,7 +11,7 @@ function HomePage() {
 
   useEffect(() => {
     const loader = new Loader({
-      apiKey: process.env.API_KEY,
+      apiKey: process.env.NEXT_PUBLIC_API_KEY,
       version: 'weekly',
     });
 
