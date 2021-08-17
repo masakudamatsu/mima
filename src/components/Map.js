@@ -1,9 +1,13 @@
 import {useEffect, useRef} from 'react';
 import {Loader} from '@googlemaps/js-api-loader';
+import PropTypes from 'prop-types';
 
 import DivMap from 'src/elements/DivMap';
 
-const Map = () => {
+const mapIdDaytime = '83a67631594fbfff';
+const mapIdNighttime = '2c8123c7734d3fb';
+
+const Map = ({nightMode}) => {
   const googlemap = useRef(null);
 
   useEffect(() => {
@@ -19,7 +23,7 @@ const Map = () => {
       map = new google.maps.Map(googlemap.current, {
         center: {lat: 35.011636, lng: 135.768029}, // Kyoto (https://www.countrycoordinate.com/city-kyoto-japan/)
         zoom: 17,
-        mapId: '83a67631594fbfff',
+        mapId: nightMode ? mapIdNighttime : mapIdDaytime,
         // Disable the default UI control buttons
         fullscreenControl: false,
         mapTypeControl: false,
@@ -27,9 +31,13 @@ const Map = () => {
         zoomControl: false,
       });
     });
-  });
+  }, [nightMode]);
 
   return <DivMap ref={googlemap} />;
+};
+
+Map.propTypes = {
+  nightMode: PropTypes.bool,
 };
 
 export default Map;
