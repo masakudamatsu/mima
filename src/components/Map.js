@@ -1,14 +1,17 @@
-import {useEffect, useRef} from 'react';
+import {useEffect, useRef, useState} from 'react';
 import {Loader} from '@googlemaps/js-api-loader';
 import PropTypes from 'prop-types';
 
 import DivMap from 'src/elements/DivMap';
+import LocatorButton from 'src/components/LocatorButton';
 
 const mapIdDaytime = '83a67631594fbfff';
 const mapIdNighttime = '2c8123c7734d3fb';
 
 const Map = ({nightMode}) => {
   const googlemap = useRef(null);
+  const [mapObject, setMapObject] = useState(null);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     const loader = new Loader({
@@ -30,10 +33,34 @@ const Map = ({nightMode}) => {
         streetViewControl: false,
         zoomControl: false,
       });
+      setMapObject(map);
     });
   }, [nightMode]);
 
-  return <DivMap ref={googlemap} />;
+  const getCurrentPosition = () => {
+    if (navigator.geolocation) {
+      setLoading(true);
+      navigator.geolocation.getCurrentPosition(async position => {
+        const pos = {
+          lat: position.coords.latitude,
+          lng: position.coords.longitude,
+        };
+        await mapObject.setCenter(pos);
+        setLoading(false);
+      });
+    } else {
+      // Browser doesn't support Geolocation
+    }
+  };
+  return (
+    <>
+      <LocatorButton
+        getCurrentPosition={getCurrentPosition}
+        loading={loading}
+      />
+      <DivMap ref={googlemap} />
+    </>
+  );
 };
 
 Map.propTypes = {
