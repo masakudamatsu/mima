@@ -1,16 +1,30 @@
 import {render, screen} from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 import {axe} from 'jest-axe';
 
-import LocatorButton from './LocatorButton';
+import MapLocator from './MapLocator';
 
 const accessibleName = 'Show current location';
+
 const mockProps = {
-  getCurrentPosition: jest.fn().mockName('getCurrentPosition'),
+  mapObject: {
+    setCenter: jest.fn().mockName('setCenter'),
+  },
 };
 
-describe('LocatorButton component', () => {
+const mockGeolocation = {
+  getCurrentPosition: jest.fn(),
+};
+
+const originalGeolocation = global.navigator.geolocation;
+
+describe('MapLocator component', () => {
   beforeEach(() => {
-    render(<LocatorButton {...mockProps} />);
+    global.navigator.geolocation = mockGeolocation;
+    render(<MapLocator {...mockProps} />);
+  });
+  afterEach(() => {
+    global.navigator.geolocation = originalGeolocation;
   });
   test(`has the accessible name of Show current lcoation`, () => {
     expect(
@@ -27,13 +41,13 @@ describe('LocatorButton component', () => {
     );
   });
   test('calls getCurrentPosition() when clicked', () => {
-    screen.getByRole('button', {name: accessibleName}).click();
-    expect(mockProps.getCurrentPosition).toHaveBeenCalledTimes(1);
+    userEvent.click(screen.getByRole('button', {name: accessibleName}));
+    expect(mockGeolocation.getCurrentPosition).toHaveBeenCalledTimes(1);
   });
 });
 
 test('Accessibility checks', async () => {
-  const {container} = render(<LocatorButton {...mockProps} />);
+  const {container} = render(<MapLocator {...mockProps} />);
   const results = await axe(container);
   expect(results).toHaveNoViolations();
 });

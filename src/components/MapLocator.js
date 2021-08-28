@@ -1,9 +1,28 @@
+import {useState} from 'react';
 import PropTypes from 'prop-types';
 
 import Button from 'src/elements/Button';
 import {minTargetSize} from 'src/utils/styleShape';
 
-const LocatorButton = ({getCurrentPosition, loading}) => {
+const MapLocator = ({mapObject}) => {
+  const [loading, setLoading] = useState(false);
+
+  const getCurrentPosition = () => {
+    if (navigator.geolocation) {
+      setLoading(true);
+      navigator.geolocation.getCurrentPosition(async position => {
+        const pos = {
+          lat: position.coords.latitude,
+          lng: position.coords.longitude,
+        };
+        await mapObject.setCenter(pos);
+        setLoading(false);
+      });
+    } else {
+      // Browser doesn't support Geolocation
+    }
+  };
+
   return (
     <Button onClick={getCurrentPosition} $loading={loading}>
       <svg
@@ -22,8 +41,8 @@ const LocatorButton = ({getCurrentPosition, loading}) => {
   );
 };
 
-LocatorButton.propTypes = {
-  getCurrentPosition: PropTypes.func.isRequired,
+MapLocator.propTypes = {
+  mapObject: PropTypes.object,
 };
 
-export default LocatorButton;
+export default MapLocator;

@@ -1,12 +1,12 @@
 import React from 'react';
-import LocatorButton from './LocatorButton';
+import MapLocator from './MapLocator';
 
 // eslint-disable-next-line import/no-anonymous-default-export
 export default {
-  title: 'LocatorButton component',
-  component: LocatorButton,
+  title: 'MapLocator component',
+  component: MapLocator,
 };
 
 export function DefaultStyle() {
-  return <LocatorButton />;
+  return <MapLocator />;
 }
