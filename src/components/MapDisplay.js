@@ -7,9 +7,17 @@ import DivMap from 'src/elements/DivMap';
 const mapIdDaytime = '83a67631594fbfff';
 const mapIdNighttime = '2c8123c7734d3fb';
 
-const MapDisplay = ({nightMode, setMapObject}) => {
-  const googlemap = useRef(null);
+const MapDisplay = ({setMapObject}) => {
+  let nightMode;
+  const currentTime = new Date();
+  const currentHour = currentTime.getHours();
+  if (currentHour < 6 || currentHour >= 18) {
+    nightMode = true;
+  } else {
+    nightMode = false;
+  }
 
+  const googlemap = useRef(null);
   useEffect(() => {
     const loader = new Loader({
       apiKey: process.env.NEXT_PUBLIC_API_KEY,
@@ -38,7 +46,6 @@ const MapDisplay = ({nightMode, setMapObject}) => {
 };
 
 MapDisplay.propTypes = {
-  nightMode: PropTypes.bool,
   setMapObject: PropTypes.func.isRequired,
 };
 

@@ -4,18 +4,16 @@ import PropTypes from 'prop-types';
 import MapDisplay from './MapDisplay';
 import MapLocator from './MapLocator';
 
-const Map = ({nightMode}) => {
+const Map = () => {
   const [mapObject, setMapObject] = useState(null);
   return (
     <>
       <MapLocator mapObject={mapObject} />
-      <MapDisplay nightMode={nightMode} setMapObject={setMapObject} />
+      <MapDisplay setMapObject={setMapObject} />
     </>
   );
 };
 
-Map.propTypes = {
-  nightMode: PropTypes.bool,
-};
+Map.propTypes = {};
 
 export default Map;
