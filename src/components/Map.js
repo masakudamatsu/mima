@@ -39,14 +39,85 @@ const Map = ({nightMode}) => {
         zoomControl: false,
       });
       // Add markers
+      const blue = nightMode
+        ? {
+            fillColor: '#0d55d9', // hue 219; chroma 80; luminance 3.32
+            strokeColor: '#cedfff', // hue 219; chroma 19.22; luminance 15.62
+          }
+        : {
+            fillColor: '#116df6', // hue 216; chroma 89.8; luminance 4.54
+            strokeColor: '#013789', // hue 216; chroma 53.33; luminance 1.91
+          };
+      const green = nightMode
+        ? {
+            fillColor: '#addd11', // hue 74; chroma 80; luminance 13.13
+            strokeColor: '#ebffad', // hue 74; chroma 32.16; luminance 19.44
+          }
+        : {
+            fillColor: '#8ef913', // hue 88; chroma 90.2; luminance 15.71
+            strokeColor: '#264700', // hue 88; chroma 27.84; luminance 1.98
+          };
+      const orange = nightMode
+        ? {
+            fillColor: '#d8430c', // hue 16; chroma 80; luminance 4.78
+            strokeColor: '#fcd4c4', // hue 16; chroma 21.96; luminance 15.35
+          }
+        : {
+            fillColor: '#f54c0f', // hue 16; chroma 90.2; luminance 5.92
+            strokeColor: '#751f00', // hue 16; chroma 45.88; luminance 1.95
+          };
+      const purple = nightMode
+        ? {
+            fillColor: '#d50972', // hue 329; chroma 80; luminance 4.11 (if chroma is 90, it looks similar to #e90b03, the night mode orange)
+            strokeColor: '#fad2e7', // hue 329; chroma 15.69; luminance 15.44
+          }
+        : {
+            fillColor: '#980ff4', // hue 276; chroma 89.8; luminance 3.71
+            strokeColor: '#5c0695', // hue 276; chroma 56.08; luminance 1.92
+          };
+      const yellow = nightMode
+        ? {
+            fillColor: '#dfa513', // hue 42; chroma 80; luminance 9.53
+            strokeColor: '#efdba7', // hue 42; chroma 28.24; luminance 15.36
+          }
+        : {
+            fillColor: '#fcc319', // hue 45; chroma 89.02; luminance 12.96
+            strokeColor: '#4f3b00', // hue 54; chroma 30.98; luminance 1.96
+          };
       for (let i = 0; i < userData.places.length; i++) {
         const userPlace = userData.places[i];
+        let color;
+        switch (userPlace.tag[0]) {
+          case 'bar':
+            color = purple;
+            break;
+          case 'breakfast':
+            color = blue;
+            break;
+          case 'cafe':
+            color = green;
+            break;
+          case 'dinner':
+            color = orange;
+            break;
+          case 'lunch':
+            color = yellow;
+            break;
+          default:
+            color = {
+              fillColor: '#fff',
+              strokeColor: '#000',
+            };
+            break;
+        }
         new google.maps.Marker({
           icon: {
+            ...color,
             anchor: new google.maps.Point(
               cormorantBoldAsterisk.width / 2,
               cormorantBoldAsterisk.height / 2,
             ), // to pin the icon at its center, rather than at its top-left (default)
+            fillOpacity: 1,
             path: cormorantBoldAsterisk.path,
           },
           map: map,

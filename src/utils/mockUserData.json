@@ -4,49 +4,57 @@
       "id": 1,
       "name": "Lorimer Kyoto",
       "latitude": 34.99365616,
-      "longitude": 135.76098633
+      "longitude": 135.76098633,
+      "tag": ["breakfast", "lunch"]
     },
     {
       "id": 2,
-      "name": "Lorimer Kyoto",
+      "name": "Walden Woods Coffee",
       "latitude": 34.99334717,
-      "longitude": 135.76315308
+      "longitude": 135.76315308,
+      "tag": ["cafe"]
     },
     {
       "id": 3,
       "name": "DD Shokudo Kyoto",
       "latitude": 35.00046921,
-      "longitude": 135.76280212
+      "longitude": 135.76280212,
+      "tag": ["lunch"]
     },
     {
       "id": 4,
       "name": "Okaffe Kyoto",
       "latitude": 35.00230408,
-      "longitude": 135.76216125
+      "longitude": 135.76216125,
+      "tag": ["cafe"]
     },
     {
       "id": 5,
       "name": "Bread & Espresso & Arashiyama Garden",
       "latitude": 35.01486588,
-      "longitude": 135.67489624
+      "longitude": 135.67489624,
+      "tag": ["breakfast", "cafe"]
     },
     {
       "id": 6,
       "name": "Fukuda Art Museum",
       "latitude": 35.01386642,
-      "longitude": 135.67628479
+      "longitude": 135.67628479,
+      "tag": ["cafe", "lunch"]
     },
     {
       "id": 7,
       "name": "Osen",
       "latitude": 35.00626373,
-      "longitude": 135.77001953
+      "longitude": 135.77001953,
+      "tag": ["dinner"]
     },
     {
       "id": 8,
       "name": "Gion Niti",
       "latitude": 35.00185013,
-      "longitude": 135.77493286
+      "longitude": 135.77493286,
+      "tag": ["bar"]
     }
   ]
 }
