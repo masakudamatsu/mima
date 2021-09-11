@@ -28,15 +28,17 @@ const Map = ({nightMode}) => {
     let map; // in response to ESLint warning: "Assignments to the 'map' variable from inside React Hook use Effect will be lost after each render. To preserve the value over time, store it in a useRef Hook and keep the mutable value in the '.current' property. Oth erwise, you can move this variable directly inside useEffect"
     loader.load().then(() => {
       const google = window.google;
-      map = new google.maps.Map(googlemap.current, {
-        center: {lat: 35.011636, lng: 135.768029}, // Kyoto (https://www.countrycoordinate.com/city-kyoto-japan/)
-        zoom: 17,
-        mapId: nightMode ? mapIdNighttime : mapIdDaytime,
-        // Disable the default UI control buttons
+      const defaultButtonsDisabled = {
         fullscreenControl: false,
         mapTypeControl: false,
         streetViewControl: false,
         zoomControl: false,
+      };
+      map = new google.maps.Map(googlemap.current, {
+        center: {lat: 35.011636, lng: 135.768029}, // Kyoto (https://www.countrycoordinate.com/city-kyoto-japan/)
+        zoom: 17,
+        mapId: nightMode ? mapIdNighttime : mapIdDaytime,
+        ...defaultButtonsDisabled,
       });
       // Add markers
       const blue = nightMode
@@ -110,14 +112,17 @@ const Map = ({nightMode}) => {
             };
             break;
         }
+        const pinnedAtCenter = {
+          anchor: new google.maps.Point(
+            cormorantBoldAsterisk.width / 2,
+            cormorantBoldAsterisk.height / 2,
+          ), // default: google.maps.Point(0,0) (i.e. top-left)
+        };
         new google.maps.Marker({
           icon: {
             ...color,
-            anchor: new google.maps.Point(
-              cormorantBoldAsterisk.width / 2,
-              cormorantBoldAsterisk.height / 2,
-            ), // to pin the icon at its center, rather than at its top-left (default)
-            fillOpacity: 1,
+            ...pinnedAtCenter,
+            fillOpacity: 1, // default: 0
             path: cormorantBoldAsterisk.path,
           },
           map: map,
