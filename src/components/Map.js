@@ -28,9 +28,16 @@ const Map = ({nightMode}) => {
     let map; // in response to ESLint warning: "Assignments to the 'map' variable from inside React Hook use Effect will be lost after each render. To preserve the value over time, store it in a useRef Hook and keep the mutable value in the '.current' property. Oth erwise, you can move this variable directly inside useEffect"
     loader.load().then(() => {
       const google = window.google;
+      const initialView = {
+        center: {
+          // Teramachi Matsubara
+          lat: 34.9988127,
+          lng: 135.7674863,
+        },
+        zoom: 14, // to see all the mock user's saved places (except those in Arashiyama) ,
+      };
       map = new google.maps.Map(googlemap.current, {
-        center: {lat: 35.011636, lng: 135.768029}, // Kyoto (https://www.countrycoordinate.com/city-kyoto-japan/)
-        zoom: 17,
+        ...initialView,
         mapId: nightMode ? mapIdNighttime : mapIdDaytime,
         // Disable the default UI control buttons
         fullscreenControl: false,
