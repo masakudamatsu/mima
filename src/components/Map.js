@@ -39,15 +39,26 @@ const Map = ({nightMode}) => {
         zoomControl: false,
       });
       // Add markers
+      const yellow = nightMode
+        ? {
+            fillColor: '#dfa513', // hue 42; chroma 80; luminance 9.53
+            strokeColor: '#efdba7', // hue 42; chroma 28.24; luminance 15.36
+          }
+        : {
+            fillColor: '#f6d410', // 51, 90.2, 14.34
+            strokeColor: '#463c01', // 51, 27.06, 1.93
+          };
       for (let i = 0; i < userData.places.length; i++) {
         const userPlace = userData.places[i];
         new google.maps.Marker({
           icon: {
+            path: cormorantBoldAsterisk.path,
             anchor: new google.maps.Point(
               cormorantBoldAsterisk.width / 2,
               cormorantBoldAsterisk.height / 2,
             ), // to pin the icon at its center, rather than at its top-left (default)
-            path: cormorantBoldAsterisk.path,
+            fillOpacity: 1,
+            ...yellow,
           },
           map: map,
           position: {
