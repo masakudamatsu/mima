@@ -36,14 +36,19 @@ const Map = ({nightMode}) => {
         },
         zoom: 14, // to see all the mock user's saved places (except those in Arashiyama) ,
       };
-      map = new google.maps.Map(googlemap.current, {
-        ...initialView,
+      const colorCustomized = {
         mapId: nightMode ? mapIdNighttime : mapIdDaytime,
-        // Disable the default UI control buttons
+      };
+      const buttonsDisabled = {
         fullscreenControl: false,
         mapTypeControl: false,
         streetViewControl: false,
         zoomControl: false,
+      };
+      map = new google.maps.Map(googlemap.current, {
+        ...initialView,
+        ...colorCustomized,
+        ...buttonsDisabled,
       });
       // Add markers
       const yellow = nightMode
@@ -55,17 +60,26 @@ const Map = ({nightMode}) => {
             fillColor: '#f6d410', // 51, 90.2, 14.34
             strokeColor: '#463c01', // 51, 27.06, 1.93
           };
+      const shapedAsAsterisk = {
+        path: cormorantBoldAsterisk.path,
+      };
+      const pinnedAtCenter = {
+        anchor: new google.maps.Point(
+          cormorantBoldAsterisk.width / 2,
+          cormorantBoldAsterisk.height / 2,
+        ), // to pin the icon at its center, rather than at its top-left (default)
+      };
+      const colored = {
+        fillOpacity: 1, // to disable the default value of 0
+        ...yellow,
+      };
       for (let i = 0; i < userData.places.length; i++) {
         const userPlace = userData.places[i];
         new google.maps.Marker({
           icon: {
-            path: cormorantBoldAsterisk.path,
-            anchor: new google.maps.Point(
-              cormorantBoldAsterisk.width / 2,
-              cormorantBoldAsterisk.height / 2,
-            ), // to pin the icon at its center, rather than at its top-left (default)
-            fillOpacity: 1,
-            ...yellow,
+            ...shapedAsAsterisk,
+            ...pinnedAtCenter,
+            ...colored,
           },
           map: map,
           position: {
