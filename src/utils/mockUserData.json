@@ -1,0 +1,52 @@
+{
+  "places": [
+    {
+      "id": 1,
+      "name": "Lorimer Kyoto",
+      "latitude": 34.99365616,
+      "longitude": 135.76098633
+    },
+    {
+      "id": 2,
+      "name": "Lorimer Kyoto",
+      "latitude": 34.99334717,
+      "longitude": 135.76315308
+    },
+    {
+      "id": 3,
+      "name": "DD Shokudo Kyoto",
+      "latitude": 35.00046921,
+      "longitude": 135.76280212
+    },
+    {
+      "id": 4,
+      "name": "Okaffe Kyoto",
+      "latitude": 35.00230408,
+      "longitude": 135.76216125
+    },
+    {
+      "id": 5,
+      "name": "Bread & Espresso & Arashiyama Garden",
+      "latitude": 35.01486588,
+      "longitude": 135.67489624
+    },
+    {
+      "id": 6,
+      "name": "Fukuda Art Museum",
+      "latitude": 35.01386642,
+      "longitude": 135.67628479
+    },
+    {
+      "id": 7,
+      "name": "Osen",
+      "latitude": 35.00626373,
+      "longitude": 135.77001953
+    },
+    {
+      "id": 8,
+      "name": "Gion Niti",
+      "latitude": 35.00185013,
+      "longitude": 135.77493286
+    }
+  ]
+}
