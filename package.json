@@ -47,7 +47,8 @@
     "semantic-release": "semantic-release --branches main",
     "storybook": "start-storybook -p 6006 -s ./public",
     "build-storybook": "build-storybook -s ./public",
-    "chromatic": "chromatic"
+    "chromatic": "chromatic",
+    "analyze": "ANALYZE=true next build"
   },
   "repository": {
     "type": "git",
@@ -73,6 +74,7 @@
   "devDependencies": {
     "@babel/core": "7.15.0",
     "@cypress/code-coverage": "3.9.7",
+    "@next/bundle-analyzer": "11.1.2",
     "@percy/cli": "1.0.0-beta.57",
     "@percy/cypress": "3.1.0",
     "@storybook/addon-a11y": "6.3.8",
