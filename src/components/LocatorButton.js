@@ -9,7 +9,7 @@ import SvgCloud from 'src/elements/SvgCloud';
 const LocatorButton = () => {
   const nightMode = useContext(NightModeContext);
   return (
-    <Button $bottomRightSecond $nightMode={nightMode} onClick={() => {}}>
+    <Button $bottomRightSecond $nightMode={nightMode}>
       <SvgCloud icon="flightTakeoff" title="Show current location" />
     </Button>
   );

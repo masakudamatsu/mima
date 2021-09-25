@@ -9,7 +9,7 @@ import SvgCloud from 'src/elements/SvgCloud';
 const SavePlaceButton = () => {
   const nightMode = useContext(NightModeContext);
   return (
-    <Button $bottomRight $nightMode={nightMode} onClick={() => {}}>
+    <Button $bottomRight $nightMode={nightMode}>
       <SvgCloud icon="add" title="Save a place" />
     </Button>
   );

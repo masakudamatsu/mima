@@ -9,7 +9,7 @@ import SvgCloud from 'src/elements/SvgCloud';
 const MenuButton = () => {
   const nightMode = useContext(NightModeContext);
   return (
-    <Button $topLeft $nightMode={nightMode} onClick={() => {}}>
+    <Button $topLeft $nightMode={nightMode}>
       <SvgCloud icon="menu" title="Show menu" />
     </Button>
   );
