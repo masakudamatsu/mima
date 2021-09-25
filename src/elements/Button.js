@@ -2,10 +2,10 @@ import styled, {css} from 'styled-components';
 import PropTypes from 'prop-types';
 
 import {button} from 'src/utils/styleShape';
-import {cloud, icon} from 'src/utils/styleColor';
+import {color} from 'src/utils/designtokens';
 
 const resetStyle = css`
-  background-color: ${cloud.transparent};
+  background-color: ${color['white 0']};
   border: none;
 `;
 
@@ -51,37 +51,80 @@ const positionButton = css`
   `}
 `;
 
-const setIconColor = css`
+const buttonLabelColor = {
+  default: color['dark-grey 100'],
+  focus: color['black 100'],
+};
+const setButtonLabelColor = css`
   & svg {
-    fill: ${icon.default};
+    fill: ${buttonLabelColor.default};
   }
   &:focus svg,
   &:hover svg {
-    fill: ${icon.focus};
+    fill: ${buttonLabelColor.focus};
   }
   &:active svg {
-    fill: ${icon.default};
+    fill: ${buttonLabelColor.default};
   }
 `;
 
-const setCloudColor = css`
+const setButtonColor = css`
   & #cloud {
-    fill: ${cloud.fill};
-    stroke: ${cloud.stroke};
+    fill: ${color['white 93']};
+  }
+`;
+
+const buttonShadow = {
+  offset: '0px 0px',
+  blur: {
+    default: {
+      layer1: '1px',
+      layer2: '2px',
+      layer3: '4px',
+    },
+    focus: `5px`,
+  },
+  color: {
+    default: color['black 33'],
+    focus: color['focus-blue 100'],
+  },
+};
+
+const setButtonShadow = css`
+  & #cloud {
+    stroke: ${color['light-grey 100']};
   }
   & svg {
-    filter: drop-shadow(0px 0px 5px ${cloud.shadow.default});
+    filter: drop-shadow(
+        ${buttonShadow.offset} ${buttonShadow.blur.default['layer1']}
+          ${buttonShadow.color.default}
+      )
+      drop-shadow(
+        ${buttonShadow.offset} ${buttonShadow.blur.default['layer2']}
+          ${buttonShadow.color.default}
+      )
+      drop-shadow(
+        ${buttonShadow.offset} ${buttonShadow.blur.default['layer3']}
+          ${buttonShadow.color.default}
+      );
   }
   &:focus #cloud,
   &:hover #cloud {
-    stroke: none;
+    stroke: ${color['focus-blue 100']};
   }
   &:focus svg,
   &:hover svg {
-    filter: drop-shadow(0px 0px 5px ${cloud.shadow.focus});
+    filter: ${`drop-shadow(
+      ${buttonShadow.offset}
+      ${buttonShadow.blur.focus}
+      ${buttonShadow.color.focus}
+    )`};
   }
   &:active svg {
     filter: none;
+  }
+  &:active #cloud {
+    stroke: none;
   }
 `;
 
@@ -93,8 +136,9 @@ const Button = styled.button.attrs({
   ${alignButtonLabel}
   ${positionButton}
 
-  ${setIconColor}
-  ${setCloudColor}
+  ${setButtonLabelColor}
+  ${setButtonColor}
+  ${setButtonShadow}
 `;
 
 Button.propTypes = {

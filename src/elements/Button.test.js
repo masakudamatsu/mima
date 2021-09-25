@@ -47,28 +47,35 @@ test('renders the default UI correctly', () => {
 
 .c0 #cloud {
   fill: rgba(255,255,255,0.93);
+}
+
+.c0 #cloud {
   stroke: rgb(148,148,148);
 }
 
 .c0 svg {
-  -webkit-filter: drop-shadow(0px 0px 5px rgba(0,0,0,0.42));
-  filter: drop-shadow(0px 0px 5px rgba(0,0,0,0.42));
+  -webkit-filter: drop-shadow( 0px 0px 1px rgba(3,3,3,0.33) ) drop-shadow( 0px 0px 2px rgba(3,3,3,0.33) ) drop-shadow( 0px 0px 4px rgba(3,3,3,0.33) );
+  filter: drop-shadow( 0px 0px 1px rgba(3,3,3,0.33) ) drop-shadow( 0px 0px 2px rgba(3,3,3,0.33) ) drop-shadow( 0px 0px 4px rgba(3,3,3,0.33) );
 }
 
 .c0:focus #cloud,
 .c0:hover #cloud {
-  stroke: none;
+  stroke: rgb(69,159,189);
 }
 
 .c0:focus svg,
 .c0:hover svg {
-  -webkit-filter: drop-shadow(0px 0px 5px rgb(18 89 229));
-  filter: drop-shadow(0px 0px 5px rgb(18 89 229));
+  -webkit-filter: drop-shadow( 0px 0px 5px rgb(69,159,189) );
+  filter: drop-shadow( 0px 0px 5px rgb(69,159,189) );
 }
 
 .c0:active svg {
   -webkit-filter: none;
   filter: none;
+}
+
+.c0:active #cloud {
+  stroke: none;
 }
 
 <div>
