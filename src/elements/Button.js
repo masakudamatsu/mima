@@ -52,25 +52,27 @@ const positionButton = css`
 `;
 
 const buttonLabelColor = {
-  default: color['dark-grey 100'],
-  focus: color['black 100'],
+  default: nightMode =>
+    nightMode ? color['off-white 100'] : color['dark-grey 100'],
+  focus: nightMode => (nightMode ? color['white 100'] : color['black 100']),
 };
 const setButtonLabelColor = css`
   & svg {
-    fill: ${buttonLabelColor.default};
+    fill: ${({$nightMode}) => buttonLabelColor.default($nightMode)};
   }
   &:focus svg,
   &:hover svg {
-    fill: ${buttonLabelColor.focus};
+    fill: ${({$nightMode}) => buttonLabelColor.focus($nightMode)};
   }
   &:active svg {
-    fill: ${buttonLabelColor.default};
+    fill: ${({$nightMode}) => buttonLabelColor.default($nightMode)};
   }
 `;
 
 const setButtonColor = css`
   & #cloud {
-    fill: ${color['white 93']};
+    fill: ${({$nightMode}) =>
+      $nightMode ? color['mid-grey 80'] : color['white 93']};
   }
 `;
 
@@ -82,42 +84,45 @@ const buttonShadow = {
       layer2: '2px',
       layer3: '4px',
     },
-    focus: `5px`,
+    focus: nightMode => (nightMode ? `10px` : `5px`),
   },
   color: {
-    default: color['black 33'],
-    focus: color['focus-blue 100'],
+    default: nightMode => (nightMode ? color['black 60'] : color['black 33']),
+    focus: nightMode =>
+      nightMode ? color['white 100'] : color['focus-blue 100'],
   },
 };
 
 const setButtonShadow = css`
   & #cloud {
-    stroke: ${color['light-grey 100']};
+    stroke: ${({$nightMode}) =>
+      $nightMode ? color['off-black 100'] : color['light-grey 100']};
   }
   & svg {
     filter: drop-shadow(
         ${buttonShadow.offset} ${buttonShadow.blur.default['layer1']}
-          ${buttonShadow.color.default}
+          ${({$nightMode}) => buttonShadow.color.default($nightMode)}
       )
       drop-shadow(
         ${buttonShadow.offset} ${buttonShadow.blur.default['layer2']}
-          ${buttonShadow.color.default}
+          ${({$nightMode}) => buttonShadow.color.default($nightMode)}
       )
       drop-shadow(
         ${buttonShadow.offset} ${buttonShadow.blur.default['layer3']}
-          ${buttonShadow.color.default}
+          ${({$nightMode}) => buttonShadow.color.default($nightMode)}
       );
   }
   &:focus #cloud,
   &:hover #cloud {
-    stroke: ${color['focus-blue 100']};
+    stroke: ${({$nightMode}) =>
+      $nightMode ? color['white 40'] : color['focus-blue 100']};
   }
   &:focus svg,
   &:hover svg {
-    filter: ${`drop-shadow(
+    filter: ${({$nightMode}) => `drop-shadow(
       ${buttonShadow.offset}
-      ${buttonShadow.blur.focus}
-      ${buttonShadow.color.focus}
+      ${buttonShadow.blur.focus($nightMode)}
+      ${buttonShadow.color.focus($nightMode)}
     )`};
   }
   &:active svg {
@@ -144,6 +149,7 @@ const Button = styled.button.attrs({
 Button.propTypes = {
   $bottomRight: PropTypes.bool,
   $bottomRightSecond: PropTypes.bool,
+  $nightMode: PropTypes.bool,
   $topLeft: PropTypes.bool,
   $topRight: PropTypes.bool,
 };
