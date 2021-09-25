@@ -47,6 +47,7 @@ const SvgCloud = ({icon, title}) => {
       );
       break;
     default:
+      iconSvgPath = null;
       break;
   }
   return (
