@@ -1,8 +1,7 @@
 import styled, {css} from 'styled-components';
 import PropTypes from 'prop-types';
 
-import {button} from 'src/utils/styleShape';
-import {color} from 'src/utils/designtokens';
+import {color, dimension} from 'src/utils/designtokens';
 
 const resetStyle = css`
   background-color: ${color['white 0']};
@@ -10,8 +9,8 @@ const resetStyle = css`
 `;
 
 const setClickableArea = css`
-  height: ${button.height}px;
-  width: ${button.width}px;
+  height: ${dimension.button['height 100']};
+  width: ${dimension.button['width 100']};
 `;
 
 const alignButtonLabel = css`
@@ -26,28 +25,26 @@ const positionButton = css`
   ${({$topLeft}) =>
     $topLeft &&
     `
-    top: ${button.height / 4}px;
-    left: ${button.width / 4}px;
+    top: ${dimension.button['height 25']};
+    left: ${dimension.button['width 25']};
   `}
   ${({$topRight}) =>
     $topRight &&
     `
-    top: ${button.height / 4}px; 
-    right: ${button.width / 4}px; 
+    top: ${dimension.button['height 25']}; 
+    right: ${dimension.button['width 25']}; 
   `}
   ${({$bottomRight}) =>
     $bottomRight &&
     `
-    bottom: ${
-      button.height / 2
-    }px; /* Google Maps's default text legend takes up space (about 1/4 of button.height) at the bottom */
-    right: ${button.width / 4}px;
+    bottom: ${dimension.button['height 50']}; /* Google Maps's default text legend takes up space (about dimension.button['height 25']) at the bottom */
+    right: ${dimension.button['width 25']};
   `}
   ${({$bottomRightSecond}) =>
     $bottomRightSecond &&
     `
-    bottom: ${button.height / 2 + button.height + button.height / 4}px;
-    right: ${button.width / 4}px;
+    bottom: ${dimension.button['height 175']}; // on top of button-right button plus dimension.button['height 25']
+    right: ${dimension.button['width 25']};
   `}
 `;
 

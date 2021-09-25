@@ -61,3 +61,14 @@ export const map = {
     night: color['off-black 100'], // = cityblocks.night
   },
 };
+
+export const dimension = {
+  button: {
+    'height 175': '84px',
+    'height 100': '48px',
+    'height 50': '24px',
+    'height 25': '12px',
+    'width 100': '56px',
+    'width 25': '14px',
+  },
+};

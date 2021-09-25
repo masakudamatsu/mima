@@ -1,11 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import {button} from 'src/utils/styleShape';
+import {dimension} from 'src/utils/designtokens';
 
-const height = `${button.height}px`;
-const viewBox = `0 0 ${button.width} ${button.height}`;
-const width = `${button.width}px`;
+// remove "px"
+const height = dimension.button['height 100'].slice(0, -2);
+const width = dimension.button['width 100'].slice(0, -2);
 
 const SvgCloud = ({icon, title}) => {
   let iconSvgPath;
@@ -53,9 +53,9 @@ const SvgCloud = ({icon, title}) => {
     <svg
       role="img"
       aria-labelledby="accessible-name"
-      width={width}
-      height={height}
-      viewBox={viewBox}
+      width={`${width}px`}
+      height={`${height}px`}
+      viewBox={`0 0 ${width} ${height}`}
     >
       <title id="accessible-name">{title}</title>
       <path
