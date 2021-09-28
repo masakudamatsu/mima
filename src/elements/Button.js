@@ -19,33 +19,9 @@ const alignButtonLabel = css`
   justify-content: center;
 `;
 
-const positionButton = css`
+const showButtonAboveMap = css`
   position: absolute;
   z-index: 1;
-  ${({$topLeft}) =>
-    $topLeft &&
-    `
-    top: ${dimension.button['height 25']};
-    left: ${dimension.button['width 25']};
-  `}
-  ${({$topRight}) =>
-    $topRight &&
-    `
-    top: ${dimension.button['height 25']}; 
-    right: ${dimension.button['width 25']}; 
-  `}
-  ${({$bottomRight}) =>
-    $bottomRight &&
-    `
-    bottom: ${dimension.button['height 50']}; /* Google Maps's default text legend takes up space (about dimension.button['height 25']) at the bottom */
-    right: ${dimension.button['width 25']};
-  `}
-  ${({$bottomRightSecond}) =>
-    $bottomRightSecond &&
-    `
-    bottom: ${dimension.button['height 175']}; // on top of button-right button plus dimension.button['height 25']
-    right: ${dimension.button['width 25']};
-  `}
 `;
 
 const buttonLabelColor = {
@@ -130,25 +106,56 @@ const setButtonShadow = css`
   }
 `;
 
-const Button = styled.button.attrs({
-  type: 'button',
-})`
+const styleCloudButton = css`
   ${resetStyle}
   ${setClickableArea}
   ${alignButtonLabel}
-  ${positionButton}
-
+  ${showButtonAboveMap}
   ${setButtonLabelColor}
   ${setButtonColor}
   ${setButtonShadow}
 `;
 
-Button.propTypes = {
-  $bottomRight: PropTypes.bool,
-  $bottomRightSecond: PropTypes.bool,
-  $nightMode: PropTypes.bool,
-  $topLeft: PropTypes.bool,
-  $topRight: PropTypes.bool,
-};
+export const ButtonTopLeft = styled.button.attrs({
+  type: 'button',
+})`
+  ${styleCloudButton}
+  top: ${dimension.button['height 25']};
+  left: ${dimension.button['width 25']};
+`;
+export const ButtonTopRight = styled.button.attrs({
+  type: 'button',
+})`
+  ${styleCloudButton}
+  top: ${dimension.button['height 25']};
+  right: ${dimension.button['width 25']};
+`;
+export const ButtonBottomRight = styled.button.attrs({
+  type: 'button',
+})`
+  ${styleCloudButton}
+  bottom: ${dimension.button[
+    'height 50'
+  ]}; /* Google Maps's default text legend takes up space (about dimension.button['height 25']) at the bottom */
+  right: ${dimension.button['width 25']};
+`;
+export const ButtonBottomRightSecond = styled.button.attrs({
+  type: 'button',
+})`
+  ${styleCloudButton}
+  bottom: ${dimension.button['height 175']};
+  right: ${dimension.button['width 25']};
+`;
 
-export default Button;
+ButtonTopLeft.propTypes = {
+  $nightMode: PropTypes.bool,
+};
+ButtonTopRight.propTypes = {
+  $nightMode: PropTypes.bool,
+};
+ButtonBottomRight.propTypes = {
+  $nightMode: PropTypes.bool,
+};
+ButtonBottomRightSecond.propTypes = {
+  $nightMode: PropTypes.bool,
+};

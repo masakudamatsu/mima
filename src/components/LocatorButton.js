@@ -3,15 +3,15 @@ import {useContext} from 'react';
 
 import {NightModeContext} from 'src/context/NightModeContext';
 
-import Button from 'src/elements/Button';
+import {ButtonBottomRightSecond} from 'src/elements/Button';
 import SvgCloud from 'src/elements/SvgCloud';
 
 const LocatorButton = () => {
   const nightMode = useContext(NightModeContext);
   return (
-    <Button $bottomRightSecond $nightMode={nightMode}>
+    <ButtonBottomRightSecond $nightMode={nightMode}>
       <SvgCloud icon="flightTakeoff" title="Show current location" />
-    </Button>
+    </ButtonBottomRightSecond>
   );
 };
 
