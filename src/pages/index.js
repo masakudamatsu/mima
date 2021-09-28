@@ -1,3 +1,4 @@
+import {useState, useEffect} from 'react';
 import Head from 'next/head';
 import {index} from 'src/utils/metadata';
 
@@ -11,6 +12,10 @@ import SavePlaceButton from 'src/components/SavePlaceButton';
 import SearchButton from 'src/components/SearchButton';
 
 function HomePage() {
+  const [clientSideRendering, setClientSideRendering] = useState(false);
+  useEffect(() => {
+    setClientSideRendering(true);
+  }, []);
   return (
     <>
       <Head>
@@ -19,10 +24,10 @@ function HomePage() {
       </Head>
       <Noscript />
       <NightModeProvider>
-        <MenuButton />
-        <SearchButton />
-        <LocatorButton />
-        <SavePlaceButton />
+        {clientSideRendering && <MenuButton />}
+        {clientSideRendering && <SearchButton />}
+        {clientSideRendering && <LocatorButton />}
+        {clientSideRendering && <SavePlaceButton />}
         <Map />
       </NightModeProvider>
     </>
