@@ -71,4 +71,15 @@ export const dimension = {
     'width 100': '56px',
     'width 25': '14px',
   },
+  shadow: {
+    offset: '0px 0px',
+    'blur layer 1': '1px',
+    'blur layer 2': '2px',
+    'blur layer 3': '4px',
+  },
+  glow: {
+    offset: '0px 0px',
+    'blur daytime': '5px',
+    'blur nighttime': '10px',
+  },
 };

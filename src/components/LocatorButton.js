@@ -8,10 +8,14 @@ import SvgCloud from 'src/elements/SvgCloud';
 
 const LocatorButton = () => {
   const nightMode = useContext(NightModeContext);
-  return (
-    <ButtonBottomRightSecond $nightMode={nightMode}>
+  return nightMode ? (
+    <ButtonBottomRightSecond.Nighttime type="button">
       <SvgCloud icon="flightTakeoff" title="Show current location" />
-    </ButtonBottomRightSecond>
+    </ButtonBottomRightSecond.Nighttime>
+  ) : (
+    <ButtonBottomRightSecond.Daytime type="button">
+      <SvgCloud icon="flightTakeoff" title="Show current location" />
+    </ButtonBottomRightSecond.Daytime>
   );
 };
 

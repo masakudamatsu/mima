@@ -9,13 +9,8 @@ import {
 } from './Button';
 
 describe('ButtonTopLeft', () => {
-  test(`sets the type attribute to be "button"`, () => {
-    render(<ButtonTopLeft data-testid="button" />);
-    expect(screen.getByTestId('button')).toHaveAttribute('type', 'button');
-  });
-
   test('renders the daytime UI correctly', () => {
-    const {container} = render(<ButtonTopLeft />);
+    const {container} = render(<ButtonTopLeft.Daytime />);
     expect(container).toMatchInlineSnapshot(`
 .c0 {
   background-color: rgba(255,255,255,0);
@@ -89,14 +84,13 @@ describe('ButtonTopLeft', () => {
 <div>
   <button
     class="c0"
-    type="button"
   />
 </div>
 `);
   });
 
   test('renders the nighttime UI correctly', () => {
-    const {container} = render(<ButtonTopLeft $nightMode />);
+    const {container} = render(<ButtonTopLeft.Nighttime />);
     expect(container).toMatchInlineSnapshot(`
 .c0 {
   background-color: rgba(255,255,255,0);
@@ -170,7 +164,6 @@ describe('ButtonTopLeft', () => {
 <div>
   <button
     class="c0"
-    type="button"
   />
 </div>
 `);
@@ -178,13 +171,8 @@ describe('ButtonTopLeft', () => {
 });
 
 describe('ButtonTopRight', () => {
-  test(`sets the type attribute to be "button"`, () => {
-    render(<ButtonTopRight data-testid="button" />);
-    expect(screen.getByTestId('button')).toHaveAttribute('type', 'button');
-  });
-
   test('renders the daytime UI correctly', () => {
-    const {container} = render(<ButtonTopRight />);
+    const {container} = render(<ButtonTopRight.Daytime />);
     expect(container).toMatchInlineSnapshot(`
 .c0 {
   background-color: rgba(255,255,255,0);
@@ -258,14 +246,13 @@ describe('ButtonTopRight', () => {
 <div>
   <button
     class="c0"
-    type="button"
   />
 </div>
 `);
   });
 
   test('renders the nighttime UI correctly', () => {
-    const {container} = render(<ButtonTopRight $nightMode />);
+    const {container} = render(<ButtonTopRight.Nighttime />);
     expect(container).toMatchInlineSnapshot(`
 .c0 {
   background-color: rgba(255,255,255,0);
@@ -339,7 +326,6 @@ describe('ButtonTopRight', () => {
 <div>
   <button
     class="c0"
-    type="button"
   />
 </div>
 `);
@@ -347,13 +333,8 @@ describe('ButtonTopRight', () => {
 });
 
 describe('ButtonBottomRight', () => {
-  test(`sets the type attribute to be "button"`, () => {
-    render(<ButtonBottomRight data-testid="button" />);
-    expect(screen.getByTestId('button')).toHaveAttribute('type', 'button');
-  });
-
   test('renders the daytime UI correctly', () => {
-    const {container} = render(<ButtonBottomRight />);
+    const {container} = render(<ButtonBottomRight.Daytime />);
     expect(container).toMatchInlineSnapshot(`
 .c0 {
   background-color: rgba(255,255,255,0);
@@ -427,14 +408,13 @@ describe('ButtonBottomRight', () => {
 <div>
   <button
     class="c0"
-    type="button"
   />
 </div>
 `);
   });
 
   test('renders the nighttime UI correctly', () => {
-    const {container} = render(<ButtonBottomRight $nightMode />);
+    const {container} = render(<ButtonBottomRight.Nighttime />);
     expect(container).toMatchInlineSnapshot(`
 .c0 {
   background-color: rgba(255,255,255,0);
@@ -508,7 +488,6 @@ describe('ButtonBottomRight', () => {
 <div>
   <button
     class="c0"
-    type="button"
   />
 </div>
 `);
@@ -516,13 +495,8 @@ describe('ButtonBottomRight', () => {
 });
 
 describe('ButtonBottomRightSecond', () => {
-  test(`sets the type attribute to be "button"`, () => {
-    render(<ButtonBottomRightSecond data-testid="button" />);
-    expect(screen.getByTestId('button')).toHaveAttribute('type', 'button');
-  });
-
   test('renders the daytime UI correctly', () => {
-    const {container} = render(<ButtonBottomRightSecond />);
+    const {container} = render(<ButtonBottomRightSecond.Daytime />);
     expect(container).toMatchInlineSnapshot(`
 .c0 {
   background-color: rgba(255,255,255,0);
@@ -596,14 +570,13 @@ describe('ButtonBottomRightSecond', () => {
 <div>
   <button
     class="c0"
-    type="button"
   />
 </div>
 `);
   });
 
   test('renders the nighttime UI correctly', () => {
-    const {container} = render(<ButtonBottomRightSecond $nightMode />);
+    const {container} = render(<ButtonBottomRightSecond.Nighttime />);
     expect(container).toMatchInlineSnapshot(`
 .c0 {
   background-color: rgba(255,255,255,0);
@@ -677,7 +650,6 @@ describe('ButtonBottomRightSecond', () => {
 <div>
   <button
     class="c0"
-    type="button"
   />
 </div>
 `);

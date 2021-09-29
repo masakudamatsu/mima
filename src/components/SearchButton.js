@@ -8,10 +8,14 @@ import SvgCloud from 'src/elements/SvgCloud';
 
 const SearchButton = () => {
   const nightMode = useContext(NightModeContext);
-  return (
-    <ButtonTopRight $nightMode={nightMode}>
+  return nightMode ? (
+    <ButtonTopRight.Nighttime type="button">
       <SvgCloud icon="search" title="Search a place" />
-    </ButtonTopRight>
+    </ButtonTopRight.Nighttime>
+  ) : (
+    <ButtonTopRight.Daytime type="button">
+      <SvgCloud icon="search" title="Search a place" />
+    </ButtonTopRight.Daytime>
   );
 };
 
