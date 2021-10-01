@@ -1,10 +1,12 @@
-import {useEffect, useRef} from 'react';
+import {useContext, useEffect, useRef} from 'react';
 import {Loader} from '@googlemaps/js-api-loader';
 import PropTypes from 'prop-types';
 
 import DivMap from 'src/elements/DivMap';
 
 import userData from 'src/utils/mockUserData.json';
+
+import {NightModeContext} from 'src/context/NightModeContext';
 
 const mapIdDaytime = '83a67631594fbfff';
 const mapIdNighttime = '2c8123c7734d3fb';
@@ -16,7 +18,8 @@ const cormorantBoldAsterisk = {
   width: 37.788,
 }; // obtained from https://danmarshall.github.io/google-font-to-svg-path/
 
-const Map = ({nightMode}) => {
+const Map = () => {
+  const nightMode = useContext(NightModeContext);
   const googlemap = useRef(null);
 
   useEffect(() => {

@@ -1,18 +1,21 @@
+import {useState, useEffect} from 'react';
 import Head from 'next/head';
-import {useState} from 'react';
 import {index} from 'src/utils/metadata';
+
+import {NightModeProvider} from 'src/context/NightModeContext';
+
+import LocatorButton from 'src/components/LocatorButton';
 import Map from 'src/components/Map';
+import MenuButton from 'src/components/MenuButton';
 import Noscript from 'src/components/Noscript';
+import SavePlaceButton from 'src/components/SavePlaceButton';
+import SearchButton from 'src/components/SearchButton';
 
 function HomePage() {
-  let nightMode;
-  const currentTime = new Date();
-  const currentHour = currentTime.getHours();
-  if (currentHour < 6 || currentHour >= 18) {
-    nightMode = true;
-  } else {
-    nightMode = false;
-  }
+  const [clientSideRendering, setClientSideRendering] = useState(false);
+  useEffect(() => {
+    setClientSideRendering(true);
+  }, []);
   return (
     <>
       <Head>
@@ -20,7 +23,13 @@ function HomePage() {
         <meta name="description" content={index.description} />
       </Head>
       <Noscript />
-      <Map nightMode={nightMode} />
+      <NightModeProvider>
+        {clientSideRendering && <MenuButton />}
+        {clientSideRendering && <SearchButton />}
+        {clientSideRendering && <LocatorButton />}
+        {clientSideRendering && <SavePlaceButton />}
+        <Map />
+      </NightModeProvider>
     </>
   ); // see https://codepen.io/masakudamatsu/pen/QWpbELb
 }
