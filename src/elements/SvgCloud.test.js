@@ -25,14 +25,14 @@ describe('renders UI with each prop correctly', () => {
     expect(container).toMatchInlineSnapshot(`
 <div>
   <svg
-    aria-labelledby="accessible-name"
+    aria-labelledby="add"
     height="48px"
     role="img"
     viewBox="0 0 56 48"
     width="56px"
   >
     <title
-      id="accessible-name"
+      id="add"
     >
       mock accessible name
     </title>
@@ -56,14 +56,14 @@ describe('renders UI with each prop correctly', () => {
     expect(container).toMatchInlineSnapshot(`
 <div>
   <svg
-    aria-labelledby="accessible-name"
+    aria-labelledby="flightTakeoff"
     height="48px"
     role="img"
     viewBox="0 0 56 48"
     width="56px"
   >
     <title
-      id="accessible-name"
+      id="flightTakeoff"
     >
       mock accessible name
     </title>
@@ -85,14 +85,14 @@ describe('renders UI with each prop correctly', () => {
     expect(container).toMatchInlineSnapshot(`
 <div>
   <svg
-    aria-labelledby="accessible-name"
+    aria-labelledby="menu"
     height="48px"
     role="img"
     viewBox="0 0 56 48"
     width="56px"
   >
     <title
-      id="accessible-name"
+      id="menu"
     >
       mock accessible name
     </title>
@@ -114,14 +114,14 @@ describe('renders UI with each prop correctly', () => {
     expect(container).toMatchInlineSnapshot(`
 <div>
   <svg
-    aria-labelledby="accessible-name"
+    aria-labelledby="search"
     height="48px"
     role="img"
     viewBox="0 0 56 48"
     width="56px"
   >
     <title
-      id="accessible-name"
+      id="search"
     >
       mock accessible name
     </title>
@@ -143,14 +143,14 @@ describe('renders UI with each prop correctly', () => {
     expect(container).toMatchInlineSnapshot(`
 <div>
   <svg
-    aria-labelledby="accessible-name"
+    aria-labelledby=""
     height="48px"
     role="img"
     viewBox="0 0 56 48"
     width="56px"
   >
     <title
-      id="accessible-name"
+      id=""
     >
       mock accessible name
     </title>
