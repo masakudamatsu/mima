@@ -1,4 +1,5 @@
-import styled, {css} from 'styled-components';
+import styled, {css, keyframes} from 'styled-components';
+import PropTypes from 'prop-types';
 
 import {color, dimension} from 'src/utils/designtokens';
 
@@ -120,6 +121,22 @@ const setColorScheme = css`
   }
 `;
 
+const flashing = keyframes`
+  0% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+`;
+
+const blinkButton = css`
+  animation: ${flashing} 1500ms linear infinite;
+`;
+
 // Define Button components
 export const Button = styled.button`
   ${resetStyle}
@@ -131,4 +148,9 @@ export const Button = styled.button`
   ${setButtonColor}
   ${setButtonShadow}
   ${setColorScheme}
+  ${({$loading}) => $loading && blinkButton}
 `;
+
+Button.propTypes = {
+  $loading: PropTypes.bool,
+};

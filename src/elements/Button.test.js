@@ -123,4 +123,16 @@ describe('Button component', () => {
 </div>
 `);
   });
+  test('blinks if $loading prop is true (for daytime)', () => {
+    render(<Button $loading />);
+    expect(screen.getByRole('button')).toHaveStyle(`
+    animation: bPkxfw 1500ms linear infinite;
+    `);
+  });
+  test('blinks if $loading prop is true (for nighttime)', () => {
+    render(<Button $loading />);
+    expect(screen.getByRole('button')).toHaveStyle(`
+    animation: bPkxfw 1500ms linear infinite;
+    `);
+  });
 });
