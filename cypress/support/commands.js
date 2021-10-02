@@ -1,3 +1,15 @@
+// Mock Geolocation API
+Cypress.Commands.add(
+  'mockGeolocation',
+  (latitude = 35.011665, longitude = 135.768326) => {
+    cy.window().then($window => {
+      cy.stub($window.navigator.geolocation, 'getCurrentPosition', callback => {
+        return callback({coords: {latitude, longitude}});
+      });
+    });
+  },
+);
+
 // ***********************************************
 // This example commands.js shows you how to
 // create various custom commands and overwrite
