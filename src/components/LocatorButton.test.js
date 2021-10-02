@@ -1,12 +1,15 @@
 // eslint-disable-next-line no-unused-vars
 import {render, screen} from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 import {axe} from 'jest-axe';
 
 import LocatorButton from './LocatorButton';
 import {NightModeContext} from 'src/context/NightModeContext';
 
 const accessibleName = 'Show current location';
-const mockProps = {};
+const mockProps = {
+  mapObject: {},
+};
 const Wrapper = {
   lightMode: ({children}) => (
     <NightModeContext.Provider value={false}>

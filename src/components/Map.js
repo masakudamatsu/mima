@@ -19,7 +19,7 @@ const cormorantBoldAsterisk = {
   width: 37.788,
 }; // obtained from https://danmarshall.github.io/google-font-to-svg-path/
 
-const Map = () => {
+const Map = ({setMapObject}) => {
   const nightMode = useContext(NightModeContext);
   const googlemap = useRef(null);
 
@@ -99,14 +99,15 @@ const Map = () => {
           title: userPlace.name,
         });
       }
+      setMapObject(map);
     });
-  }, [nightMode]);
+  }, [nightMode, setMapObject]);
 
   return <DivMap ref={googlemap} />;
 };
 
 Map.propTypes = {
-  nightMode: PropTypes.bool,
+  setMapObject: PropTypes.func.isRequired,
 };
 
 export default Map;
