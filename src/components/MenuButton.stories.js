@@ -18,22 +18,31 @@ export default {
   },
 };
 
+// Day mode
+function MenuButtonAtDay() {
+  return (
+    <NightModeContext.Provider value={false}>
+      <MenuButton />
+    </NightModeContext.Provider>
+  );
+}
+
 export function DefaultStyle() {
-  return <MenuButton />;
+  return <MenuButtonAtDay />;
 }
 
 export function FocusStyle() {
-  return <MenuButton />;
+  return <MenuButtonAtDay />;
 }
 FocusStyle.parameters = {pseudo: {focus: true}};
 
 export function HoverStyle() {
-  return <MenuButton />;
+  return <MenuButtonAtDay />;
 }
 HoverStyle.parameters = {pseudo: {hover: true}};
 
 export function ActiveStyle() {
-  return <MenuButton />;
+  return <MenuButtonAtDay />;
 }
 ActiveStyle.parameters = {pseudo: {active: true}};
 

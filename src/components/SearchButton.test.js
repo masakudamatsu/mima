@@ -4,7 +4,6 @@ import {axe} from 'jest-axe';
 
 import SearchButton from './SearchButton';
 import {NightModeContext} from 'src/context/NightModeContext';
-import {color} from 'src/utils/designtokens';
 
 const accessibleName = 'Search a place';
 const mockProps = {};
@@ -21,20 +20,6 @@ const Wrapper = {
   ),
 };
 
-describe('Dark mode checks', () => {
-  test('renders Light mode', () => {
-    render(<SearchButton {...mockProps} />, {wrapper: Wrapper.lightMode});
-    expect(screen.getByRole('img')).toHaveStyle(`
-      fill: ${color['dark-grey 100']};
-    `);
-  });
-  test('renders Dark mode', () => {
-    render(<SearchButton {...mockProps} />, {wrapper: Wrapper.darkMode});
-    expect(screen.getByRole('img')).toHaveStyle(`
-      fill: ${color['off-white 100']};
-    `);
-  });
-});
 describe('HTML checks', () => {
   beforeEach(() => {
     render(<SearchButton {...mockProps} />, {wrapper: Wrapper.lightMode});

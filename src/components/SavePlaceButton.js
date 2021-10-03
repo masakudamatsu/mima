@@ -8,14 +8,14 @@ import SvgCloud from 'src/elements/SvgCloud';
 
 const SavePlaceButton = () => {
   const nightMode = useContext(NightModeContext);
-  return nightMode ? (
-    <Button.Nighttime data-position="bottom-right" type="button">
+  return (
+    <Button
+      data-darkmode={nightMode}
+      data-position="bottom-right"
+      type="button"
+    >
       <SvgCloud icon="add" title="Save a place" />
-    </Button.Nighttime>
-  ) : (
-    <Button.Daytime data-position="bottom-right" type="button">
-      <SvgCloud icon="add" title="Save a place" />
-    </Button.Daytime>
+    </Button>
   );
 };
 

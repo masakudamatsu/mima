@@ -18,22 +18,30 @@ export default {
   },
 };
 
+// Day mode
+function LocatorButtonAtDay() {
+  return (
+    <NightModeContext.Provider value={false}>
+      <LocatorButton />
+    </NightModeContext.Provider>
+  );
+}
 export function DefaultStyle() {
-  return <LocatorButton />;
+  return <LocatorButtonAtDay />;
 }
 
 export function FocusStyle() {
-  return <LocatorButton />;
+  return <LocatorButtonAtDay />;
 }
 FocusStyle.parameters = {pseudo: {focus: true}};
 
 export function HoverStyle() {
-  return <LocatorButton />;
+  return <LocatorButtonAtDay />;
 }
 HoverStyle.parameters = {pseudo: {hover: true}};
 
 export function ActiveStyle() {
-  return <LocatorButton />;
+  return <LocatorButtonAtDay />;
 }
 ActiveStyle.parameters = {pseudo: {active: true}};
 

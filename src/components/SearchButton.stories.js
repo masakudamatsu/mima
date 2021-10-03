@@ -18,22 +18,30 @@ export default {
   },
 };
 
+// Day mode
+function SearchButtonAtDay() {
+  return (
+    <NightModeContext.Provider value={false}>
+      <SearchButton />
+    </NightModeContext.Provider>
+  );
+}
 export function DefaultStyle() {
-  return <SearchButton />;
+  return <SearchButtonAtDay />;
 }
 
 export function FocusStyle() {
-  return <SearchButton />;
+  return <SearchButtonAtDay />;
 }
 FocusStyle.parameters = {pseudo: {focus: true}};
 
 export function HoverStyle() {
-  return <SearchButton />;
+  return <SearchButtonAtDay />;
 }
 HoverStyle.parameters = {pseudo: {hover: true}};
 
 export function ActiveStyle() {
-  return <SearchButton />;
+  return <SearchButtonAtDay />;
 }
 ActiveStyle.parameters = {pseudo: {active: true}};
 

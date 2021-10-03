@@ -18,22 +18,31 @@ export default {
   },
 };
 
+// Night mode
+function SavePlaceButtonAtDay() {
+  return (
+    <NightModeContext.Provider value={false}>
+      <SavePlaceButton />
+    </NightModeContext.Provider>
+  );
+}
+
 export function DefaultStyle() {
-  return <SavePlaceButton />;
+  return <SavePlaceButtonAtDay />;
 }
 
 export function FocusStyle() {
-  return <SavePlaceButton />;
+  return <SavePlaceButtonAtDay />;
 }
 FocusStyle.parameters = {pseudo: {focus: true}};
 
 export function HoverStyle() {
-  return <SavePlaceButton />;
+  return <SavePlaceButtonAtDay />;
 }
 HoverStyle.parameters = {pseudo: {hover: true}};
 
 export function ActiveStyle() {
-  return <SavePlaceButton />;
+  return <SavePlaceButtonAtDay />;
 }
 ActiveStyle.parameters = {pseudo: {active: true}};
 
