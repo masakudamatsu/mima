@@ -3,19 +3,19 @@ import {useContext} from 'react';
 
 import {NightModeContext} from 'src/context/NightModeContext';
 
-import {ButtonBottomRight} from 'src/elements/Button';
+import {Button} from 'src/elements/Button';
 import SvgCloud from 'src/elements/SvgCloud';
 
 const SavePlaceButton = () => {
   const nightMode = useContext(NightModeContext);
   return nightMode ? (
-    <ButtonBottomRight.Nighttime type="button">
+    <Button.Nighttime data-position="bottom-right" type="button">
       <SvgCloud icon="add" title="Save a place" />
-    </ButtonBottomRight.Nighttime>
+    </Button.Nighttime>
   ) : (
-    <ButtonBottomRight.Daytime type="button">
+    <Button.Daytime data-position="bottom-right" type="button">
       <SvgCloud icon="add" title="Save a place" />
-    </ButtonBottomRight.Daytime>
+    </Button.Daytime>
   );
 };
 

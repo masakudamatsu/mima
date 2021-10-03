@@ -23,26 +23,45 @@ const showButtonAboveMap = css`
   z-index: 1;
 `;
 
-const positionButton = {
-  topLeft: css`
-    top: ${dimension.button['height 25']};
-    left: ${dimension.button['width 25']};
-  `,
-  topRight: css`
-    top: ${dimension.button['height 25']};
-    right: ${dimension.button['width 25']};
-  `,
-  bottomRight: css`
-    bottom: ${dimension.button[
+const positionButton = css`
+  bottom: var(--button-bottom, auto);
+  left: var(--button-left, auto);
+  right: var(--button-right, auto);
+  top: var(--button-top, auto);
+  &[data-position='top-left'] {
+    --button-top: ${dimension.button['height 25']};
+    --button-left: ${dimension.button['width 25']};
+  }
+  &[data-position='top-right'] {
+    --button-top: ${dimension.button['height 25']};
+    --button-right: ${dimension.button['width 25']};
+  }
+  &[data-position='bottom-right'] {
+    --button-bottom: ${dimension.button[
       'height 50'
     ]}; /* Google Maps's default text legend takes up space (about dimension.button['height 25']) at the bottom */
-    right: ${dimension.button['width 25']};
-  `,
-  bottomRightSecond: css`
-    bottom: ${dimension.button['height 175']};
-    right: ${dimension.button['width 25']};
-  `,
-};
+    --button-right: ${dimension.button['width 25']};
+  }
+  &[data-position='bottom-right-second'] {
+    --button-bottom: ${dimension.button['height 175']};
+    --button-right: ${dimension.button['width 25']};
+  }
+`;
+
+const darkmode = `
+  &[data-darkmode='false'] {
+    --label-color-default: ${color['dark-grey 100']};
+    --label-color-focus: ${color['black 100']};
+    --button-color: ${color['white 93']};
+    --outline-color: ${color['light-grey 100']};
+  }
+  &[data-darkmode='true'] {
+    --label-color-default: ${color['off-white 100']};
+    --label-color-focus: ${color['white 100']};
+    --button-color: ${color['mid-grey 80']};
+    --outline-color: ${color['off-black 100']};
+  }
+`;
 
 const setButtonLabelColor = {
   daytime: css`
@@ -164,6 +183,7 @@ const styleCloudButton = css`
   ${setClickableArea}
   ${alignButtonLabel}
   ${showButtonAboveMap}
+  ${positionButton}
 `;
 const colorCloudButton = {
   daytime: css`
@@ -179,51 +199,13 @@ const colorCloudButton = {
 };
 
 // Define Button components
-export const ButtonTopLeft = {
+export const Button = {
   Daytime: styled.button`
     ${styleCloudButton}
-    ${positionButton.topLeft}
     ${colorCloudButton.daytime}
   `,
   Nighttime: styled.button`
     ${styleCloudButton}
-    ${positionButton.topLeft}
-    ${colorCloudButton.nighttime}
-  `,
-};
-export const ButtonTopRight = {
-  Daytime: styled.button`
-    ${styleCloudButton}
-    ${positionButton.topRight}
-    ${colorCloudButton.daytime}
-  `,
-  Nighttime: styled.button`
-    ${styleCloudButton}
-    ${positionButton.topRight}
-    ${colorCloudButton.nighttime}
-  `,
-};
-export const ButtonBottomRight = {
-  Daytime: styled.button`
-    ${styleCloudButton}
-    ${positionButton.bottomRight}
-    ${colorCloudButton.daytime}
-  `,
-  Nighttime: styled.button`
-    ${styleCloudButton}
-    ${positionButton.bottomRight}
-    ${colorCloudButton.nighttime}
-  `,
-};
-export const ButtonBottomRightSecond = {
-  Daytime: styled.button`
-    ${styleCloudButton}
-    ${positionButton.bottomRightSecond}
-    ${colorCloudButton.daytime}
-  `,
-  Nighttime: styled.button`
-    ${styleCloudButton}
-    ${positionButton.bottomRightSecond}
     ${colorCloudButton.nighttime}
   `,
 };
