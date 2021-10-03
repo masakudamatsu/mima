@@ -4,7 +4,6 @@ import {axe} from 'jest-axe';
 
 import MenuButton from './MenuButton';
 import {NightModeContext} from 'src/context/NightModeContext';
-import {color} from 'src/utils/designtokens';
 
 const accessibleName = 'Show menu';
 const mockProps = {};
@@ -20,21 +19,6 @@ const Wrapper = {
     </NightModeContext.Provider>
   ),
 };
-
-describe('Dark mode checks', () => {
-  test('renders Light mode', () => {
-    render(<MenuButton {...mockProps} />, {wrapper: Wrapper.lightMode});
-    expect(screen.getByRole('img')).toHaveStyle(`
-      fill: ${color['dark-grey 100']};
-    `);
-  });
-  test('renders Dark mode', () => {
-    render(<MenuButton {...mockProps} />, {wrapper: Wrapper.darkMode});
-    expect(screen.getByRole('img')).toHaveStyle(`
-      fill: ${color['off-white 100']};
-    `);
-  });
-});
 
 describe('HTML checks', () => {
   beforeEach(() => {

@@ -4,7 +4,6 @@ import {axe} from 'jest-axe';
 
 import SavePlaceButton from './SavePlaceButton';
 import {NightModeContext} from 'src/context/NightModeContext';
-import {color} from 'src/utils/designtokens';
 
 const accessibleName = 'Save a place';
 const mockProps = {};
@@ -20,21 +19,6 @@ const Wrapper = {
     </NightModeContext.Provider>
   ),
 };
-
-describe('Dark mode checks', () => {
-  test('renders Light mode', () => {
-    render(<SavePlaceButton {...mockProps} />, {wrapper: Wrapper.lightMode});
-    expect(screen.getByRole('img')).toHaveStyle(`
-      fill: ${color['dark-grey 100']};
-    `);
-  });
-  test('renders Dark mode', () => {
-    render(<SavePlaceButton {...mockProps} />, {wrapper: Wrapper.darkMode});
-    expect(screen.getByRole('img')).toHaveStyle(`
-      fill: ${color['off-white 100']};
-    `);
-  });
-});
 
 describe('HTML checks', () => {
   beforeEach(() => {

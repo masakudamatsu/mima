@@ -23,207 +23,116 @@ const showButtonAboveMap = css`
   z-index: 1;
 `;
 
-const positionButton = {
-  topLeft: css`
-    top: ${dimension.button['height 25']};
-    left: ${dimension.button['width 25']};
-  `,
-  topRight: css`
-    top: ${dimension.button['height 25']};
-    right: ${dimension.button['width 25']};
-  `,
-  bottomRight: css`
-    bottom: ${dimension.button[
+const positionButton = css`
+  bottom: var(--button-bottom, auto);
+  left: var(--button-left, auto);
+  right: var(--button-right, auto);
+  top: var(--button-top, auto);
+  &[data-position='top-left'] {
+    --button-top: ${dimension.button['height 25']};
+    --button-left: ${dimension.button['width 25']};
+  }
+  &[data-position='top-right'] {
+    --button-top: ${dimension.button['height 25']};
+    --button-right: ${dimension.button['width 25']};
+  }
+  &[data-position='bottom-right'] {
+    --button-bottom: ${dimension.button[
       'height 50'
     ]}; /* Google Maps's default text legend takes up space (about dimension.button['height 25']) at the bottom */
-    right: ${dimension.button['width 25']};
-  `,
-  bottomRightSecond: css`
-    bottom: ${dimension.button['height 175']};
-    right: ${dimension.button['width 25']};
-  `,
-};
+    --button-right: ${dimension.button['width 25']};
+  }
+  &[data-position='bottom-right-second'] {
+    --button-bottom: ${dimension.button['height 175']};
+    --button-right: ${dimension.button['width 25']};
+  }
+`;
 
-const setButtonLabelColor = {
-  daytime: css`
-    & svg {
-      fill: ${color['dark-grey 100']};
-    }
-    &:focus svg,
-    &:hover svg {
-      fill: ${color['black 100']};
-    }
-    &:active svg {
-      fill: ${color['dark-grey 100']};
-    }
-  `,
-  nighttime: css`
-    & svg {
-      fill: ${color['off-white 100']};
-    }
-    &:focus svg,
-    &:hover svg {
-      fill: ${color['white 100']};
-    }
-    &:active svg {
-      fill: ${color['off-white 100']};
-    }
-  `,
-};
-const setButtonColor = {
-  daytime: css`
-    & #cloud {
-      fill: ${color['white 93']};
-    }
-  `,
-  nighttime: css`
-    & #cloud {
-      fill: ${color['mid-grey 80']};
-    }
-  `,
-};
-
-const setButtonShadow = {
-  daytime: css`
-    & #cloud {
-      stroke: ${color['light-grey 100']};
-    }
-    & svg {
-      filter: drop-shadow(
-          ${dimension.shadow['offset']} ${dimension.shadow['blur layer 1']}
-            ${color['black 33']}
-        )
-        drop-shadow(
-          ${dimension.shadow['offset']} ${dimension.shadow['blur layer 2']}
-            ${color['black 33']}
-        )
-        drop-shadow(
-          ${dimension.shadow['offset']} ${dimension.shadow['blur layer 3']}
-            ${color['black 33']}
-        );
-    }
-    &:focus #cloud,
-    &:hover #cloud {
-      stroke: ${color['focus-blue 100']};
-    }
-    &:focus svg,
-    &:hover svg {
-      filter: drop-shadow(
-        ${dimension.glow['offset']} ${dimension.glow['blur daytime']}
-          ${color['focus-blue 100']}
+const setButtonLabelColor = css`
+  & svg {
+    fill: var(--button-label-color-default);
+  }
+  &:focus svg,
+  &:hover svg {
+    fill: var(--button-label-color-focus);
+  }
+  &:active svg {
+    fill: var(--button-label-color-default);
+  }
+`;
+const setButtonColor = css`
+  & #cloud {
+    fill: var(--button-color);
+  }
+`;
+const setButtonShadow = css`
+  & #cloud {
+    stroke: var(--button-outline-color);
+  }
+  & svg {
+    filter: drop-shadow(
+        ${dimension.shadow['offset']} ${dimension.shadow['blur layer 1']}
+          var(--button-shadow-color)
+      )
+      drop-shadow(
+        ${dimension.shadow['offset']} ${dimension.shadow['blur layer 2']}
+          var(--button-shadow-color)
+      )
+      drop-shadow(
+        ${dimension.shadow['offset']} ${dimension.shadow['blur layer 3']}
+          var(--button-shadow-color)
       );
-    }
-    &:active svg {
-      filter: none;
-    }
-    &:active #cloud {
-      stroke: none;
-    }
-  `,
-  nighttime: css`
-    & #cloud {
-      stroke: ${color['off-black 100']};
-    }
-    & svg {
-      filter: drop-shadow(
-          ${dimension.shadow['offset']} ${dimension.shadow['blur layer 1']}
-            ${color['black 60']}
-        )
-        drop-shadow(
-          ${dimension.shadow['offset']} ${dimension.shadow['blur layer 2']}
-            ${color['black 60']}
-        )
-        drop-shadow(
-          ${dimension.shadow['offset']} ${dimension.shadow['blur layer 3']}
-            ${color['black 60']}
-        );
-    }
-    &:focus #cloud,
-    &:hover #cloud {
-      stroke: ${color['white 40']};
-    }
-    &:focus svg,
-    &:hover svg {
-      filter: drop-shadow(
-        ${dimension.glow['offset']} ${dimension.glow['blur nighttime']}
-          ${color['white 100']}
-      );
-    }
-    &:active svg {
-      filter: none;
-    }
-    &:active #cloud {
-      stroke: none;
-    }
-  `,
-};
+  }
+  &:focus #cloud,
+  &:hover #cloud {
+    stroke: var(--button-outline-color-focus);
+  }
+  &:focus svg,
+  &:hover svg {
+    filter: drop-shadow(
+      ${dimension.glow['offset']} var(--button-shadow-blur-radius-focus)
+        var(--button-shadow-color-focus)
+    );
+  }
+  &:active svg {
+    filter: none;
+  }
+  &:active #cloud {
+    stroke: none;
+  }
+`;
+const setColorScheme = css`
+  &[data-darkmode='false'] {
+    --button-label-color-default: ${color['dark-grey 100']};
+    --button-label-color-focus: ${color['black 100']};
+    --button-color: ${color['white 93']};
+    --button-outline-color: ${color['light-grey 100']};
+    --button-outline-color-focus: ${color['focus-blue 100']};
+    --button-shadow-blur-radius-focus: ${dimension.glow['blur daytime']};
+    --button-shadow-color: ${color['black 33']};
+    --button-shadow-color-focus: ${color['focus-blue 100']};
+  }
+  &[data-darkmode='true'] {
+    --button-label-color-default: ${color['off-white 100']};
+    --button-label-color-focus: ${color['white 100']};
+    --button-color: ${color['mid-grey 80']};
+    --button-outline-color: ${color['off-black 100']};
+    --button-outline-color-focus: ${color['white 40']};
+    --button-shadow-blur-radius-focus: ${dimension.glow['blur nighttime']};
+    --button-shadow-color: ${color['black 60']};
+    --button-shadow-color-focus: ${color['white 100']};
+  }
+`;
 
-// Group CSS utilities
-const styleCloudButton = css`
+// Define Button components
+export const Button = styled.button`
   ${resetStyle}
   ${setClickableArea}
   ${alignButtonLabel}
   ${showButtonAboveMap}
+  ${positionButton}
+  ${setButtonLabelColor}
+  ${setButtonColor}
+  ${setButtonShadow}
+  ${setColorScheme}
 `;
-const colorCloudButton = {
-  daytime: css`
-    ${setButtonLabelColor.daytime}
-    ${setButtonColor.daytime}
-    ${setButtonShadow.daytime}
-  `,
-  nighttime: css`
-    ${setButtonLabelColor.nighttime}
-    ${setButtonColor.nighttime}
-    ${setButtonShadow.nighttime}
-  `,
-};
-
-// Define Button components
-export const ButtonTopLeft = {
-  Daytime: styled.button`
-    ${styleCloudButton}
-    ${positionButton.topLeft}
-    ${colorCloudButton.daytime}
-  `,
-  Nighttime: styled.button`
-    ${styleCloudButton}
-    ${positionButton.topLeft}
-    ${colorCloudButton.nighttime}
-  `,
-};
-export const ButtonTopRight = {
-  Daytime: styled.button`
-    ${styleCloudButton}
-    ${positionButton.topRight}
-    ${colorCloudButton.daytime}
-  `,
-  Nighttime: styled.button`
-    ${styleCloudButton}
-    ${positionButton.topRight}
-    ${colorCloudButton.nighttime}
-  `,
-};
-export const ButtonBottomRight = {
-  Daytime: styled.button`
-    ${styleCloudButton}
-    ${positionButton.bottomRight}
-    ${colorCloudButton.daytime}
-  `,
-  Nighttime: styled.button`
-    ${styleCloudButton}
-    ${positionButton.bottomRight}
-    ${colorCloudButton.nighttime}
-  `,
-};
-export const ButtonBottomRightSecond = {
-  Daytime: styled.button`
-    ${styleCloudButton}
-    ${positionButton.bottomRightSecond}
-    ${colorCloudButton.daytime}
-  `,
-  Nighttime: styled.button`
-    ${styleCloudButton}
-    ${positionButton.bottomRightSecond}
-    ${colorCloudButton.nighttime}
-  `,
-};

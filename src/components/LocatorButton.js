@@ -3,19 +3,19 @@ import {useContext} from 'react';
 
 import {NightModeContext} from 'src/context/NightModeContext';
 
-import {ButtonBottomRightSecond} from 'src/elements/Button';
+import {Button} from 'src/elements/Button';
 import SvgCloud from 'src/elements/SvgCloud';
 
 const LocatorButton = () => {
   const nightMode = useContext(NightModeContext);
-  return nightMode ? (
-    <ButtonBottomRightSecond.Nighttime type="button">
+  return (
+    <Button
+      data-darkmode={nightMode}
+      data-position="bottom-right-second"
+      type="button"
+    >
       <SvgCloud icon="flightTakeoff" title="Show current location" />
-    </ButtonBottomRightSecond.Nighttime>
-  ) : (
-    <ButtonBottomRightSecond.Daytime type="button">
-      <SvgCloud icon="flightTakeoff" title="Show current location" />
-    </ButtonBottomRightSecond.Daytime>
+    </Button>
   );
 };
 
