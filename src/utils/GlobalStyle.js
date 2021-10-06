@@ -1,5 +1,5 @@
 import {createGlobalStyle} from 'styled-components';
-import {colour} from 'src/utils/colorScheme';
+import {color} from 'src/utils/designtokens';
 
 const GlobalStyle = createGlobalStyle`
 /******************* Self-hosted fonts *********************/
@@ -340,7 +340,7 @@ input {
 }
 
 :root { /* The background-color on the body element won't spread over the entire page for some reason. */
-  background-color: ${colour.global.background};
+  background-color: ${color['day-mid-grey 100']};
   height: 100%;
 }
 
