@@ -6,7 +6,7 @@ export const color = {
   'white 93': `rgba(255,255,255,0.93)`,
   'day-light-grey 100': '#aaaaaa', // 9.03 = day-mid-grey 100 * 3
   'light-grey 100': `rgb(148, 148, 148)`, // 6.92 white 100 / 3
-  'day-mid-grey 100': '#898989', // 6 = pale-cyan 100 / 1.5
+  'day-mid-grey 100': 'rgb(137, 137, 137)', // '#898989', // 6 = pale-cyan 100 / 1.5
   'day-dark-grey 100': '#767676', // 4.62 = white 100 / 4.5
   'dark-grey 100': `rgb(90,90,90)`, // 3.04 = 3 * black
   'pale-green 100': '#c0dac0', // 14.03 = white 100 / 1.5
@@ -24,7 +24,7 @@ export const color = {
   'dull-orange 100': '#ae6f2f', // 5.11 = greyish-green 100 * 1.5
   'greyish-green 100': '#4c664c', // 3.31 = greyish-cyan 100 * 1.5
   'greyish-cyan 100': '#344d4d', // 2.31 = off-black 100 * 1.5
-  'off-black 100': `#2b2b2b`, // 1.48 = black * 1.5
+  'off-black 100': 'rgb(43, 43, 43)', // `#2b2b2b`, // 1.48 = black * 1.5
   'black 60': `rgba(3,3,3,0.6)`,
 
   // uncategoriezed
