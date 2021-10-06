@@ -1,8 +1,8 @@
-import {useState, useEffect} from 'react';
+import {useContext, useState, useEffect} from 'react';
 import Head from 'next/head';
 import {index} from 'src/utils/metadata';
 
-import {NightModeProvider} from 'src/context/NightModeContext';
+import {NightModeContext} from 'src/context/NightModeContext';
 
 import LocatorButton from 'src/components/LocatorButton';
 import Map from 'src/components/Map';
@@ -16,6 +16,11 @@ function HomePage() {
   useEffect(() => {
     setClientSideRendering(true);
   }, []);
+
+  const nightMode = useContext(NightModeContext);
+  useEffect(() => {
+    document.body.dataset.darkmode = nightMode;
+  }, [nightMode]);
   return (
     <>
       <Head>
@@ -23,13 +28,11 @@ function HomePage() {
         <meta name="description" content={index.description} />
       </Head>
       <Noscript />
-      <NightModeProvider>
-        {clientSideRendering && <MenuButton />}
-        {clientSideRendering && <SearchButton />}
-        {clientSideRendering && <LocatorButton />}
-        {clientSideRendering && <SavePlaceButton />}
-        <Map />
-      </NightModeProvider>
+      {clientSideRendering && <MenuButton />}
+      {clientSideRendering && <SearchButton />}
+      {clientSideRendering && <LocatorButton />}
+      {clientSideRendering && <SavePlaceButton />}
+      <Map />
     </>
   ); // see https://codepen.io/masakudamatsu/pen/QWpbELb
 }

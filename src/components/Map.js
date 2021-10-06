@@ -7,6 +7,7 @@ import DivMap from 'src/elements/DivMap';
 import userData from 'src/utils/mockUserData.json';
 
 import {NightModeContext} from 'src/context/NightModeContext';
+import {map as mapColor} from 'src/utils/designtokens';
 
 const mapIdDaytime = '83a67631594fbfff';
 const mapIdNighttime = '2c8123c7734d3fb';
@@ -31,6 +32,11 @@ const Map = () => {
     let map; // in response to ESLint warning: "Assignments to the 'map' variable from inside React Hook use Effect will be lost after each render. To preserve the value over time, store it in a useRef Hook and keep the mutable value in the '.current' property. Oth erwise, you can move this variable directly inside useEffect"
     loader.load().then(() => {
       const google = window.google;
+      const colorLoadingScreen = {
+        backgroundColor: nightMode
+          ? mapColor.cityblocks.night
+          : mapColor.cityblocks.day,
+      };
       const initialView = {
         center: {
           // Teramachi Matsubara
@@ -49,6 +55,7 @@ const Map = () => {
         zoomControl: false,
       };
       map = new google.maps.Map(googlemap.current, {
+        ...colorLoadingScreen,
         ...initialView,
         ...colorCustomized,
         ...buttonsDisabled,
