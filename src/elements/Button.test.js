@@ -26,30 +26,26 @@ describe('Button component', () => {
   justify-content: center;
   position: absolute;
   z-index: 1;
-  bottom: var(--button-bottom,auto);
-  left: var(--button-left,auto);
-  right: var(--button-right,auto);
-  top: var(--button-top,auto);
 }
 
 .c0[data-position='top-left'] {
-  --button-top: 12px;
-  --button-left: 14px;
+  top: 12px;
+  left: 14px;
 }
 
 .c0[data-position='top-right'] {
-  --button-top: 12px;
-  --button-right: 14px;
+  top: 12px;
+  right: 14px;
 }
 
 .c0[data-position='bottom-right'] {
-  --button-bottom: 24px;
-  --button-right: 14px;
+  bottom: 24px;
+  right: 14px;
 }
 
 .c0[data-position='bottom-right-second'] {
-  --button-bottom: 84px;
-  --button-right: 14px;
+  bottom: 84px;
+  right: 14px;
 }
 
 .c0 svg {

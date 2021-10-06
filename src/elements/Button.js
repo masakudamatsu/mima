@@ -24,27 +24,23 @@ const showButtonAboveMap = css`
 `;
 
 const positionButton = css`
-  bottom: var(--button-bottom, auto);
-  left: var(--button-left, auto);
-  right: var(--button-right, auto);
-  top: var(--button-top, auto);
   &[data-position='top-left'] {
-    --button-top: ${dimension.button['height 25']};
-    --button-left: ${dimension.button['width 25']};
+    top: ${dimension.button['height 25']};
+    left: ${dimension.button['width 25']};
   }
   &[data-position='top-right'] {
-    --button-top: ${dimension.button['height 25']};
-    --button-right: ${dimension.button['width 25']};
+    top: ${dimension.button['height 25']};
+    right: ${dimension.button['width 25']};
   }
   &[data-position='bottom-right'] {
-    --button-bottom: ${dimension.button[
+    bottom: ${dimension.button[
       'height 50'
     ]}; /* Google Maps's default text legend takes up space (about dimension.button['height 25']) at the bottom */
-    --button-right: ${dimension.button['width 25']};
+    right: ${dimension.button['width 25']};
   }
   &[data-position='bottom-right-second'] {
-    --button-bottom: ${dimension.button['height 175']};
-    --button-right: ${dimension.button['width 25']};
+    bottom: ${dimension.button['height 175']};
+    right: ${dimension.button['width 25']};
   }
 `;
 
