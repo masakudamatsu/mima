@@ -7,7 +7,7 @@ import DivMap from 'src/elements/DivMap';
 import userData from 'src/utils/mockUserData.json';
 
 import {NightModeContext} from 'src/context/NightModeContext';
-import {color} from 'src/utils/designtokens';
+import {map as mapColor} from 'src/utils/designtokens';
 
 const mapIdDaytime = '83a67631594fbfff';
 const mapIdNighttime = '2c8123c7734d3fb';
@@ -33,7 +33,9 @@ const Map = () => {
     loader.load().then(() => {
       const google = window.google;
       const colorLoadingScreen = {
-        backgroundColor: color['day-mid-grey 100'],
+        backgroundColor: nightMode
+          ? mapColor.cityblocks.night
+          : mapColor.cityblocks.day,
       };
       const initialView = {
         center: {

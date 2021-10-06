@@ -1,5 +1,5 @@
 import {createGlobalStyle} from 'styled-components';
-import {color} from 'src/utils/designtokens';
+import {map} from 'src/utils/designtokens';
 
 const GlobalStyle = createGlobalStyle`
 /******************* Self-hosted fonts *********************/
@@ -340,7 +340,6 @@ input {
 }
 
 :root { /* The background-color on the body element won't spread over the entire page for some reason. */
-  background-color: ${color['day-mid-grey 100']};
   height: 100%;
 }
 
@@ -350,6 +349,13 @@ body {
 
 #__next {
   height: 100%;
+}
+
+body[data-darkmode='false'] {
+  background-color: ${map.cityblocks.day};
+}
+body[data-darkmode='true'] {
+  background-color: ${map.cityblocks.night};
 }
 `;
 
