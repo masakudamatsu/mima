@@ -10,7 +10,11 @@ export default function App({Component, pageProps}) {
         {/* This tag would cause an error if it were in _document.js. See https://github.com/vercel/next.js/blob/master/errors/no-document-viewport-meta.md */}
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         {/* Google Maps server */}
-        <link rel="preconnect" href="https://maps.googleapis.com" />{' '}
+        <link
+          rel="preconnect"
+          href="https://maps.googleapis.com"
+          crossOrigin
+        />{' '}
       </Head>
       <GlobalStyle />
       <NightModeProvider>
