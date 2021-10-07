@@ -17,3 +17,21 @@ jobs:
         run: npm run build
       - name: 'Start the server and run tests'
         run: npm run ci
+  lighthouse-ci:
+    runs-on: ubuntu-latest
+    steps:
+      - name: 'Checkout the repo'
+        uses: actions/checkout@v2
+      - name: 'Install Node'
+        uses: actions/setup-node@v2
+        with:
+          node-version: '14'
+          cache: 'npm'
+      - name: 'Install Lighthouse CI'
+        run: npm install -g @lhci/cli@0.8.x
+      - name: 'Install repo'
+        run: npm install
+      - name: 'Build the site'
+        run: npm run build
+      - name: 'Run Lighthouse audit'
+        run: lhci autorun
