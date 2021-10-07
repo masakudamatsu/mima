@@ -11,8 +11,6 @@ export default function App({Component, pageProps}) {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         {/* Google Maps server */}
         <link rel="preconnect" href="https://maps.googleapis.com" />{' '}
-        {/* Google Fonts server */}
-        <link rel="preconnect" href="https://maps.gstatic.com" />{' '}
       </Head>
       <GlobalStyle />
       <NightModeProvider>
