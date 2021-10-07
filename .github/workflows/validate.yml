@@ -20,8 +20,10 @@ jobs:
   lighthouse-ci:
     runs-on: ubuntu-latest
     steps:
-      - name: 'Checkout the repo'
+      - name: 'Checkout the repo with Git history'
         uses: actions/checkout@v2
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}
       - name: 'Install Node'
         uses: actions/setup-node@v2
         with:
