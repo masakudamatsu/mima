@@ -20,6 +20,7 @@ export const color = {
   'off-white 100': `rgb(218,218,218)`, // 15.02 = white 100 / 1.5
   'night-light-grey 100': '#929292', // 6.74 = off-black 100 * 4.5
   'mid-grey 80': `rgba(123,123,123,0.8)`, // 4.96 = dull-orange 100
+  'mid-grey 100': `rgb(123, 123, 123)`,
   'night-mid-grey 100': '#757575', // 4.55 = off-black 100 * 3
   'dull-orange 100': '#ae6f2f', // 5.11 = greyish-green 100 * 1.5
   'greyish-green 100': '#4c664c', // 3.31 = greyish-cyan 100 * 1.5
