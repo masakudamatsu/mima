@@ -7,24 +7,18 @@ import {Button} from 'src/elements/Button';
 import SvgCloud from 'src/elements/SvgCloud';
 import {color} from 'src/utils/designtokens';
 
-const svgPathAirplane = `
-  M21 16v-2l-8-5V3.5c0-.83-.67-1.5-1.5-1.5S10 2.67 10 3.5V9l-8 5v2l8-2.5V19l-2 1.5V22l3.5-1 3.5 1v-1.5L13 19v-5.5l8 2.5z
-`; // source: Material Icons Flight: https://fonts.google.com/icons?icon.query=flight
+const airplane = {
+  height: 24,
+  path: `
+    M21 16v-2l-8-5V3.5c0-.83-.67-1.5-1.5-1.5S10 2.67 10 3.5V9l-8 5v2l8-2.5V19l-2 1.5V22l3.5-1 3.5 1v-1.5L13 19v-5.5l8 2.5z
+  `,
+  width: 24,
+}; // source: Material Icons Flight: https://fonts.google.com/icons?icon.query=flight
+
+const icon = airplane;
 let marker = null;
 // this needs to be outside the component
 // because setLoading(true) causes the rerendering of the component
-
-const svgImg = ({nightMode, rotation}) => {
-  return {
-    fillColor: nightMode ? color['mid-grey 100'] : color['white 100'],
-    fillOpacity: 1,
-    path: svgPathAirplane,
-    rotation: rotation,
-    scale: 2,
-    strokeColor: nightMode ? color['off-black 100'] : color['day-mid-grey 100'],
-    strokeOpacity: 1,
-  };
-};
 
 const LocatorButton = ({mapObject}) => {
   const nightMode = useContext(NightModeContext);
@@ -50,6 +44,20 @@ const LocatorButton = ({mapObject}) => {
         }
         // create the current location marker
         const google = window.google;
+        const svgImg = ({nightMode, rotation}) => {
+          return {
+            anchor: new google.maps.Point(icon.width / 2, icon.height / 2), // to pin the icon at its center, rather than at its top-left (default)
+            fillColor: nightMode ? color['mid-grey 100'] : color['white 100'],
+            fillOpacity: 1,
+            path: icon.path,
+            rotation: rotation,
+            scale: 2,
+            strokeColor: nightMode
+              ? color['off-black 100']
+              : color['day-mid-grey 100'],
+            strokeOpacity: 1,
+          };
+        };
         marker = new google.maps.Marker({
           icon: svgImg({nightMode: nightMode, rotation: heading}),
           position: pos,
