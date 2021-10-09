@@ -57,7 +57,6 @@ const LocatorButton = ({mapObject}) => {
         });
         console.log(marker);
         marker.setMap(mapObject);
-        mapObject.setZoom(18);
 
         setLoading(false);
       });
