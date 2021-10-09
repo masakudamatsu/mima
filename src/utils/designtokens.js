@@ -12,6 +12,7 @@ export const color = {
   'pale-green 100': '#c0dac0', // 14.03 = white 100 / 1.5
   'pale-cyan 100': '#99b2b2', // 9.36 = pale-green 100 / 1.5
   'focus-blue 100': `rgb(69, 159, 189)`, // 6.95 = streets.day / 3
+  'google-blue 100': `#4285F4`, // https://usbrandcolors.com/google-colors/
   'black 100': `rgb(3,3,3)`, // to avoid black-smearing on OLED screens
   'black 33': `rgba(3,3,3,0.33)`,
 
