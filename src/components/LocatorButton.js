@@ -8,7 +8,8 @@ import SvgCloud from 'src/elements/SvgCloud';
 import {color} from 'src/utils/designtokens';
 
 let marker = null;
-// this needs to be outside the component
+let accuracyCircle = null;
+// these needs to be outside the component
 // because setLoading(true) causes the rerendering of the component
 
 const LocatorButton = ({mapObject}) => {
@@ -29,9 +30,14 @@ const LocatorButton = ({mapObject}) => {
         if (!heading) {
           heading = 0;
         }
+        // obtain the 95% confidence interval
+        const accuracyRange = position.coords.accuracy;
         // remove the previous current location marker from the map
         if (marker) {
           marker.setMap(null);
+        }
+        if (accuracyCircle) {
+          accuracyCircle.setMap(null);
         }
         // create the current location marker
         const google = window.google;
@@ -49,6 +55,17 @@ const LocatorButton = ({mapObject}) => {
           title: 'You are here!',
         });
         marker.setMap(mapObject);
+        accuracyCircle = new google.maps.Circle({
+          center: pos,
+          fillColor: color['google-blue-dark 100'],
+          fillOpacity: 0.4,
+          radius: accuracyRange,
+          strokeColor: color['google-blue-light 100'],
+          strokeOpacity: 0.4,
+          strokeWeight: 1,
+          zIndex: 1,
+        }); // source: https://github.com/ChadKillingsworth/geolocation-marker/releases/download/v2.0.5/geolocation-marker.js
+        accuracyCircle.setMap(mapObject);
         setLoading(false);
       });
     } else {
