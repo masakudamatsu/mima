@@ -116,23 +116,16 @@ describe('Button component', () => {
   --button-shadow-color-focus: rgb(255,255,255);
 }
 
+.c0[data-loading='true'] {
+  -webkit-animation: bPkxfw 1500ms linear infinite;
+  animation: bPkxfw 1500ms linear infinite;
+}
+
 <div>
   <button
     class="c0"
   />
 </div>
 `);
-  });
-  test('blinks if $loading prop is true (for daytime)', () => {
-    render(<Button $loading />);
-    expect(screen.getByRole('button')).toHaveStyle(`
-    animation: bPkxfw 1500ms linear infinite;
-    `);
-  });
-  test('blinks if $loading prop is true (for nighttime)', () => {
-    render(<Button $loading />);
-    expect(screen.getByRole('button')).toHaveStyle(`
-    animation: bPkxfw 1500ms linear infinite;
-    `);
   });
 });

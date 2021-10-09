@@ -76,7 +76,7 @@ const LocatorButton = ({mapObject}) => {
     <Button
       data-darkmode={nightMode}
       data-position="bottom-right-second"
-      $loading={loading}
+      data-loading={loading}
       onClick={getCurrentLocation}
       type="button"
     >
