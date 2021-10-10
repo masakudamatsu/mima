@@ -25,11 +25,6 @@ const LocatorButton = ({mapObject}) => {
           lng: position.coords.longitude,
         };
         await mapObject.setCenter(pos);
-        // obtain the direction
-        let heading = position.coords.heading; // 0 degrees represents true north, and the direction is determined clockwise (which means that east is 90 degrees and west is 270 degrees). If speed is 0, heading is NaN. If the device is unable to provide heading information, this value is null.  https://developer.mozilla.org/en-US/docs/Web/API/GeolocationCoordinates/heading
-        if (!heading) {
-          heading = 0;
-        }
         // obtain the 95% confidence interval
         const accuracyRange = position.coords.accuracy;
         // remove the previous current location marker from the map
