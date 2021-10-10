@@ -3,7 +3,7 @@ Cypress.Commands.add(
   'mockGeolocation',
   (latitude = 35.011665, longitude = 135.768326) => {
     cy.window().then($window => {
-      cy.stub($window.navigator.geolocation, 'getCurrentPosition', callback => {
+      cy.stub($window.navigator.geolocation, 'watchPosition', callback => {
         return callback({coords: {latitude, longitude}});
       });
     });
