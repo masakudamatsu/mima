@@ -17,41 +17,50 @@ const LocatorButton = ({mapObject}) => {
   const [loading, setLoading] = useState(false);
   const getCurrentLocation = () => {
     if (navigator.geolocation) {
+      // Start blinking the button
       setLoading(true);
-      navigator.geolocation.getCurrentPosition(async position => {
+      navigator.geolocation.getCurrentPosition(position => {
         // obtain current location geocoordinate
-        const pos = {
+        const currentPosition = {
           lat: position.coords.latitude,
           lng: position.coords.longitude,
         };
-        await mapObject.setCenter(pos);
-        // obtain the 95% confidence interval
-        const accuracyRange = position.coords.accuracy;
-        // remove the previous current location marker from the map
-        if (marker) {
-          marker.setMap(null);
-        }
-        if (accuracyCircle) {
-          accuracyCircle.setMap(null);
-        }
-        // create the current location marker
+
+        // Move the map to the current location
+        mapObject.setCenter(currentPosition);
+
+        // prepare for drawing markers
         const google = window.google;
+
+        // Mark the current location
+        if (marker) {
+          marker.setMap(null); // remove the previous current location marker from the map
+        }
         const blueCircle = {
+          // design the icon to mark the current location
+          // source: lines 50-55 of https://github.com/ChadKillingsworth/geolocation-marker/releases/download/v2.0.5/geolocation-marker.js
           path: google.maps.SymbolPath.CIRCLE,
           fillColor: color['google-blue 100'],
           fillOpacity: 1,
           scale: 8,
           strokeColor: color['white 100'],
           strokeWeight: 2,
-        }; // source: https://github.com/ChadKillingsworth/geolocation-marker/releases/download/v2.0.5/geolocation-marker.js
+        };
         marker = new google.maps.Marker({
           icon: blueCircle,
-          position: pos,
+          position: currentPosition,
           title: 'You are here!',
         });
         marker.setMap(mapObject);
+
+        // Draw the circle indicationg the 95% confidence interval of current position
+        const accuracyRange = position.coords.accuracy; // obtain the 95% confidence interval
+        if (accuracyCircle) {
+          accuracyCircle.setMap(null); // remove the previous circle from the map
+        }
         accuracyCircle = new google.maps.Circle({
-          center: pos,
+          // source: lines 65-72 of https://github.com/ChadKillingsworth/geolocation-marker/releases/download/v2.0.5/geolocation-marker.js
+          center: currentPosition,
           fillColor: color['google-blue-dark 100'],
           fillOpacity: 0.4,
           radius: accuracyRange,
@@ -59,8 +68,10 @@ const LocatorButton = ({mapObject}) => {
           strokeOpacity: 0.4,
           strokeWeight: 1,
           zIndex: 1,
-        }); // source: https://github.com/ChadKillingsworth/geolocation-marker/releases/download/v2.0.5/geolocation-marker.js
+        });
         accuracyCircle.setMap(mapObject);
+
+        // Stop blinking the button
         setLoading(false);
       });
     } else {
