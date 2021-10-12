@@ -13,16 +13,25 @@ describe('Initial UI', () => {
   });
 });
 
-describe('Current location', () => {
+describe('After clicking the location button', () => {
   beforeEach(() => {
     cy.clock(Date.UTC(2021, 8, 28, 6), ['Date']); // https://docs.cypress.io/api/commands/clock#Function-names
     cy.visit('/');
     cy.contains('Map Data', {timeout: 20000}); // Bottom-right text to be rendered in Google Maps
-    cy.mockGeolocation();
-  });
-  it('Shown after tapping the locator button', () => {
+    cy.mockGeolocation(); // this needs to be run after cy.visit(). Source: https://github.com/cypress-io/cypress/issues/2671#issuecomment-780721234
+
+    // execute
     cy.findByRole('button', {name: 'Show current location'}).click();
-    cy.contains('Map Data', {timeout: 20000}); // Bottom-right text to be rendered in Google Maps
+
+    // wait for GPS info loaded
+    cy.findByRole('button', {
+      name: 'Stop tracking current location',
+      timeout: 50000,
+    });
+  });
+  it('Shows the current location with the blur circle', () => {
+    // eslint-disable-next-line cypress/no-unnecessary-waiting
+    cy.wait(2500); // we cannot detect when Google Maps are fully loaded
     cy.percySnapshot('current-location', {widths: [320, 768, 1024]});
   });
 });

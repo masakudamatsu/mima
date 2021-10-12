@@ -1,10 +1,11 @@
 // Mock Geolocation API
+// source: https://github.com/cypress-io/cypress/issues/2671#issuecomment-564796821
 Cypress.Commands.add(
   'mockGeolocation',
-  (latitude = 35.011665, longitude = 135.768326) => {
+  (latitude = 35.011665, longitude = 135.768326, accuracy = 12) => {
     cy.window().then($window => {
       cy.stub($window.navigator.geolocation, 'watchPosition', callback => {
-        return callback({coords: {latitude, longitude}});
+        return callback({coords: {latitude, longitude, accuracy}});
       });
     });
   },

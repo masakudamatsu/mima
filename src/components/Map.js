@@ -39,11 +39,11 @@ const Map = ({setMapObject}) => {
       };
       const initialView = {
         center: {
-          // Teramachi Matsubara
-          lat: 34.9988127,
-          lng: 135.7674863,
+          // Kiyamachi Rokkaku
+          lat: 35.006063,
+          lng: 135.769922,
         },
-        zoom: 14, // to see all the mock user's saved places (except those in Arashiyama) ,
+        zoom: 18, // to see the accuracy range circle of the current location
       };
       const colorCustomized = {
         mapId: nightMode ? mapIdNighttime : mapIdDaytime,
