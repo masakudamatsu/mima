@@ -80,7 +80,7 @@ const LocatorButton = ({mapObject}) => {
       onClick={moveToCurrentLocation}
       type="button"
     >
-      <SvgCloud icon={'flightLanding'} title={locatorButtonLabel.activated} />
+      <SvgCloud icon={'flightFlying'} title={locatorButtonLabel.activated} />
     </Button>
   );
 };
