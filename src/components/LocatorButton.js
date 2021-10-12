@@ -13,6 +13,14 @@ let accuracyCircle = null;
 // these needs to be outside the component
 // because setStatus() causes the rerendering of the component, assigning null to these variables
 
+const flightIcon = {
+  height: 24,
+  path: `
+    M21 16v-2l-8-5V3.5c0-.83-.67-1.5-1.5-1.5S10 2.67 10 3.5V9l-8 5v2l8-2.5V19l-2 1.5V22l3.5-1 3.5 1v-1.5L13 19v-5.5l8 2.5z
+  `,
+  width: 24,
+};
+
 const LocatorButton = ({mapObject}) => {
   // UI states
   const nightMode = useContext(NightModeContext);
@@ -20,6 +28,7 @@ const LocatorButton = ({mapObject}) => {
   const [isWatching, setIsWatching] = useState(false);
 
   const currentPosition = useRef(null);
+  const currentDirection = useRef(null);
 
   const trackCurrentLocation = () => {
     if (navigator.geolocation) {
@@ -29,7 +38,13 @@ const LocatorButton = ({mapObject}) => {
       navigator.geolocation.getCurrentPosition(
         position => {
           currentPosition.current = updateCurrentPositionCoordinates(position);
-          markCurrentLocation({currentPosition, mapObject, position});
+          currentDirection.current = updateCurrentDirection(position);
+          markCurrentLocation({
+            currentDirection,
+            currentPosition,
+            mapObject,
+            position,
+          });
           // Move to the current location
           mapObject.setCenter(currentPosition.current);
           // Stop blinking the button
@@ -42,7 +57,13 @@ const LocatorButton = ({mapObject}) => {
               currentPosition.current = updateCurrentPositionCoordinates(
                 position,
               );
-              markCurrentLocation({currentPosition, mapObject, position});
+              currentDirection.current = updateCurrentDirection(position);
+              markCurrentLocation({
+                currentDirection,
+                currentPosition,
+                mapObject,
+                position,
+              });
             },
             () => {},
             {maximumAge: 1000},
@@ -97,7 +118,19 @@ function updateCurrentPositionCoordinates(position) {
   return {lat: position.coords.latitude, lng: position.coords.longitude};
 }
 
-function markCurrentLocation({currentPosition, mapObject, position}) {
+function updateCurrentDirection(position, defaultAngle = 45) {
+  if (position.coords.heading) {
+    return position.coords.heading;
+  } else {
+    return defaultAngle;
+  }
+}
+function markCurrentLocation({
+  currentDirection,
+  currentPosition,
+  mapObject,
+  position,
+}) {
   // prepare for drawing markers
   const google = window.google;
 
@@ -105,18 +138,20 @@ function markCurrentLocation({currentPosition, mapObject, position}) {
   if (marker) {
     marker.setMap(null); // remove the previous current location marker from the map
   }
-  const blueCircle = {
+  const svgIcon = {
     // design the icon to mark the current location
-    // source: lines 50-55 of https://github.com/ChadKillingsworth/geolocation-marker/releases/download/v2.0.5/geolocation-marker.js
-    path: google.maps.SymbolPath.CIRCLE,
+    // source: Material Icons Flight: https://fonts.google.com/icons?icon.query=flight
+    anchor: new google.maps.Point(flightIcon.width / 2, flightIcon.height / 2),
     fillColor: color['google-blue 100'],
     fillOpacity: 1,
-    scale: 8,
+    path: flightIcon.path,
+    rotation: currentDirection.current,
+    scale: 2,
     strokeColor: color['white 100'],
     strokeWeight: 2,
   };
   marker = new google.maps.Marker({
-    icon: blueCircle,
+    icon: svgIcon,
     position: currentPosition.current,
     title: 'You are here!',
   });
