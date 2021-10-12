@@ -34,4 +34,17 @@ describe('After clicking the location button', () => {
     cy.wait(2500); // we cannot detect when Google Maps are fully loaded
     cy.percySnapshot('current-location', {widths: [320, 768, 1024]});
   });
+  it('Removes the current location marker after tapping the locator button once again', () => {
+    // execute
+    cy.findByRole('button', {
+      name: 'Stop tracking current location',
+      timeout: 50000,
+    }).click();
+
+    // verify
+    cy.findByRole('button', {name: 'Show current location', timeout: 50000}); // Make sure the button's label and accessible name switches back
+    // eslint-disable-next-line cypress/no-unnecessary-waiting
+    cy.wait(2500); // we cannot detect when Google Maps are fully loaded
+    cy.percySnapshot('current-location-off', {widths: [320, 768, 1024]});
+  });
 });
