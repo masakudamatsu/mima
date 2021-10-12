@@ -19,32 +19,18 @@ describe('After clicking the location button', () => {
     cy.visit('/');
     cy.contains('Map Data', {timeout: 20000}); // Bottom-right text to be rendered in Google Maps
     cy.mockGeolocation(); // this needs to be run after cy.visit(). Source: https://github.com/cypress-io/cypress/issues/2671#issuecomment-780721234
-
-    // execute
-    cy.findByRole('button', {name: 'Show current location'}).click();
-
-    // wait for GPS info loaded
-    cy.findByRole('button', {
-      name: 'Stop tracking current location',
-      timeout: 50000,
-    });
   });
   it('Shows the current location with the blur circle', () => {
+    // execute
+    cy.findByRole('button', {name: 'Start tracking current location'}).click();
+
+    //verify
+    cy.findByRole('button', {
+      name: 'Show current location',
+      timeout: 50000,
+    });
     // eslint-disable-next-line cypress/no-unnecessary-waiting
     cy.wait(2500); // we cannot detect when Google Maps are fully loaded
     cy.percySnapshot('current-location', {widths: [320, 768, 1024]});
-  });
-  it('Removes the current location marker after tapping the locator button once again', () => {
-    // execute
-    cy.findByRole('button', {
-      name: 'Stop tracking current location',
-      timeout: 50000,
-    }).click();
-
-    // verify
-    cy.findByRole('button', {name: 'Show current location', timeout: 50000}); // Make sure the button's label and accessible name switches back
-    // eslint-disable-next-line cypress/no-unnecessary-waiting
-    cy.wait(2500); // we cannot detect when Google Maps are fully loaded
-    cy.percySnapshot('current-location-off', {widths: [320, 768, 1024]});
   });
 });

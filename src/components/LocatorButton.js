@@ -1,4 +1,4 @@
-import {useContext, useState} from 'react';
+import {useContext, useRef, useState} from 'react';
 import PropTypes from 'prop-types';
 
 import {NightModeContext} from 'src/context/NightModeContext';
@@ -9,27 +9,27 @@ import {color} from 'src/utils/designtokens';
 
 let marker = null;
 let accuracyCircle = null;
-let watchId;
 // these needs to be outside the component
 // because setStatus() causes the rerendering of the component, assigning null to these variables
 
 const LocatorButton = ({mapObject}) => {
+  // UI states
   const nightMode = useContext(NightModeContext);
-  const [status, setStatus] = useState('landed');
+  const [loading, setLoading] = useState(false);
+  const [isWatching, setIsWatching] = useState(false);
+
+  const currentPosition = useRef(null);
   const getCurrentLocation = () => {
     if (navigator.geolocation) {
       // Start blinking the button
-      setStatus('taking-off');
-      watchId = navigator.geolocation.watchPosition(
+      setLoading(true);
+      navigator.geolocation.watchPosition(
         position => {
           // obtain current location geocoordinate
-          const currentPosition = {
+          currentPosition.current = {
             lat: position.coords.latitude,
             lng: position.coords.longitude,
           };
-
-          // Move the map to the current location
-          mapObject.setCenter(currentPosition);
 
           // prepare for drawing markers
           const google = window.google;
@@ -50,7 +50,7 @@ const LocatorButton = ({mapObject}) => {
           };
           marker = new google.maps.Marker({
             icon: blueCircle,
-            position: currentPosition,
+            position: currentPosition.current,
             title: 'You are here!',
           });
           marker.setMap(mapObject);
@@ -62,7 +62,7 @@ const LocatorButton = ({mapObject}) => {
           }
           accuracyCircle = new google.maps.Circle({
             // source: lines 65-72 of https://github.com/ChadKillingsworth/geolocation-marker/releases/download/v2.0.5/geolocation-marker.js
-            center: currentPosition,
+            center: currentPosition.current,
             fillColor: color['google-blue-dark 100'],
             fillOpacity: 0.4,
             radius: accuracyRange,
@@ -73,8 +73,13 @@ const LocatorButton = ({mapObject}) => {
           });
           accuracyCircle.setMap(mapObject);
 
+          if (!isWatching) {
+            // Move the map to the current location
+            mapObject.setCenter(currentPosition.current);
+            setIsWatching(true);
+          }
           // Stop blinking the button
-          setStatus('flying');
+          setLoading(false);
         },
         () => {},
         {maximumAge: 1000}, // people walk at 1.4m per second; typically accurracy error is about the same (source: https://en.wikipedia.org/wiki/Preferred_walking_speed#:~:text=Many%20people%20tend%20to%20walk,they%20typically%20choose%20not%20to.)
@@ -83,35 +88,33 @@ const LocatorButton = ({mapObject}) => {
       // Browser doesn't support Geolocation
     }
   };
-  const stopTracking = () => {
-    setStatus('landing');
-    navigator.geolocation.clearWatch(watchId);
-    marker.setMap(null);
-    accuracyCircle.setMap(null);
-    setStatus('landed');
+  const moveToCurrentLocation = () => {
+    setLoading(true);
+    mapObject.setCenter(currentPosition.current);
+    setLoading(false);
   };
-  return status === 'landed' || status === 'taking-off' ? (
+  return !isWatching ? (
     <Button
       data-darkmode={nightMode}
       data-position="bottom-right-second"
-      data-loading={status === 'taking-off'}
+      data-loading={loading}
       onClick={getCurrentLocation}
       type="button"
     >
-      <SvgCloud icon={'flightTakeoff'} title={'Show current location'} />
+      <SvgCloud
+        icon={'flightTakeoff'}
+        title={'Start tracking current location'}
+      />
     </Button>
   ) : (
     <Button
       data-darkmode={nightMode}
       data-position="bottom-right-second"
-      data-loading={status === 'landing'}
-      onClick={stopTracking}
+      data-loading={loading}
+      onClick={moveToCurrentLocation}
       type="button"
     >
-      <SvgCloud
-        icon={'flightLanding'}
-        title={'Stop tracking current location'}
-      />
+      <SvgCloud icon={'flightLanding'} title={'Show current location'} />
     </Button>
   );
 };
