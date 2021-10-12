@@ -1,3 +1,5 @@
+import {locatorButtonLabel} from '../../src/utils/uiCopies';
+
 describe('Initial UI', () => {
   it('Rendered in Light Mode at Daytime', () => {
     cy.clock(Date.UTC(2021, 8, 28, 6), ['Date']); // https://docs.cypress.io/api/commands/clock#Function-names
@@ -22,11 +24,11 @@ describe('After clicking the location button', () => {
   });
   it('Shows the current location with the blur circle', () => {
     // execute
-    cy.findByRole('button', {name: 'Start tracking current location'}).click();
+    cy.findByRole('button', {name: locatorButtonLabel.default}).click();
 
     //verify
     cy.findByRole('button', {
-      name: 'Show current location',
+      name: locatorButtonLabel.activated,
       timeout: 50000,
     });
     // eslint-disable-next-line cypress/no-unnecessary-waiting

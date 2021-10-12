@@ -5,8 +5,9 @@ import {axe} from 'jest-axe';
 
 import LocatorButton from './LocatorButton';
 import {NightModeContext} from 'src/context/NightModeContext';
+import {locatorButtonLabel} from 'src/utils/uiCopies';
 
-const accessibleName = 'Start tracking current location';
+const accessibleName = locatorButtonLabel.default;
 const mockProps = {
   mapObject: {},
 };

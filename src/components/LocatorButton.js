@@ -6,6 +6,7 @@ import {NightModeContext} from 'src/context/NightModeContext';
 import {Button} from 'src/elements/Button';
 import SvgCloud from 'src/elements/SvgCloud';
 import {color} from 'src/utils/designtokens';
+import {locatorButtonLabel} from 'src/utils/uiCopies';
 
 let marker = null;
 let accuracyCircle = null;
@@ -69,10 +70,7 @@ const LocatorButton = ({mapObject}) => {
       onClick={trackCurrentLocation}
       type="button"
     >
-      <SvgCloud
-        icon={'flightTakeoff'}
-        title={'Start tracking current location'}
-      />
+      <SvgCloud icon={'flightTakeoff'} title={locatorButtonLabel.default} />
     </Button>
   ) : (
     <Button
@@ -82,7 +80,7 @@ const LocatorButton = ({mapObject}) => {
       onClick={moveToCurrentLocation}
       type="button"
     >
-      <SvgCloud icon={'flightLanding'} title={'Show current location'} />
+      <SvgCloud icon={'flightLanding'} title={locatorButtonLabel.activated} />
     </Button>
   );
 };
