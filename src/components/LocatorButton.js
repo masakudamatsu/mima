@@ -38,7 +38,7 @@ const LocatorButton = ({mapObject}) => {
       navigator.geolocation.getCurrentPosition(
         position => {
           currentPosition.current = updateCurrentPositionCoordinates(position);
-          currentDirection.current = updateCurrentDirection(position);
+          currentDirection.current = null;
           markCurrentLocation({
             currentDirection,
             currentPosition,
@@ -54,10 +54,26 @@ const LocatorButton = ({mapObject}) => {
           // Enable continuous extraction of GPS info
           navigator.geolocation.watchPosition(
             position => {
+              const previousPosition = currentPosition.current;
+              console.log(
+                `previous position: (${previousPosition.lng}, ${previousPosition.lat})`,
+              );
               currentPosition.current = updateCurrentPositionCoordinates(
                 position,
               );
-              currentDirection.current = updateCurrentDirection(position);
+              console.log(
+                `current position: (${currentPosition.current.lng}, ${currentPosition.current.lat})`,
+              );
+              const diffLat =
+                currentPosition.current.lat - previousPosition.lat;
+              console.log(`change in latitude: ${diffLat}`);
+              const diffLng =
+                currentPosition.current.lng - previousPosition.lng;
+              console.log(`change in longitude: ${diffLng}`);
+              const direction =
+                90 - (Math.atan2(diffLat, diffLng) * 180) / Math.PI;
+              console.log(`direction in degree: ${direction}`);
+              currentDirection.current = direction;
               markCurrentLocation({
                 currentDirection,
                 currentPosition,
@@ -118,13 +134,6 @@ function updateCurrentPositionCoordinates(position) {
   return {lat: position.coords.latitude, lng: position.coords.longitude};
 }
 
-function updateCurrentDirection(position, defaultAngle = 45) {
-  if (position.coords.heading) {
-    return position.coords.heading;
-  } else {
-    return defaultAngle;
-  }
-}
 function markCurrentLocation({
   currentDirection,
   currentPosition,
