@@ -2,7 +2,7 @@ import {createGlobalStyle} from 'styled-components';
 import {map} from 'src/utils/designtokens';
 
 import {fontface} from 'src/utils/cssFontface';
-import {ress} from 'src/utils/cssRess';
+import {modernCssReset} from 'src/utils/cssModernReset';
 import {resetRangeInput} from 'src/utils/cssResetRangeInput';
 
 const makeMapFullscreen = `
@@ -24,7 +24,7 @@ const setBackground = `
 
 const GlobalStyle = createGlobalStyle`
   ${fontface}
-  ${ress}
+  ${modernCssReset}
   ${resetRangeInput}
 
   input {
