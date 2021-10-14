@@ -82,7 +82,7 @@ const LocatorButton = ({mapObject}) => {
               });
             },
             () => {},
-            {maximumAge: 1000},
+            {maximumAge: 0},
           );
         },
         () => {},
