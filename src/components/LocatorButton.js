@@ -28,7 +28,7 @@ const LocatorButton = ({mapObject}) => {
   const [isWatching, setIsWatching] = useState(false);
 
   const currentPosition = useRef(null);
-  const currentDirection = useRef(null);
+  const currentDirection = useRef(45); // to match the button label icon
 
   const trackCurrentLocation = () => {
     if (navigator.geolocation) {
@@ -38,7 +38,6 @@ const LocatorButton = ({mapObject}) => {
       navigator.geolocation.getCurrentPosition(
         position => {
           currentPosition.current = updateCurrentPositionCoordinates(position);
-          currentDirection.current = null;
           markCurrentLocation({
             currentDirection,
             currentPosition,
