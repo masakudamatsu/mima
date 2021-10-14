@@ -1,11 +1,21 @@
 // Mock Geolocation API
 // source: https://github.com/cypress-io/cypress/issues/2671#issuecomment-564796821
 Cypress.Commands.add(
-  'mockGeolocation',
-  (latitude = 35.011665, longitude = 135.768326, accuracy = 12) => {
+  'mockGetCurrentPosition',
+  ({latitude, longitude, accuracy = 12}) => {
+    cy.window().then($window => {
+      cy.stub($window.navigator.geolocation, 'getCurrentPosition', callback => {
+        return callback({coords: {latitude, longitude, accuracy}}); // https://developer.mozilla.org/en-US/docs/Web/API/GeolocationCoordinates
+      });
+    });
+  },
+);
+Cypress.Commands.add(
+  'mockWatchPosition',
+  ({latitude, longitude, accuracy = 12}) => {
     cy.window().then($window => {
       cy.stub($window.navigator.geolocation, 'watchPosition', callback => {
-        return callback({coords: {latitude, longitude, accuracy}});
+        return callback({coords: {latitude, longitude, accuracy}}); // https://developer.mozilla.org/en-US/docs/Web/API/GeolocationCoordinates
       });
     });
   },
