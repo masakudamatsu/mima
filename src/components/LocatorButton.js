@@ -37,7 +37,7 @@ const LocatorButton = ({mapObject}) => {
       // First-run of extracting GPS info
       navigator.geolocation.getCurrentPosition(
         position => {
-          currentPosition.current = updateCurrentPositionCoordinates(position);
+          currentPosition.current = obtainCurrentCoordinates(position);
           markCurrentLocation({
             currentDirection,
             currentPosition,
@@ -48,31 +48,17 @@ const LocatorButton = ({mapObject}) => {
           mapObject.setCenter(currentPosition.current);
           // Stop blinking the button
           setLoading(false);
-          // Rerender the button
+          // Change the button label icon
           setIsWatching(true);
           // Enable continuous extraction of GPS info
           navigator.geolocation.watchPosition(
             position => {
-              const previousPosition = currentPosition.current;
-              console.log(
-                `previous position: (${previousPosition.lng}, ${previousPosition.lat})`,
+              const previousCoordinates = currentPosition.current;
+              currentPosition.current = obtainCurrentCoordinates(position);
+              currentDirection.current = obtainCurrentDirection(
+                previousCoordinates,
+                currentPosition.current,
               );
-              currentPosition.current = updateCurrentPositionCoordinates(
-                position,
-              );
-              console.log(
-                `current position: (${currentPosition.current.lng}, ${currentPosition.current.lat})`,
-              );
-              const diffLat =
-                currentPosition.current.lat - previousPosition.lat;
-              console.log(`change in latitude: ${diffLat}`);
-              const diffLng =
-                currentPosition.current.lng - previousPosition.lng;
-              console.log(`change in longitude: ${diffLng}`);
-              const direction =
-                90 - (Math.atan2(diffLat, diffLng) * 180) / Math.PI;
-              console.log(`direction in degree: ${direction}`);
-              currentDirection.current = direction;
               markCurrentLocation({
                 currentDirection,
                 currentPosition,
@@ -129,8 +115,21 @@ export default LocatorButton;
 
 // helper functions
 
-function updateCurrentPositionCoordinates(position) {
+function obtainCurrentCoordinates(position) {
   return {lat: position.coords.latitude, lng: position.coords.longitude};
+}
+
+function obtainCurrentDirection(previousCoordinates, currentCoordinates) {
+  const diffLat = currentCoordinates.lat - previousCoordinates.lat;
+  const diffLng = currentCoordinates.lng - previousCoordinates.lng;
+  const anticlockwiseAngleFromEast = convertToDegrees(
+    Math.atan2(diffLat, diffLng), // Docs on Math.atan2(): https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math/atan2
+  );
+  const clockwiseAngleFromNorth = 90 - anticlockwiseAngleFromEast; // East 0 => 90; North 90 => 0; West 180 => -90; South 270 => -180;
+  return clockwiseAngleFromNorth;
+}
+function convertToDegrees(radian) {
+  return (radian * 180) / Math.PI; // https://www.101computing.net/radians-to-degrees-conversions/
 }
 
 function markCurrentLocation({
