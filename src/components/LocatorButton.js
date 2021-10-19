@@ -7,6 +7,7 @@ import {Button} from 'src/elements/Button';
 import SvgCloud from 'src/elements/SvgCloud';
 import {color} from 'src/utils/designtokens';
 import {locatorButtonLabel} from 'src/utils/uiCopies';
+import ModalPopup from 'src/components/ModalPopup';
 
 let marker = null;
 let accuracyCircle = null;
@@ -26,6 +27,7 @@ const LocatorButton = ({mapObject}) => {
   const nightMode = useContext(NightModeContext);
   const [loading, setLoading] = useState(false);
   const [isWatching, setIsWatching] = useState(false);
+  const [modalPopupHidden, setModalPopupHidden] = useState(true);
 
   const currentPosition = useRef(null);
   const currentDirection = useRef(45); // to match the button label icon
@@ -66,11 +68,15 @@ const LocatorButton = ({mapObject}) => {
                 position,
               });
             },
-            () => {},
+            error => {
+              handlePermissionDenied(error, setLoading, setModalPopupHidden);
+            },
             {maximumAge: 0},
           );
         },
-        () => {},
+        error => {
+          handlePermissionDenied(error, setLoading, setModalPopupHidden);
+        },
         {maximumAge: 1000},
       );
     } else {
@@ -84,26 +90,38 @@ const LocatorButton = ({mapObject}) => {
     setLoading(false);
   };
 
-  return !isWatching ? (
-    <Button
-      data-darkmode={nightMode}
-      data-position="bottom-right-second"
-      data-loading={loading}
-      onClick={trackCurrentLocation}
-      type="button"
-    >
-      <SvgCloud icon={'flightTakeoff'} title={locatorButtonLabel.default} />
-    </Button>
-  ) : (
-    <Button
-      data-darkmode={nightMode}
-      data-position="bottom-right-second"
-      data-loading={loading}
-      onClick={moveToCurrentLocation}
-      type="button"
-    >
-      <SvgCloud icon={'flightFlying'} title={locatorButtonLabel.activated} />
-    </Button>
+  return (
+    <>
+      {!isWatching ? (
+        <Button
+          data-darkmode={nightMode}
+          data-position="bottom-right-second"
+          data-loading={loading}
+          onClick={trackCurrentLocation}
+          type="button"
+        >
+          <SvgCloud icon={'flightTakeoff'} title={locatorButtonLabel.default} />
+        </Button>
+      ) : (
+        <Button
+          data-darkmode={nightMode}
+          data-position="bottom-right-second"
+          data-loading={loading}
+          onClick={moveToCurrentLocation}
+          type="button"
+        >
+          <SvgCloud
+            icon={'flightFlying'}
+            title={locatorButtonLabel.activated}
+          />
+        </Button>
+      )}
+      {modalPopupHidden || (
+        <ModalPopup setModalPopupHidden={setModalPopupHidden}>
+          Please allow your browser to use your location data
+        </ModalPopup>
+      )}
+    </>
   );
 };
 
@@ -181,4 +199,12 @@ function markCurrentLocation({
     zIndex: 1,
   });
   accuracyCircle.setMap(mapObject);
+}
+
+function handlePermissionDenied(error, setLoading, setModalPopupHidden) {
+  if (error.code === 1) {
+    console.log('Please allow your browser to use your location');
+    setModalPopupHidden(false);
+    setLoading(false);
+  }
 }
