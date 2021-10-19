@@ -1,6 +1,7 @@
 import styled, {css, keyframes} from 'styled-components';
 
 import {color, dimension} from 'src/utils/designtokens';
+import {zIndex} from 'src/utils/zIndex';
 
 const resetStyle = css`
   background-color: ${color['white 0']};
@@ -20,7 +21,7 @@ const alignButtonLabel = css`
 
 const showButtonAboveMap = css`
   position: absolute;
-  z-index: 1;
+  z-index: ${zIndex.button};
 `;
 
 const positionButton = css`

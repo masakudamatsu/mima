@@ -5,14 +5,15 @@ import DivMap from './DivMap';
 test('renders UI correctly', () => {
   const {container} = render(<DivMap />);
   expect(container).toMatchInlineSnapshot(`
-    .c0 {
-      height: 100%;
-    }
+.c0 {
+  height: 100%;
+  isolation: isolate;
+}
 
-    <div>
-      <div
-        class="c0"
-      />
-    </div>
-  `);
+<div>
+  <div
+    class="c0"
+  />
+</div>
+`);
 });
