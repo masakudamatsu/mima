@@ -1,7 +1,7 @@
 {
   "report-dir": "coverage-cypress",
-  "branches": 89.11,
-  "functions": 88.91,
-  "lines": 94.5,
-  "statements": 94.53
+  "branches": 89.49,
+  "functions": 85.5,
+  "lines": 93.36,
+  "statements": 93.38
 }
