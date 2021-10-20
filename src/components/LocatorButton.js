@@ -6,7 +6,11 @@ import {NightModeContext} from 'src/context/NightModeContext';
 import {Button} from 'src/elements/Button';
 import SvgCloud from 'src/elements/SvgCloud';
 import {color} from 'src/utils/designtokens';
-import {locatorButtonLabel} from 'src/utils/uiCopies';
+import {
+  locatorButtonLabel,
+  geolocationNotSupported,
+  dismissDialogButton,
+} from 'src/utils/uiCopies';
 import ModalPopup from 'src/components/ModalPopup';
 
 let marker = null;
@@ -77,6 +81,7 @@ const LocatorButton = ({mapObject}) => {
       );
     } else {
       // Browser doesn't support Geolocation
+      setStatus('geolocationNotSupported');
     }
   };
 
@@ -122,6 +127,16 @@ const LocatorButton = ({mapObject}) => {
             To see your current location on the map, please enable location
             services with your OS/browser.
           </p>
+          <button onClick={setModalPopupHidden} type="button">
+            Got it
+          </button>
+        </ModalPopup>
+      )}
+      {status === 'geolocationNotSupported' && (
+        <ModalPopup setModalPopupHidden={setModalPopupHidden}>
+          <h1>{geolocationNotSupported.what}</h1>
+          <p>{geolocationNotSupported.why}</p>
+          <p>{geolocationNotSupported.how}</p>
           <button onClick={setModalPopupHidden} type="button">
             Got it
           </button>
