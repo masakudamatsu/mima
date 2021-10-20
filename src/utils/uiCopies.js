@@ -14,5 +14,10 @@ export const geolocationPermissionDenied = {
   why: `You've chosen to keep your location private.`,
   how: `To see your current location on the map, please enable location services with your OS/browser.`,
 };
+export const geolocationPositionUnavailable = {
+  what: geolocationApiFails,
+  why: `Your device fails to obtain your location data.`,
+  how: `Please check if location services are working with your device, or try again.`,
+};
 
 export const dismissDialogButton = `Got it`;
