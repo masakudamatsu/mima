@@ -25,9 +25,7 @@ const flightIcon = {
 const LocatorButton = ({mapObject}) => {
   // UI states
   const nightMode = useContext(NightModeContext);
-  const [loading, setLoading] = useState(false);
-  const [isWatching, setIsWatching] = useState(false);
-  const [modalPopupHidden, setModalPopupHidden] = useState(true);
+  const [status, setStatus] = useState('initial');
 
   const currentPosition = useRef(null);
   const currentDirection = useRef(45); // to match the button label icon
@@ -35,7 +33,7 @@ const LocatorButton = ({mapObject}) => {
   const trackCurrentLocation = () => {
     if (navigator.geolocation) {
       // Start blinking the button
-      setLoading(true);
+      setStatus('loading');
       // First-run of extracting GPS info
       navigator.geolocation.getCurrentPosition(
         position => {
@@ -48,10 +46,8 @@ const LocatorButton = ({mapObject}) => {
           });
           // Move to the current location
           mapObject.setCenter(currentPosition.current);
-          // Stop blinking the button
-          setLoading(false);
-          // Change the button label icon
-          setIsWatching(true);
+          // Stop blinking the button & Change the button label icon
+          setStatus('watching');
           // Enable continuous extraction of GPS info
           navigator.geolocation.watchPosition(
             position => {
@@ -69,13 +65,13 @@ const LocatorButton = ({mapObject}) => {
               });
             },
             error => {
-              handlePermissionDenied(error, setLoading, setModalPopupHidden);
+              handleGeolocationError(error, setStatus, setModalPopupHidden);
             },
             {maximumAge: 0},
           );
         },
         error => {
-          handlePermissionDenied(error, setLoading, setModalPopupHidden);
+          handleGeolocationError(error, setStatus, setModalPopupHidden);
         },
         {maximumAge: 1000},
       );
@@ -85,18 +81,20 @@ const LocatorButton = ({mapObject}) => {
   };
 
   const moveToCurrentLocation = () => {
-    setLoading(true);
     mapObject.setCenter(currentPosition.current);
-    setLoading(false);
+  };
+
+  const setModalPopupHidden = () => {
+    setStatus('initial');
   };
 
   return (
     <>
-      {!isWatching ? (
+      {status !== 'watching' ? (
         <Button
           data-darkmode={nightMode}
           data-position="bottom-right-second"
-          data-loading={loading}
+          data-loading={status === 'loading'}
           onClick={trackCurrentLocation}
           type="button"
         >
@@ -106,7 +104,7 @@ const LocatorButton = ({mapObject}) => {
         <Button
           data-darkmode={nightMode}
           data-position="bottom-right-second"
-          data-loading={loading}
+          data-loading={status === 'loading'}
           onClick={moveToCurrentLocation}
           type="button"
         >
@@ -116,9 +114,17 @@ const LocatorButton = ({mapObject}) => {
           />
         </Button>
       )}
-      {modalPopupHidden || (
+      {status === 'permissionDenied' && (
         <ModalPopup setModalPopupHidden={setModalPopupHidden}>
-          Please allow your browser to use your location data
+          <h1>We can't find where you are.</h1>
+          <p>Because you've chosen to keep your location private.</p>
+          <p>
+            To see your current location on the map, please enable location
+            services with your OS/browser.
+          </p>
+          <button onClick={setModalPopupHidden} type="button">
+            Got it
+          </button>
         </ModalPopup>
       )}
     </>
@@ -201,10 +207,8 @@ function markCurrentLocation({
   accuracyCircle.setMap(mapObject);
 }
 
-function handlePermissionDenied(error, setLoading, setModalPopupHidden) {
+function handleGeolocationError(error, setStatus) {
   if (error.code === 1) {
-    console.log('Please allow your browser to use your location');
-    setModalPopupHidden(false);
-    setLoading(false);
+    setStatus('permissionDenied');
   }
 }
