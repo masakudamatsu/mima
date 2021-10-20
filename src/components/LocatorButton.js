@@ -9,6 +9,7 @@ import {color} from 'src/utils/designtokens';
 import {
   locatorButtonLabel,
   geolocationNotSupported,
+  geolocationPermissionDenied,
   dismissDialogButton,
 } from 'src/utils/uiCopies';
 import ModalPopup from 'src/components/ModalPopup';
@@ -121,14 +122,11 @@ const LocatorButton = ({mapObject}) => {
       )}
       {status === 'permissionDenied' && (
         <ModalPopup setModalPopupHidden={setModalPopupHidden}>
-          <h1>We can't find where you are.</h1>
-          <p>Because you've chosen to keep your location private.</p>
-          <p>
-            To see your current location on the map, please enable location
-            services with your OS/browser.
-          </p>
+          <h1>{geolocationPermissionDenied.what}</h1>
+          <p>{geolocationPermissionDenied.why}</p>
+          <p>{geolocationPermissionDenied.how}</p>
           <button onClick={setModalPopupHidden} type="button">
-            Got it
+            {dismissDialogButton}
           </button>
         </ModalPopup>
       )}

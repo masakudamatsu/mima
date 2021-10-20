@@ -9,5 +9,10 @@ export const geolocationNotSupported = {
   why: `Your browser is not equipped with location services`,
   how: `Please consider using other browsers such as Chrome, Firefox, Microsoft Edge, or Safari.`,
 };
+export const geolocationPermissionDenied = {
+  what: geolocationApiFails,
+  why: `You've chosen to keep your location private.`,
+  how: `To see your current location on the map, please enable location services with your OS/browser.`,
+};
 
 export const dismissDialogButton = `Got it`;
