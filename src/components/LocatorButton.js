@@ -11,7 +11,6 @@ import {
   geolocationNotSupported,
   geolocationPermissionDenied,
   geolocationPositionUnavailable,
-  dismissDialogButton,
 } from 'src/utils/uiCopies';
 import ModalPopup from 'src/components/ModalPopup';
 
@@ -127,7 +126,7 @@ const LocatorButton = ({mapObject}) => {
           <p>{geolocationPermissionDenied.why}</p>
           <p>{geolocationPermissionDenied.how}</p>
           <button onClick={setModalPopupHidden} type="button">
-            {dismissDialogButton}
+            {geolocationPermissionDenied.button}
           </button>
         </ModalPopup>
       )}
@@ -136,9 +135,12 @@ const LocatorButton = ({mapObject}) => {
           <h1>{geolocationPositionUnavailable.what}</h1>
           <p>{geolocationPositionUnavailable.why}</p>
           <p>{geolocationPositionUnavailable.how}</p>
-          <button onClick={setModalPopupHidden} type="button">
-            {dismissDialogButton}
+          <button onClick={trackCurrentLocation} type="button">
+            {geolocationPositionUnavailable.button.primary}
           </button>
+          <button onClick={setModalPopupHidden} type="button">
+            {geolocationPositionUnavailable.button.secondary}
+          </button>{' '}
         </ModalPopup>
       )}
       {status === 'geolocationNotSupported' && (
@@ -147,7 +149,7 @@ const LocatorButton = ({mapObject}) => {
           <p>{geolocationNotSupported.why}</p>
           <p>{geolocationNotSupported.how}</p>
           <button onClick={setModalPopupHidden} type="button">
-            Got it
+            {geolocationNotSupported.button}
           </button>
         </ModalPopup>
       )}

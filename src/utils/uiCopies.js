@@ -3,21 +3,25 @@ export const locatorButtonLabel = {
   activated: 'Show current location',
 };
 
-const geolocationApiFails = 'We cannot find where you are.';
+const geolocationApiFails = 'Unable to find where you are';
 export const geolocationNotSupported = {
   what: geolocationApiFails,
-  why: `Your browser is not equipped with location services`,
-  how: `Please consider using other browsers such as Chrome, Firefox, Microsoft Edge, or Safari.`,
+  why: `We couldn’t obtain your location data from your browser.`,
+  how: `Consider using other browsers such as Chrome, Firefox, Microsoft Edge, and Safari.`,
+  button: `Got it`,
 };
 export const geolocationPermissionDenied = {
   what: geolocationApiFails,
-  why: `You've chosen to keep your location private.`,
-  how: `To see your current location on the map, please enable location services with your OS/browser.`,
+  why: `We couldn’t obtain your location data because you’ve chosen to keep it private.`,
+  how: `To see where you are on the map, enable location services with your OS/browser.`,
+  button: `Got it`,
 };
 export const geolocationPositionUnavailable = {
   what: geolocationApiFails,
-  why: `Your device fails to obtain your location data.`,
-  how: `Please check if location services are working with your device, or try again.`,
+  why: `We couldn’t obtain your location data from your device.`,
+  how: `Check if your device can detect your location, and try again.`,
+  button: {
+    primary: `Try again`,
+    secondary: `Close`,
+  },
 };
-
-export const dismissDialogButton = `Got it`;
