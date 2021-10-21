@@ -70,3 +70,46 @@ describe('After clicking the location button', () => {
     });
   });
 });
+
+describe('Once user location is being watched', () => {
+  const initialLat = 35.011565;
+  const initialLng = 135.768326;
+  const oneMeterInDegree = 1 / 111000; // 1 degree = 111km https://www.usna.edu/Users/oceano/pguth/md_help/html/approx_equivalents.htm
+  beforeEach(() => {
+    cy.clock(Date.UTC(2021, 8, 28, 6), ['Date']); // https://docs.cypress.io/api/commands/clock#Function-names
+    cy.visit('/');
+    cy.contains('Map Data', {timeout: 20000}); // Bottom-right text to be rendered in Google Maps
+    // setup (mock current locations)
+    cy.mockGetCurrentPosition({
+      latitude: initialLat,
+      longitude: initialLng,
+    }); // this needs to be run after cy.visit(). Source: https://github.com/cypress-io/cypress/issues/2671#issuecomment-780721234
+    cy.mockWatchPosition({
+      latitude: initialLat - oneMeterInDegree, // moving southwards
+      longitude: initialLng,
+      accuracy: 15,
+    }); // this needs to be run after cy.visit(). Source: https://github.com/cypress-io/cypress/issues/2671#issuecomment-780721234
+    // execute
+    cy.findByRole('button', {name: locatorButtonLabel.default}).click();
+    //verify
+    cy.findByRole('button', {
+      name: locatorButtonLabel.activated,
+      timeout: 50000,
+    });
+    // eslint-disable-next-line cypress/no-unnecessary-waiting
+    cy.wait(2500); // we cannot detect when Google Maps are fully loaded
+  });
+  it('Clicking locator button again after panning the map will show user location again', () => {
+    // execute
+    cy.get('body')
+      .trigger('mousedown', {button: 0})
+      .trigger('mousemove', {clientX: 100, clientY: 100})
+      .trigger('mousemove', {clientX: 300, clientY: 500})
+      .trigger('mouseup');
+    cy.findByRole('button', {name: locatorButtonLabel.activated}).click();
+    // verify
+    cy.percySnapshot('current-location-once-activated', {
+      widths: [320, 768, 1024],
+    });
+  });
+});
