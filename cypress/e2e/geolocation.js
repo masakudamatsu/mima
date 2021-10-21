@@ -3,6 +3,7 @@ import {
   geolocationNotSupported,
   geolocationPermissionDenied,
   geolocationPositionUnavailable,
+  geolocationTimedOut,
 } from '../../src/utils/uiCopies';
 
 describe('Geolocation API unsupported', () => {
@@ -105,6 +106,42 @@ describe('Geolocation API fails to find user location', () => {
     // execute
     cy.findByRole('button', {
       name: geolocationPositionUnavailable.button.primary,
+    }).click();
+    // verify
+    cy.get('@getCurrentPosition').should('have.been.calledTwice'); // see https://glebbahmutov.com/blog/cypress-tips-and-tricks/#control-navigatorlanguage
+  });
+});
+
+describe('Geolocation API times out', () => {
+  beforeEach(() => {
+    cy.clock(Date.UTC(2021, 8, 28, 6), ['Date']); // https://docs.cypress.io/api/commands/clock#Function-names
+    cy.visit('/', {
+      onBeforeLoad(window) {
+        cy.stub(
+          window.navigator.geolocation,
+          'getCurrentPosition',
+          (success, error) => {
+            throw error({code: 3});
+          },
+        ).as('getCurrentPosition');
+      },
+    });
+    cy.contains('Map Data', {timeout: 20000}); // Bottom-right text to be rendered in Google Maps
+    // execute
+    cy.findByRole('button', {name: locatorButtonLabel.default}).click();
+  });
+  it('Clicking locator button shows a dialog', () => {
+    // verify
+    cy.findByText(geolocationTimedOut.what).should('be.visible');
+    cy.findByText(geolocationTimedOut.why).should('be.visible');
+    cy.findByText(geolocationTimedOut.how).should('be.visible');
+  });
+  it(`Clicking the "${geolocationTimedOut.button.primary}" button executes Geolocation API once again`, () => {
+    // verify
+    cy.get('@getCurrentPosition').should('have.been.calledOnce'); // see https://glebbahmutov.com/blog/cypress-tips-and-tricks/#control-navigatorlanguage
+    // execute
+    cy.findByRole('button', {
+      name: geolocationTimedOut.button.primary,
     }).click();
     // verify
     cy.get('@getCurrentPosition').should('have.been.calledTwice'); // see https://glebbahmutov.com/blog/cypress-tips-and-tricks/#control-navigatorlanguage
