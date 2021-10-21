@@ -1,3 +1,5 @@
+export const userLocationMakerLabel = 'You are here!';
+
 export const locatorButtonLabel = {
   default: 'Start tracking current location',
   activated: 'Show current location',

@@ -41,6 +41,25 @@ describe('HTML checks', () => {
   });
 });
 
+describe('Clicking the button', () => {
+  beforeEach(() => {
+    // Mock Geolocation API; otherwise it's "undefined"
+    // source: https://stackoverflow.com/a/43957674
+    const mockGeolocation = {
+      getCurrentPosition: jest.fn(),
+      watchPosition: jest.fn(),
+    };
+    global.navigator.geolocation = mockGeolocation;
+  });
+  test('toggles data-loading attribute value', () => {
+    render(<LocatorButton {...mockProps} />, {wrapper: Wrapper.lightMode});
+    const button = screen.getByRole('button', {name: accessibleName});
+    expect(button).toHaveAttribute('data-loading', 'false');
+    userEvent.click(button);
+    expect(button).toHaveAttribute('data-loading', 'true');
+  });
+});
+
 test('Accessibility checks', async () => {
   const {container} = render(<LocatorButton {...mockProps} />, {
     wrapper: Wrapper.lightMode,

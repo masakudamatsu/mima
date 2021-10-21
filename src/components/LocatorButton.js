@@ -7,10 +7,11 @@ import {Button} from 'src/elements/Button';
 import SvgCloud from 'src/elements/SvgCloud';
 import {color} from 'src/utils/designtokens';
 import {
-  locatorButtonLabel,
   geolocationNotSupported,
   geolocationPermissionDenied,
   geolocationPositionUnavailable,
+  locatorButtonLabel,
+  userLocationMakerLabel,
 } from 'src/utils/uiCopies';
 import ModalPopup from 'src/components/ModalPopup';
 
@@ -47,6 +48,7 @@ const LocatorButton = ({mapObject}) => {
             currentDirection,
             currentPosition,
             mapObject,
+            markerLabelText: userLocationMakerLabel,
             position,
           });
           // Move to the current location
@@ -66,6 +68,7 @@ const LocatorButton = ({mapObject}) => {
                 currentDirection,
                 currentPosition,
                 mapObject,
+                markerLabelText: userLocationMakerLabel,
                 position,
               });
             },
@@ -81,6 +84,7 @@ const LocatorButton = ({mapObject}) => {
         {maximumAge: 1000},
       );
     } else {
+      console.log('run');
       // Browser doesn't support Geolocation
       setStatus('geolocationNotSupported');
     }
@@ -186,6 +190,7 @@ function markCurrentLocation({
   currentDirection,
   currentPosition,
   mapObject,
+  markerLabelText,
   position,
 }) {
   // prepare for drawing markers
@@ -210,7 +215,7 @@ function markCurrentLocation({
   marker = new google.maps.Marker({
     icon: svgIcon,
     position: currentPosition.current,
-    title: 'You are here!',
+    title: markerLabelText,
   });
   marker.setMap(mapObject);
 
