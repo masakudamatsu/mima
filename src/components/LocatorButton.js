@@ -11,7 +11,6 @@ import {
   geolocationNotSupported,
   geolocationPermissionDenied,
   geolocationPositionUnavailable,
-  geolocationTimedOut,
 } from 'src/utils/uiCopies';
 import ModalPopup from 'src/components/ModalPopup';
 
@@ -73,13 +72,13 @@ const LocatorButton = ({mapObject}) => {
             error => {
               handleGeolocationError(error, setStatus, setModalPopupHidden);
             },
-            {maximumAge: 0, timeout: 10000},
+            {maximumAge: 0},
           );
         },
         error => {
           handleGeolocationError(error, setStatus, setModalPopupHidden);
         },
-        {maximumAge: 1000, timeout: 10000},
+        {maximumAge: 1000},
       );
     } else {
       // Browser doesn't support Geolocation
@@ -152,19 +151,6 @@ const LocatorButton = ({mapObject}) => {
           <button onClick={setModalPopupHidden} type="button">
             {geolocationNotSupported.button}
           </button>
-        </ModalPopup>
-      )}
-      {status === 'timedOut' && (
-        <ModalPopup setModalPopupHidden={setModalPopupHidden}>
-          <h1>{geolocationTimedOut.what}</h1>
-          <p>{geolocationTimedOut.why}</p>
-          <p>{geolocationTimedOut.how}</p>
-          <button onClick={trackCurrentLocation} type="button">
-            {geolocationTimedOut.button.primary}
-          </button>
-          <button onClick={setModalPopupHidden} type="button">
-            {geolocationTimedOut.button.secondary}
-          </button>{' '}
         </ModalPopup>
       )}
     </>
@@ -252,7 +238,5 @@ function handleGeolocationError(error, setStatus) {
     setStatus('permissionDenied');
   } else if (error.code === 2) {
     setStatus('positionUnavailable');
-  } else if (error.code === 3) {
-    setStatus('timedOut');
   }
 }

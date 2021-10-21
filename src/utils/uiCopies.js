@@ -25,12 +25,3 @@ export const geolocationPositionUnavailable = {
     secondary: `Close`,
   },
 };
-export const geolocationTimedOut = {
-  what: geolocationApiFails,
-  why: `We couldn’t obtain your location data for more than 10 seconds.`,
-  how: `Check if your device can detect your location, and try again.`,
-  button: {
-    primary: `Try again`,
-    secondary: `Close`,
-  },
-};
