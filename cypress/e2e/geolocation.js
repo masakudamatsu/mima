@@ -110,6 +110,19 @@ describe('Geolocation API fails to find user location', () => {
     // verify
     cy.get('@getCurrentPosition').should('have.been.calledTwice'); // see https://glebbahmutov.com/blog/cypress-tips-and-tricks/#control-navigatorlanguage
   });
+  it(`Clicking the "${geolocationPositionUnavailable.button.secondary}" button dismisses the dialog`, () => {
+    // execute
+    cy.findByRole('button', {
+      name: geolocationPositionUnavailable.button.secondary,
+    }).click();
+    // verify
+    cy.findByText(geolocationPositionUnavailable.what).should('not.exist');
+    cy.findByText(geolocationPositionUnavailable.why).should('not.exist');
+    cy.findByText(geolocationPositionUnavailable.how).should('not.exist');
+    cy.findByRole('button', {name: locatorButtonLabel.default}).should(
+      'be.visible',
+    );
+  });
 });
 
 describe('Geolocation API times out', () => {
@@ -145,5 +158,18 @@ describe('Geolocation API times out', () => {
     }).click();
     // verify
     cy.get('@getCurrentPosition').should('have.been.calledTwice'); // see https://glebbahmutov.com/blog/cypress-tips-and-tricks/#control-navigatorlanguage
+  });
+  it(`Clicking the "${geolocationTimedOut.button.secondary}" button dismisses the dialog`, () => {
+    // execute
+    cy.findByRole('button', {
+      name: geolocationTimedOut.button.secondary,
+    }).click();
+    // verify
+    cy.findByText(geolocationTimedOut.what).should('not.exist');
+    cy.findByText(geolocationTimedOut.why).should('not.exist');
+    cy.findByText(geolocationTimedOut.how).should('not.exist');
+    cy.findByRole('button', {name: locatorButtonLabel.default}).should(
+      'be.visible',
+    );
   });
 });
