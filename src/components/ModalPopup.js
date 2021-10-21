@@ -20,7 +20,7 @@ const ModalPopup = ({children, setModalPopupHidden}) => {
           onClick={handleClick}
           type="button"
         >
-          <SvgClose title="Close" />
+          <SvgClose title="Close dialog" />
         </ButtonSquare>
         {children}
       </DivPopup>
