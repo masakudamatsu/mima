@@ -17,11 +17,6 @@ import {
   userLocationMakerLabel,
 } from 'src/utils/uiCopies';
 
-let marker = null;
-let accuracyCircle = null;
-// these needs to be outside the component
-// because setStatus() causes the rerendering of the component, assigning null to these variables
-
 const flightIcon = {
   // source: Material Icons Flight: https://fonts.google.com/icons?icon.query=flight
   height: 24,
@@ -38,6 +33,9 @@ const LocatorButton = ({mapObject}) => {
   // to track user location
   const userLocation = useRef(null);
   const userDirection = useRef(45); // to match the button label icon
+  // to remove the previous location marker
+  const marker = useRef(null);
+  const accuracyCircle = useRef(null);
 
   // helper functions
   function obtainCurrentCoordinates(position) {
@@ -57,11 +55,11 @@ const LocatorButton = ({mapObject}) => {
     }
   }
   function removeUserLocation() {
-    if (marker) {
-      marker.setMap(null); // remove the previous current location marker from the map
+    if (marker.current) {
+      marker.current.setMap(null); // remove the previous current location marker from the map
     }
-    if (accuracyCircle) {
-      accuracyCircle.setMap(null); // remove the previous circle from the map
+    if (accuracyCircle.current) {
+      accuracyCircle.current.setMap(null); // remove the previous circle from the map
     }
   }
   function markUserLocation({
@@ -78,7 +76,7 @@ const LocatorButton = ({mapObject}) => {
     const google = window.google;
 
     // design the icon to mark the current location
-    marker = new google.maps.Marker({
+    marker.current = new google.maps.Marker({
       icon: {
         anchor: new google.maps.Point(svgIcon.width / 2, svgIcon.height / 2),
         fillColor: color['google-blue 100'],
@@ -93,10 +91,10 @@ const LocatorButton = ({mapObject}) => {
       title: markerLabelText,
     });
     // Mark the current location
-    marker.setMap(mapObject);
+    marker.current.setMap(mapObject);
 
     // Draw the circle indicationg the 95% confidence interval of current position
-    accuracyCircle = new google.maps.Circle({
+    accuracyCircle.current = new google.maps.Circle({
       // source: lines 65-72 of https://github.com/ChadKillingsworth/geolocation-marker/releases/download/v2.0.5/geolocation-marker.js
       center: userLocation.current,
       fillColor: color['google-blue-dark 100'],
@@ -107,7 +105,7 @@ const LocatorButton = ({mapObject}) => {
       strokeWeight: 1,
       zIndex: 1,
     });
-    accuracyCircle.setMap(mapObject);
+    accuracyCircle.current.setMap(mapObject);
   }
   function handleGeolocationError(error, setStatus) {
     if (error.code === 1) {
