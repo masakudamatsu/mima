@@ -13,8 +13,8 @@ export const geolocationNotSupported = {
   button: `Got it`,
 };
 export const geolocationPermissionDenied = {
-  what: geolocationApiFails,
-  why: `We couldn’t obtain your location data because you’ve chosen to keep it private.`,
+  what: `We're not allowed to find where you are`,
+  why: `You’ve chosen to keep your location private, and we respect your privacy.`,
   how: `To see where you are on the map, enable location services with your OS/browser.`,
   button: `Got it`,
 };
