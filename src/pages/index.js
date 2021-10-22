@@ -21,6 +21,8 @@ function HomePage() {
   useEffect(() => {
     document.body.dataset.darkmode = nightMode;
   }, [nightMode]);
+
+  const [mapObject, setMapObject] = useState(null);
   return (
     <>
       <Head>
@@ -28,11 +30,11 @@ function HomePage() {
         <meta name="description" content={index.description} />
       </Head>
       <Noscript />
-      {clientSideRendering && <MenuButton />}
-      {clientSideRendering && <SearchButton />}
-      {clientSideRendering && <LocatorButton />}
-      {clientSideRendering && <SavePlaceButton />}
-      <Map />
+      {/* {clientSideRendering && <MenuButton />}
+      {clientSideRendering && <SearchButton />} */}
+      {clientSideRendering && <LocatorButton mapObject={mapObject} />}
+      {/* {clientSideRendering && <SavePlaceButton />} */}
+      <Map setMapObject={setMapObject} />
     </>
   ); // see https://codepen.io/masakudamatsu/pen/QWpbELb
 }

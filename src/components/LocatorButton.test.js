@@ -1,12 +1,16 @@
 // eslint-disable-next-line no-unused-vars
 import {render, screen} from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 import {axe} from 'jest-axe';
 
 import LocatorButton from './LocatorButton';
 import {NightModeContext} from 'src/context/NightModeContext';
+import {locatorButtonLabel} from 'src/utils/uiCopies';
 
-const accessibleName = 'Show current location';
-const mockProps = {};
+const accessibleName = locatorButtonLabel.default;
+const mockProps = {
+  mapObject: {},
+};
 const Wrapper = {
   lightMode: ({children}) => (
     <NightModeContext.Provider value={false}>
@@ -34,6 +38,25 @@ describe('HTML checks', () => {
       'type',
       'button',
     );
+  });
+});
+
+describe('Clicking the button', () => {
+  beforeEach(() => {
+    // Mock Geolocation API; otherwise it's "undefined"
+    // source: https://stackoverflow.com/a/43957674
+    const mockGeolocation = {
+      getCurrentPosition: jest.fn(),
+      watchPosition: jest.fn(),
+    };
+    global.navigator.geolocation = mockGeolocation;
+  });
+  test('toggles data-loading attribute value', () => {
+    render(<LocatorButton {...mockProps} />, {wrapper: Wrapper.lightMode});
+    const button = screen.getByRole('button', {name: accessibleName});
+    expect(button).toHaveAttribute('data-loading', 'false');
+    userEvent.click(button);
+    expect(button).toHaveAttribute('data-loading', 'true');
   });
 });
 

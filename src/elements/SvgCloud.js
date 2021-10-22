@@ -19,6 +19,15 @@ const SvgCloud = ({icon, title}) => {
         />
       );
       break;
+    case 'flightFlying':
+      iconSvgPath = (
+        <path
+          d="M28.875,22 L28.875,19.25 L17.875,12.375 L17.875,4.8125 C17.875,3.67125 16.95375,2.75 15.8125,2.75 C14.67125,2.75 13.75,3.67125 13.75,4.8125 L13.75,12.375 L2.75,19.25 L2.75,22 L13.75,18.5625 L13.75,26.125 L11,28.1875 L11,30.25 L15.8125,28.875 L20.625,30.25 L20.625,28.1875 L17.875,26.125 L17.875,18.5625 L28.875,22 Z"
+          id="material-icon-flight" // https://fonts.google.com/icons?selected=Material%20Icons%3Aflight%3A
+          transform="translate(29.500000, 23.500000) rotate(45.000000) translate(-29.500000, -23.500000) translate(13.000000, 7.000000)"
+        />
+      );
+      break;
     case 'flightTakeoff':
       iconSvgPath = (
         <path

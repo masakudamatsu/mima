@@ -17,7 +17,7 @@
     "dev": "open http://localhost:3000 && next dev",
     "format": "prettier --ignore-path .gitignore --write \"**/*.+(js|json)\"",
     "lint": "eslint --ignore-path .gitignore .",
-    "snapshot": "percy exec -- cypress run --spec \"cypress/e2e/snapshot.js\"",
+    "snapshot": "percy exec -- cypress run --spec \"cypress/e2e/snapshot*.js\"",
     "presnapshot": "npm run remove:report",
     "start": "next start",
     "subset": "start-server-and-test start http://localhost:3000 subset:all",
