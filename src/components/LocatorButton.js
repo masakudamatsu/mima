@@ -41,19 +41,6 @@ const LocatorButton = ({mapObject}) => {
   function obtainCurrentCoordinates(position) {
     return {lat: position.coords.latitude, lng: position.coords.longitude};
   }
-  function obtainCurrentDirection(previousCoordinates, currentCoordinates) {
-    const diffLat = currentCoordinates.lat - previousCoordinates.lat;
-    const diffLng = currentCoordinates.lng - previousCoordinates.lng;
-    const anticlockwiseAngleFromEast = convertToDegrees(
-      Math.atan2(diffLat, diffLng), // Docs on Math.atan2(): https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math/atan2
-    );
-    const clockwiseAngleFromNorth = 90 - anticlockwiseAngleFromEast; // East 0 => 90; North 90 => 0; West 180 => -90; South 270 => -180;
-    return clockwiseAngleFromNorth;
-    // helper function
-    function convertToDegrees(radian) {
-      return (radian * 180) / Math.PI; // https://www.101computing.net/radians-to-degrees-conversions/
-    }
-  }
   function removeUserLocation() {
     if (marker.current) {
       marker.current.setMap(null); // remove the previous current location marker from the map
@@ -78,12 +65,10 @@ const LocatorButton = ({mapObject}) => {
     // design the icon to mark the current location
     marker.current = new google.maps.Marker({
       icon: {
-        anchor: new google.maps.Point(svgIcon.width / 2, svgIcon.height / 2),
         fillColor: color['google-blue 100'],
         fillOpacity: 1,
-        path: svgIcon.path,
-        rotation: userDirection.current,
-        scale: 2,
+        path: google.maps.SymbolPath.CIRCLE,
+        scale: 8,
         strokeColor: color['white 100'],
         strokeWeight: 2,
       },
@@ -136,29 +121,6 @@ const LocatorButton = ({mapObject}) => {
           mapObject.setCenter(userLocation.current);
           // Stop blinking the button & Change the button label icon
           setStatus('watching');
-          // Enable continuous extraction of GPS info
-          navigator.geolocation.watchPosition(
-            position => {
-              const previousCoordinates = userLocation.current;
-              userLocation.current = obtainCurrentCoordinates(position);
-              userDirection.current = obtainCurrentDirection(
-                previousCoordinates,
-                userLocation.current,
-              );
-              markUserLocation({
-                userDirection,
-                userLocation,
-                mapObject,
-                markerLabelText: userLocationMakerLabel,
-                svgIcon: flightIcon,
-                accuracy: position.coords.accuracy,
-              });
-            },
-            error => {
-              handleGeolocationError(error, setStatus);
-            },
-            {maximumAge: 0},
-          );
         },
         error => {
           handleGeolocationError(error, setStatus);
@@ -171,39 +133,21 @@ const LocatorButton = ({mapObject}) => {
     }
   };
 
-  const moveToCurrentLocation = () => {
-    mapObject.setCenter(userLocation.current);
-  };
-
   const initializeUI = () => {
     setStatus('initial');
   };
 
   return (
     <>
-      {status !== 'watching' ? (
-        <Button
-          data-darkmode={nightMode}
-          data-position="bottom-right-second"
-          data-loading={status === 'loading'}
-          onClick={trackUserLocation}
-          type="button"
-        >
-          <SvgCloud icon={'flightTakeoff'} title={locatorButtonLabel.default} />
-        </Button>
-      ) : (
-        <Button
-          data-darkmode={nightMode}
-          data-position="bottom-right-second"
-          onClick={moveToCurrentLocation}
-          type="button"
-        >
-          <SvgCloud
-            icon={'flightFlying'}
-            title={locatorButtonLabel.activated}
-          />
-        </Button>
-      )}
+      <Button
+        data-darkmode={nightMode}
+        data-position="bottom-right-second"
+        data-loading={status === 'loading'}
+        onClick={trackUserLocation}
+        type="button"
+      >
+        <SvgCloud icon={'flightTakeoff'} title={locatorButtonLabel.default} />
+      </Button>
       {status === 'permissionDenied' && (
         <ModalPopup setModalPopupHidden={initializeUI}>
           <h1>{geolocationPermissionDenied.what}</h1>

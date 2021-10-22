@@ -30,11 +30,11 @@ function HomePage() {
         <meta name="description" content={index.description} />
       </Head>
       <Noscript />
-      {clientSideRendering && <MenuButton />}
-      {clientSideRendering && <SearchButton />}
-        {clientSideRendering && <LocatorButton mapObject={mapObject} />}
-      {clientSideRendering && <SavePlaceButton />}
-        <Map setMapObject={setMapObject} />
+      {/* {clientSideRendering && <MenuButton />}
+      {clientSideRendering && <SearchButton />} */}
+      {clientSideRendering && <LocatorButton mapObject={mapObject} />}
+      {/* {clientSideRendering && <SavePlaceButton />} */}
+      <Map setMapObject={setMapObject} />
     </>
   ); // see https://codepen.io/masakudamatsu/pen/QWpbELb
 }
