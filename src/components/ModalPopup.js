@@ -15,13 +15,13 @@ const ModalPopup = ({children, setModalPopupHidden}) => {
   return (
     <DivScrim>
       <DivPopup data-darkmode={nightMode}>
-        <ButtonSquare
+        {/* <ButtonSquare
           data-darkmode={nightMode}
           onClick={handleClick}
           type="button"
         >
           <SvgClose title="Close dialog" />
-        </ButtonSquare>
+        </ButtonSquare> */}
         {children}
       </DivPopup>
     </DivScrim>
