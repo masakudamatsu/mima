@@ -1,5 +1,5 @@
 import {
-  locatorButtonLabel,
+  buttonLabel,
   geolocationNotSupported,
   geolocationPermissionDenied,
   geolocationPositionUnavailable,
@@ -24,13 +24,13 @@ describe('Geolocation API happy path', () => {
     });
     it(`changes the button label`, () => {
       // execute
-      cy.findByRole('button', {name: locatorButtonLabel.default}).click();
+      cy.findByRole('button', {name: buttonLabel.locator.default}).click();
       // verify
-      cy.findByRole('button', {name: locatorButtonLabel.default}).should(
+      cy.findByRole('button', {name: buttonLabel.locator.default}).should(
         'not.exist',
       );
       cy.findByRole('button', {
-        name: locatorButtonLabel.activated,
+        name: buttonLabel.locator.activated,
         timeout: 20000,
       }).should('be.visible');
     });
@@ -38,7 +38,7 @@ describe('Geolocation API happy path', () => {
       // verify initial state
       cy.findByRole('img', {name: `You are here!`}).should('not.exist');
       // execute
-      cy.findByRole('button', {name: locatorButtonLabel.default}).click();
+      cy.findByRole('button', {name: buttonLabel.locator.default}).click();
       // verify
       cy.findByRole('img', {name: `You are here!`, timeout: 20000}).should(
         'be.visible',
@@ -69,7 +69,7 @@ describe('Geolocation API unsupported', () => {
     });
     cy.waitForMapToLoad();
     // execute
-    cy.findByRole('button', {name: locatorButtonLabel.default}).click();
+    cy.findByRole('button', {name: buttonLabel.locator.default}).click();
   });
   it('Clicking locator button shows a dialog', () => {
     // verify
@@ -84,7 +84,7 @@ describe('Geolocation API unsupported', () => {
     cy.findByText(geolocationNotSupported.what).should('not.exist');
     cy.findByText(geolocationNotSupported.why).should('not.exist');
     cy.findByText(geolocationNotSupported.how).should('not.exist');
-    cy.findByRole('button', {name: locatorButtonLabel.default}).should(
+    cy.findByRole('button', {name: buttonLabel.locator.default}).should(
       'be.visible',
     );
   });
@@ -105,7 +105,7 @@ describe('Geolocation API permission denied', () => {
     });
     cy.waitForMapToLoad();
     // execute
-    cy.findByRole('button', {name: locatorButtonLabel.default}).click();
+    cy.findByRole('button', {name: buttonLabel.locator.default}).click();
   });
   it('Clicking locator button shows a dialog', () => {
     // verify
@@ -120,7 +120,7 @@ describe('Geolocation API permission denied', () => {
     cy.findByText(geolocationPermissionDenied.what).should('not.exist');
     cy.findByText(geolocationPermissionDenied.why).should('not.exist');
     cy.findByText(geolocationPermissionDenied.how).should('not.exist');
-    cy.findByRole('button', {name: locatorButtonLabel.default}).should(
+    cy.findByRole('button', {name: buttonLabel.locator.default}).should(
       'be.visible',
     );
   });
@@ -141,7 +141,7 @@ describe('Geolocation API fails to find user location', () => {
     });
     cy.waitForMapToLoad();
     // execute
-    cy.findByRole('button', {name: locatorButtonLabel.default}).click();
+    cy.findByRole('button', {name: buttonLabel.locator.default}).click();
   });
   it('Clicking locator button shows a dialog', () => {
     // verify
@@ -168,7 +168,7 @@ describe('Geolocation API fails to find user location', () => {
     cy.findByText(geolocationPositionUnavailable.what).should('not.exist');
     cy.findByText(geolocationPositionUnavailable.why).should('not.exist');
     cy.findByText(geolocationPositionUnavailable.how).should('not.exist');
-    cy.findByRole('button', {name: locatorButtonLabel.default}).should(
+    cy.findByRole('button', {name: buttonLabel.locator.default}).should(
       'be.visible',
     );
   });

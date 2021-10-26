@@ -1,8 +1,13 @@
 export const userLocationMakerLabel = 'You are here!';
 
-export const locatorButtonLabel = {
-  default: 'Start tracking current location',
-  activated: 'Show current location',
+export const buttonLabel = {
+  locator: {
+    default: 'Start tracking current location',
+    activated: 'Show current location',
+  },
+  menu: 'Show menu',
+  save: 'Save a place',
+  search: 'Search a place',
 };
 
 const geolocationApiFails = 'Unable to find where you are';

@@ -4,8 +4,9 @@ import {axe} from 'jest-axe';
 
 import {SavePlaceButton} from './SavePlaceButton';
 import {NightModeContext} from 'src/context/NightModeContext';
+import {buttonLabel} from 'src/utils/uiCopies';
 
-const accessibleName = 'Save a place';
+const accessibleName = buttonLabel.save;
 const mockProps = {};
 const Wrapper = {
   lightMode: ({children}) => (

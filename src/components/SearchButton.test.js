@@ -4,8 +4,9 @@ import {axe} from 'jest-axe';
 
 import {SearchButton} from './SearchButton';
 import {NightModeContext} from 'src/context/NightModeContext';
+import {buttonLabel} from 'src/utils/uiCopies';
 
-const accessibleName = 'Search a place';
+const accessibleName = buttonLabel.search;
 const mockProps = {};
 const Wrapper = {
   lightMode: ({children}) => (

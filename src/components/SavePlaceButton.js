@@ -6,6 +6,8 @@ import {NightModeContext} from 'src/context/NightModeContext';
 import {Button} from 'src/elements/Button';
 import {SvgCloud} from 'src/elements/SvgCloud';
 
+import {buttonLabel} from 'src/utils/uiCopies';
+
 export const SavePlaceButton = () => {
   const nightMode = useContext(NightModeContext);
   return (
@@ -14,7 +16,7 @@ export const SavePlaceButton = () => {
       data-position="bottom-right"
       type="button"
     >
-      <SvgCloud icon="add" title="Save a place" />
+      <SvgCloud icon="add" title={buttonLabel.save} />
     </Button>
   );
 };

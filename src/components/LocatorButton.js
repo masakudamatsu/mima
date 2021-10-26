@@ -10,10 +10,10 @@ import {SvgCloud} from 'src/elements/SvgCloud';
 
 import {color} from 'src/utils/designtokens';
 import {
+  buttonLabel,
   geolocationNotSupported,
   geolocationPermissionDenied,
   geolocationPositionUnavailable,
-  locatorButtonLabel,
   userLocationMakerLabel,
 } from 'src/utils/uiCopies';
 
@@ -189,7 +189,10 @@ export const LocatorButton = ({mapObject}) => {
           onClick={trackUserLocation}
           type="button"
         >
-          <SvgCloud icon={'flightTakeoff'} title={locatorButtonLabel.default} />
+          <SvgCloud
+            icon={'flightTakeoff'}
+            title={buttonLabel.locator.default}
+          />
         </Button>
       ) : (
         <Button
@@ -200,7 +203,7 @@ export const LocatorButton = ({mapObject}) => {
         >
           <SvgCloud
             icon={'flightFlying'}
-            title={locatorButtonLabel.activated}
+            title={buttonLabel.locator.activated}
           />
         </Button>
       )}
