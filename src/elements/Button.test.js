@@ -116,6 +116,11 @@ describe('Button component', () => {
   --button-shadow-color-focus: rgb(255,255,255);
 }
 
+.c0[data-loading='true'] {
+  -webkit-animation: bPkxfw 1500ms linear infinite;
+  animation: bPkxfw 1500ms linear infinite;
+}
+
 <div>
   <button
     class="c0"

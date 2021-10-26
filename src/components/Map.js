@@ -19,7 +19,7 @@ const cormorantBoldAsterisk = {
   width: 37.788,
 }; // obtained from https://danmarshall.github.io/google-font-to-svg-path/
 
-const Map = () => {
+const Map = ({setMapObject}) => {
   const nightMode = useContext(NightModeContext);
   const googlemap = useRef(null);
 
@@ -39,11 +39,11 @@ const Map = () => {
       };
       const initialView = {
         center: {
-          // Teramachi Matsubara
-          lat: 34.9988127,
-          lng: 135.7674863,
+          // Kiyamachi Rokkaku
+          lat: 35.006063,
+          lng: 135.769922,
         },
-        zoom: 14, // to see all the mock user's saved places (except those in Arashiyama) ,
+        zoom: 18, // to see the accuracy range circle of the current location
       };
       const colorCustomized = {
         mapId: nightMode ? mapIdNighttime : mapIdDaytime,
@@ -99,14 +99,15 @@ const Map = () => {
           title: userPlace.name,
         });
       }
+      setMapObject(map);
     });
-  }, [nightMode]);
+  }, [nightMode, setMapObject]);
 
   return <DivMap ref={googlemap} />;
 };
 
 Map.propTypes = {
-  nightMode: PropTypes.bool,
+  setMapObject: PropTypes.func.isRequired,
 };
 
 export default Map;
