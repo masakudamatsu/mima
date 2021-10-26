@@ -1,7 +1,7 @@
 import {render, screen} from '@testing-library/react';
 import {axe} from 'jest-axe';
 
-import SvgCloud from './SvgCloud';
+import {SvgCloud} from './SvgCloud';
 
 const mockProps = {
   icon: 'menu',

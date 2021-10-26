@@ -1,4 +1,4 @@
-export default function round(float, decimalPlaces) {
+export function round(float, decimalPlaces) {
   if (decimalPlaces === undefined) {
     throw new Error(
       'The second argument is missing. Provide the number of decimal places you want to keep.',

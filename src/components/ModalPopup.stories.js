@@ -1,5 +1,5 @@
 import React from 'react';
-import ModalPopup from './ModalPopup';
+import {ModalPopup} from './ModalPopup';
 
 import {NightModeContext} from 'src/context/NightModeContext';
 

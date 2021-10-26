@@ -1,7 +1,7 @@
 import {render, screen} from '@testing-library/react';
 import {axe} from 'jest-axe';
 
-import SvgClose from './SvgClose';
+import {SvgClose} from './SvgClose';
 
 const mockProps = {
   title: 'Close search box',

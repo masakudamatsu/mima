@@ -4,9 +4,9 @@ import {useContext} from 'react';
 import {NightModeContext} from 'src/context/NightModeContext';
 
 import {Button} from 'src/elements/Button';
-import SvgCloud from 'src/elements/SvgCloud';
+import {SvgCloud} from 'src/elements/SvgCloud';
 
-const SavePlaceButton = () => {
+export const SavePlaceButton = () => {
   const nightMode = useContext(NightModeContext);
   return (
     <Button
@@ -21,5 +21,3 @@ const SavePlaceButton = () => {
 
 // SavePlaceButton.propTypes = {
 // };
-
-export default SavePlaceButton;

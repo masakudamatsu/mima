@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-const VisuallyHidden = styled.h1`
+export const VisuallyHidden = styled.h1`
   /* Hide an element but show it for the screen reader. See my article on this technique: https://masakudamatsu.medium.com/the-visually-hidden-technique-303f8e2bd409 */
   clip: rect(1px 1px 1px 1px); /* To support IE6, IE7 */
   clip: rect(1px, 1px, 1px, 1px);
@@ -11,5 +11,3 @@ const VisuallyHidden = styled.h1`
   white-space: nowrap;
   width: 1px;
 `;
-
-export default VisuallyHidden;

@@ -2,7 +2,7 @@ import PropTypes from 'prop-types';
 
 import {dimension} from 'src/utils/designtokens';
 
-const SvgClose = ({title}) => {
+export const SvgClose = ({title}) => {
   return (
     <svg
       role="img"
@@ -21,5 +21,3 @@ const SvgClose = ({title}) => {
 SvgClose.propTypes = {
   title: PropTypes.string.isRequired,
 };
-
-export default SvgClose;

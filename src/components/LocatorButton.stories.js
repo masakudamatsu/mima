@@ -1,5 +1,5 @@
 import React from 'react';
-import LocatorButton from './LocatorButton';
+import {LocatorButton} from './LocatorButton';
 
 import {NightModeContext} from 'src/context/NightModeContext';
 

@@ -2,7 +2,7 @@ import {useContext, useEffect, useRef} from 'react';
 import {Loader} from '@googlemaps/js-api-loader';
 import PropTypes from 'prop-types';
 
-import DivMap from 'src/elements/DivMap';
+import {DivMap} from 'src/elements/DivMap';
 
 import userData from 'src/utils/mockUserData.json';
 
@@ -19,7 +19,7 @@ const cormorantBoldAsterisk = {
   width: 37.788,
 }; // obtained from https://danmarshall.github.io/google-font-to-svg-path/
 
-const Map = ({setMapObject}) => {
+export const Map = ({setMapObject}) => {
   const nightMode = useContext(NightModeContext);
   const googlemap = useRef(null);
 
@@ -109,5 +109,3 @@ const Map = ({setMapObject}) => {
 Map.propTypes = {
   setMapObject: PropTypes.func.isRequired,
 };
-
-export default Map;

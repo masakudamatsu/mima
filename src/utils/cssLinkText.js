@@ -1,5 +1,5 @@
 import {css} from 'styled-components';
-import remify from './remify';
+import {remify} from './remify';
 
 export function cssLinkText({
   backgroundColor,

@@ -1,6 +1,6 @@
 import cases from 'jest-in-case';
 
-import round from './round';
+import {round} from './round';
 
 cases(
   'returns the correct outputs:',

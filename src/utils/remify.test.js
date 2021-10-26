@@ -1,6 +1,6 @@
 import cases from 'jest-in-case';
 
-import remify from './remify';
+import {remify} from './remify';
 
 cases(
   'returns the correct outputs:',

@@ -1,7 +1,7 @@
 import React from 'react';
 import {render} from '@testing-library/react';
 
-import VisuallyHidden from './VisuallyHidden';
+import {VisuallyHidden} from './VisuallyHidden';
 
 test('renders UI correctly', () => {
   const {container} = render(<VisuallyHidden />);

@@ -3,7 +3,7 @@ import {render, screen} from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import {axe} from 'jest-axe';
 
-import LocatorButton from './LocatorButton';
+import {LocatorButton} from './LocatorButton';
 import {NightModeContext} from 'src/context/NightModeContext';
 import {locatorButtonLabel} from 'src/utils/uiCopies';
 

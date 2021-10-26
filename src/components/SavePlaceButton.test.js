@@ -2,7 +2,7 @@
 import {render, screen} from '@testing-library/react';
 import {axe} from 'jest-axe';
 
-import SavePlaceButton from './SavePlaceButton';
+import {SavePlaceButton} from './SavePlaceButton';
 import {NightModeContext} from 'src/context/NightModeContext';
 
 const accessibleName = 'Save a place';

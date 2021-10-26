@@ -2,7 +2,7 @@ import styled from 'styled-components';
 // import PropTypes from 'prop-types';
 import {zIndex} from 'src/utils/zIndex';
 
-const DivScrim = styled.div`
+export const DivScrim = styled.div`
   height: 100%;
   position: absolute;
   width: 100%;
@@ -10,4 +10,3 @@ const DivScrim = styled.div`
 `;
 
 // DivScrim.propTypes = {};
-export default DivScrim;
