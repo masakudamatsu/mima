@@ -2,7 +2,7 @@ import {useContext, useEffect, useRef} from 'react';
 import {Loader} from '@googlemaps/js-api-loader';
 import PropTypes from 'prop-types';
 
-import {DivMap} from 'src/elements/DivMap';
+import {Main} from 'src/elements/Main';
 
 import userData from 'src/utils/mockUserData.json';
 
@@ -103,7 +103,7 @@ export const Map = ({setMapObject}) => {
     });
   }, [nightMode, setMapObject]);
 
-  return <DivMap ref={googlemap} />;
+  return <Main ref={googlemap} />;
 };
 
 Map.propTypes = {

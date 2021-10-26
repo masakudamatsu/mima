@@ -11,9 +11,11 @@ import {buttonLabel} from 'src/utils/uiCopies';
 export const MenuButton = () => {
   const nightMode = useContext(NightModeContext);
   return (
-    <Button data-darkmode={nightMode} data-position="top-left" type="button">
-      <SvgCloud icon="menu" title={buttonLabel.menu} />
-    </Button>
+    <nav>
+      <Button data-darkmode={nightMode} data-position="top-left" type="button">
+        <SvgCloud icon="menu" title={buttonLabel.menu} />
+      </Button>
+    </nav>
   );
 };
 
