@@ -1,4 +1,4 @@
-import {locatorButtonLabel} from '../../src/utils/uiCopies';
+import {buttonLabel} from '../../src/utils/uiCopies';
 
 describe('After clicking the location button', () => {
   const initialLat = 35.011565;
@@ -20,7 +20,7 @@ describe('After clicking the location button', () => {
       accuracy: 15,
     });
     // execute
-    cy.findByRole('button', {name: locatorButtonLabel.default}).click();
+    cy.findByRole('button', {name: buttonLabel.locator.default}).click();
     // verify
     cy.waitForUserLocationToBeMarked();
     cy.percySnapshot('current-location-heading-south-more-accurate', {
@@ -36,7 +36,7 @@ describe('After clicking the location button', () => {
       accuracy: 30,
     }); // this needs to be run after cy.visit(). Source: https://github.com/cypress-io/cypress/issues/2671#issuecomment-780721234
     // execute
-    cy.findByRole('button', {name: locatorButtonLabel.default}).click();
+    cy.findByRole('button', {name: buttonLabel.locator.default}).click();
     // verify
     cy.waitForUserLocationToBeMarked();
     cy.percySnapshot('current-location-heading-west-less-accurate', {
@@ -57,7 +57,7 @@ describe('Once user location is being watched', () => {
     cy.mockWatchPosition(coords);
     cy.waitForMapToLoad();
     // execute
-    cy.findByRole('button', {name: locatorButtonLabel.default}).click();
+    cy.findByRole('button', {name: buttonLabel.locator.default}).click();
     cy.waitForUserLocationToBeMarked();
   });
   it('Clicking locator button again after panning the map will show user location again', () => {
@@ -67,7 +67,7 @@ describe('Once user location is being watched', () => {
       .trigger('mousemove', {clientX: 100, clientY: 100})
       .trigger('mousemove', {clientX: 300, clientY: 500})
       .trigger('mouseup');
-    cy.findByRole('button', {name: locatorButtonLabel.activated}).click();
+    cy.findByRole('button', {name: buttonLabel.locator.activated}).click();
     // verify
     cy.percySnapshot('current-location-once-activated', {
       widths: [320, 768, 1024],
@@ -91,7 +91,7 @@ describe('Geolocation API permission denied', () => {
     });
     cy.waitForMapToLoad();
     // execute
-    cy.findByRole('button', {name: locatorButtonLabel.default}).click();
+    cy.findByRole('button', {name: buttonLabel.locator.default}).click();
     // verify
     cy.percySnapshot('current-location-permission-denied-daytime', {
       widths: [320, 768, 1024],
@@ -112,7 +112,7 @@ describe('Geolocation API permission denied', () => {
     });
     cy.waitForMapToLoad();
     // execute
-    cy.findByRole('button', {name: locatorButtonLabel.default}).click();
+    cy.findByRole('button', {name: buttonLabel.locator.default}).click();
     // verify
     cy.percySnapshot('current-location-permission-denied-nighttime', {
       widths: [320, 768, 1024],

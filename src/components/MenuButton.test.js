@@ -4,8 +4,9 @@ import {axe} from 'jest-axe';
 
 import {MenuButton} from './MenuButton';
 import {NightModeContext} from 'src/context/NightModeContext';
+import {buttonLabel} from 'src/utils/uiCopies';
 
-const accessibleName = 'Show menu';
+const accessibleName = buttonLabel.menu;
 const mockProps = {};
 const Wrapper = {
   lightMode: ({children}) => (

@@ -1,9 +1,9 @@
 import {render} from '@testing-library/react';
 
-import {DivMap} from './DivMap';
+import {Main} from './Main';
 
 test('renders UI correctly', () => {
-  const {container} = render(<DivMap />);
+  const {container} = render(<Main />);
   expect(container).toMatchInlineSnapshot(`
 .c0 {
   height: 100%;
@@ -11,7 +11,7 @@ test('renders UI correctly', () => {
 }
 
 <div>
-  <div
+  <main
     class="c0"
   />
 </div>

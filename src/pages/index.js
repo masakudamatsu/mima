@@ -32,8 +32,10 @@ function HomePage() {
       <Noscript />
       {clientSideRendering && <MenuButton />}
       {clientSideRendering && <SearchButton />}
-      {clientSideRendering && <LocatorButton mapObject={mapObject} />}
-      {clientSideRendering && <SavePlaceButton />}
+      <section aria-label="controls">
+        {clientSideRendering && <LocatorButton mapObject={mapObject} />}
+        {clientSideRendering && <SavePlaceButton />}
+      </section>
       <Map setMapObject={setMapObject} />
     </>
   ); // see https://codepen.io/masakudamatsu/pen/QWpbELb
