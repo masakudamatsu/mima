@@ -7,7 +7,7 @@ import {dimension} from 'src/utils/designtokens';
 const height = dimension.button['height 100'].slice(0, -2);
 const width = dimension.button['width 100'].slice(0, -2);
 
-const SvgCloud = ({icon, title}) => {
+export const SvgCloud = ({icon, title}) => {
   let iconSvgPath;
   switch (icon) {
     case 'add':
@@ -81,5 +81,3 @@ SvgCloud.propTypes = {
   icon: PropTypes.string,
   title: PropTypes.string,
 };
-
-export default SvgCloud;

@@ -1,10 +1,10 @@
 import {render} from '@testing-library/react';
 import {axe} from 'jest-axe';
 
-import Noscript from './Noscript';
+import {Noscript} from './Noscript';
 
 test('renders UI correctly', () => {
-  const {container} = render(<Noscript  />);
+  const {container} = render(<Noscript />);
   expect(container).toMatchInlineSnapshot(`
     <div>
       <noscript />

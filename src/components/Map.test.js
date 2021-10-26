@@ -1,7 +1,7 @@
 import {render} from '@testing-library/react';
 import {axe} from 'jest-axe';
 
-import Map from './Map';
+import {Map} from './Map';
 
 const mockProps = {
   setMapObject: jest.fn().mockName('setMapObject'),

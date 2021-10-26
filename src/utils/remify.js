@@ -1,6 +1,6 @@
-import round from './round';
+import {round} from './round';
 
-function remify(px) {
+export function remify(px) {
   if (px === undefined) {
     throw new Error(
       'The argument is missing. Provide a number of the pixel value to be converted into rem.',
@@ -17,5 +17,3 @@ function remify(px) {
   }
   return stringify(round(px / oneRemInPx, 4));
 }
-
-export default remify;

@@ -1,12 +1,12 @@
 import {useContext, useRef, useState} from 'react';
 import PropTypes from 'prop-types';
 
-import ModalPopup from 'src/components/ModalPopup';
+import {ModalPopup} from 'src/components/ModalPopup';
 
 import {NightModeContext} from 'src/context/NightModeContext';
 
 import {Button} from 'src/elements/Button';
-import SvgCloud from 'src/elements/SvgCloud';
+import {SvgCloud} from 'src/elements/SvgCloud';
 
 import {color} from 'src/utils/designtokens';
 import {
@@ -26,7 +26,7 @@ const flightIcon = {
   width: 24,
 };
 
-const LocatorButton = ({mapObject}) => {
+export const LocatorButton = ({mapObject}) => {
   // UI states
   const nightMode = useContext(NightModeContext);
   const [status, setStatus] = useState('initial');
@@ -244,5 +244,3 @@ const LocatorButton = ({mapObject}) => {
 LocatorButton.propTypes = {
   mapObject: PropTypes.object.isRequired,
 };
-
-export default LocatorButton;

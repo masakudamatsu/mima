@@ -47,7 +47,7 @@ const setTextColor = `
   }
 `;
 
-const DivPopup = styled.div`
+export const DivPopup = styled.div`
   ${setFontScheme}
   ${setLayout}
   ${placeOverScrim}
@@ -69,4 +69,3 @@ const DivPopup = styled.div`
 `;
 
 // DivPopup.propTypes = {};
-export default DivPopup;

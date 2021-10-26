@@ -4,12 +4,12 @@ import {index} from 'src/utils/metadata';
 
 import {NightModeContext} from 'src/context/NightModeContext';
 
-import LocatorButton from 'src/components/LocatorButton';
-import Map from 'src/components/Map';
-import MenuButton from 'src/components/MenuButton';
-import Noscript from 'src/components/Noscript';
-import SavePlaceButton from 'src/components/SavePlaceButton';
-import SearchButton from 'src/components/SearchButton';
+import {LocatorButton} from 'src/components/LocatorButton';
+import {Map} from 'src/components/Map';
+import {MenuButton} from 'src/components/MenuButton';
+import {Noscript} from 'src/components/Noscript';
+import {SavePlaceButton} from 'src/components/SavePlaceButton';
+import {SearchButton} from 'src/components/SearchButton';
 
 function HomePage() {
   const [clientSideRendering, setClientSideRendering] = useState(false);
@@ -32,9 +32,9 @@ function HomePage() {
       <Noscript />
       {clientSideRendering && <MenuButton />}
       {clientSideRendering && <SearchButton />}
-        {clientSideRendering && <LocatorButton mapObject={mapObject} />}
+      {clientSideRendering && <LocatorButton mapObject={mapObject} />}
       {clientSideRendering && <SavePlaceButton />}
-        <Map setMapObject={setMapObject} />
+      <Map setMapObject={setMapObject} />
     </>
   ); // see https://codepen.io/masakudamatsu/pen/QWpbELb
 }

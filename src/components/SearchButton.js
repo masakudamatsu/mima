@@ -4,9 +4,9 @@ import {useContext} from 'react';
 import {NightModeContext} from 'src/context/NightModeContext';
 
 import {Button} from 'src/elements/Button';
-import SvgCloud from 'src/elements/SvgCloud';
+import {SvgCloud} from 'src/elements/SvgCloud';
 
-const SearchButton = () => {
+export const SearchButton = () => {
   const nightMode = useContext(NightModeContext);
   return (
     <Button data-darkmode={nightMode} data-position="top-right" type="button">
@@ -17,5 +17,3 @@ const SearchButton = () => {
 
 // SearchButton.propTypes = {
 // };
-
-export default SearchButton;

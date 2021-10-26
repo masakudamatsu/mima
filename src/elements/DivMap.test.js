@@ -1,6 +1,6 @@
 import {render} from '@testing-library/react';
 
-import DivMap from './DivMap';
+import {DivMap} from './DivMap';
 
 test('renders UI correctly', () => {
   const {container} = render(<DivMap />);

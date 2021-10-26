@@ -1,5 +1,5 @@
 import React from 'react';
-import MenuButton from './MenuButton';
+import {MenuButton} from './MenuButton';
 
 import {NightModeContext} from 'src/context/NightModeContext';
 

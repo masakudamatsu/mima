@@ -3,11 +3,11 @@ import PropTypes from 'prop-types';
 
 import {NightModeContext} from 'src/context/NightModeContext';
 import {ButtonSquare} from 'src/elements/ButtonSquare';
-import DivScrim from 'src/elements/DivScrim';
-import DivPopup from 'src/elements/DivPopup';
-import SvgClose from 'src/elements/SvgClose';
+import {DivScrim} from 'src/elements/DivScrim';
+import {DivPopup} from 'src/elements/DivPopup';
+import {SvgClose} from 'src/elements/SvgClose';
 
-const ModalPopup = ({children, setModalPopupHidden}) => {
+export const ModalPopup = ({children, setModalPopupHidden}) => {
   const nightMode = useContext(NightModeContext);
   const handleClick = () => {
     setModalPopupHidden(true);
@@ -32,5 +32,3 @@ ModalPopup.propTypes = {
   children: PropTypes.element,
   setModalPopupHidden: PropTypes.func.isRequired,
 };
-
-export default ModalPopup;

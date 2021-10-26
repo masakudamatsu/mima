@@ -1,5 +1,5 @@
 import React from 'react';
-import SavePlaceButton from './SavePlaceButton';
+import {SavePlaceButton} from './SavePlaceButton';
 
 import {NightModeContext} from 'src/context/NightModeContext';
 

@@ -4,9 +4,9 @@ import {useContext} from 'react';
 import {NightModeContext} from 'src/context/NightModeContext';
 
 import {Button} from 'src/elements/Button';
-import SvgCloud from 'src/elements/SvgCloud';
+import {SvgCloud} from 'src/elements/SvgCloud';
 
-const MenuButton = () => {
+export const MenuButton = () => {
   const nightMode = useContext(NightModeContext);
   return (
     <Button data-darkmode={nightMode} data-position="top-left" type="button">
@@ -17,5 +17,3 @@ const MenuButton = () => {
 
 // MenuButton.propTypes = {
 // };
-
-export default MenuButton;

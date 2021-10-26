@@ -1,4 +1,4 @@
-const Noscript = () => {
+export const Noscript = () => {
   return (
     <noscript>
       For full functionality of this site, it is necessary to enable JavaScript.
@@ -10,5 +10,3 @@ const Noscript = () => {
     </noscript>
   );
 };
-
-export default Noscript;

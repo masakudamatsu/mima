@@ -1,6 +1,6 @@
 import Head from 'next/head';
 
-import GlobalStyle from 'src/elements/GlobalStyle';
+import {GlobalStyle} from 'src/elements/GlobalStyle';
 import {NightModeProvider} from 'src/context/NightModeContext';
 
 export default function App({Component, pageProps}) {

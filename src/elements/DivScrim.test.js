@@ -1,7 +1,7 @@
 // eslint-disable-next-line no-unused-vars
 import {render, screen} from '@testing-library/react';
 
-import DivScrim from './DivScrim';
+import {DivScrim} from './DivScrim';
 
 const mockProps = {};
 

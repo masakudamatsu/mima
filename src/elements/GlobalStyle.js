@@ -22,7 +22,7 @@ const setBackground = `
   }
 `;
 
-const GlobalStyle = createGlobalStyle`
+export const GlobalStyle = createGlobalStyle`
   ${fontface}
   ${ress}
   ${resetRangeInput}
@@ -33,5 +33,3 @@ const GlobalStyle = createGlobalStyle`
   ${setBackground}
   ${makeMapFullscreen}
 `;
-
-export default GlobalStyle;

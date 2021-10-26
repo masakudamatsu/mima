@@ -1,7 +1,7 @@
 // eslint-disable-next-line no-unused-vars
 import {render, screen} from '@testing-library/react';
 
-import DivPopup from './DivPopup';
+import {DivPopup} from './DivPopup';
 
 const mockProps = {};
 
