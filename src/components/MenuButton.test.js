@@ -39,11 +39,22 @@ describe('HTML checks', () => {
   });
 });
 
-test('Clicking button reveals menu', () => {
-  render(<MenuButton {...mockProps} />, {wrapper: Wrapper.lightMode});
-  expect(screen.getByRole('heading', {hidden: true})).not.toBeVisible();
-  userEvent.click(screen.getByRole('button', {name: buttonLabel.menu}));
-  expect(screen.getByRole('heading')).toHaveTextContent(menuLabel);
+describe('Menu window', () => {
+  beforeEach(() => {
+    render(<MenuButton {...mockProps} />, {wrapper: Wrapper.lightMode});
+  });
+  test('is hidden by default', () => {
+    expect(screen.getByRole('heading', {hidden: true})).not.toBeVisible();
+  });
+  test('is shown by clicking menu button', () => {
+    userEvent.click(screen.getByRole('button', {name: buttonLabel.menu}));
+    expect(screen.getByRole('heading')).toHaveTextContent(menuLabel);
+  });
+  test('is hidden again by clicking close button on menu window', () => {
+    userEvent.click(screen.getByRole('button', {name: buttonLabel.menu}));
+    userEvent.click(screen.getByRole('button', {name: buttonLabel.close}));
+    expect(screen.getByRole('heading', {hidden: true})).not.toBeVisible();
+  });
 });
 
 test('Accessibility checks', async () => {

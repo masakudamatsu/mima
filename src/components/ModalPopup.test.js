@@ -3,6 +3,7 @@ import userEvent from '@testing-library/user-event';
 import {axe} from 'jest-axe';
 
 import {ModalPopup} from './ModalPopup';
+import {buttonLabel} from 'src/utils/uiCopies';
 
 const mockTitle = 'Mock Title';
 const mockProps = {
@@ -10,6 +11,7 @@ const mockProps = {
   titleId: 'mock-title',
   // setModalPopupHidden: jest.fn().mockName('setModalPopupHidden'),
 };
+const mockHandleClickCloseButton = jest.fn().mockName('handleClickCloseButton');
 
 describe('ModalPopup component', () => {
   test('toggles visibility with hidden prop', () => {
@@ -56,11 +58,28 @@ describe('ModalPopup component', () => {
     );
     expect(screen.getByRole('heading', {name: mockHeading})).toBeVisible();
   });
-  test.skip('calls setModalPopupHidden(true) when the close button is clicked', () => {
-    render(<ModalPopup {...mockProps} />);
-    userEvent.click(screen.getByRole('button', {name: 'Close dialog'}));
-    expect(mockProps.setModalPopupHidden).toHaveBeenCalledTimes(1);
-    expect(mockProps.setModalPopupHidden).toHaveBeenCalledWith(true);
+  test('renders close button if handleClickCloseButton prop is provided', () => {
+    const {rerender} = render(<ModalPopup {...mockProps} />);
+    expect(
+      screen.queryByRole('button', {name: buttonLabel.close}),
+    ).not.toBeInTheDocument();
+    rerender(
+      <ModalPopup
+        {...mockProps}
+        handleClickCloseButton={mockHandleClickCloseButton}
+      />,
+    );
+    expect(screen.getByRole('button', {name: buttonLabel.close})).toBeVisible();
+  });
+  test('calls handleClickCloseButton after clicking close button', () => {
+    render(
+      <ModalPopup
+        {...mockProps}
+        handleClickCloseButton={mockHandleClickCloseButton}
+      />,
+    );
+    userEvent.click(screen.getByRole('button', {name: buttonLabel.close}));
+    expect(mockHandleClickCloseButton).toBeCalledTimes(1);
   });
 });
 

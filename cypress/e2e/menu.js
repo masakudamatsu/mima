@@ -8,3 +8,15 @@ describe('Menu button', () => {
     cy.findByRole('dialog', {name: menuLabel}).should('exist');
   });
 });
+
+describe('Menu window, once opened...', () => {
+  beforeEach(() => {
+    cy.visitAtDaytime('/');
+    cy.waitForMapToLoad();
+    cy.findByRole('button', {name: buttonLabel.menu}).click();
+  });
+  it('closes after clicking the close button', () => {
+    cy.findByRole('button', {name: buttonLabel.close}).click();
+    cy.findByRole('dialog', {name: menuLabel}).should('not.exist');
+  });
+});

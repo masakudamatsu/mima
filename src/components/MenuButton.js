@@ -15,6 +15,9 @@ export const MenuButton = () => {
   const handleClick = () => {
     setOpen(true);
   };
+  const handleClickCloseButton = () => {
+    setOpen(false);
+  };
   return (
     <nav>
       <Button
@@ -25,7 +28,12 @@ export const MenuButton = () => {
       >
         <SvgCloud icon="menu" title={buttonLabel.menu} />
       </Button>
-      <ModalPopup hidden={!open} slideFrom="left" titleId="menu-label">
+      <ModalPopup
+        handleClickCloseButton={handleClickCloseButton}
+        hidden={!open}
+        slideFrom="left"
+        titleId="menu-label"
+      >
         <h1 id="menu-label">{menuLabel}</h1>
       </ModalPopup>
     </nav>
