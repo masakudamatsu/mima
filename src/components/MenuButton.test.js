@@ -1,10 +1,11 @@
 // eslint-disable-next-line no-unused-vars
 import {render, screen} from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 import {axe} from 'jest-axe';
 
 import {MenuButton} from './MenuButton';
 import {NightModeContext} from 'src/context/NightModeContext';
-import {buttonLabel} from 'src/utils/uiCopies';
+import {buttonLabel, menuLabel} from 'src/utils/uiCopies';
 
 const accessibleName = buttonLabel.menu;
 const mockProps = {};
@@ -36,6 +37,13 @@ describe('HTML checks', () => {
       'button',
     );
   });
+});
+
+test('Clicking button reveals menu', () => {
+  render(<MenuButton {...mockProps} />, {wrapper: Wrapper.lightMode});
+  expect(screen.getByRole('heading', {hidden: true})).not.toBeVisible();
+  userEvent.click(screen.getByRole('button', {name: buttonLabel.menu}));
+  expect(screen.getByRole('heading')).toHaveTextContent(menuLabel);
 });
 
 test('Accessibility checks', async () => {
