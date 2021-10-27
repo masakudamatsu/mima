@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 // import PropTypes from 'prop-types';
-import {color} from 'src/utils/designtokens';
+import {color, duration, easing} from 'src/utils/designtokens';
 import {zIndex} from 'src/utils/zIndex';
 
 const placeOverScrim = `
@@ -61,6 +61,28 @@ const setSize = `
   }
 `;
 
+const animateTransition = `
+  &[data-slide-from="left"] {
+    transform: translateX(-100%);
+  }
+  &[data-slide-from="right"] {
+    transform: translateX(100%);
+  }
+  &[data-hidden='true'] {
+    opacity: 0;
+    transition: 
+      opacity ${duration.menu.exit} ${easing.linear},
+      transform ${duration.menu.exit} ${easing.accelerate};
+  }
+  &[data-hidden='false'] {
+    opacity: 1;
+    transform: none;
+    transition: 
+      opcacity ${duration.menu.enter.opacity} ${easing.linear},
+      transform ${duration.menu.enter.transform} ${easing.decelerate};
+  }
+`;
+
 export const DivPopup = styled.div`
   ${setFontScheme}
   ${setLayout}
@@ -68,6 +90,7 @@ export const DivPopup = styled.div`
   ${setColorScheme}
   ${setTextColor}
   ${setSize}
+  ${animateTransition}
   background: var(--popup-background-color);
   box-shadow: 0 0 ${dimension['margin 66']} ${dimension['margin 66']}
       var(--popup-shadow-color),
