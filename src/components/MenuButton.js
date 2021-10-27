@@ -6,12 +6,15 @@ import {NightModeContext} from 'src/context/NightModeContext';
 import {ModalPopup} from 'src/components/ModalPopup';
 import {Button} from 'src/elements/Button';
 import {SvgCloud} from 'src/elements/SvgCloud';
+import {ButtonSquare} from 'src/elements/ButtonSquare';
+import {SvgClose} from 'src/elements/SvgClose';
 
 import {buttonLabel, menuLabel} from 'src/utils/uiCopies';
 
 export const MenuButton = () => {
   const nightMode = useContext(NightModeContext);
   const [open, setOpen] = useState(false);
+
   const closeByEsc = event => {
     if (event.key === 'Escape') {
       document.removeEventListener('keydown', closeByEsc);
@@ -36,13 +39,16 @@ export const MenuButton = () => {
       >
         <SvgCloud icon="menu" title={buttonLabel.menu} />
       </Button>
-      <ModalPopup
-        handleClickCloseButton={handleClickCloseButton}
-        hidden={!open}
-        slideFrom="left"
-        titleId="menu-label"
-      >
+      <ModalPopup hidden={!open} slideFrom="left" titleId="menu-label">
         <h1 id="menu-label">{menuLabel}</h1>
+        <ButtonSquare
+          data-darkmode={nightMode}
+          data-testid="close-button"
+          onClick={handleClickCloseButton}
+          type="button"
+        >
+          <SvgClose title={buttonLabel.close} />
+        </ButtonSquare>
       </ModalPopup>
     </nav>
   );

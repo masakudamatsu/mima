@@ -11,7 +11,6 @@ const mockProps = {
   titleId: 'mock-title',
   // setModalPopupHidden: jest.fn().mockName('setModalPopupHidden'),
 };
-const mockHandleClickCloseButton = jest.fn().mockName('handleClickCloseButton');
 
 describe('ModalPopup component', () => {
   test('toggles visibility with hidden prop', () => {
@@ -58,31 +57,7 @@ describe('ModalPopup component', () => {
     );
     expect(screen.getByRole('heading', {name: mockHeading})).toBeVisible();
   });
-  test('renders close button if handleClickCloseButton prop is provided', () => {
-    const {rerender} = render(<ModalPopup {...mockProps} />);
-    expect(
-      screen.queryByRole('button', {name: buttonLabel.close}),
-    ).not.toBeInTheDocument();
-    rerender(
-      <ModalPopup
-        {...mockProps}
-        handleClickCloseButton={mockHandleClickCloseButton}
-      />,
-    );
-    expect(screen.getByRole('button', {name: buttonLabel.close})).toBeVisible();
-  });
-  test('calls handleClickCloseButton after clicking close button', () => {
-    render(
-      <ModalPopup
-        {...mockProps}
-        handleClickCloseButton={mockHandleClickCloseButton}
-      />,
-    );
-    userEvent.click(screen.getByRole('button', {name: buttonLabel.close}));
-    expect(mockHandleClickCloseButton).toBeCalledTimes(1);
-  });
 });
-
 test('Accessibility checks', async () => {
   const {container} = render(<ModalPopup {...mockProps} />);
   const results = await axe(container);
