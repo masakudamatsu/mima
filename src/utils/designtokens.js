@@ -91,3 +91,11 @@ export const dimension = {
     'blur nighttime': '10px',
   },
 };
+
+export const duration = {
+  flashingButton: '1500ms',
+};
+
+export const easing = {
+  linear: 'linear',
+};

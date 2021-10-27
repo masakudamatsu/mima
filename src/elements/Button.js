@@ -1,6 +1,6 @@
 import styled, {css, keyframes} from 'styled-components';
 
-import {color, dimension} from 'src/utils/designtokens';
+import {color, dimension, duration, easing} from 'src/utils/designtokens';
 import {zIndex} from 'src/utils/zIndex';
 
 const resetStyle = css`
@@ -135,7 +135,7 @@ const flashing = keyframes`
 
 const blinkButton = css`
   &[data-loading='true'] {
-    animation: ${flashing} 1500ms linear infinite;
+    animation: ${flashing} ${duration.flashingButton} ${easing.linear} infinite;
   }
 `;
 
