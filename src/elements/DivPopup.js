@@ -48,16 +48,24 @@ const setTextColor = `
 `;
 
 const setSize = `
-  height: calc(100% - ${dimension['margin 200']});
   bottom: ${dimension['margin 100']};
-  top: ${dimension['margin 100']};
   &[data-slide-from="left"] {
+    height: calc(100% - ${dimension['margin 200']});
     right: ${dimension['margin 100']};
+    top: ${dimension['margin 100']};
     width: calc(100% - ${dimension['margin 100']});  
   }
   &[data-slide-from="right"] {
+    height: calc(100% - ${dimension['margin 200']});
     left: ${dimension['margin 100']};
+    top: ${dimension['margin 100']};
     width: calc(100% - ${dimension['margin 100']});  
+  }
+  &[data-slide-from="top"] {
+    height: calc(100% - ${dimension['margin 100']});
+    left: ${dimension['margin 100']};
+    right: ${dimension['margin 100']};
+    width: calc(100% - ${dimension['margin 200']});  
   }
 `;
 
@@ -67,6 +75,9 @@ const animateTransition = `
   }
   &[data-slide-from="right"] {
     transform: translateX(100%);
+  }
+  &[data-slide-from="top"] {
+    transform: translateY(-100%);
   }
   &[data-hidden='true'] {
     opacity: 0;

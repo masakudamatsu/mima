@@ -81,9 +81,9 @@ describe('Geolocation API unsupported', () => {
     // execute
     cy.findByRole('button', {name: geolocationNotSupported.button}).click();
     // verify
-    cy.findByText(geolocationNotSupported.what).should('not.exist');
-    cy.findByText(geolocationNotSupported.why).should('not.exist');
-    cy.findByText(geolocationNotSupported.how).should('not.exist');
+    cy.findByText(geolocationNotSupported.what).should('not.be.visible');
+    cy.findByText(geolocationNotSupported.why).should('not.be.visible');
+    cy.findByText(geolocationNotSupported.how).should('not.be.visible');
     cy.findByRole('button', {name: buttonLabel.locator.default}).should(
       'be.visible',
     );
@@ -117,9 +117,9 @@ describe('Geolocation API permission denied', () => {
     // execute
     cy.findByRole('button', {name: geolocationPermissionDenied.button}).click();
     // verify
-    cy.findByText(geolocationPermissionDenied.what).should('not.exist');
-    cy.findByText(geolocationPermissionDenied.why).should('not.exist');
-    cy.findByText(geolocationPermissionDenied.how).should('not.exist');
+    cy.findByText(geolocationPermissionDenied.what).should('not.be.visible');
+    cy.findByText(geolocationPermissionDenied.why).should('not.be.visible');
+    cy.findByText(geolocationPermissionDenied.how).should('not.be.visible');
     cy.findByRole('button', {name: buttonLabel.locator.default}).should(
       'be.visible',
     );
@@ -165,9 +165,9 @@ describe('Geolocation API fails to find user location', () => {
       name: geolocationPositionUnavailable.button.secondary,
     }).click();
     // verify
-    cy.findByText(geolocationPositionUnavailable.what).should('not.exist');
-    cy.findByText(geolocationPositionUnavailable.why).should('not.exist');
-    cy.findByText(geolocationPositionUnavailable.how).should('not.exist');
+    cy.findByText(geolocationPositionUnavailable.what).should('not.be.visible');
+    cy.findByText(geolocationPositionUnavailable.why).should('not.be.visible');
+    cy.findByText(geolocationPositionUnavailable.how).should('not.be.visible');
     cy.findByRole('button', {name: buttonLabel.locator.default}).should(
       'be.visible',
     );

@@ -24,9 +24,7 @@ test('renders UI correctly', () => {
   position: absolute;
   z-index: 3;
   color: var(--popup-text-color);
-  height: calc(100% - 48px);
   bottom: 24px;
-  top: 24px;
   background: var(--popup-background-color);
   box-shadow: 0 0 16px 16px var(--popup-shadow-color),0 0 24px 16px var(--popup-shadow-color),0 0 32px 16px var(--popup-shadow-color);
 }
@@ -50,13 +48,24 @@ test('renders UI correctly', () => {
 }
 
 .c0[data-slide-from="left"] {
+  height: calc(100% - 48px);
   right: 24px;
+  top: 24px;
   width: calc(100% - 24px);
 }
 
 .c0[data-slide-from="right"] {
+  height: calc(100% - 48px);
   left: 24px;
+  top: 24px;
   width: calc(100% - 24px);
+}
+
+.c0[data-slide-from="top"] {
+  height: calc(100% - 24px);
+  left: 24px;
+  right: 24px;
+  width: calc(100% - 48px);
 }
 
 .c0[data-slide-from="left"] {
@@ -69,6 +78,12 @@ test('renders UI correctly', () => {
   -webkit-transform: translateX(100%);
   -ms-transform: translateX(100%);
   transform: translateX(100%);
+}
+
+.c0[data-slide-from="top"] {
+  -webkit-transform: translateY(-100%);
+  -ms-transform: translateY(-100%);
+  transform: translateY(-100%);
 }
 
 .c0[data-hidden='true'] {
