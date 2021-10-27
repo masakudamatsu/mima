@@ -55,6 +55,14 @@ describe('Menu window', () => {
     userEvent.click(screen.getByRole('button', {name: buttonLabel.close}));
     expect(screen.getByRole('heading', {hidden: true})).not.toBeVisible();
   });
+  test('is hidden again by clicking Esc button', () => {
+    userEvent.click(screen.getByRole('button', {name: buttonLabel.menu}));
+    userEvent.type(
+      screen.getByRole('button', {name: buttonLabel.close}),
+      '{esc}',
+    );
+    expect(screen.getByRole('heading', {hidden: true})).not.toBeVisible();
+  });
 });
 
 test('Accessibility checks', async () => {

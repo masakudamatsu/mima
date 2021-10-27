@@ -12,10 +12,18 @@ import {buttonLabel, menuLabel} from 'src/utils/uiCopies';
 export const MenuButton = () => {
   const nightMode = useContext(NightModeContext);
   const [open, setOpen] = useState(false);
+  const closeByEsc = event => {
+    if (event.key === 'Escape') {
+      document.removeEventListener('keydown', closeByEsc);
+      setOpen(false);
+    }
+  };
   const handleClick = () => {
+    document.addEventListener('keydown', closeByEsc);
     setOpen(true);
   };
   const handleClickCloseButton = () => {
+    document.removeEventListener('keydown', closeByEsc);
     setOpen(false);
   };
   return (
