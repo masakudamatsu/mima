@@ -109,8 +109,10 @@ export const LocatorButton = ({mapObject}) => {
   }
   function handleGeolocationError(error, setStatus) {
     if (error.code === 1) {
+      document.addEventListener('keydown', closeByEsc);
       setStatus('permissionDenied');
     } else if (error.code === 2) {
+      document.addEventListener('keydown', closeByEsc);
       setStatus('positionUnavailable');
     }
   }
@@ -167,6 +169,7 @@ export const LocatorButton = ({mapObject}) => {
       );
     } else {
       // Browser doesn't support Geolocation
+      document.addEventListener('keydown', closeByEsc);
       setStatus('geolocationNotSupported');
     }
   };
@@ -176,9 +179,15 @@ export const LocatorButton = ({mapObject}) => {
   };
 
   const initializeUI = () => {
+    document.removeEventListener('keydown', closeByEsc);
     setStatus('initial');
   };
-
+  const closeByEsc = event => {
+    if (event.key === 'Escape') {
+      document.removeEventListener('keydown', closeByEsc);
+      setStatus('initial');
+    }
+  };
   return (
     <>
       {status !== 'watching' ? (

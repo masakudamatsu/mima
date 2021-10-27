@@ -88,6 +88,16 @@ describe('Geolocation API unsupported', () => {
       'be.visible',
     );
   });
+  it('Pressing Esc key dismisses the dialog', () => {
+    cy.get('body').type('{esc}');
+    // verify
+    cy.findByText(geolocationNotSupported.what).should('not.be.visible');
+    cy.findByText(geolocationNotSupported.why).should('not.be.visible');
+    cy.findByText(geolocationNotSupported.how).should('not.be.visible');
+    cy.findByRole('button', {name: buttonLabel.locator.default}).should(
+      'be.visible',
+    );
+  });
 });
 
 describe('Geolocation API permission denied', () => {
@@ -116,6 +126,16 @@ describe('Geolocation API permission denied', () => {
   it(`Clicking the "${geolocationPermissionDenied.button}" button dismisses the dialog`, () => {
     // execute
     cy.findByRole('button', {name: geolocationPermissionDenied.button}).click();
+    // verify
+    cy.findByText(geolocationPermissionDenied.what).should('not.be.visible');
+    cy.findByText(geolocationPermissionDenied.why).should('not.be.visible');
+    cy.findByText(geolocationPermissionDenied.how).should('not.be.visible');
+    cy.findByRole('button', {name: buttonLabel.locator.default}).should(
+      'be.visible',
+    );
+  });
+  it('Pressing Esc key dismisses the dialog', () => {
+    cy.get('body').type('{esc}');
     // verify
     cy.findByText(geolocationPermissionDenied.what).should('not.be.visible');
     cy.findByText(geolocationPermissionDenied.why).should('not.be.visible');
@@ -164,6 +184,16 @@ describe('Geolocation API fails to find user location', () => {
     cy.findByRole('button', {
       name: geolocationPositionUnavailable.button.secondary,
     }).click();
+    // verify
+    cy.findByText(geolocationPositionUnavailable.what).should('not.be.visible');
+    cy.findByText(geolocationPositionUnavailable.why).should('not.be.visible');
+    cy.findByText(geolocationPositionUnavailable.how).should('not.be.visible');
+    cy.findByRole('button', {name: buttonLabel.locator.default}).should(
+      'be.visible',
+    );
+  });
+  it('Pressing Esc key dismisses the dialog', () => {
+    cy.get('body').type('{esc}');
     // verify
     cy.findByText(geolocationPositionUnavailable.what).should('not.be.visible');
     cy.findByText(geolocationPositionUnavailable.why).should('not.be.visible');
