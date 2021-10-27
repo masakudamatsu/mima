@@ -1,4 +1,4 @@
-import {useContext, useRef, useState} from 'react';
+import {useContext, useEffect, useRef, useState} from 'react';
 import PropTypes from 'prop-types';
 
 import {ModalPopup} from 'src/components/ModalPopup';
@@ -30,6 +30,7 @@ export const LocatorButton = ({mapObject}) => {
   // UI states
   const nightMode = useContext(NightModeContext);
   const [status, setStatus] = useState('initial');
+
   // to track user location
   const userLocation = useRef(null);
   const userDirection = useRef(45); // to match the button label icon
@@ -188,6 +189,22 @@ export const LocatorButton = ({mapObject}) => {
       setStatus('initial');
     }
   };
+
+  const buttonDenied = useRef();
+  const buttonUnsupported = useRef();
+  const buttonUnavailable = useRef();
+  useEffect(() => {
+    if (status === 'permissionDenied') {
+      buttonDenied.current.focus();
+    }
+    if (status === 'geolocationNotSupported') {
+      buttonUnsupported.current.focus();
+    }
+    if (status === 'positionUnavailable') {
+      buttonUnavailable.current.focus();
+    }
+  }, [status]);
+
   return (
     <>
       {status !== 'watching' ? (
@@ -224,7 +241,7 @@ export const LocatorButton = ({mapObject}) => {
         <h1 id="permission-denied">{geolocationPermissionDenied.what}</h1>
         <p>{geolocationPermissionDenied.why}</p>
         <p>{geolocationPermissionDenied.how}</p>
-        <button onClick={initializeUI} type="button">
+        <button onClick={initializeUI} ref={buttonDenied} type="button">
           {geolocationPermissionDenied.button}
         </button>
       </ModalPopup>
@@ -239,7 +256,7 @@ export const LocatorButton = ({mapObject}) => {
         <button onClick={trackUserLocation} type="button">
           {geolocationPositionUnavailable.button.primary}
         </button>
-        <button onClick={initializeUI} type="button">
+        <button onClick={initializeUI} ref={buttonUnavailable} type="button">
           {geolocationPositionUnavailable.button.secondary}
         </button>{' '}
       </ModalPopup>
@@ -251,7 +268,7 @@ export const LocatorButton = ({mapObject}) => {
         <h1 id="geolocation-unsupported">{geolocationNotSupported.what}</h1>
         <p>{geolocationNotSupported.why}</p>
         <p>{geolocationNotSupported.how}</p>
-        <button onClick={initializeUI} type="button">
+        <button onClick={initializeUI} ref={buttonUnsupported} type="button">
           {geolocationNotSupported.button}
         </button>
       </ModalPopup>

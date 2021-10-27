@@ -77,6 +77,16 @@ describe('Geolocation API unsupported', () => {
     cy.findByText(geolocationNotSupported.why).should('be.visible');
     cy.findByText(geolocationNotSupported.how).should('be.visible');
   });
+  it('Clicking locator button focuses close button', () => {
+    cy.focused().click();
+    // verify
+    cy.findByText(geolocationNotSupported.what).should('not.be.visible');
+    cy.findByText(geolocationNotSupported.why).should('not.be.visible');
+    cy.findByText(geolocationNotSupported.how).should('not.be.visible');
+    cy.findByRole('button', {name: buttonLabel.locator.default}).should(
+      'be.visible',
+    );
+  });
   it(`Clicking the "${geolocationNotSupported.button}" button dismisses the dialog`, () => {
     // execute
     cy.findByRole('button', {name: geolocationNotSupported.button}).click();
@@ -123,6 +133,16 @@ describe('Geolocation API permission denied', () => {
     cy.findByText(geolocationPermissionDenied.why).should('be.visible');
     cy.findByText(geolocationPermissionDenied.how).should('be.visible');
   });
+  it('Clicking locator button focuses close button', () => {
+    cy.focused().click();
+    // verify
+    cy.findByText(geolocationPermissionDenied.what).should('not.be.visible');
+    cy.findByText(geolocationPermissionDenied.why).should('not.be.visible');
+    cy.findByText(geolocationPermissionDenied.how).should('not.be.visible');
+    cy.findByRole('button', {name: buttonLabel.locator.default}).should(
+      'be.visible',
+    );
+  });
   it(`Clicking the "${geolocationPermissionDenied.button}" button dismisses the dialog`, () => {
     // execute
     cy.findByRole('button', {name: geolocationPermissionDenied.button}).click();
@@ -168,6 +188,16 @@ describe('Geolocation API fails to find user location', () => {
     cy.findByText(geolocationPositionUnavailable.what).should('be.visible');
     cy.findByText(geolocationPositionUnavailable.why).should('be.visible');
     cy.findByText(geolocationPositionUnavailable.how).should('be.visible');
+  });
+  it('Clicking locator button focuses close button', () => {
+    cy.focused().click();
+    // verify
+    cy.findByText(geolocationPositionUnavailable.what).should('not.be.visible');
+    cy.findByText(geolocationPositionUnavailable.why).should('not.be.visible');
+    cy.findByText(geolocationPositionUnavailable.how).should('not.be.visible');
+    cy.findByRole('button', {name: buttonLabel.locator.default}).should(
+      'be.visible',
+    );
   });
   it(`Clicking the "${geolocationPositionUnavailable.button.primary}" button executes Geolocation API once again`, () => {
     // verify initial condition (it's been called once)
