@@ -50,6 +50,10 @@ describe('Menu window', () => {
     userEvent.click(screen.getByRole('button', {name: buttonLabel.menu}));
     expect(screen.getByRole('heading')).toHaveTextContent(menuLabel);
   });
+  test('focuses close button after being opened', () => {
+    userEvent.click(screen.getByRole('button', {name: buttonLabel.menu}));
+    expect(screen.getByRole('button', {name: buttonLabel.close})).toHaveFocus();
+  });
   test('is hidden again by clicking close button on menu window', () => {
     userEvent.click(screen.getByRole('button', {name: buttonLabel.menu}));
     userEvent.click(screen.getByRole('button', {name: buttonLabel.close}));

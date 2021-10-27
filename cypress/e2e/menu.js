@@ -1,11 +1,17 @@
 import {buttonLabel, menuLabel} from '../../src/utils/uiCopies';
 
-describe('Menu button', () => {
-  it('opens the menu window after being clicked', () => {
+describe('Clicking menu button', () => {
+  beforeEach(() => {
     cy.visitAtDaytime('/');
     cy.waitForMapToLoad();
     cy.findByRole('button', {name: buttonLabel.menu}).click();
+  });
+  it('opens the menu window', () => {
     cy.findByRole('dialog', {name: menuLabel}).should('exist');
+  });
+  it('focuses the close button', () => {
+    cy.focused().click();
+    cy.findByRole('dialog', {name: menuLabel}).should('not.exist');
   });
 });
 

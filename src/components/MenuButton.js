@@ -1,4 +1,4 @@
-import {useContext, useState} from 'react';
+import {useContext, useEffect, useRef, useState} from 'react';
 // import PropTypes from 'prop-types';
 
 import {NightModeContext} from 'src/context/NightModeContext';
@@ -14,6 +14,13 @@ import {buttonLabel, menuLabel} from 'src/utils/uiCopies';
 export const MenuButton = () => {
   const nightMode = useContext(NightModeContext);
   const [open, setOpen] = useState(false);
+
+  const closeButton = useRef();
+  useEffect(() => {
+    if (open) {
+      closeButton.current.focus();
+    }
+  }, [open]);
 
   const closeByEsc = event => {
     if (event.key === 'Escape') {
@@ -45,6 +52,7 @@ export const MenuButton = () => {
           data-darkmode={nightMode}
           data-testid="close-button"
           onClick={handleClickCloseButton}
+          ref={closeButton}
           type="button"
         >
           <SvgClose title={buttonLabel.close} />
