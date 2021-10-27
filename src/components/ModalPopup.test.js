@@ -28,6 +28,18 @@ describe('ModalPopup component', () => {
     );
     expect(screen.getByRole('heading')).toHaveTextContent('New Mock Title');
   });
+  test('sets data-slide-from attribute value with slideFrom prop', () => {
+    const {rerender} = render(<ModalPopup {...mockProps} slideFrom="left" />);
+    expect(screen.getByRole('document')).toHaveAttribute(
+      'data-slide-from',
+      'left',
+    );
+    rerender(<ModalPopup {...mockProps} slideFrom="right" />);
+    expect(screen.getByRole('document')).toHaveAttribute(
+      'data-slide-from',
+      'right',
+    );
+  });
   test('renders child elements', () => {
     const mockContent = 'Mock content';
     const {rerender} = render(

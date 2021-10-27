@@ -6,12 +6,17 @@ import {DivDialog} from 'src/elements/DivDialog';
 import {DivScrim} from 'src/elements/DivScrim';
 import {DivPopup} from 'src/elements/DivPopup';
 
-export const ModalPopup = ({children, hidden, titleId}) => {
+export const ModalPopup = ({children, hidden, slideFrom, titleId}) => {
   const nightMode = useContext(NightModeContext);
   return (
     <DivDialog role="dialog" aria-labelledby={titleId} aria-hidden={hidden}>
       <DivScrim />
-      <DivPopup data-darkmode={nightMode} data-hidden={hidden} role="document">
+      <DivPopup
+        data-darkmode={nightMode}
+        data-hidden={hidden}
+        data-slide-from={slideFrom}
+        role="document"
+      >
         {children}
       </DivPopup>
     </DivDialog>
@@ -21,5 +26,6 @@ export const ModalPopup = ({children, hidden, titleId}) => {
 ModalPopup.propTypes = {
   children: PropTypes.element,
   hidden: PropTypes.bool,
+  slideFrom: PropTypes.string,
   titleId: PropTypes.string.isRequired,
 };

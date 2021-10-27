@@ -47,12 +47,27 @@ const setTextColor = `
   }
 `;
 
+const setSize = `
+  height: calc(100% - ${dimension['margin 200']});
+  bottom: ${dimension['margin 100']};
+  top: ${dimension['margin 100']};
+  &[data-slide-from="left"] {
+    right: ${dimension['margin 100']};
+    width: calc(100% - ${dimension['margin 100']});  
+  }
+  &[data-slide-from="right"] {
+    left: ${dimension['margin 100']};
+    width: calc(100% - ${dimension['margin 100']});  
+  }
+`;
+
 export const DivPopup = styled.div`
   ${setFontScheme}
   ${setLayout}
   ${placeOverScrim}
   ${setColorScheme}
   ${setTextColor}
+  ${setSize}
   background: var(--popup-background-color);
   box-shadow: 0 0 ${dimension['margin 66']} ${dimension['margin 66']}
       var(--popup-shadow-color),
@@ -60,12 +75,6 @@ export const DivPopup = styled.div`
       var(--popup-shadow-color),
     0 0 ${dimension['margin 133']} ${dimension['margin 66']}
       var(--popup-shadow-color);
-  height: calc(100% - ${dimension['margin 200']});
-  top: ${dimension['margin 100']};
-  left: ${dimension['margin 100']};
-  right: ${dimension['margin 100']};
-  bottom: ${dimension['margin 100']};
-  width: calc(100% - ${dimension['margin 200']});
 `;
 
 // DivPopup.propTypes = {};

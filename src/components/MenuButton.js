@@ -25,7 +25,7 @@ export const MenuButton = () => {
       >
         <SvgCloud icon="menu" title={buttonLabel.menu} />
       </Button>
-      <ModalPopup hidden={!open} titleId="menu-label">
+      <ModalPopup hidden={!open} slideFrom="left" titleId="menu-label">
         <h1 id="menu-label">{menuLabel}</h1>
       </ModalPopup>
     </nav>

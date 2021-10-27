@@ -24,14 +24,11 @@ test('renders UI correctly', () => {
   position: absolute;
   z-index: 3;
   color: var(--popup-text-color);
+  height: calc(100% - 48px);
+  bottom: 24px;
+  top: 24px;
   background: var(--popup-background-color);
   box-shadow: 0 0 16px 16px var(--popup-shadow-color),0 0 24px 16px var(--popup-shadow-color),0 0 32px 16px var(--popup-shadow-color);
-  height: calc(100% - 48px);
-  top: 24px;
-  left: 24px;
-  right: 24px;
-  bottom: 24px;
-  width: calc(100% - 48px);
 }
 
 .c0[data-darkmode='false'] {
@@ -50,6 +47,16 @@ test('renders UI correctly', () => {
 
 .c0 button {
   color: var(--popup-button-text-color);
+}
+
+.c0[data-slide-from="left"] {
+  right: 24px;
+  width: calc(100% - 24px);
+}
+
+.c0[data-slide-from="right"] {
+  left: 24px;
+  width: calc(100% - 24px);
 }
 
 <div>
