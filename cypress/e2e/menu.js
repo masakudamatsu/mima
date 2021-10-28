@@ -38,3 +38,15 @@ describe('Menu window, once opened...', () => {
     cy.focused().should('have.attr', 'data-testid', 'last-focusable-element');
   });
 });
+
+describe('Menu window, once closed...', () => {
+  beforeEach(() => {
+    cy.visitAtDaytime('/');
+    cy.waitForMapToLoad();
+    cy.findByRole('button', {name: buttonLabel.menu}).click();
+    cy.findByRole('button', {name: buttonLabel.close}).click();
+  });
+  it('focuses the menu button', () => {
+    cy.focused().should('have.attr', 'data-testid', 'menu-button');
+  });
+});

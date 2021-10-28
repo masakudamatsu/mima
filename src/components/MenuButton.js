@@ -51,12 +51,13 @@ export const MenuButton = () => {
       <Button
         data-darkmode={nightMode}
         data-position="top-left"
+        data-testid="menu-button"
         onClick={handleClick}
         type="button"
       >
         <SvgCloud icon="menu" title={buttonLabel.menu} />
       </Button>
-      <FocusLock disabled={!open}>
+      <FocusLock disabled={!open} returnFocus>
         <ModalPopup hidden={!open} slideFrom="left" titleId="menu-label">
           <h1 id="menu-label">{menuLabel}</h1>
           <ButtonSquare
