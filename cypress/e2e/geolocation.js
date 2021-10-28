@@ -255,6 +255,24 @@ describe('Geolocation API fails to find user location', () => {
       'be.visible',
     );
   });
+  it.skip(`Pressing Tab key focuses on "${geolocationPositionUnavailable.button.primary}" button`, () => {
+    // This test sometimes works, sometimes doesn't...
+    cy.focused().tab();
+    // https://docs.cypress.io/api/commands/type#Tabbing
+    cy.focused().click();
+    // verify
+    cy.get('@getCurrentPosition').should('have.been.calledTwice'); // see https://glebbahmutov.com/blog/cypress-tips-and-tricks/#control-navigatorlanguage
+  });
+  it.skip(`Pressing Shift + Tab key focuses on "${geolocationPositionUnavailable.button.primary}" button`, () => {
+    // This test sometimes works, sometimes doesn't...
+    cy.focused().tab({
+      shift: true,
+    });
+    // https://docs.cypress.io/api/commands/type#Tabbing
+    cy.focused().click();
+    // verify
+    cy.get('@getCurrentPosition').should('have.been.calledTwice'); // see https://glebbahmutov.com/blog/cypress-tips-and-tricks/#control-navigatorlanguage
+  });
   it(`Clicking the "${geolocationPositionUnavailable.button.primary}" button executes Geolocation API once again`, () => {
     // verify initial condition (it's been called once)
     cy.get('@getCurrentPosition').should('have.been.calledOnce'); // see https://glebbahmutov.com/blog/cypress-tips-and-tricks/#control-navigatorlanguage
@@ -264,6 +282,38 @@ describe('Geolocation API fails to find user location', () => {
     }).click();
     // verify
     cy.get('@getCurrentPosition').should('have.been.calledTwice'); // see https://glebbahmutov.com/blog/cypress-tips-and-tricks/#control-navigatorlanguage
+  });
+  it.skip(`Pressing Tab key on "${geolocationPositionUnavailable.button.primary}" button moves the focus on "${geolocationPositionUnavailable.button.secondary}" button`, () => {
+    // This test sometimes works, sometimes doesn't...
+    cy.findByRole('button', {
+      name: geolocationPositionUnavailable.button.primary,
+    }).tab();
+    // https://docs.cypress.io/api/commands/type#Tabbing
+    cy.focused().click();
+    // verify
+    cy.findByText(geolocationPositionUnavailable.what).should('not.be.visible');
+    cy.findByText(geolocationPositionUnavailable.why).should('not.be.visible');
+    cy.findByText(geolocationPositionUnavailable.how).should('not.be.visible');
+    cy.findByRole('button', {name: buttonLabel.locator.default}).should(
+      'be.visible',
+    );
+  });
+  it.skip(`Pressing Shift + Tab key on "${geolocationPositionUnavailable.button.primary}" button moves the focus on "${geolocationPositionUnavailable.button.secondary}" button`, () => {
+    // This test sometimes works, sometimes doesn't...
+    cy.findByRole('button', {
+      name: geolocationPositionUnavailable.button.primary,
+    }).tab({
+      shift: true,
+    });
+    // https://docs.cypress.io/api/commands/type#Tabbing
+    cy.focused().click();
+    // verify
+    cy.findByText(geolocationPositionUnavailable.what).should('not.be.visible');
+    cy.findByText(geolocationPositionUnavailable.why).should('not.be.visible');
+    cy.findByText(geolocationPositionUnavailable.how).should('not.be.visible');
+    cy.findByRole('button', {name: buttonLabel.locator.default}).should(
+      'be.visible',
+    );
   });
   it(`Clicking the "${geolocationPositionUnavailable.button.secondary}" button dismisses the dialog`, () => {
     // execute

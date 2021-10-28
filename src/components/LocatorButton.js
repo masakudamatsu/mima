@@ -183,7 +183,8 @@ export const LocatorButton = ({mapObject}) => {
   // focus management
   const buttonDenied = useRef();
   const buttonUnsupported = useRef();
-  const buttonUnavailable = useRef();
+  const buttonUnavailablePrimary = useRef();
+  const buttonUnavailableSecondary = useRef();
   useEffect(() => {
     if (status === 'permissionDenied') {
       buttonDenied.current.focus();
@@ -192,13 +193,25 @@ export const LocatorButton = ({mapObject}) => {
       buttonUnsupported.current.focus();
     }
     if (status === 'positionUnavailable') {
-      buttonUnavailable.current.focus();
+      buttonUnavailableSecondary.current.focus();
     }
   }, [status]);
   const trapFocus = event => {
     if (event.key === 'Tab') {
       event.preventDefault();
       // source: https://accessibility.huit.harvard.edu/technique-accessible-modal-dialogs
+    }
+  };
+  const trapFocusPrimary = event => {
+    if (event.key === 'Tab') {
+      event.preventDefault();
+      buttonUnavailableSecondary.current.focus();
+    }
+  };
+  const trapFocusSecondary = event => {
+    if (event.key === 'Tab') {
+      event.preventDefault();
+      buttonUnavailablePrimary.current.focus();
     }
   };
   // close error dialogs with Esc key
@@ -279,10 +292,20 @@ export const LocatorButton = ({mapObject}) => {
         <h1 id="position-unavailable">{geolocationPositionUnavailable.what}</h1>
         <p>{geolocationPositionUnavailable.why}</p>
         <p>{geolocationPositionUnavailable.how}</p>
-        <button onClick={trackUserLocation} type="button">
+        <button
+          onClick={trackUserLocation}
+          onKeyDown={trapFocusPrimary}
+          ref={buttonUnavailablePrimary}
+          type="button"
+        >
           {geolocationPositionUnavailable.button.primary}
         </button>
-        <button onClick={initializeUI} ref={buttonUnavailable} type="button">
+        <button
+          onClick={initializeUI}
+          onKeyDown={trapFocusSecondary}
+          ref={buttonUnavailableSecondary}
+          type="button"
+        >
           {geolocationPositionUnavailable.button.secondary}
         </button>{' '}
       </ModalPopup>
