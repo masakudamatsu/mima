@@ -1,6 +1,6 @@
 import {useContext, useEffect, useRef, useState} from 'react';
 // import PropTypes from 'prop-types';
-
+import FocusLock from 'react-focus-lock';
 import {NightModeContext} from 'src/context/NightModeContext';
 
 import {ModalPopup} from 'src/components/ModalPopup';
@@ -56,18 +56,30 @@ export const MenuButton = () => {
       >
         <SvgCloud icon="menu" title={buttonLabel.menu} />
       </Button>
-      <ModalPopup hidden={!open} slideFrom="left" titleId="menu-label">
-        <h1 id="menu-label">{menuLabel}</h1>
-        <ButtonSquare
-          data-darkmode={nightMode}
-          data-testid="close-button"
-          onClick={handleClickCloseButton}
-          ref={closeButton}
-          type="button"
-        >
-          <SvgClose title={buttonLabel.close} />
-        </ButtonSquare>
-      </ModalPopup>
+      <FocusLock disabled={!open}>
+        <ModalPopup hidden={!open} slideFrom="left" titleId="menu-label">
+          <h1 id="menu-label">{menuLabel}</h1>
+          <ButtonSquare
+            data-darkmode={nightMode}
+            data-testid="close-button"
+            onClick={handleClickCloseButton}
+            ref={closeButton}
+            type="button"
+          >
+            <SvgClose title={buttonLabel.close} />
+          </ButtonSquare>
+          <ul>
+            <li>
+              <button>First menu item</button>
+            </li>
+            <li>
+              <button data-testid="last-focusable-element">
+                Second menu item
+              </button>
+            </li>
+          </ul>
+        </ModalPopup>
+      </FocusLock>
     </nav>
   );
 };

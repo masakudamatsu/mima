@@ -29,4 +29,12 @@ describe('Menu window, once opened...', () => {
     cy.get('body').type('{esc}');
     cy.findByRole('dialog', {name: menuLabel}).should('not.exist');
   });
+  it('traps focus inside with Tab key', () => {
+    cy.findByTestId('last-focusable-element').tab({shift: false});
+    cy.focused().should('have.attr', 'data-testid', 'close-button');
+  });
+  it('traps focus inside with Shift + Tab key', () => {
+    cy.findByTestId('close-button').tab({shift: true});
+    cy.focused().should('have.attr', 'data-testid', 'last-focusable-element');
+  });
 });
