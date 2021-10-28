@@ -1,5 +1,6 @@
 import {useContext} from 'react';
 import PropTypes from 'prop-types';
+import FocusLock from 'react-focus-lock';
 
 import {NightModeContext} from 'src/context/NightModeContext';
 
@@ -10,17 +11,19 @@ import {DivPopup} from 'src/elements/DivPopup';
 export const ModalPopup = ({children, hidden, slideFrom, titleId}) => {
   const nightMode = useContext(NightModeContext);
   return (
-    <DivDialog role="dialog" aria-labelledby={titleId} aria-hidden={hidden}>
-      <DivScrim />
-      <DivPopup
-        data-darkmode={nightMode}
-        data-hidden={hidden}
-        data-slide-from={slideFrom}
-        role="document"
-      >
-        {children}
-      </DivPopup>
-    </DivDialog>
+    <FocusLock disabled={hidden} returnFocus>
+      <DivDialog role="dialog" aria-labelledby={titleId} aria-hidden={hidden}>
+        <DivScrim />
+        <DivPopup
+          data-darkmode={nightMode}
+          data-hidden={hidden}
+          data-slide-from={slideFrom}
+          role="document"
+        >
+          {children}
+        </DivPopup>
+      </DivDialog>
+    </FocusLock>
   );
 };
 

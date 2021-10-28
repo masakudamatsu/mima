@@ -180,44 +180,6 @@ export const LocatorButton = ({mapObject}) => {
     setStatus('dismissed');
   };
 
-  // focus management
-  const buttonLocator = useRef();
-  const buttonDenied = useRef();
-  const buttonUnsupported = useRef();
-  const buttonUnavailablePrimary = useRef();
-  const buttonUnavailableSecondary = useRef();
-  useEffect(() => {
-    if (status === 'permissionDenied') {
-      buttonDenied.current.focus();
-    }
-    if (status === 'geolocationNotSupported') {
-      buttonUnsupported.current.focus();
-    }
-    if (status === 'positionUnavailable') {
-      buttonUnavailableSecondary.current.focus();
-    }
-    if (status === 'dismissed') {
-      buttonLocator.current.focus();
-    }
-  }, [status]);
-  const trapFocus = event => {
-    if (event.key === 'Tab') {
-      event.preventDefault();
-      // source: https://accessibility.huit.harvard.edu/technique-accessible-modal-dialogs
-    }
-  };
-  const trapFocusPrimary = event => {
-    if (event.key === 'Tab') {
-      event.preventDefault();
-      buttonUnavailableSecondary.current.focus();
-    }
-  };
-  const trapFocusSecondary = event => {
-    if (event.key === 'Tab') {
-      event.preventDefault();
-      buttonUnavailablePrimary.current.focus();
-    }
-  };
   // close error dialogs with Esc key
   useEffect(() => {
     if (status === 'loading' || status === 'watching') {
@@ -252,7 +214,6 @@ export const LocatorButton = ({mapObject}) => {
           data-position="bottom-right-second"
           data-testid="locator-button"
           onClick={trackUserLocation}
-          ref={buttonLocator}
           type="button"
         >
           <SvgCloud
@@ -282,10 +243,9 @@ export const LocatorButton = ({mapObject}) => {
         <p>{geolocationPermissionDenied.why}</p>
         <p>{geolocationPermissionDenied.how}</p>
         <button
+          data-autofocus
           data-testid="close-button-denied"
           onClick={initializeUI}
-          onKeyDown={trapFocus}
-          ref={buttonDenied}
           type="button"
         >
           {geolocationPermissionDenied.button}
@@ -299,19 +259,13 @@ export const LocatorButton = ({mapObject}) => {
         <h1 id="position-unavailable">{geolocationPositionUnavailable.what}</h1>
         <p>{geolocationPositionUnavailable.why}</p>
         <p>{geolocationPositionUnavailable.how}</p>
-        <button
-          onClick={trackUserLocation}
-          onKeyDown={trapFocusPrimary}
-          ref={buttonUnavailablePrimary}
-          type="button"
-        >
+        <button onClick={trackUserLocation} type="button">
           {geolocationPositionUnavailable.button.primary}
         </button>
         <button
+          data-autofocus
           data-testid="close-button-unavailable"
           onClick={initializeUI}
-          onKeyDown={trapFocusSecondary}
-          ref={buttonUnavailableSecondary}
           type="button"
         >
           {geolocationPositionUnavailable.button.secondary}
@@ -326,10 +280,9 @@ export const LocatorButton = ({mapObject}) => {
         <p>{geolocationNotSupported.why}</p>
         <p>{geolocationNotSupported.how}</p>
         <button
+          data-autofocus
           data-testid="close-button-unsupported"
           onClick={initializeUI}
-          onKeyDown={trapFocus}
-          ref={buttonUnsupported}
           type="button"
         >
           {geolocationNotSupported.button}
