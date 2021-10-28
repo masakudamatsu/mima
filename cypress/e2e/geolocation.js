@@ -201,7 +201,7 @@ describe('Geolocation API permission denied', () => {
       'be.visible',
     );
   });
-  it.only(`Clicking the "${geolocationPermissionDenied.button}" button dismisses the dialog and focuses the locator button`, () => {
+  it(`Clicking the "${geolocationPermissionDenied.button}" button dismisses the dialog and focuses the locator button`, () => {
     // execute
     cy.findByRole('button', {name: geolocationPermissionDenied.button}).click();
     // verify
@@ -213,7 +213,7 @@ describe('Geolocation API permission denied', () => {
     );
     cy.focused().should('have.attr', 'data-testid', 'locator-button');
   });
-  it.only('Pressing Esc key dismisses the dialog and focuses the locator button', () => {
+  it('Pressing Esc key dismisses the dialog and focuses the locator button', () => {
     cy.get('body').type('{esc}');
     // verify
     cy.findByText(geolocationPermissionDenied.what).should('not.be.visible');
@@ -319,7 +319,7 @@ describe('Geolocation API fails to find user location', () => {
       'be.visible',
     );
   });
-  it.only(`Clicking the "${geolocationPositionUnavailable.button.secondary}" button dismisses the dialog and focuses the locator button`, () => {
+  it(`Clicking the "${geolocationPositionUnavailable.button.secondary}" button dismisses the dialog and focuses the locator button`, () => {
     // execute
     cy.findByRole('button', {
       name: geolocationPositionUnavailable.button.secondary,
@@ -333,7 +333,7 @@ describe('Geolocation API fails to find user location', () => {
     );
     cy.focused().should('have.attr', 'data-testid', 'locator-button');
   });
-  it.only('Pressing Esc key dismisses the dialog and focuses the locator button', () => {
+  it('Pressing Esc key dismisses the dialog and focuses the locator button', () => {
     cy.get('body').type('{esc}');
     // verify
     cy.findByText(geolocationPositionUnavailable.what).should('not.be.visible');

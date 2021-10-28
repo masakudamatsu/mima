@@ -248,8 +248,8 @@ export const LocatorButton = ({mapObject}) => {
       {status !== 'watching' ? (
         <Button
           data-darkmode={nightMode}
-          data-position="bottom-right-second"
           data-loading={status === 'loading'}
+          data-position="bottom-right-second"
           data-testid="locator-button"
           onClick={trackUserLocation}
           ref={buttonLocator}
