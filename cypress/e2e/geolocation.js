@@ -120,16 +120,15 @@ describe('Geolocation API unsupported', () => {
     );
     cy.focused().should('have.attr', 'data-testid', 'locator-button');
   });
-  it('Pressing Esc key dismisses the dialog and focuses the locator button', () => {
+  it.only('Pressing Esc key DOES NOT dismiss the dialog', () => {
     cy.get('body').type('{esc}');
     // verify
-    cy.findByText(geolocationNotSupported.what).should('not.be.visible');
-    cy.findByText(geolocationNotSupported.why).should('not.be.visible');
-    cy.findByText(geolocationNotSupported.how).should('not.be.visible');
+    cy.findByText(geolocationNotSupported.what).should('be.visible');
+    cy.findByText(geolocationNotSupported.why).should('be.visible');
+    cy.findByText(geolocationNotSupported.how).should('be.visible');
     cy.findByRole('button', {name: buttonLabel.locator.default}).should(
       'be.visible',
     );
-    cy.focused().should('have.attr', 'data-testid', 'locator-button');
   });
 });
 
@@ -199,16 +198,15 @@ describe('Geolocation API permission denied', () => {
     );
     cy.focused().should('have.attr', 'data-testid', 'locator-button');
   });
-  it('Pressing Esc key dismisses the dialog and focuses the locator button', () => {
+  it.only('Pressing Esc key DOES NOT dismiss the dialog', () => {
     cy.get('body').type('{esc}');
     // verify
-    cy.findByText(geolocationPermissionDenied.what).should('not.be.visible');
-    cy.findByText(geolocationPermissionDenied.why).should('not.be.visible');
-    cy.findByText(geolocationPermissionDenied.how).should('not.be.visible');
+    cy.findByText(geolocationPermissionDenied.what).should('be.visible');
+    cy.findByText(geolocationPermissionDenied.why).should('be.visible');
+    cy.findByText(geolocationPermissionDenied.how).should('be.visible');
     cy.findByRole('button', {name: buttonLabel.locator.default}).should(
       'be.visible',
     );
-    cy.focused().should('have.attr', 'data-testid', 'locator-button');
   });
 });
 
@@ -312,15 +310,14 @@ describe('Geolocation API fails to find user location', () => {
     );
     cy.focused().should('have.attr', 'data-testid', 'locator-button');
   });
-  it('Pressing Esc key dismisses the dialog and focuses the locator button', () => {
+  it.only('Pressing Esc key DOES NOT dismiss the dialog', () => {
     cy.get('body').type('{esc}');
     // verify
-    cy.findByText(geolocationPositionUnavailable.what).should('not.be.visible');
-    cy.findByText(geolocationPositionUnavailable.why).should('not.be.visible');
-    cy.findByText(geolocationPositionUnavailable.how).should('not.be.visible');
+    cy.findByText(geolocationPositionUnavailable.what).should('be.visible');
+    cy.findByText(geolocationPositionUnavailable.why).should('be.visible');
+    cy.findByText(geolocationPositionUnavailable.how).should('be.visible');
     cy.findByRole('button', {name: buttonLabel.locator.default}).should(
       'be.visible',
     );
-    cy.focused().should('have.attr', 'data-testid', 'locator-button');
   });
 });

@@ -19,6 +19,11 @@ describe('ModalPopup component', () => {
     rerender(<ModalPopup {...mockProps} hidden={false} />);
     expect(screen.getByRole('dialog', {hidden: true})).toBeVisible();
   });
+  test('changes ARIA role to alertdialog with alert prop', () => {
+    render(<ModalPopup {...mockProps} alert />);
+    expect(screen.queryByRole('dialog')).not.toBeInTheDocument();
+    expect(screen.getByRole('alertdialog')).toBeVisible();
+  });
   test('has accessible name specified with titleId prop', () => {
     const {rerender} = render(<ModalPopup {...mockProps} />);
     expect(screen.getByRole('heading')).toHaveTextContent(mockTitle);
