@@ -62,7 +62,7 @@ export const MenuButton = () => {
           <h1 id="menu-label">{menuLabel}</h1>
           <ButtonSquare
             data-darkmode={nightMode}
-            data-testid="close-button"
+            data-testid="close-button-menu"
             onClick={handleClickCloseButton}
             ref={closeButton}
             type="button"

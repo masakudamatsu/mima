@@ -78,7 +78,7 @@ describe('Geolocation API unsupported', () => {
     cy.findByText(geolocationNotSupported.how).should('be.visible');
   });
   it('Clicking locator button focuses close button', () => {
-    cy.focused().should('have.attr', 'data-testid', 'close-button');
+    cy.focused().should('have.attr', 'data-testid', 'close-button-unsupported');
   });
   it.skip('Pressing Tab key keeps the focus on close button', () => {
     // This test sometimes works, sometimes doesn't...
@@ -157,7 +157,7 @@ describe('Geolocation API permission denied', () => {
     cy.findByText(geolocationPermissionDenied.how).should('be.visible');
   });
   it('Clicking locator button focuses close button', () => {
-    cy.focused().should('have.attr', 'data-testid', 'close-button');
+    cy.focused().should('have.attr', 'data-testid', 'close-button-denied');
   });
   it.skip('Pressing Tab key keeps the focus on close button', () => {
     // This test sometimes works, sometimes doesn't...
@@ -236,7 +236,7 @@ describe('Geolocation API fails to find user location', () => {
     cy.findByText(geolocationPositionUnavailable.how).should('be.visible');
   });
   it('Clicking locator button focuses close button', () => {
-    cy.focused().should('have.attr', 'data-testid', 'close-button');
+    cy.focused().should('have.attr', 'data-testid', 'close-button-unavailable');
   });
   it.skip(`Pressing Tab key focuses on "${geolocationPositionUnavailable.button.primary}" button`, () => {
     // This test sometimes works, sometimes doesn't...

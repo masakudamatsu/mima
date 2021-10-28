@@ -10,7 +10,7 @@ describe('Clicking menu button', () => {
     cy.findByRole('dialog', {name: menuLabel}).should('exist');
   });
   it('focuses the close button', () => {
-    cy.focused().should('have.attr', 'data-testid', 'close-button');
+    cy.focused().should('have.attr', 'data-testid', 'close-button-menu');
   });
 });
 
@@ -30,10 +30,10 @@ describe('Menu window, once opened...', () => {
   });
   it('traps focus inside with Tab key', () => {
     cy.findByTestId('last-focusable-element').tab({shift: false});
-    cy.focused().should('have.attr', 'data-testid', 'close-button');
+    cy.focused().should('have.attr', 'data-testid', 'close-button-menu');
   });
   it('traps focus inside with Shift + Tab key', () => {
-    cy.findByTestId('close-button').tab({shift: true});
+    cy.findByTestId('close-button-menu').tab({shift: true});
     cy.focused().should('have.attr', 'data-testid', 'last-focusable-element');
   });
 });
