@@ -87,6 +87,34 @@ describe('Geolocation API unsupported', () => {
       'be.visible',
     );
   });
+  it.skip('Pressing Tab key keeps the focus on close button', () => {
+    // This test sometimes works, sometimes doesn't...
+    cy.focused().tab();
+    // https://docs.cypress.io/api/commands/type#Tabbing
+    cy.focused().click();
+    // verify
+    cy.findByText(geolocationNotSupported.what).should('not.be.visible');
+    cy.findByText(geolocationNotSupported.why).should('not.be.visible');
+    cy.findByText(geolocationNotSupported.how).should('not.be.visible');
+    cy.findByRole('button', {name: buttonLabel.locator.default}).should(
+      'be.visible',
+    );
+  });
+  it.skip('Pressing Shift + Tab key keeps the focus on close button', () => {
+    // This test sometimes works, sometimes doesn't...
+    cy.focused().tab({
+      shift: true,
+    });
+    // https://docs.cypress.io/api/commands/type#Tabbing
+    cy.focused().click();
+    // verify
+    cy.findByText(geolocationNotSupported.what).should('not.be.visible');
+    cy.findByText(geolocationNotSupported.why).should('not.be.visible');
+    cy.findByText(geolocationNotSupported.how).should('not.be.visible');
+    cy.findByRole('button', {name: buttonLabel.locator.default}).should(
+      'be.visible',
+    );
+  });
   it(`Clicking the "${geolocationNotSupported.button}" button dismisses the dialog`, () => {
     // execute
     cy.findByRole('button', {name: geolocationNotSupported.button}).click();
@@ -134,6 +162,34 @@ describe('Geolocation API permission denied', () => {
     cy.findByText(geolocationPermissionDenied.how).should('be.visible');
   });
   it('Clicking locator button focuses close button', () => {
+    cy.focused().click();
+    // verify
+    cy.findByText(geolocationPermissionDenied.what).should('not.be.visible');
+    cy.findByText(geolocationPermissionDenied.why).should('not.be.visible');
+    cy.findByText(geolocationPermissionDenied.how).should('not.be.visible');
+    cy.findByRole('button', {name: buttonLabel.locator.default}).should(
+      'be.visible',
+    );
+  });
+  it.skip('Pressing Tab key keeps the focus on close button', () => {
+    // This test sometimes works, sometimes doesn't...
+    cy.focused().tab();
+    // https://docs.cypress.io/api/commands/type#Tabbing
+    cy.focused().click();
+    // verify
+    cy.findByText(geolocationPermissionDenied.what).should('not.be.visible');
+    cy.findByText(geolocationPermissionDenied.why).should('not.be.visible');
+    cy.findByText(geolocationPermissionDenied.how).should('not.be.visible');
+    cy.findByRole('button', {name: buttonLabel.locator.default}).should(
+      'be.visible',
+    );
+  });
+  it.skip('Pressing Shift + Tab key keeps the focus on close button', () => {
+    // This test sometimes works, sometimes doesn't...
+    cy.focused().tab({
+      shift: true,
+    });
+    // https://docs.cypress.io/api/commands/type#Tabbing
     cy.focused().click();
     // verify
     cy.findByText(geolocationPermissionDenied.what).should('not.be.visible');

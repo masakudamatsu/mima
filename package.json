@@ -98,6 +98,7 @@
     "chromatic": "5.9.2",
     "commitizen": "4.2.4",
     "cypress": "8.2.0",
+    "cypress-plugin-tab": "1.0.5",
     "cz-conventional-changelog": "3.3.0",
     "eslint": "^7.14.0",
     "eslint-config-prettier": "^6.15.0",

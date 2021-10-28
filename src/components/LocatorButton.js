@@ -195,7 +195,12 @@ export const LocatorButton = ({mapObject}) => {
       buttonUnavailable.current.focus();
     }
   }, [status]);
-
+  const trapFocus = event => {
+    if (event.key === 'Tab') {
+      event.preventDefault();
+      // source: https://accessibility.huit.harvard.edu/technique-accessible-modal-dialogs
+    }
+  };
   // close error dialogs with Esc key
   useEffect(() => {
     if (status === 'loading' || status === 'watching') {
@@ -257,7 +262,12 @@ export const LocatorButton = ({mapObject}) => {
         <h1 id="permission-denied">{geolocationPermissionDenied.what}</h1>
         <p>{geolocationPermissionDenied.why}</p>
         <p>{geolocationPermissionDenied.how}</p>
-        <button onClick={initializeUI} ref={buttonDenied} type="button">
+        <button
+          onClick={initializeUI}
+          onKeyDown={trapFocus}
+          ref={buttonDenied}
+          type="button"
+        >
           {geolocationPermissionDenied.button}
         </button>
       </ModalPopup>
@@ -284,7 +294,12 @@ export const LocatorButton = ({mapObject}) => {
         <h1 id="geolocation-unsupported">{geolocationNotSupported.what}</h1>
         <p>{geolocationNotSupported.why}</p>
         <p>{geolocationNotSupported.how}</p>
-        <button onClick={initializeUI} ref={buttonUnsupported} type="button">
+        <button
+          onClick={initializeUI}
+          onKeyDown={trapFocus}
+          ref={buttonUnsupported}
+          type="button"
+        >
           {geolocationNotSupported.button}
         </button>
       </ModalPopup>
