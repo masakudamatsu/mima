@@ -282,6 +282,7 @@ export const LocatorButton = ({mapObject}) => {
         <p>{geolocationPermissionDenied.why}</p>
         <p>{geolocationPermissionDenied.how}</p>
         <button
+          data-testid="close-button"
           onClick={initializeUI}
           onKeyDown={trapFocus}
           ref={buttonDenied}
@@ -307,6 +308,7 @@ export const LocatorButton = ({mapObject}) => {
           {geolocationPositionUnavailable.button.primary}
         </button>
         <button
+          data-testid="close-button"
           onClick={initializeUI}
           onKeyDown={trapFocusSecondary}
           ref={buttonUnavailableSecondary}
@@ -324,6 +326,7 @@ export const LocatorButton = ({mapObject}) => {
         <p>{geolocationNotSupported.why}</p>
         <p>{geolocationNotSupported.how}</p>
         <button
+          data-testid="close-button"
           onClick={initializeUI}
           onKeyDown={trapFocus}
           ref={buttonUnsupported}

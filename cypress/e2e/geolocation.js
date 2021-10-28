@@ -78,14 +78,7 @@ describe('Geolocation API unsupported', () => {
     cy.findByText(geolocationNotSupported.how).should('be.visible');
   });
   it('Clicking locator button focuses close button', () => {
-    cy.focused().click();
-    // verify
-    cy.findByText(geolocationNotSupported.what).should('not.be.visible');
-    cy.findByText(geolocationNotSupported.why).should('not.be.visible');
-    cy.findByText(geolocationNotSupported.how).should('not.be.visible');
-    cy.findByRole('button', {name: buttonLabel.locator.default}).should(
-      'be.visible',
-    );
+    cy.focused().should('have.attr', 'data-testid', 'close-button');
   });
   it.skip('Pressing Tab key keeps the focus on close button', () => {
     // This test sometimes works, sometimes doesn't...
@@ -164,14 +157,7 @@ describe('Geolocation API permission denied', () => {
     cy.findByText(geolocationPermissionDenied.how).should('be.visible');
   });
   it('Clicking locator button focuses close button', () => {
-    cy.focused().click();
-    // verify
-    cy.findByText(geolocationPermissionDenied.what).should('not.be.visible');
-    cy.findByText(geolocationPermissionDenied.why).should('not.be.visible');
-    cy.findByText(geolocationPermissionDenied.how).should('not.be.visible');
-    cy.findByRole('button', {name: buttonLabel.locator.default}).should(
-      'be.visible',
-    );
+    cy.focused().should('have.attr', 'data-testid', 'close-button');
   });
   it.skip('Pressing Tab key keeps the focus on close button', () => {
     // This test sometimes works, sometimes doesn't...
@@ -250,14 +236,7 @@ describe('Geolocation API fails to find user location', () => {
     cy.findByText(geolocationPositionUnavailable.how).should('be.visible');
   });
   it('Clicking locator button focuses close button', () => {
-    cy.focused().click();
-    // verify
-    cy.findByText(geolocationPositionUnavailable.what).should('not.be.visible');
-    cy.findByText(geolocationPositionUnavailable.why).should('not.be.visible');
-    cy.findByText(geolocationPositionUnavailable.how).should('not.be.visible');
-    cy.findByRole('button', {name: buttonLabel.locator.default}).should(
-      'be.visible',
-    );
+    cy.focused().should('have.attr', 'data-testid', 'close-button');
   });
   it.skip(`Pressing Tab key focuses on "${geolocationPositionUnavailable.button.primary}" button`, () => {
     // This test sometimes works, sometimes doesn't...
