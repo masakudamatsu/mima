@@ -10,8 +10,7 @@ describe('Clicking menu button', () => {
     cy.findByRole('dialog', {name: menuLabel}).should('exist');
   });
   it('focuses the close button', () => {
-    cy.focused().click();
-    cy.findByRole('dialog', {name: menuLabel}).should('not.exist');
+    cy.focused().should('have.attr', 'data-testid', 'close-button');
   });
 });
 
