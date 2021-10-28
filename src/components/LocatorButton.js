@@ -177,10 +177,11 @@ export const LocatorButton = ({mapObject}) => {
   };
 
   const initializeUI = () => {
-    setStatus('initial');
+    setStatus('dismissed');
   };
 
   // focus management
+  const buttonLocator = useRef();
   const buttonDenied = useRef();
   const buttonUnsupported = useRef();
   const buttonUnavailablePrimary = useRef();
@@ -194,6 +195,9 @@ export const LocatorButton = ({mapObject}) => {
     }
     if (status === 'positionUnavailable') {
       buttonUnavailableSecondary.current.focus();
+    }
+    if (status === 'dismissed') {
+      buttonLocator.current.focus();
     }
   }, [status]);
   const trapFocus = event => {
@@ -221,7 +225,7 @@ export const LocatorButton = ({mapObject}) => {
     }
     const closeByEsc = event => {
       if (event.key === 'Escape') {
-        setStatus('initial');
+        setStatus('dismissed');
       }
     };
     const geolocationError =
@@ -231,7 +235,7 @@ export const LocatorButton = ({mapObject}) => {
     if (geolocationError) {
       document.addEventListener('keydown', closeByEsc);
     }
-    if (status === 'initial') {
+    if (status === 'dismissed') {
       document.removeEventListener('keydown', closeByEsc);
     }
     return () => {
@@ -246,7 +250,9 @@ export const LocatorButton = ({mapObject}) => {
           data-darkmode={nightMode}
           data-position="bottom-right-second"
           data-loading={status === 'loading'}
+          data-testid="locator-button"
           onClick={trackUserLocation}
+          ref={buttonLocator}
           type="button"
         >
           <SvgCloud
