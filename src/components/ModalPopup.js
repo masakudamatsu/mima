@@ -8,11 +8,15 @@ import {DivDialog} from 'src/elements/DivDialog';
 import {DivScrim} from 'src/elements/DivScrim';
 import {DivPopup} from 'src/elements/DivPopup';
 
-export const ModalPopup = ({children, hidden, slideFrom, titleId}) => {
+export const ModalPopup = ({alert, children, hidden, slideFrom, titleId}) => {
   const nightMode = useContext(NightModeContext);
   return (
     <FocusLock disabled={hidden} returnFocus>
-      <DivDialog role="dialog" aria-labelledby={titleId} aria-hidden={hidden}>
+      <DivDialog
+        role={alert ? 'alertdialog' : 'dialog'}
+        aria-labelledby={titleId}
+        aria-hidden={hidden}
+      >
         <DivScrim />
         <DivPopup
           data-darkmode={nightMode}

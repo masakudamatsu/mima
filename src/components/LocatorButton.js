@@ -1,4 +1,4 @@
-import {useContext, useEffect, useRef, useState} from 'react';
+import {useContext, useRef, useState} from 'react';
 import PropTypes from 'prop-types';
 
 import {ModalPopup} from 'src/components/ModalPopup';
@@ -180,31 +180,6 @@ export const LocatorButton = ({mapObject}) => {
     setStatus('dismissed');
   };
 
-  // close error dialogs with Esc key
-  useEffect(() => {
-    if (status === 'loading' || status === 'watching') {
-      return;
-    }
-    const closeByEsc = event => {
-      if (event.key === 'Escape') {
-        setStatus('dismissed');
-      }
-    };
-    const geolocationError =
-      status === 'permissionDenied' ||
-      status === 'positionUnavailable' ||
-      status === 'geolocationNotSupported';
-    if (geolocationError) {
-      document.addEventListener('keydown', closeByEsc);
-    }
-    if (status === 'dismissed') {
-      document.removeEventListener('keydown', closeByEsc);
-    }
-    return () => {
-      document.removeEventListener('keydown', closeByEsc);
-    }; // otherwise Jest/Testing-Library issues a warning
-  }, [status]);
-
   return (
     <>
       {status !== 'watching' ? (
@@ -235,6 +210,7 @@ export const LocatorButton = ({mapObject}) => {
         </Button>
       )}
       <ModalPopup
+        alert
         hidden={status !== 'permissionDenied'}
         slideFrom="top"
         titleId="permission-denied"
@@ -252,6 +228,7 @@ export const LocatorButton = ({mapObject}) => {
         </button>
       </ModalPopup>
       <ModalPopup
+        alert
         hidden={status !== 'positionUnavailable'}
         slideFrom="top"
         titleId="position-unavailable"
@@ -272,6 +249,7 @@ export const LocatorButton = ({mapObject}) => {
         </button>{' '}
       </ModalPopup>
       <ModalPopup
+        alert
         hidden={status !== 'geolocationNotSupported'}
         slideFrom="top"
         titleId="geolocation-unsupported"
