@@ -25,7 +25,7 @@ export const ModalPopup = ({children, hidden, slideFrom, titleId}) => {
 };
 
 ModalPopup.propTypes = {
-  children: PropTypes.element,
+  children: PropTypes.node,
   hidden: PropTypes.bool,
   slideFrom: PropTypes.string,
   titleId: PropTypes.string.isRequired,
