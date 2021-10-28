@@ -15,6 +15,7 @@ export const MenuButton = () => {
   const nightMode = useContext(NightModeContext);
   const [open, setOpen] = useState(false);
 
+  // focus management
   const closeButton = useRef();
   useEffect(() => {
     if (open) {
@@ -22,18 +23,27 @@ export const MenuButton = () => {
     }
   }, [open]);
 
-  const closeByEsc = event => {
-    if (event.key === 'Escape') {
+  // close menu with Esc key
+  useEffect(() => {
+    const closeByEsc = event => {
+      if (event.key === 'Escape') {
+        setOpen(false);
+      }
+    };
+    if (open) {
+      document.addEventListener('keydown', closeByEsc);
+    } else {
       document.removeEventListener('keydown', closeByEsc);
-      setOpen(false);
     }
-  };
+    return () => {
+      document.removeEventListener('keydown', closeByEsc);
+    }; // otherwise Jest/Testing-Library issues a warning
+  }, [open]);
+
   const handleClick = () => {
-    document.addEventListener('keydown', closeByEsc);
     setOpen(true);
   };
   const handleClickCloseButton = () => {
-    document.removeEventListener('keydown', closeByEsc);
     setOpen(false);
   };
   return (

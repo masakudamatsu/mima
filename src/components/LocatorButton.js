@@ -110,10 +110,8 @@ export const LocatorButton = ({mapObject}) => {
   }
   function handleGeolocationError(error, setStatus) {
     if (error.code === 1) {
-      document.addEventListener('keydown', closeByEsc);
       setStatus('permissionDenied');
     } else if (error.code === 2) {
-      document.addEventListener('keydown', closeByEsc);
       setStatus('positionUnavailable');
     }
   }
@@ -170,7 +168,6 @@ export const LocatorButton = ({mapObject}) => {
       );
     } else {
       // Browser doesn't support Geolocation
-      document.addEventListener('keydown', closeByEsc);
       setStatus('geolocationNotSupported');
     }
   };
@@ -180,16 +177,10 @@ export const LocatorButton = ({mapObject}) => {
   };
 
   const initializeUI = () => {
-    document.removeEventListener('keydown', closeByEsc);
     setStatus('initial');
   };
-  const closeByEsc = event => {
-    if (event.key === 'Escape') {
-      document.removeEventListener('keydown', closeByEsc);
-      setStatus('initial');
-    }
-  };
 
+  // focus management
   const buttonDenied = useRef();
   const buttonUnsupported = useRef();
   const buttonUnavailable = useRef();
@@ -203,6 +194,31 @@ export const LocatorButton = ({mapObject}) => {
     if (status === 'positionUnavailable') {
       buttonUnavailable.current.focus();
     }
+  }, [status]);
+
+  // close error dialogs with Esc key
+  useEffect(() => {
+    if (status === 'loading' || status === 'watching') {
+      return;
+    }
+    const closeByEsc = event => {
+      if (event.key === 'Escape') {
+        setStatus('initial');
+      }
+    };
+    const geolocationError =
+      status === 'permissionDenied' ||
+      status === 'positionUnavailable' ||
+      status === 'geolocationNotSupported';
+    if (geolocationError) {
+      document.addEventListener('keydown', closeByEsc);
+    }
+    if (status === 'initial') {
+      document.removeEventListener('keydown', closeByEsc);
+    }
+    return () => {
+      document.removeEventListener('keydown', closeByEsc);
+    }; // otherwise Jest/Testing-Library issues a warning
   }, [status]);
 
   return (
