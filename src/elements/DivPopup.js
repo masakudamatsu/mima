@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 // import PropTypes from 'prop-types';
-import {color} from 'src/utils/designtokens';
+import {color, duration, easing} from 'src/utils/designtokens';
 import {zIndex} from 'src/utils/zIndex';
 
 const placeOverScrim = `
@@ -47,12 +47,61 @@ const setTextColor = `
   }
 `;
 
+const setSize = `
+  bottom: ${dimension['margin 100']};
+  &[data-slide-from="left"] {
+    height: calc(100% - ${dimension['margin 200']});
+    right: ${dimension['margin 100']};
+    top: ${dimension['margin 100']};
+    width: calc(100% - ${dimension['margin 100']});  
+  }
+  &[data-slide-from="right"] {
+    height: calc(100% - ${dimension['margin 200']});
+    left: ${dimension['margin 100']};
+    top: ${dimension['margin 100']};
+    width: calc(100% - ${dimension['margin 100']});  
+  }
+  &[data-slide-from="top"] {
+    height: calc(100% - ${dimension['margin 100']});
+    left: ${dimension['margin 100']};
+    right: ${dimension['margin 100']};
+    width: calc(100% - ${dimension['margin 200']});  
+  }
+`;
+
+const animateTransition = `
+  &[data-slide-from="left"] {
+    transform: translateX(-100%);
+  }
+  &[data-slide-from="right"] {
+    transform: translateX(100%);
+  }
+  &[data-slide-from="top"] {
+    transform: translateY(-100%);
+  }
+  &[data-hidden='true'] {
+    opacity: 0;
+    transition: 
+      opacity ${duration.menu.exit} ${easing.linear},
+      transform ${duration.menu.exit} ${easing.accelerate};
+  }
+  &[data-hidden='false'] {
+    opacity: 1;
+    transform: none;
+    transition: 
+      opcacity ${duration.menu.enter.opacity} ${easing.linear},
+      transform ${duration.menu.enter.transform} ${easing.decelerate};
+  }
+`;
+
 export const DivPopup = styled.div`
   ${setFontScheme}
   ${setLayout}
   ${placeOverScrim}
   ${setColorScheme}
   ${setTextColor}
+  ${setSize}
+  ${animateTransition}
   background: var(--popup-background-color);
   box-shadow: 0 0 ${dimension['margin 66']} ${dimension['margin 66']}
       var(--popup-shadow-color),
@@ -60,12 +109,6 @@ export const DivPopup = styled.div`
       var(--popup-shadow-color),
     0 0 ${dimension['margin 133']} ${dimension['margin 66']}
       var(--popup-shadow-color);
-  height: calc(100% - ${dimension['margin 200']});
-  top: ${dimension['margin 100']};
-  left: ${dimension['margin 100']};
-  right: ${dimension['margin 100']};
-  bottom: ${dimension['margin 100']};
-  width: calc(100% - ${dimension['margin 200']});
 `;
 
 // DivPopup.propTypes = {};

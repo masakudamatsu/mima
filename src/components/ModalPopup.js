@@ -1,34 +1,39 @@
 import {useContext} from 'react';
 import PropTypes from 'prop-types';
+import FocusLock from 'react-focus-lock';
 
 import {NightModeContext} from 'src/context/NightModeContext';
-import {ButtonSquare} from 'src/elements/ButtonSquare';
+
+import {DivDialog} from 'src/elements/DivDialog';
 import {DivScrim} from 'src/elements/DivScrim';
 import {DivPopup} from 'src/elements/DivPopup';
-import {SvgClose} from 'src/elements/SvgClose';
 
-export const ModalPopup = ({children, setModalPopupHidden}) => {
+export const ModalPopup = ({alert, children, hidden, slideFrom, titleId}) => {
   const nightMode = useContext(NightModeContext);
-  const handleClick = () => {
-    setModalPopupHidden(true);
-  };
   return (
-    <DivScrim>
-      <DivPopup data-darkmode={nightMode}>
-        {/* <ButtonSquare
+    <FocusLock disabled={hidden} returnFocus>
+      <DivDialog
+        role={alert ? 'alertdialog' : 'dialog'}
+        aria-labelledby={titleId}
+        aria-hidden={hidden}
+      >
+        <DivScrim />
+        <DivPopup
           data-darkmode={nightMode}
-          onClick={handleClick}
-          type="button"
+          data-hidden={hidden}
+          data-slide-from={slideFrom}
+          role="document"
         >
-          <SvgClose title="Close dialog" />
-        </ButtonSquare> */}
-        {children}
-      </DivPopup>
-    </DivScrim>
+          {children}
+        </DivPopup>
+      </DivDialog>
+    </FocusLock>
   );
 };
 
 ModalPopup.propTypes = {
-  children: PropTypes.element,
-  setModalPopupHidden: PropTypes.func.isRequired,
+  children: PropTypes.node,
+  hidden: PropTypes.bool,
+  slideFrom: PropTypes.string,
+  titleId: PropTypes.string.isRequired,
 };

@@ -94,8 +94,17 @@ export const dimension = {
 
 export const duration = {
   flashingButton: '1500ms',
+  menu: {
+    enter: {
+      opacity: '100ms', // more than 100ms will suggest the lack of response
+      transform: '450ms',
+    },
+    exit: '400ms',
+  },
 };
 
 export const easing = {
+  accelerate: 'cubic-bezier(0.4, 0.0, 1, 1)',
+  decelerate: 'cubic-bezier(0.0, 0.0, 0.2, 1)',
   linear: 'linear',
 };

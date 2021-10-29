@@ -30,6 +30,7 @@ export const LocatorButton = ({mapObject}) => {
   // UI states
   const nightMode = useContext(NightModeContext);
   const [status, setStatus] = useState('initial');
+
   // to track user location
   const userLocation = useRef(null);
   const userDirection = useRef(45); // to match the button label icon
@@ -176,7 +177,7 @@ export const LocatorButton = ({mapObject}) => {
   };
 
   const initializeUI = () => {
-    setStatus('initial');
+    setStatus('dismissed');
   };
 
   return (
@@ -184,8 +185,9 @@ export const LocatorButton = ({mapObject}) => {
       {status !== 'watching' ? (
         <Button
           data-darkmode={nightMode}
-          data-position="bottom-right-second"
           data-loading={status === 'loading'}
+          data-position="bottom-right-second"
+          data-testid="locator-button"
           onClick={trackUserLocation}
           type="button"
         >
@@ -207,39 +209,63 @@ export const LocatorButton = ({mapObject}) => {
           />
         </Button>
       )}
-      {status === 'permissionDenied' && (
-        <ModalPopup setModalPopupHidden={initializeUI}>
-          <h1>{geolocationPermissionDenied.what}</h1>
-          <p>{geolocationPermissionDenied.why}</p>
-          <p>{geolocationPermissionDenied.how}</p>
-          <button onClick={initializeUI} type="button">
-            {geolocationPermissionDenied.button}
-          </button>
-        </ModalPopup>
-      )}
-      {status === 'positionUnavailable' && (
-        <ModalPopup setModalPopupHidden={initializeUI}>
-          <h1>{geolocationPositionUnavailable.what}</h1>
-          <p>{geolocationPositionUnavailable.why}</p>
-          <p>{geolocationPositionUnavailable.how}</p>
-          <button onClick={trackUserLocation} type="button">
-            {geolocationPositionUnavailable.button.primary}
-          </button>
-          <button onClick={initializeUI} type="button">
-            {geolocationPositionUnavailable.button.secondary}
-          </button>{' '}
-        </ModalPopup>
-      )}
-      {status === 'geolocationNotSupported' && (
-        <ModalPopup setModalPopupHidden={initializeUI}>
-          <h1>{geolocationNotSupported.what}</h1>
-          <p>{geolocationNotSupported.why}</p>
-          <p>{geolocationNotSupported.how}</p>
-          <button onClick={initializeUI} type="button">
-            {geolocationNotSupported.button}
-          </button>
-        </ModalPopup>
-      )}
+      <ModalPopup
+        alert
+        hidden={status !== 'permissionDenied'}
+        slideFrom="top"
+        titleId="permission-denied"
+      >
+        <h1 id="permission-denied">{geolocationPermissionDenied.what}</h1>
+        <p>{geolocationPermissionDenied.why}</p>
+        <p>{geolocationPermissionDenied.how}</p>
+        <button
+          data-autofocus
+          data-testid="close-button-denied"
+          onClick={initializeUI}
+          type="button"
+        >
+          {geolocationPermissionDenied.button}
+        </button>
+      </ModalPopup>
+      <ModalPopup
+        alert
+        hidden={status !== 'positionUnavailable'}
+        slideFrom="top"
+        titleId="position-unavailable"
+      >
+        <h1 id="position-unavailable">{geolocationPositionUnavailable.what}</h1>
+        <p>{geolocationPositionUnavailable.why}</p>
+        <p>{geolocationPositionUnavailable.how}</p>
+        <button onClick={trackUserLocation} type="button">
+          {geolocationPositionUnavailable.button.primary}
+        </button>
+        <button
+          data-autofocus
+          data-testid="close-button-unavailable"
+          onClick={initializeUI}
+          type="button"
+        >
+          {geolocationPositionUnavailable.button.secondary}
+        </button>{' '}
+      </ModalPopup>
+      <ModalPopup
+        alert
+        hidden={status !== 'geolocationNotSupported'}
+        slideFrom="top"
+        titleId="geolocation-unsupported"
+      >
+        <h1 id="geolocation-unsupported">{geolocationNotSupported.what}</h1>
+        <p>{geolocationNotSupported.why}</p>
+        <p>{geolocationNotSupported.how}</p>
+        <button
+          data-autofocus
+          data-testid="close-button-unsupported"
+          onClick={initializeUI}
+          type="button"
+        >
+          {geolocationNotSupported.button}
+        </button>
+      </ModalPopup>
     </>
   );
 };

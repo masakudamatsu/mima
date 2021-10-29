@@ -1,6 +1,7 @@
 export const userLocationMakerLabel = 'You are here!';
 
 export const buttonLabel = {
+  close: 'Close',
   locator: {
     default: 'Start tracking current location',
     activated: 'Show current location',
@@ -10,22 +11,23 @@ export const buttonLabel = {
   search: 'Search a place',
 };
 
-const geolocationApiFails = 'Unable to find where you are';
+export const menuLabel = 'Menu';
+
 export const geolocationNotSupported = {
-  what: geolocationApiFails,
-  why: `We couldn’t obtain your location data from your browser.`,
+  what: `Unable to get location data from your browser`,
+  why: `Your browser cannot handle location data in your device.`,
   how: `Consider using other browsers such as Chrome, Firefox, Microsoft Edge, and Safari.`,
   button: `Got it`,
 };
 export const geolocationPermissionDenied = {
-  what: `We're not allowed to find where you are`,
+  what: `Not allowed to find where you are`,
   why: `You’ve chosen to keep your location private, and we respect your privacy.`,
   how: `To see where you are on the map, enable location services with your OS/browser.`,
   button: `Got it`,
 };
 export const geolocationPositionUnavailable = {
-  what: geolocationApiFails,
-  why: `We couldn’t obtain your location data from your device.`,
+  what: `Unable to get location data from your device`,
+  why: `Your device has an issue with location data.`,
   how: `Check if your device can detect your location, and try again.`,
   button: {
     primary: `Try again`,
