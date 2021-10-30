@@ -79,12 +79,10 @@ export const LocatorButton = ({mapObject}) => {
     // design the icon to mark the current location
     marker.current = new google.maps.Marker({
       icon: {
-        anchor: new google.maps.Point(svgIcon.width / 2, svgIcon.height / 2),
         fillColor: color['google-blue 100'],
         fillOpacity: 1,
-        path: svgIcon.path,
-        rotation: userDirection.current,
-        scale: 2,
+        path: google.maps.SymbolPath.CIRCLE,
+        scale: 8,
         strokeColor: color['white 100'],
         strokeWeight: 2,
       },
