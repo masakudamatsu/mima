@@ -10,6 +10,7 @@ test('renders UI correctly', () => {
   expect(container).toMatchInlineSnapshot(`
 .c0 {
   font-family: 'Noto Sans',Verdana,sans-serif;
+  font-size: 1.0506rem;
   font-weight: 400;
 }
 

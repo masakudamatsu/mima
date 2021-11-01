@@ -113,10 +113,24 @@ const metrics = {
   'Noto Sans Regular': {
     fontFamily: `'Noto Sans', Verdana, sans-serif`,
     fontWeight: 400,
+    unitsPerEm: 2048, // head.unitsPerEm
+    capHeight: 1462, // os2.sCapHeight
   },
+};
+
+const capHeight = {
+  100: 12, // minimum cap height for Noto Sans Regular to be at font-size of 16px
+};
+
+const getFontSize = ({capHeight, metrics}) => {
+  return capHeight / (metrics.capHeight / metrics.unitsPerEm);
 };
 
 export const bodyText = {
   fontFamily: metrics['Noto Sans Regular'].fontFamily,
+  fontSize: getFontSize({
+    capHeight: capHeight[100],
+    metrics: metrics['Noto Sans Regular'],
+  }),
   fontWeight: metrics['Noto Sans Regular'].fontWeight,
 };
