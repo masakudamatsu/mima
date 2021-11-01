@@ -137,6 +137,7 @@ const capHeight = {
   10: 12 / fontScale,
   100: 12, // minimum cap height for Noto Sans Regular to be at font-size of 16px
   200: 12 * fontScale,
+  300: 12 * Math.pow(fontScale, 2),
 };
 
 const getFontSize = ({capHeight, metrics}) => {
@@ -197,7 +198,7 @@ export const bodyText = {
 export const heading = {
   fontFamily: metrics['Noto Sans Display Bold'].fontFamily,
   fontSize: getFontSize({
-    capHeight: capHeight[200],
+    capHeight: capHeight[300],
     metrics: metrics['Noto Sans Display Bold'],
   }),
   fontWeight: metrics['Noto Sans Display Bold'].fontWeight,
