@@ -217,8 +217,10 @@ export const LocatorButton = ({mapObject}) => {
         titleId="permission-denied"
       >
         <h1 id="permission-denied">{geolocationPermissionDenied.what}</h1>
-        <Paragraph>{geolocationPermissionDenied.why}</Paragraph>
-        <Paragraph>{geolocationPermissionDenied.how}</Paragraph>
+        <Paragraph.Wrapper>
+          <Paragraph>{geolocationPermissionDenied.why}</Paragraph>
+          <Paragraph>{geolocationPermissionDenied.how}</Paragraph>
+        </Paragraph.Wrapper>
         <button
           data-autofocus
           data-testid="close-button-denied"

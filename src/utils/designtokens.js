@@ -118,6 +118,8 @@ const metrics = {
     unitsPerEm: 2048, // head.unitsPerEm
     capHeight: 1462, // os2.sCapHeight
     xHeight: 1098, // os2.sxHeight
+    ascender: 2189, // hhea.ascender
+    descender: 600, // - hhea.descender
   },
 };
 
@@ -127,10 +129,27 @@ const fontScale =
 const capHeight = {
   10: 12 / fontScale,
   100: 12, // minimum cap height for Noto Sans Regular to be at font-size of 16px
+  200: 12 * fontScale,
 };
 
 const getFontSize = ({capHeight, metrics}) => {
   return capHeight / (metrics.capHeight / metrics.unitsPerEm);
+};
+export const getSpaceToCrop = (
+  where,
+  {fontSize, lineHeight, normalLineHeight, font},
+) => {
+  const addedDefaultSpace = ((normalLineHeight - 1) / 2) * font.unitsPerEm;
+  let intrinsicSpace;
+  if (where === 'top') {
+    intrinsicSpace = font.ascender - font.capHeight - addedDefaultSpace;
+  }
+  if (where === 'bottom') {
+    intrinsicSpace = font.descender - addedDefaultSpace;
+  }
+  const addedNewSpace = ((lineHeight - 1) / 2) * font.unitsPerEm;
+  const pxPerUnit = fontSize / font.unitsPerEm;
+  return (intrinsicSpace + addedNewSpace) * pxPerUnit;
 };
 
 export const bodyText = {
@@ -145,5 +164,25 @@ export const bodyText = {
     const spaceBetweenLines = capHeight[100];
     const lineHeight = xHeight + spaceBetweenLines;
     return round(lineHeight / this.fontSize, 4);
+  },
+  normalLineHeight: 1.4,
+  get spaceTop() {
+    return getSpaceToCrop('top', {
+      fontSize: this.fontSize,
+      font: metrics['Noto Sans Regular'],
+      lineHeight: this.lineHeight,
+      normalLineHeight: this.normalLineHeight,
+    });
+  },
+  get spaceBottom() {
+    return getSpaceToCrop('bottom', {
+      fontSize: this.fontSize,
+      font: metrics['Noto Sans Regular'],
+      lineHeight: this.lineHeight,
+      normalLineHeight: this.normalLineHeight,
+    });
+  },
+  get spaceBetweenParagraphs() {
+    return capHeight[200] - this.spaceTop - this.spaceBottom;
   },
 };
