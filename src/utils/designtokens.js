@@ -124,6 +124,8 @@ const metrics = {
   'Noto Sans Display Bold': {
     fontFamily: `'Noto Sans Display', Georgia, sans-serif`,
     fontWeight: 700,
+    unitsPerEm: 1000, // head.unitsPerEm
+    capHeight: 714, // os2.sCapHeight
   },
 };
 
@@ -193,5 +195,9 @@ export const bodyText = {
 
 export const heading = {
   fontFamily: metrics['Noto Sans Display Bold'].fontFamily,
+  fontSize: getFontSize({
+    capHeight: capHeight[200],
+    metrics: metrics['Noto Sans Display Bold'],
+  }),
   fontWeight: metrics['Noto Sans Display Bold'].fontWeight,
 };
