@@ -9,10 +9,4 @@ export const Paragraph = styled.p`
   font-weight: ${bodyText.fontWeight};
   line-height: ${bodyText.lineHeight};
 `;
-
-Paragraph.Wrapper = styled.div`
-  & p + p {
-    margin-top: ${remify(bodyText.spaceBetweenParagraphs)};
-  }
-`;
 // Paragraph.propTypes = {};

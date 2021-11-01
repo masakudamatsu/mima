@@ -13,6 +13,8 @@ test('renders UI correctly', () => {
   font-size: 1.8623rem;
   font-weight: 700;
   line-height: 1.092;
+  padding-bottom: 1.0988rem;
+  padding-top: 0.9833rem;
 }
 
 <div>

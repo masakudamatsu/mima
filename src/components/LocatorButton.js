@@ -6,6 +6,7 @@ import {ModalPopup} from 'src/components/ModalPopup';
 import {NightModeContext} from 'src/context/NightModeContext';
 
 import {Button} from 'src/elements/Button';
+import {DivErrorDialog} from 'src/elements/DivErrorDialog';
 import {Heading} from 'src/elements/Heading';
 import {Paragraph} from 'src/elements/Paragraph';
 import {SvgCloud} from 'src/elements/SvgCloud';
@@ -217,13 +218,13 @@ export const LocatorButton = ({mapObject}) => {
         slideFrom="top"
         titleId="permission-denied"
       >
-        <Heading as="h1" id="permission-denied">
-          {geolocationPermissionDenied.what}
-        </Heading>
-        <Paragraph.Wrapper>
+        <DivErrorDialog>
+          <Heading as="h1" id="permission-denied">
+            {geolocationPermissionDenied.what}
+          </Heading>
           <Paragraph>{geolocationPermissionDenied.why}</Paragraph>
           <Paragraph>{geolocationPermissionDenied.how}</Paragraph>
-        </Paragraph.Wrapper>
+        </DivErrorDialog>
         <button
           data-autofocus
           data-testid="close-button-denied"

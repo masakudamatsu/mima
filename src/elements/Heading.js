@@ -8,6 +8,8 @@ export const Heading = styled.h1`
   font-size: ${remify(heading.fontSize)};
   font-weight: ${heading.fontWeight};
   line-height: ${heading.lineHeight};
+  padding-bottom: ${remify(heading.paddingBottom)};
+  padding-top: ${remify(heading.paddingTop)};
 `;
 
 // Heading.propTypes = {};

@@ -127,6 +127,8 @@ const metrics = {
     unitsPerEm: 1000, // head.unitsPerEm
     xHeight: 546, // os2.sxHeight
     capHeight: 714, // os2.sCapHeight
+    ascender: 1069, // hhea.ascender
+    descender: 293, // - hhea.descender
   },
 };
 
@@ -173,7 +175,7 @@ export const bodyText = {
     const lineHeight = xHeight + spaceBetweenLines;
     return round(lineHeight / this.fontSize, 4);
   },
-  normalLineHeight: 1.4,
+  normalLineHeight: 1.42,
   get spaceTop() {
     return getSpaceToCrop('top', {
       fontSize: this.fontSize,
@@ -210,5 +212,28 @@ export const heading = {
     const spaceBetweenLines = xHeight;
     const lineHeight = xHeight + spaceBetweenLines;
     return round(lineHeight / this.fontSize, 4);
+  },
+  normalLineHeight: 1.43,
+  get spaceTop() {
+    return getSpaceToCrop('top', {
+      fontSize: this.fontSize,
+      font: metrics['Noto Sans Display Bold'],
+      lineHeight: this.lineHeight,
+      normalLineHeight: this.normalLineHeight,
+    });
+  },
+  get spaceBottom() {
+    return getSpaceToCrop('bottom', {
+      fontSize: this.fontSize,
+      font: metrics['Noto Sans Display Bold'],
+      lineHeight: this.lineHeight,
+      normalLineHeight: this.normalLineHeight,
+    });
+  },
+  get paddingBottom() {
+    return capHeight[300] - this.spaceBottom;
+  },
+  get paddingTop() {
+    return capHeight[300] - this.spaceTop;
   },
 };
