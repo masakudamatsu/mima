@@ -240,11 +240,13 @@ export const LocatorButton = ({mapObject}) => {
         slideFrom="top"
         titleId="position-unavailable"
       >
-        <Heading as="h1" id="position-unavailable">
-          {geolocationPositionUnavailable.what}
-        </Heading>
-        <Paragraph>{geolocationPositionUnavailable.why}</Paragraph>
-        <Paragraph>{geolocationPositionUnavailable.how}</Paragraph>
+        <DivErrorDialog>
+          <Heading as="h1" id="position-unavailable">
+            {geolocationPositionUnavailable.what}
+          </Heading>
+          <Paragraph>{geolocationPositionUnavailable.why}</Paragraph>
+          <Paragraph>{geolocationPositionUnavailable.how}</Paragraph>
+        </DivErrorDialog>
         <button onClick={trackUserLocation} type="button">
           {geolocationPositionUnavailable.button.primary}
         </button>
@@ -263,11 +265,13 @@ export const LocatorButton = ({mapObject}) => {
         slideFrom="top"
         titleId="geolocation-unsupported"
       >
-        <Heading as="h1" id="geolocation-unsupported">
-          {geolocationNotSupported.what}
-        </Heading>
-        <Paragraph>{geolocationNotSupported.why}</Paragraph>
-        <Paragraph>{geolocationNotSupported.how}</Paragraph>
+        <DivErrorDialog>
+          <Heading as="h1" id="geolocation-unsupported">
+            {geolocationNotSupported.what}
+          </Heading>
+          <Paragraph>{geolocationNotSupported.why}</Paragraph>
+          <Paragraph>{geolocationNotSupported.how}</Paragraph>
+        </DivErrorDialog>
         <button
           data-autofocus
           data-testid="close-button-unsupported"
