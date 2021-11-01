@@ -7,6 +7,7 @@ export const Paragraph = styled.p`
   font-family: ${bodyText.fontFamily};
   font-size: ${remify(bodyText.fontSize)};
   font-weight: ${bodyText.fontWeight};
+  line-height: ${bodyText.lineHeight};
 `;
 
 // Paragraph.propTypes = {};

@@ -1,3 +1,5 @@
+import {round} from './round';
+
 export const color = {
   // both
   'white 100': `rgb(255,255,255)`,
@@ -115,10 +117,15 @@ const metrics = {
     fontWeight: 400,
     unitsPerEm: 2048, // head.unitsPerEm
     capHeight: 1462, // os2.sCapHeight
+    xHeight: 1098, // os2.sxHeight
   },
 };
 
+const fontScale =
+  metrics['Noto Sans Regular'].capHeight / metrics['Noto Sans Regular'].xHeight;
+
 const capHeight = {
+  10: 12 / fontScale,
   100: 12, // minimum cap height for Noto Sans Regular to be at font-size of 16px
 };
 
@@ -133,4 +140,10 @@ export const bodyText = {
     metrics: metrics['Noto Sans Regular'],
   }),
   fontWeight: metrics['Noto Sans Regular'].fontWeight,
+  get lineHeight() {
+    const xHeight = capHeight[10];
+    const spaceBetweenLines = capHeight[100];
+    const lineHeight = xHeight + spaceBetweenLines;
+    return round(lineHeight / this.fontSize, 4);
+  },
 };
