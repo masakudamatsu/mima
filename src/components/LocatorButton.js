@@ -6,6 +6,7 @@ import {ModalPopup} from 'src/components/ModalPopup';
 import {NightModeContext} from 'src/context/NightModeContext';
 
 import {Button} from 'src/elements/Button';
+import {Heading} from 'src/elements/Heading';
 import {Paragraph} from 'src/elements/Paragraph';
 import {SvgCloud} from 'src/elements/SvgCloud';
 
@@ -216,7 +217,9 @@ export const LocatorButton = ({mapObject}) => {
         slideFrom="top"
         titleId="permission-denied"
       >
-        <h1 id="permission-denied">{geolocationPermissionDenied.what}</h1>
+        <Heading as="h1" id="permission-denied">
+          {geolocationPermissionDenied.what}
+        </Heading>
         <Paragraph.Wrapper>
           <Paragraph>{geolocationPermissionDenied.why}</Paragraph>
           <Paragraph>{geolocationPermissionDenied.how}</Paragraph>
@@ -236,7 +239,9 @@ export const LocatorButton = ({mapObject}) => {
         slideFrom="top"
         titleId="position-unavailable"
       >
-        <h1 id="position-unavailable">{geolocationPositionUnavailable.what}</h1>
+        <Heading as="h1" id="position-unavailable">
+          {geolocationPositionUnavailable.what}
+        </Heading>
         <Paragraph>{geolocationPositionUnavailable.why}</Paragraph>
         <Paragraph>{geolocationPositionUnavailable.how}</Paragraph>
         <button onClick={trackUserLocation} type="button">
@@ -257,7 +262,9 @@ export const LocatorButton = ({mapObject}) => {
         slideFrom="top"
         titleId="geolocation-unsupported"
       >
-        <h1 id="geolocation-unsupported">{geolocationNotSupported.what}</h1>
+        <Heading as="h1" id="geolocation-unsupported">
+          {geolocationNotSupported.what}
+        </Heading>
         <Paragraph>{geolocationNotSupported.why}</Paragraph>
         <Paragraph>{geolocationNotSupported.how}</Paragraph>
         <button

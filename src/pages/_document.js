@@ -36,7 +36,7 @@ export default class MyDocument extends Document {
         {/* If a page doesn't specify a lang attribute, a screen reader assumes that the page is in the default language that the user chose when setting up the screen reader https://web.dev/html-has-lang/ */}
         <Head>
           <link
-            href="https://fonts.googleapis.com/css2?family=Noto+Sans&display=swap"
+            href="https://fonts.googleapis.com/css2?family=Noto+Sans&family=Noto+Sans+Display:wght@700&display=swap"
             rel="stylesheet"
           />{' '}
         </Head>{' '}

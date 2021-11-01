@@ -121,6 +121,10 @@ const metrics = {
     ascender: 2189, // hhea.ascender
     descender: 600, // - hhea.descender
   },
+  'Noto Sans Display Bold': {
+    fontFamily: `'Noto Sans Display', Georgia, sans-serif`,
+    fontWeight: 700,
+  },
 };
 
 const fontScale =
@@ -185,4 +189,9 @@ export const bodyText = {
   get spaceBetweenParagraphs() {
     return capHeight[200] - this.spaceTop - this.spaceBottom;
   },
+};
+
+export const heading = {
+  fontFamily: metrics['Noto Sans Display Bold'].fontFamily,
+  fontWeight: metrics['Noto Sans Display Bold'].fontWeight,
 };
