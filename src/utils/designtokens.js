@@ -108,3 +108,15 @@ export const easing = {
   decelerate: 'cubic-bezier(0.0, 0.0, 0.2, 1)',
   linear: 'linear',
 };
+
+const metrics = {
+  'Noto Sans Regular': {
+    fontFamily: `'Noto Sans', Verdana, sans-serif`,
+    fontWeight: 400,
+  },
+};
+
+export const bodyText = {
+  fontFamily: metrics['Noto Sans Regular'].fontFamily,
+  fontWeight: metrics['Noto Sans Regular'].fontWeight,
+};

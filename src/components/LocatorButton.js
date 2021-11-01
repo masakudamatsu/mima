@@ -6,6 +6,7 @@ import {ModalPopup} from 'src/components/ModalPopup';
 import {NightModeContext} from 'src/context/NightModeContext';
 
 import {Button} from 'src/elements/Button';
+import {Paragraph} from 'src/elements/Paragraph';
 import {SvgCloud} from 'src/elements/SvgCloud';
 
 import {color} from 'src/utils/designtokens';
@@ -216,8 +217,8 @@ export const LocatorButton = ({mapObject}) => {
         titleId="permission-denied"
       >
         <h1 id="permission-denied">{geolocationPermissionDenied.what}</h1>
-        <p>{geolocationPermissionDenied.why}</p>
-        <p>{geolocationPermissionDenied.how}</p>
+        <Paragraph>{geolocationPermissionDenied.why}</Paragraph>
+        <Paragraph>{geolocationPermissionDenied.how}</Paragraph>
         <button
           data-autofocus
           data-testid="close-button-denied"
@@ -234,8 +235,8 @@ export const LocatorButton = ({mapObject}) => {
         titleId="position-unavailable"
       >
         <h1 id="position-unavailable">{geolocationPositionUnavailable.what}</h1>
-        <p>{geolocationPositionUnavailable.why}</p>
-        <p>{geolocationPositionUnavailable.how}</p>
+        <Paragraph>{geolocationPositionUnavailable.why}</Paragraph>
+        <Paragraph>{geolocationPositionUnavailable.how}</Paragraph>
         <button onClick={trackUserLocation} type="button">
           {geolocationPositionUnavailable.button.primary}
         </button>
@@ -255,8 +256,8 @@ export const LocatorButton = ({mapObject}) => {
         titleId="geolocation-unsupported"
       >
         <h1 id="geolocation-unsupported">{geolocationNotSupported.what}</h1>
-        <p>{geolocationNotSupported.why}</p>
-        <p>{geolocationNotSupported.how}</p>
+        <Paragraph>{geolocationNotSupported.why}</Paragraph>
+        <Paragraph>{geolocationNotSupported.how}</Paragraph>
         <button
           data-autofocus
           data-testid="close-button-unsupported"
