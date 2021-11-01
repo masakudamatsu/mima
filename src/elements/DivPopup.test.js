@@ -9,18 +9,6 @@ test('renders UI correctly', () => {
   const {container} = render(<DivPopup {...mockProps} />);
   expect(container).toMatchInlineSnapshot(`
 .c0 {
-  font-family: system-ui,-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,'Helvetica Neue',Arial,sans-serif;
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-flex-direction: column;
-  -ms-flex-direction: column;
-  flex-direction: column;
-  -webkit-box-pack: space-around;
-  -webkit-justify-content: space-around;
-  -ms-flex-pack: space-around;
-  justify-content: space-around;
   position: absolute;
   z-index: 3;
   color: var(--popup-text-color);

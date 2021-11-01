@@ -30,16 +30,6 @@ const setColorScheme = `
   }
 `;
 
-const setFontScheme = `
-  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
-`;
-
-const setLayout = `
-  display: flex;
-  flex-direction: column;
-  justify-content: space-around;
-`;
-
 const setTextColor = `
   color: var(--popup-text-color);
   & button {
@@ -95,8 +85,6 @@ const animateTransition = `
 `;
 
 export const DivPopup = styled.div`
-  ${setFontScheme}
-  ${setLayout}
   ${placeOverScrim}
   ${setColorScheme}
   ${setTextColor}
