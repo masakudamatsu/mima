@@ -125,6 +125,7 @@ const metrics = {
     fontFamily: `'Noto Sans Display', Georgia, sans-serif`,
     fontWeight: 700,
     unitsPerEm: 1000, // head.unitsPerEm
+    xHeight: 546, // os2.sxHeight
     capHeight: 714, // os2.sCapHeight
   },
 };
@@ -200,4 +201,13 @@ export const heading = {
     metrics: metrics['Noto Sans Display Bold'],
   }),
   fontWeight: metrics['Noto Sans Display Bold'].fontWeight,
+  get lineHeight() {
+    const xHeight =
+      this.fontSize *
+      (metrics['Noto Sans Display Bold'].xHeight /
+        metrics['Noto Sans Display Bold'].unitsPerEm);
+    const spaceBetweenLines = xHeight;
+    const lineHeight = xHeight + spaceBetweenLines;
+    return round(lineHeight / this.fontSize, 4);
+  },
 };

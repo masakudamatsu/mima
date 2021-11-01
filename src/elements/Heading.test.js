@@ -12,6 +12,7 @@ test('renders UI correctly', () => {
   font-family: 'Noto Sans Display',Georgia,sans-serif;
   font-size: 1.3986rem;
   font-weight: 700;
+  line-height: 1.092;
 }
 
 <div>

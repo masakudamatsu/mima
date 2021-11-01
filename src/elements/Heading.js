@@ -7,6 +7,7 @@ export const Heading = styled.h1`
   font-family: ${heading.fontFamily};
   font-size: ${remify(heading.fontSize)};
   font-weight: ${heading.fontWeight};
+  line-height: ${heading.lineHeight};
 `;
 
 // Heading.propTypes = {};
