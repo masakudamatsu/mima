@@ -20,21 +20,16 @@ const setColorScheme = `
     --popup-background-color: ${color['white 93']};
     --popup-shadow-color: ${color['white 63']};
     --popup-text-color: ${color['dark-grey 100']};
-    --popup-button-text-color: ${color['google-blue 100']};
   }
   &[data-darkmode='true'] {
     --popup-background-color: ${color['mid-grey 80']};
     --popup-shadow-color: ${color['mid-grey 42']};
     --popup-text-color: ${color['off-white 100']};
-    --popup-button-text-color: ${color['google-blue-light 100']};
   }
 `;
 
 const setTextColor = `
   color: var(--popup-text-color);
-  & button {
-    color: var(--popup-button-text-color);
-  }
 `;
 
 const setSize = `

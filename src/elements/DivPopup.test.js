@@ -21,18 +21,12 @@ test('renders UI correctly', () => {
   --popup-background-color: rgba(255,255,255,0.93);
   --popup-shadow-color: rgba(255,255,255,0.63);
   --popup-text-color: rgb(90,90,90);
-  --popup-button-text-color: #4285F4;
 }
 
 .c0[data-darkmode='true'] {
   --popup-background-color: rgba(123,123,123,0.8);
   --popup-shadow-color: rgba(123,123,123,0.42);
   --popup-text-color: rgb(218,218,218);
-  --popup-button-text-color: #1bb6ff;
-}
-
-.c0 button {
-  color: var(--popup-button-text-color);
 }
 
 .c0[data-slide-from="left"] {

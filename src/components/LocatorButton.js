@@ -217,7 +217,7 @@ export const LocatorButton = ({mapObject}) => {
         slideFrom="top"
         titleId="permission-denied"
       >
-        <DivErrorDialog>
+        <DivErrorDialog data-darkmode={nightMode}>
           <Heading as="h1" id="permission-denied">
             {geolocationPermissionDenied.what}
           </Heading>
@@ -239,7 +239,7 @@ export const LocatorButton = ({mapObject}) => {
         slideFrom="top"
         titleId="position-unavailable"
       >
-        <DivErrorDialog>
+        <DivErrorDialog data-darkmode={nightMode}>
           <Heading as="h1" id="position-unavailable">
             {geolocationPositionUnavailable.what}
           </Heading>
@@ -264,7 +264,7 @@ export const LocatorButton = ({mapObject}) => {
         slideFrom="top"
         titleId="geolocation-unsupported"
       >
-        <DivErrorDialog>
+        <DivErrorDialog data-darkmode={nightMode}>
           <Heading as="h1" id="geolocation-unsupported">
             {geolocationNotSupported.what}
           </Heading>

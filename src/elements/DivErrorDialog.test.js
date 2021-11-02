@@ -27,6 +27,18 @@ test('renders UI correctly', () => {
   margin-top: 1.1112rem;
 }
 
+.c0 button {
+  color: var(--button-color);
+}
+
+.c0[data-darkmode='false'] {
+  --button-color: #4285F4;
+}
+
+.c0[data-darkmode='true'] {
+  --button-color: #1bb6ff;
+}
+
 <div>
   <div
     class="c0"
