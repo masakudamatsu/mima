@@ -39,6 +39,10 @@ export const DivErrorDialog = styled.div`
       ${color['focus-blue 100']};
     outline-offset: ${dimension.button['border width 200']};
   }
+  & button:focus:not(:focus-visible) {
+    outline: none;
+    outline-offset: initial;
+  }
   ${setColorScheme}
 `;
 // DivErrorDialog.propTypes = {};

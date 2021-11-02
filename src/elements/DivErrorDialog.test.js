@@ -36,6 +36,16 @@ test('renders UI correctly', () => {
   min-width: 96px;
 }
 
+.c0 button:focus {
+  outline: 2px solid rgb(69,159,189);
+  outline-offset: 2px;
+}
+
+.c0 button:focus:not(:focus-visible) {
+  outline: none;
+  outline-offset: initial;
+}
+
 .c0[data-darkmode='false'] {
   --button-color: #4285F4;
 }
