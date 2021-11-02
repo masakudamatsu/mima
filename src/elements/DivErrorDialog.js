@@ -27,7 +27,12 @@ export const DivErrorDialog = styled.div`
     margin-top: ${remify(capHeight[300] - bodyText.spaceBottom)};
   }
   & button {
+    border: ${dimension.button['border width 100']} solid var(--button-color);
+    border-radius: ${dimension.button['border radius 100']};
     color: var(--button-color);
+    min-height: ${dimension.button['minimum target size 100']};
+    min-width: ${dimension.button['minimum target size 200']};
+  }
   }
   ${setColorScheme}
 `;

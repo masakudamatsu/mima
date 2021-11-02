@@ -28,7 +28,11 @@ test('renders UI correctly', () => {
 }
 
 .c0 button {
+  border: 1px solid var(--button-color);
+  border-radius: 4px;
   color: var(--button-color);
+  min-height: 48px;
+  min-width: 96px;
 }
 
 .c0[data-darkmode='false'] {
