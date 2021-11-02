@@ -135,7 +135,7 @@ const metrics = {
 const fontScale =
   metrics['Noto Sans Regular'].capHeight / metrics['Noto Sans Regular'].xHeight;
 
-const capHeight = {
+export const capHeight = {
   10: 12 / fontScale,
   100: 12, // minimum cap height for Noto Sans Regular to be at font-size of 16px
   200: 12 * fontScale,
