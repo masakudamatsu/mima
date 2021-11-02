@@ -8,6 +8,13 @@ const mockProps = {};
 test('renders UI correctly', () => {
   const {container} = render(<DivErrorDialog {...mockProps} />);
   expect(container).toMatchInlineSnapshot(`
+.c0 {
+  font-family: 'Noto Sans',Verdana,sans-serif;
+  font-size: 1.0506rem;
+  font-weight: 400;
+  line-height: 1.25;
+}
+
 .c0 p + p {
   margin-top: 0.4965rem;
 }

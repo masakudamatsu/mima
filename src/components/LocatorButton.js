@@ -8,7 +8,6 @@ import {NightModeContext} from 'src/context/NightModeContext';
 import {Button} from 'src/elements/Button';
 import {DivErrorDialog} from 'src/elements/DivErrorDialog';
 import {Heading} from 'src/elements/Heading';
-import {Paragraph} from 'src/elements/Paragraph';
 import {SvgCloud} from 'src/elements/SvgCloud';
 
 import {color} from 'src/utils/designtokens';
@@ -222,17 +221,17 @@ export const LocatorButton = ({mapObject}) => {
           <Heading as="h1" id="permission-denied">
             {geolocationPermissionDenied.what}
           </Heading>
-          <Paragraph>{geolocationPermissionDenied.why}</Paragraph>
-          <Paragraph>{geolocationPermissionDenied.how}</Paragraph>
+          <p>{geolocationPermissionDenied.why}</p>
+          <p>{geolocationPermissionDenied.how}</p>
+          <button
+            data-autofocus
+            data-testid="close-button-denied"
+            onClick={initializeUI}
+            type="button"
+          >
+            {geolocationPermissionDenied.button}
+          </button>
         </DivErrorDialog>
-        <button
-          data-autofocus
-          data-testid="close-button-denied"
-          onClick={initializeUI}
-          type="button"
-        >
-          {geolocationPermissionDenied.button}
-        </button>
       </ModalPopup>
       <ModalPopup
         alert
@@ -244,20 +243,20 @@ export const LocatorButton = ({mapObject}) => {
           <Heading as="h1" id="position-unavailable">
             {geolocationPositionUnavailable.what}
           </Heading>
-          <Paragraph>{geolocationPositionUnavailable.why}</Paragraph>
-          <Paragraph>{geolocationPositionUnavailable.how}</Paragraph>
+          <p>{geolocationPositionUnavailable.why}</p>
+          <p>{geolocationPositionUnavailable.how}</p>
+          <button onClick={trackUserLocation} type="button">
+            {geolocationPositionUnavailable.button.primary}
+          </button>
+          <button
+            data-autofocus
+            data-testid="close-button-unavailable"
+            onClick={initializeUI}
+            type="button"
+          >
+            {geolocationPositionUnavailable.button.secondary}
+          </button>{' '}
         </DivErrorDialog>
-        <button onClick={trackUserLocation} type="button">
-          {geolocationPositionUnavailable.button.primary}
-        </button>
-        <button
-          data-autofocus
-          data-testid="close-button-unavailable"
-          onClick={initializeUI}
-          type="button"
-        >
-          {geolocationPositionUnavailable.button.secondary}
-        </button>{' '}
       </ModalPopup>
       <ModalPopup
         alert
@@ -269,17 +268,17 @@ export const LocatorButton = ({mapObject}) => {
           <Heading as="h1" id="geolocation-unsupported">
             {geolocationNotSupported.what}
           </Heading>
-          <Paragraph>{geolocationNotSupported.why}</Paragraph>
-          <Paragraph>{geolocationNotSupported.how}</Paragraph>
+          <p>{geolocationNotSupported.why}</p>
+          <p>{geolocationNotSupported.how}</p>
+          <button
+            data-autofocus
+            data-testid="close-button-unsupported"
+            onClick={initializeUI}
+            type="button"
+          >
+            {geolocationNotSupported.button}
+          </button>
         </DivErrorDialog>
-        <button
-          data-autofocus
-          data-testid="close-button-unsupported"
-          onClick={initializeUI}
-          type="button"
-        >
-          {geolocationNotSupported.button}
-        </button>
       </ModalPopup>
     </>
   );
