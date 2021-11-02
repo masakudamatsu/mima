@@ -81,6 +81,7 @@ export const dimension = {
     'minimum target size 100': '48px', // https://web.dev/accessible-tap-targets/
     'minimum target size 75': '36px',
     'minimum target size 50': '24px', // https://web.dev/accessible-tap-targets/
+    'minimum target size 25': '12px',
     'border radius 100': '4px',
     'border width 100': '1px',
   },

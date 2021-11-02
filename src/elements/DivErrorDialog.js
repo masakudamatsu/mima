@@ -30,6 +30,7 @@ export const DivErrorDialog = styled.div`
     border: ${dimension.button['border width 100']} solid var(--button-color);
     border-radius: ${dimension.button['border radius 100']};
     color: var(--button-color);
+    margin-right: ${dimension.button['minimum target size 25']};
     min-height: ${dimension.button['minimum target size 100']};
     min-width: ${dimension.button['minimum target size 200']};
   }

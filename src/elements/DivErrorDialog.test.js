@@ -31,6 +31,7 @@ test('renders UI correctly', () => {
   border: 1px solid var(--button-color);
   border-radius: 4px;
   color: var(--button-color);
+  margin-right: 12px;
   min-height: 48px;
   min-width: 96px;
 }
