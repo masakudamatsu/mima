@@ -34,6 +34,10 @@ export const DivErrorDialog = styled.div`
     min-height: ${dimension.button['minimum target size 100']};
     min-width: ${dimension.button['minimum target size 200']};
   }
+  & button:focus {
+    outline: ${dimension.button['border width 200']} solid
+      ${color['focus-blue 100']};
+    outline-offset: ${dimension.button['border width 200']};
   }
   ${setColorScheme}
 `;
