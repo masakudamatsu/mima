@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 // import PropTypes from 'prop-types';
-import {color, duration, easing} from 'src/utils/designtokens';
+import {bodyText, color, duration, easing} from 'src/utils/designtokens';
+import {remify} from 'src/utils/remify';
 import {zIndex} from 'src/utils/zIndex';
 
 const placeOverScrim = `
@@ -28,6 +29,12 @@ const setColorScheme = `
   }
 `;
 
+const setFontStyle = `
+  font-family: ${bodyText.fontFamily};
+  font-size: ${remify(bodyText.fontSize)};
+  font-weight: ${bodyText.fontWeight};
+  line-height: ${bodyText.lineHeight};
+`;
 const setTextColor = `
   color: var(--popup-text-color);
 `;
@@ -78,6 +85,7 @@ const animateTransition = `
 export const DivPopup = styled.div`
   ${placeOverScrim}
   ${setColorScheme}
+  ${setFontStyle}
   ${setTextColor}
   ${setSize}
   ${animateTransition}
