@@ -57,6 +57,10 @@ describe('Button component', () => {
   fill: var(--button-label-color-focus);
 }
 
+.c0:focus:not(:focus-visible) svg {
+  fill: var(--button-label-color-default);
+}
+
 .c0:active svg {
   fill: var(--button-label-color-default);
 }
@@ -79,10 +83,19 @@ describe('Button component', () => {
   stroke: var(--button-outline-color-focus);
 }
 
+.c0:focus:not(:focus-visible) #cloud {
+  stroke: var(--button-outline-color);
+}
+
 .c0:focus svg,
 .c0:hover svg {
   -webkit-filter: drop-shadow( 0px 0px var(--button-shadow-blur-radius-focus) var(--button-shadow-color-focus) );
   filter: drop-shadow( 0px 0px var(--button-shadow-blur-radius-focus) var(--button-shadow-color-focus) );
+}
+
+.c0:focus:not(:focus-visible) svg {
+  -webkit-filter: drop-shadow( 0px 0px 1px var(--button-shadow-color) ) drop-shadow( 0px 0px 2px var(--button-shadow-color) ) drop-shadow( 0px 0px 4px var(--button-shadow-color) );
+  filter: drop-shadow( 0px 0px 1px var(--button-shadow-color) ) drop-shadow( 0px 0px 2px var(--button-shadow-color) ) drop-shadow( 0px 0px 4px var(--button-shadow-color) );
 }
 
 .c0:active svg {

@@ -53,6 +53,9 @@ const setButtonLabelColor = css`
   &:hover svg {
     fill: var(--button-label-color-focus);
   }
+  &:focus:not(:focus-visible) svg {
+    fill: var(--button-label-color-default);
+  }
   &:active svg {
     fill: var(--button-label-color-default);
   }
@@ -62,27 +65,36 @@ const setButtonColor = css`
     fill: var(--button-color);
   }
 `;
+const buttonShadow = {
+  edge: `stroke: var(--button-outline-color);`,
+  blur: `
+    filter: drop-shadow(
+      ${dimension.shadow['offset']} ${dimension.shadow['blur layer 1']}
+        var(--button-shadow-color)
+    )
+    drop-shadow(
+      ${dimension.shadow['offset']} ${dimension.shadow['blur layer 2']}
+        var(--button-shadow-color)
+    )
+    drop-shadow(
+      ${dimension.shadow['offset']} ${dimension.shadow['blur layer 3']}
+        var(--button-shadow-color)
+    );
+  `,
+};
 const setButtonShadow = css`
   & #cloud {
-    stroke: var(--button-outline-color);
+    ${buttonShadow.edge}
   }
   & svg {
-    filter: drop-shadow(
-        ${dimension.shadow['offset']} ${dimension.shadow['blur layer 1']}
-          var(--button-shadow-color)
-      )
-      drop-shadow(
-        ${dimension.shadow['offset']} ${dimension.shadow['blur layer 2']}
-          var(--button-shadow-color)
-      )
-      drop-shadow(
-        ${dimension.shadow['offset']} ${dimension.shadow['blur layer 3']}
-          var(--button-shadow-color)
-      );
+    ${buttonShadow.blur}
   }
   &:focus #cloud,
   &:hover #cloud {
     stroke: var(--button-outline-color-focus);
+  }
+  &:focus:not(:focus-visible) #cloud {
+    ${buttonShadow.edge}
   }
   &:focus svg,
   &:hover svg {
@@ -90,6 +102,9 @@ const setButtonShadow = css`
       ${dimension.glow['offset']} var(--button-shadow-blur-radius-focus)
         var(--button-shadow-color-focus)
     );
+  }
+  &:focus:not(:focus-visible) svg {
+    ${buttonShadow.blur}
   }
   &:active svg {
     filter: none;
