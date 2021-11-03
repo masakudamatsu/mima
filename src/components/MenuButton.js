@@ -4,10 +4,13 @@ import {NightModeContext} from 'src/context/NightModeContext';
 
 import {ModalPopup} from 'src/components/ModalPopup';
 import {Button} from 'src/elements/Button';
-import {SvgCloud} from 'src/elements/SvgCloud';
 import {ButtonSquare} from 'src/elements/ButtonSquare';
-import {SvgClose} from 'src/elements/SvgClose';
 import {ListMenu} from 'src/elements/ListMenu';
+import {SvgAdd} from 'src/elements/SvgAdd';
+import {SvgCloud} from 'src/elements/SvgCloud';
+import {SvgClose} from 'src/elements/SvgClose';
+import {SvgFlightTakeoff} from 'src/elements/SvgFlightTakeoff';
+import {SvgSearch} from 'src/elements/SvgSearch';
 
 import {buttonLabel, menuLabel} from 'src/utils/uiCopies';
 
@@ -62,11 +65,18 @@ export const MenuButton = () => {
         </ButtonSquare>
         <ListMenu>
           <li>
-            <button>First menu item</button>
+            <button>
+              <SvgSearch aria-hidden="true" /> Search Place
+            </button>
+          </li>
+          <li>
+            <button>
+              <SvgFlightTakeoff aria-hidden="true" /> Find Where You Are
+            </button>
           </li>
           <li>
             <button data-testid="last-focusable-element">
-              Second menu item
+              <SvgAdd aria-hidden="true" /> Save Place
             </button>
           </li>
         </ListMenu>
