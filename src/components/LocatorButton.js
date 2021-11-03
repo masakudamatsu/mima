@@ -1,4 +1,4 @@
-import {useContext, useRef, useState} from 'react';
+import {useContext, useEffect, useRef, useState} from 'react';
 import PropTypes from 'prop-types';
 
 import {ModalPopup} from 'src/components/ModalPopup';
@@ -39,6 +39,8 @@ export const LocatorButton = ({mapObject}) => {
   // to remove the previous location marker
   const marker = useRef(null);
   const accuracyCircle = useRef(null);
+  // to control user location tracking
+  const watchID = useRef(null);
 
   // helper functions
   function obtainCurrentCoordinates(position) {
@@ -140,7 +142,7 @@ export const LocatorButton = ({mapObject}) => {
           // Stop blinking the button & Change the button label icon
           setStatus('watching');
           // Enable continuous extraction of GPS info
-          navigator.geolocation.watchPosition(
+          watchID.current = navigator.geolocation.watchPosition(
             position => {
               const previousCoordinates = userLocation.current;
               userLocation.current = obtainCurrentCoordinates(position);
@@ -181,6 +183,30 @@ export const LocatorButton = ({mapObject}) => {
   const initializeUI = () => {
     setStatus('dismissed');
   };
+
+  // Stop tracking user location if user switches to another browser tap
+  useEffect(() => {
+    function handleVisibilityChange() {
+      let timeoutID;
+      if (document.visibilityState === 'hidden') {
+        timeoutID = setTimeout(() => {
+          navigator.geolocation.clearWatch(watchID.current);
+          removeUserLocation();
+          initializeUI();
+        }, 10000);
+      } else {
+        clearTimeout(timeoutID);
+      }
+    }
+    document.addEventListener(
+      'visibilitychange',
+      handleVisibilityChange,
+      false,
+    );
+    return () => {
+      document.removeEventListener('visibilitychange', handleVisibilityChange);
+    }; // otherwise Jest/Testing-Library issues a warning
+  }, []);
 
   return (
     <>
