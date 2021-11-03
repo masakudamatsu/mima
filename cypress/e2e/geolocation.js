@@ -56,6 +56,11 @@ describe('Geolocation API happy path', () => {
       // requires visual testing; see snapshot-geolocation.js
     });
   });
+  describe.skip('after switching to another tab', () => {
+    // unable to test because we're unsure how to mock Page Visibility API
+    it.skip('stops tracking after 10 seconds', () => {});
+    it.skip('DOES NOT stop tracking within 10 seconds', () => {});
+  });
 });
 
 describe('Geolocation API unsupported', () => {
