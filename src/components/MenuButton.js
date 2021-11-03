@@ -7,6 +7,7 @@ import {Button} from 'src/elements/Button';
 import {SvgCloud} from 'src/elements/SvgCloud';
 import {ButtonSquare} from 'src/elements/ButtonSquare';
 import {SvgClose} from 'src/elements/SvgClose';
+import {ListMenu} from 'src/elements/ListMenu';
 
 import {buttonLabel, menuLabel} from 'src/utils/uiCopies';
 
@@ -59,7 +60,7 @@ export const MenuButton = () => {
         >
           <SvgClose title={buttonLabel.close} />
         </ButtonSquare>
-        <ul>
+        <ListMenu>
           <li>
             <button>First menu item</button>
           </li>
@@ -68,7 +69,7 @@ export const MenuButton = () => {
               Second menu item
             </button>
           </li>
-        </ul>
+        </ListMenu>
       </ModalPopup>
     </nav>
   );
