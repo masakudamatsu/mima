@@ -12,6 +12,14 @@ test('renders UI correctly', () => {
   list-style: none;
 }
 
+.c0 li {
+  padding: 4px 0;
+}
+
+.c0 li button {
+  height: 48px;
+}
+
 <div>
   <ul
     class="c0"
