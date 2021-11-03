@@ -75,25 +75,69 @@ describe('Once user location is being watched', () => {
   });
 });
 
-describe('Geolocation API permission denied', () => {
+const errorCodes = [1, 2];
+errorCodes.forEach(errorCode => {
+  describe(`Geolocation API error code: ${errorCode}`, () => {
+    it('Clicking the locator button pops up a light-mode dialog at daytime', () => {
+      cy.clock(Date.UTC(2021, 8, 28, 6), ['Date']); // https://docs.cypress.io/api/commands/clock#Function-names
+      cy.visit('/', {
+        onBeforeLoad(window) {
+          cy.stub(
+            window.navigator.geolocation,
+            'getCurrentPosition',
+            (success, error) => {
+              throw error({code: errorCode});
+            },
+          );
+        },
+      });
+      cy.waitForMapToLoad();
+      // execute
+      cy.findByRole('button', {name: buttonLabel.locator.default}).click();
+      // verify
+      cy.percySnapshot(`current-location-error-${errorCode}-daytime`, {
+        widths: [320, 768, 1024],
+      });
+    });
+    it('Clicking the locator button pops up a dark-mode dialog at nighttime', () => {
+      cy.clock(Date.UTC(2021, 8, 28, 18), ['Date']); // https://docs.cypress.io/api/commands/clock#Function-names
+      cy.visit('/', {
+        onBeforeLoad(window) {
+          cy.stub(
+            window.navigator.geolocation,
+            'getCurrentPosition',
+            (success, error) => {
+              throw error({code: errorCode});
+            },
+          );
+        },
+      });
+      cy.waitForMapToLoad();
+      // execute
+      cy.findByRole('button', {name: buttonLabel.locator.default}).click();
+      // verify
+      cy.percySnapshot(`current-location-error-${errorCode}-nighttime`, {
+        widths: [320, 768, 1024],
+      });
+    });
+  });
+});
+
+describe('Geolocation API unsupported', () => {
   it('Clicking the locator button pops up a light-mode dialog at daytime', () => {
     cy.clock(Date.UTC(2021, 8, 28, 6), ['Date']); // https://docs.cypress.io/api/commands/clock#Function-names
     cy.visit('/', {
       onBeforeLoad(window) {
-        cy.stub(
-          window.navigator.geolocation,
-          'getCurrentPosition',
-          (success, error) => {
-            throw error({code: 1});
-          },
-        );
+        Object.defineProperty(window.navigator, 'geolocation', {
+          value: undefined,
+        });
       },
     });
     cy.waitForMapToLoad();
     // execute
     cy.findByRole('button', {name: buttonLabel.locator.default}).click();
     // verify
-    cy.percySnapshot('current-location-permission-denied-daytime', {
+    cy.percySnapshot(`current-location-not-supported-daytime`, {
       widths: [320, 768, 1024],
     });
   });
@@ -101,20 +145,16 @@ describe('Geolocation API permission denied', () => {
     cy.clock(Date.UTC(2021, 8, 28, 18), ['Date']); // https://docs.cypress.io/api/commands/clock#Function-names
     cy.visit('/', {
       onBeforeLoad(window) {
-        cy.stub(
-          window.navigator.geolocation,
-          'getCurrentPosition',
-          (success, error) => {
-            throw error({code: 1});
-          },
-        );
+        Object.defineProperty(window.navigator, 'geolocation', {
+          value: undefined,
+        });
       },
     });
     cy.waitForMapToLoad();
     // execute
     cy.findByRole('button', {name: buttonLabel.locator.default}).click();
     // verify
-    cy.percySnapshot('current-location-permission-denied-nighttime', {
+    cy.percySnapshot(`current-location-not-supported-nighttime`, {
       widths: [320, 768, 1024],
     });
   });
