@@ -32,6 +32,9 @@ const setButtonLabelColor = css`
   &:hover svg {
     fill: var(--button-label-color-focus);
   }
+  &:focus:not(:focus-visible) svg {
+    fill: var(--button-label-color-default);
+  }
   &:active svg {
     fill: var(--button-label-color-default);
   }

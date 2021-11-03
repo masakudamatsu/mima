@@ -38,6 +38,10 @@ describe('ButtonSquare component', () => {
   fill: var(--button-label-color-focus);
 }
 
+.c0:focus:not(:focus-visible) svg {
+  fill: var(--button-label-color-default);
+}
+
 .c0:active svg {
   fill: var(--button-label-color-default);
 }
