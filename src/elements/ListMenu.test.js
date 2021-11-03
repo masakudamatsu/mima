@@ -20,6 +20,18 @@ test('renders UI correctly', () => {
   height: 48px;
 }
 
+.c0 li:not(:first-of-type) {
+  border-top: 1px solid var(--button-color);
+}
+
+.c0[data-darkmode='false'] {
+  --button-color: #4285F4;
+}
+
+.c0[data-darkmode='true'] {
+  --button-color: #1bb6ff;
+}
+
 <div>
   <ul
     class="c0"

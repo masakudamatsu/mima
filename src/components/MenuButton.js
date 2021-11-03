@@ -63,7 +63,7 @@ export const MenuButton = () => {
         >
           <SvgClose title={buttonLabel.close} />
         </ButtonSquare>
-        <ListMenu>
+        <ListMenu data-darkmode={nightMode}>
           <li>
             <button>
               <SvgSearch aria-hidden="true" /> Search Place
