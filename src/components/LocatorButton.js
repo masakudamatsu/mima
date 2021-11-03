@@ -214,7 +214,7 @@ export const LocatorButton = ({mapObject}) => {
       <ModalPopup
         alert
         hidden={status !== 'permissionDenied'}
-        slideFrom="top"
+        slideFrom="bottom"
         titleId="permission-denied"
       >
         <DivErrorDialog data-darkmode={nightMode}>
@@ -236,7 +236,7 @@ export const LocatorButton = ({mapObject}) => {
       <ModalPopup
         alert
         hidden={status !== 'positionUnavailable'}
-        slideFrom="top"
+        slideFrom="bottom"
         titleId="position-unavailable"
       >
         <DivErrorDialog data-darkmode={nightMode}>
@@ -261,7 +261,7 @@ export const LocatorButton = ({mapObject}) => {
       <ModalPopup
         alert
         hidden={status !== 'geolocationNotSupported'}
-        slideFrom="top"
+        slideFrom="bottom"
         titleId="geolocation-unsupported"
       >
         <DivErrorDialog data-darkmode={nightMode}>
