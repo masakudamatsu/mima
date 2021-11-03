@@ -6,6 +6,8 @@ import {ModalPopup} from 'src/components/ModalPopup';
 import {NightModeContext} from 'src/context/NightModeContext';
 
 import {Button} from 'src/elements/Button';
+import {DivErrorDialog} from 'src/elements/DivErrorDialog';
+import {Heading} from 'src/elements/Heading';
 import {SvgCloud} from 'src/elements/SvgCloud';
 
 import {color} from 'src/utils/designtokens';
@@ -212,59 +214,71 @@ export const LocatorButton = ({mapObject}) => {
       <ModalPopup
         alert
         hidden={status !== 'permissionDenied'}
-        slideFrom="top"
+        slideFrom="bottom"
         titleId="permission-denied"
       >
-        <h1 id="permission-denied">{geolocationPermissionDenied.what}</h1>
-        <p>{geolocationPermissionDenied.why}</p>
-        <p>{geolocationPermissionDenied.how}</p>
-        <button
-          data-autofocus
-          data-testid="close-button-denied"
-          onClick={initializeUI}
-          type="button"
-        >
-          {geolocationPermissionDenied.button}
-        </button>
+        <DivErrorDialog data-darkmode={nightMode}>
+          <Heading as="h1" id="permission-denied">
+            {geolocationPermissionDenied.what}
+          </Heading>
+          <p>{geolocationPermissionDenied.why}</p>
+          <p>{geolocationPermissionDenied.how}</p>
+          <button
+            data-autofocus
+            data-testid="close-button-denied"
+            onClick={initializeUI}
+            type="button"
+          >
+            {geolocationPermissionDenied.button}
+          </button>
+        </DivErrorDialog>
       </ModalPopup>
       <ModalPopup
         alert
         hidden={status !== 'positionUnavailable'}
-        slideFrom="top"
+        slideFrom="bottom"
         titleId="position-unavailable"
       >
-        <h1 id="position-unavailable">{geolocationPositionUnavailable.what}</h1>
-        <p>{geolocationPositionUnavailable.why}</p>
-        <p>{geolocationPositionUnavailable.how}</p>
-        <button onClick={trackUserLocation} type="button">
-          {geolocationPositionUnavailable.button.primary}
-        </button>
-        <button
-          data-autofocus
-          data-testid="close-button-unavailable"
-          onClick={initializeUI}
-          type="button"
-        >
-          {geolocationPositionUnavailable.button.secondary}
-        </button>{' '}
+        <DivErrorDialog data-darkmode={nightMode}>
+          <Heading as="h1" id="position-unavailable">
+            {geolocationPositionUnavailable.what}
+          </Heading>
+          <p>{geolocationPositionUnavailable.why}</p>
+          <p>{geolocationPositionUnavailable.how}</p>
+          <button onClick={trackUserLocation} type="button">
+            {geolocationPositionUnavailable.button.primary}
+          </button>
+          <button
+            data-autofocus
+            data-testid="close-button-unavailable"
+            onClick={initializeUI}
+            type="button"
+          >
+            {geolocationPositionUnavailable.button.secondary}
+          </button>{' '}
+        </DivErrorDialog>
       </ModalPopup>
       <ModalPopup
         alert
         hidden={status !== 'geolocationNotSupported'}
-        slideFrom="top"
+        slideFrom="bottom"
         titleId="geolocation-unsupported"
       >
-        <h1 id="geolocation-unsupported">{geolocationNotSupported.what}</h1>
-        <p>{geolocationNotSupported.why}</p>
-        <p>{geolocationNotSupported.how}</p>
-        <button
-          data-autofocus
-          data-testid="close-button-unsupported"
-          onClick={initializeUI}
-          type="button"
-        >
-          {geolocationNotSupported.button}
-        </button>
+        <DivErrorDialog data-darkmode={nightMode}>
+          <Heading as="h1" id="geolocation-unsupported">
+            {geolocationNotSupported.what}
+          </Heading>
+          <p>{geolocationNotSupported.why}</p>
+          <p>{geolocationNotSupported.how}</p>
+          <button
+            data-autofocus
+            data-testid="close-button-unsupported"
+            onClick={initializeUI}
+            type="button"
+          >
+            {geolocationNotSupported.button}
+          </button>
+        </DivErrorDialog>
       </ModalPopup>
     </>
   );

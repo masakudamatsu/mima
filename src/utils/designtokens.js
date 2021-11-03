@@ -1,3 +1,5 @@
+import {round} from './round';
+
 export const color = {
   // both
   'white 100': `rgb(255,255,255)`,
@@ -75,9 +77,14 @@ export const dimension = {
     'height 25': '12px',
     'width 100': '56px',
     'width 25': '14px',
+    'minimum target size 200': '96px',
     'minimum target size 100': '48px', // https://web.dev/accessible-tap-targets/
     'minimum target size 75': '36px',
     'minimum target size 50': '24px', // https://web.dev/accessible-tap-targets/
+    'minimum target size 25': '12px',
+    'border radius 100': '4px',
+    'border width 200': '2px',
+    'border width 100': '1px',
   },
   shadow: {
     offset: '0px 0px',
@@ -107,4 +114,131 @@ export const easing = {
   accelerate: 'cubic-bezier(0.4, 0.0, 1, 1)',
   decelerate: 'cubic-bezier(0.0, 0.0, 0.2, 1)',
   linear: 'linear',
+};
+
+const metrics = {
+  'Noto Sans Regular': {
+    fontFamily: `'Noto Sans', Verdana, sans-serif`,
+    fontWeight: 400,
+    unitsPerEm: 2048, // head.unitsPerEm
+    capHeight: 1462, // os2.sCapHeight
+    xHeight: 1098, // os2.sxHeight
+    ascender: 2189, // hhea.ascender
+    descender: 600, // - hhea.descender
+  },
+  'Noto Sans Display Bold': {
+    fontFamily: `'Noto Sans Display', Georgia, sans-serif`,
+    fontWeight: 700,
+    unitsPerEm: 1000, // head.unitsPerEm
+    xHeight: 546, // os2.sxHeight
+    capHeight: 714, // os2.sCapHeight
+    ascender: 1069, // hhea.ascender
+    descender: 293, // - hhea.descender
+  },
+};
+
+const fontScale =
+  metrics['Noto Sans Regular'].capHeight / metrics['Noto Sans Regular'].xHeight;
+
+export const capHeight = {
+  10: 12 / fontScale,
+  100: 12, // minimum cap height for Noto Sans Regular to be at font-size of 16px
+  200: 12 * fontScale,
+  300: 12 * Math.pow(fontScale, 2),
+};
+
+const getFontSize = ({capHeight, metrics}) => {
+  return capHeight / (metrics.capHeight / metrics.unitsPerEm);
+};
+export const getSpaceToCrop = (
+  where,
+  {fontSize, lineHeight, normalLineHeight, font},
+) => {
+  const addedDefaultSpace = ((normalLineHeight - 1) / 2) * font.unitsPerEm;
+  let intrinsicSpace;
+  if (where === 'top') {
+    intrinsicSpace = font.ascender - font.capHeight - addedDefaultSpace;
+  }
+  if (where === 'bottom') {
+    intrinsicSpace = font.descender - addedDefaultSpace;
+  }
+  const addedNewSpace = ((lineHeight - 1) / 2) * font.unitsPerEm;
+  const pxPerUnit = fontSize / font.unitsPerEm;
+  return (intrinsicSpace + addedNewSpace) * pxPerUnit;
+};
+
+export const bodyText = {
+  fontFamily: metrics['Noto Sans Regular'].fontFamily,
+  fontSize: getFontSize({
+    capHeight: capHeight[100],
+    metrics: metrics['Noto Sans Regular'],
+  }),
+  fontWeight: metrics['Noto Sans Regular'].fontWeight,
+  get lineHeight() {
+    const xHeight = capHeight[10];
+    const spaceBetweenLines = capHeight[100];
+    const lineHeight = xHeight + spaceBetweenLines;
+    return round(lineHeight / this.fontSize, 4);
+  },
+  normalLineHeight: 1.42,
+  get spaceTop() {
+    return getSpaceToCrop('top', {
+      fontSize: this.fontSize,
+      font: metrics['Noto Sans Regular'],
+      lineHeight: this.lineHeight,
+      normalLineHeight: this.normalLineHeight,
+    });
+  },
+  get spaceBottom() {
+    return getSpaceToCrop('bottom', {
+      fontSize: this.fontSize,
+      font: metrics['Noto Sans Regular'],
+      lineHeight: this.lineHeight,
+      normalLineHeight: this.normalLineHeight,
+    });
+  },
+  get spaceBetweenParagraphs() {
+    return capHeight[200] - this.spaceTop - this.spaceBottom;
+  },
+};
+
+export const heading = {
+  fontFamily: metrics['Noto Sans Display Bold'].fontFamily,
+  fontSize: getFontSize({
+    capHeight: capHeight[300],
+    metrics: metrics['Noto Sans Display Bold'],
+  }),
+  fontWeight: metrics['Noto Sans Display Bold'].fontWeight,
+  get lineHeight() {
+    const xHeight =
+      this.fontSize *
+      (metrics['Noto Sans Display Bold'].xHeight /
+        metrics['Noto Sans Display Bold'].unitsPerEm);
+    const spaceBetweenLines = xHeight;
+    const lineHeight = xHeight + spaceBetweenLines;
+    return round(lineHeight / this.fontSize, 4);
+  },
+  normalLineHeight: 1.43,
+  get spaceTop() {
+    return getSpaceToCrop('top', {
+      fontSize: this.fontSize,
+      font: metrics['Noto Sans Display Bold'],
+      lineHeight: this.lineHeight,
+      normalLineHeight: this.normalLineHeight,
+    });
+  },
+  get spaceBottom() {
+    return getSpaceToCrop('bottom', {
+      fontSize: this.fontSize,
+      font: metrics['Noto Sans Display Bold'],
+      lineHeight: this.lineHeight,
+      normalLineHeight: this.normalLineHeight,
+    });
+  },
+  get paddingBottom() {
+    return capHeight[300] - this.spaceBottom;
+  },
+  get paddingTop() {
+    return capHeight[300] - this.spaceTop;
+  },
 };
