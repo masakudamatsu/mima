@@ -13,10 +13,6 @@ const setColorScheme = `
 `;
 
 export const DivErrorDialog = styled.div`
-  font-family: ${bodyText.fontFamily};
-  font-size: ${remify(bodyText.fontSize)};
-  font-weight: ${bodyText.fontWeight};
-  line-height: ${bodyText.lineHeight};
   & h1 + p {
     margin-top: -${remify(bodyText.spaceTop)};
   }

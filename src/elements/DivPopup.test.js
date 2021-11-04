@@ -11,6 +11,10 @@ test('renders UI correctly', () => {
 .c0 {
   position: absolute;
   z-index: 3;
+  font-family: 'Noto Sans',Verdana,sans-serif;
+  font-size: 1.0506rem;
+  font-weight: 400;
+  line-height: 1.25;
   color: var(--popup-text-color);
   height: calc(100% - 24px);
   top: 24px;

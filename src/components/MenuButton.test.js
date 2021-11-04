@@ -69,6 +69,24 @@ describe('Menu window', () => {
   });
 });
 
+describe('Menu window content', () => {
+  beforeEach(() => {
+    render(<MenuButton {...mockProps} />, {wrapper: Wrapper.lightMode});
+    userEvent.click(screen.getByRole('button', {name: buttonLabel.menu}));
+  });
+  it('includes search', () => {
+    expect(screen.getByRole('button', {name: /search place/i})).toBeVisible();
+  });
+  it('includes locator', () => {
+    expect(
+      screen.getByRole('button', {name: /find where you are/i}),
+    ).toBeVisible();
+  });
+  it('includes save', () => {
+    expect(screen.getByRole('button', {name: /save place/i})).toBeVisible();
+  });
+});
+
 test('Accessibility checks', async () => {
   const {container} = render(<MenuButton {...mockProps} />, {
     wrapper: Wrapper.lightMode,
