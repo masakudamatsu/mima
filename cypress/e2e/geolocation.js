@@ -75,17 +75,16 @@ describe('Geolocation API happy path', () => {
       );
     });
     it.skip('menu includes the button to stop tracking', () => {
+      // unable to test because we're unsure how to mock watchPosition(), with watchID returned
       // execute
       cy.findByRole('button', {name: buttonLabel.menu}).click();
       // verify
       cy.findByRole('button', {name: /stop showing where you are/i}).click();
       cy.findByRole('img', {name: `You are here!`}).should('not.exist');
     });
-  });
-  describe.skip('after switching to another tab', () => {
-    // unable to test because we're unsure how to mock Page Visibility API
-    it.skip('stops tracking after 10 seconds', () => {});
-    it.skip('DOES NOT stop tracking within 10 seconds', () => {});
+    it.skip('switching to another tab stops tracking after 10 seconds', () => {
+      // unable to test because we're unsure how to mock Page Visibility API
+    });
   });
 });
 
