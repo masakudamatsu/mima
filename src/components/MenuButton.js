@@ -17,7 +17,7 @@ import {SvgSearch} from 'src/elements/SvgSearch';
 
 import {buttonLabel, menuLabel} from 'src/utils/uiCopies';
 
-export const MenuButton = ({stopTracking, watchID}) => {
+export const MenuButton = ({stopTracking, trackUserLocation, watchID}) => {
   const nightMode = useContext(NightModeContext);
   const [open, setOpen] = useState(false);
 
@@ -42,6 +42,10 @@ export const MenuButton = ({stopTracking, watchID}) => {
     setOpen(true);
   };
   const handleClickCloseButton = () => {
+    setOpen(false);
+  };
+  const handleClickFlightTakeoff = () => {
+    trackUserLocation();
     setOpen(false);
   };
   const handleClickFlightLanding = () => {
@@ -81,7 +85,7 @@ export const MenuButton = ({stopTracking, watchID}) => {
             </li>
             <li>
               {!watchID ? (
-                <button>
+                <button type="button" onClick={handleClickFlightTakeoff}>
                   <SvgFlightTakeoff aria-hidden="true" /> Find Where You Are
                 </button>
               ) : (
@@ -105,5 +109,6 @@ export const MenuButton = ({stopTracking, watchID}) => {
 
 MenuButton.propTypes = {
   stopTracking: PropTypes.func,
+  trackUserLocation: PropTypes.func,
   watchID: PropTypes.number,
 };

@@ -210,7 +210,11 @@ export const Controls = ({mapObject}) => {
   return (
     <>
       {clientSideRendering && (
-        <MenuButton stopTracking={stopTracking} watchID={watchID} />
+        <MenuButton
+          stopTracking={stopTracking}
+          trackUserLocation={trackUserLocation}
+          watchID={watchID}
+        />
       )}
       {clientSideRendering && <SearchButton />}
       <section aria-label="controls">

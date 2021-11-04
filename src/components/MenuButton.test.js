@@ -10,6 +10,7 @@ import {buttonLabel, menuLabel} from 'src/utils/uiCopies';
 const accessibleName = buttonLabel.menu;
 const mockProps = {
   stopTracking: jest.fn().mockName('stopTracking'),
+  trackUserLocation: jest.fn().mockName('trackUserLocation'),
   watchID: null,
 };
 const Wrapper = {
@@ -80,10 +81,10 @@ describe('Menu window content', () => {
   it('includes search', () => {
     expect(screen.getByRole('button', {name: /search place/i})).toBeVisible();
   });
-  it('includes locator', () => {
-    expect(
-      screen.getByRole('button', {name: /find where you are/i}),
-    ).toBeVisible();
+  it('includes flight takeoff icon menu, the clicking of which calls trackUserLocation() and closes the menu window', () => {
+    userEvent.click(screen.getByRole('button', {name: /find where you are/i}));
+    expect(mockProps.trackUserLocation).toHaveBeenCalledTimes(1);
+    expect(screen.getByRole('heading', {hidden: true})).not.toBeVisible();
   });
   it('includes save', () => {
     expect(screen.getByRole('button', {name: /save place/i})).toBeVisible();

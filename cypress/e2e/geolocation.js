@@ -56,6 +56,17 @@ describe('Geolocation API happy path', () => {
       // requires visual testing; see snapshot-geolocation.js
     });
   });
+  describe('after clicking the button in the menu', () => {
+    it(`shows user's current location`, () => {
+      // execute
+      cy.findByRole('button', {name: buttonLabel.menu}).click();
+      cy.findByRole('button', {name: /find where you are/i}).click();
+      // verify
+      cy.findByRole('img', {name: `You are here!`, timeout: 20000}).should(
+        'be.visible',
+      );
+    });
+  });
   describe.skip('once user location is shown', () => {
     beforeEach(() => {
       cy.findByRole('button', {name: buttonLabel.locator.default}).click();
