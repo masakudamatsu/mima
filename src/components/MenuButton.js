@@ -1,5 +1,5 @@
 import {useContext, useEffect, useState} from 'react';
-// import PropTypes from 'prop-types';
+import PropTypes from 'prop-types';
 import {NightModeContext} from 'src/context/NightModeContext';
 
 import {ModalPopup} from 'src/components/ModalPopup';
@@ -11,12 +11,13 @@ import {ListMenu} from 'src/elements/ListMenu';
 import {SvgAdd} from 'src/elements/SvgAdd';
 import {SvgCloud} from 'src/elements/SvgCloud';
 import {SvgClose} from 'src/elements/SvgClose';
+import {SvgFlightLanding} from 'src/elements/SvgFlightLanding';
 import {SvgFlightTakeoff} from 'src/elements/SvgFlightTakeoff';
 import {SvgSearch} from 'src/elements/SvgSearch';
 
 import {buttonLabel, menuLabel} from 'src/utils/uiCopies';
 
-export const MenuButton = () => {
+export const MenuButton = ({stopTracking, watchID}) => {
   const nightMode = useContext(NightModeContext);
   const [open, setOpen] = useState(false);
 
@@ -41,6 +42,10 @@ export const MenuButton = () => {
     setOpen(true);
   };
   const handleClickCloseButton = () => {
+    setOpen(false);
+  };
+  const handleClickFlightLanding = () => {
+    stopTracking(watchID);
     setOpen(false);
   };
   return (
@@ -75,9 +80,16 @@ export const MenuButton = () => {
               </button>
             </li>
             <li>
-              <button>
-                <SvgFlightTakeoff aria-hidden="true" /> Find Where You Are
-              </button>
+              {!watchID ? (
+                <button>
+                  <SvgFlightTakeoff aria-hidden="true" /> Find Where You Are
+                </button>
+              ) : (
+                <button type="button" onClick={handleClickFlightLanding}>
+                  <SvgFlightLanding aria-hidden="true" /> Stop Showing Where You
+                  Are
+                </button>
+              )}
             </li>
             <li>
               <button data-testid="last-focusable-element">
@@ -91,5 +103,7 @@ export const MenuButton = () => {
   );
 };
 
-// MenuButton.propTypes = {
-// };
+MenuButton.propTypes = {
+  stopTracking: PropTypes.func,
+  watchID: PropTypes.number,
+};

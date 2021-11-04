@@ -56,6 +56,21 @@ describe('Geolocation API happy path', () => {
       // requires visual testing; see snapshot-geolocation.js
     });
   });
+  describe.skip('once user location is shown', () => {
+    beforeEach(() => {
+      cy.findByRole('button', {name: buttonLabel.locator.default}).click();
+      cy.findByRole('img', {name: `You are here!`, timeout: 20000}).should(
+        'be.visible',
+      );
+    });
+    it.skip('menu includes the button to stop tracking', () => {
+      // execute
+      cy.findByRole('button', {name: buttonLabel.menu}).click();
+      // verify
+      cy.findByRole('button', {name: /stop showing where you are/i}).click();
+      cy.findByRole('img', {name: `You are here!`}).should('not.exist');
+    });
+  });
   describe.skip('after switching to another tab', () => {
     // unable to test because we're unsure how to mock Page Visibility API
     it.skip('stops tracking after 10 seconds', () => {});

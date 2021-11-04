@@ -34,7 +34,7 @@ export const Controls = ({mapObject}) => {
   const marker = useRef(null);
   const accuracyCircle = useRef(null);
   // to control user location tracking
-  const watchID = useRef(null);
+  const [watchID, setWatchID] = useState(null);
 
   // helper functions
   function obtainCurrentCoordinates(position) {
@@ -136,7 +136,7 @@ export const Controls = ({mapObject}) => {
           // Stop blinking the button & Change the button label icon
           setStatus('watching');
           // Enable continuous extraction of GPS info
-          watchID.current = navigator.geolocation.watchPosition(
+          const newWatchID = navigator.geolocation.watchPosition(
             position => {
               const previousCoordinates = userLocation.current;
               userLocation.current = obtainCurrentCoordinates(position);
@@ -158,6 +158,7 @@ export const Controls = ({mapObject}) => {
             },
             {maximumAge: 0},
           );
+          setWatchID(newWatchID);
         },
         error => {
           handleGeolocationError(error, setStatus);
@@ -178,15 +179,19 @@ export const Controls = ({mapObject}) => {
     setStatus('dismissed');
   };
 
+  const stopTracking = watchID => {
+    navigator.geolocation.clearWatch(watchID);
+    removeUserLocation();
+    initializeUI();
+    setWatchID(null);
+  };
   // Stop tracking user location if user switches to another browser tap
   useEffect(() => {
     function handleVisibilityChange() {
       let timeoutID;
       if (document.visibilityState === 'hidden') {
         timeoutID = setTimeout(() => {
-          navigator.geolocation.clearWatch(watchID.current);
-          removeUserLocation();
-          initializeUI();
+          stopTracking(watchID);
         }, 10000);
       } else {
         clearTimeout(timeoutID);
@@ -204,7 +209,9 @@ export const Controls = ({mapObject}) => {
 
   return (
     <>
-      {clientSideRendering && <MenuButton />}
+      {clientSideRendering && (
+        <MenuButton stopTracking={stopTracking} watchID={watchID} />
+      )}
       {clientSideRendering && <SearchButton />}
       <section aria-label="controls">
         {clientSideRendering && (

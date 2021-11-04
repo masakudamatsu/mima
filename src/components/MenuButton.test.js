@@ -8,7 +8,10 @@ import {NightModeContext} from 'src/context/NightModeContext';
 import {buttonLabel, menuLabel} from 'src/utils/uiCopies';
 
 const accessibleName = buttonLabel.menu;
-const mockProps = {};
+const mockProps = {
+  stopTracking: jest.fn().mockName('stopTracking'),
+  watchID: null,
+};
 const Wrapper = {
   lightMode: ({children}) => (
     <NightModeContext.Provider value={false}>
@@ -84,6 +87,28 @@ describe('Menu window content', () => {
   });
   it('includes save', () => {
     expect(screen.getByRole('button', {name: /save place/i})).toBeVisible();
+  });
+  it('DOES NOT include flight landing icon menu', () => {
+    expect(
+      screen.queryByRole('button', {name: /stop showing where you are/i}),
+    ).not.toBeInTheDocument();
+  });
+});
+
+describe('watchID prop', () => {
+  const watchID = 2;
+  beforeEach(() => {
+    render(<MenuButton {...mockProps} watchID={watchID} />, {
+      wrapper: Wrapper.lightMode,
+    });
+    userEvent.click(screen.getByRole('button', {name: buttonLabel.menu}));
+  });
+  it('allows the user to stop tracking their location', () => {
+    userEvent.click(
+      screen.getByRole('button', {name: /stop showing where you are/i}),
+    );
+    expect(mockProps.stopTracking).toHaveBeenCalledTimes(1);
+    expect(mockProps.stopTracking).toHaveBeenCalledWith(watchID);
   });
 });
 
