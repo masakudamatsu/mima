@@ -202,6 +202,7 @@ export const bodyText = {
   get spaceBetweenParagraphs() {
     return capHeight[200] - this.spaceTop - this.spaceBottom;
   },
+  wordSpacing: 7, // measured by myself
 };
 
 export const heading = {

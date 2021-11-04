@@ -5,6 +5,8 @@ import {NightModeContext} from 'src/context/NightModeContext';
 import {ModalPopup} from 'src/components/ModalPopup';
 import {Button} from 'src/elements/Button';
 import {ButtonSquare} from 'src/elements/ButtonSquare';
+import {DivMenu} from 'src/elements/DivMenu';
+import {Heading} from 'src/elements/Heading';
 import {ListMenu} from 'src/elements/ListMenu';
 import {SvgAdd} from 'src/elements/SvgAdd';
 import {SvgCloud} from 'src/elements/SvgCloud';
@@ -53,33 +55,37 @@ export const MenuButton = () => {
         <SvgCloud icon="menu" title={buttonLabel.menu} />
       </Button>
       <ModalPopup hidden={!open} slideFrom="left" titleId="menu-label">
-        <h1 id="menu-label">{menuLabel}</h1>
-        <ButtonSquare
-          data-autofocus
-          data-darkmode={nightMode}
-          data-testid="close-button-menu"
-          onClick={handleClickCloseButton}
-          type="button"
-        >
-          <SvgClose title={buttonLabel.close} />
-        </ButtonSquare>
-        <ListMenu data-darkmode={nightMode}>
-          <li>
-            <button>
-              <SvgSearch aria-hidden="true" /> Search Place
-            </button>
-          </li>
-          <li>
-            <button>
-              <SvgFlightTakeoff aria-hidden="true" /> Find Where You Are
-            </button>
-          </li>
-          <li>
-            <button data-testid="last-focusable-element">
-              <SvgAdd aria-hidden="true" /> Save Place
-            </button>
-          </li>
-        </ListMenu>
+        <DivMenu>
+          <Heading as="h2" id="menu-label">
+            {menuLabel}
+          </Heading>
+          <ButtonSquare
+            data-autofocus
+            data-darkmode={nightMode}
+            data-testid="close-button-menu"
+            onClick={handleClickCloseButton}
+            type="button"
+          >
+            <SvgClose title={buttonLabel.close} />
+          </ButtonSquare>
+          <ListMenu data-darkmode={nightMode}>
+            <li>
+              <button>
+                <SvgSearch aria-hidden="true" /> Search Place
+              </button>
+            </li>
+            <li>
+              <button>
+                <SvgFlightTakeoff aria-hidden="true" /> Find Where You Are
+              </button>
+            </li>
+            <li>
+              <button data-testid="last-focusable-element">
+                <SvgAdd aria-hidden="true" /> Save Place
+              </button>
+            </li>
+          </ListMenu>
+        </DivMenu>
       </ModalPopup>
     </nav>
   );
