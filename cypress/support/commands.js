@@ -1,4 +1,4 @@
-import {userLocationMakerLabel} from '../../src/utils/uiCopies';
+import {userLocationMarkerLabel} from '../../src/utils/uiCopies';
 
 // Swipe from right to left
 Cypress.Commands.add('swipeScreenRightToLeft', () => {
@@ -56,7 +56,7 @@ Cypress.Commands.add(
 // Wait for user location to be marked on the map
 Cypress.Commands.add('waitForUserLocationToBeMarked', () => {
   // make sure user location is marked on the map
-  cy.findByRole('img', {name: userLocationMakerLabel, timeout: 50000});
+  cy.findByRole('img', {name: userLocationMarkerLabel, timeout: 50000});
   // eslint-disable-next-line cypress/no-unnecessary-waiting
   cy.wait(2500); // we cannot detect when Google Maps are fully loaded
 });

@@ -90,17 +90,19 @@ export const MenuButton = ({
           <ListMenu data-darkmode={nightMode}>
             <li>
               <button>
-                <SvgSearch aria-hidden="true" /> Search Place
+                <SvgSearch aria-hidden="true" /> {buttonLabel.search}
               </button>
             </li>
             <li>
               {!watchID ? (
                 <button type="button" onClick={handleClickFlightTakeoff}>
-                  <SvgFlightTakeoff aria-hidden="true" /> Find Where You Are
+                  <SvgFlightTakeoff aria-hidden="true" />{' '}
+                  {buttonLabel.locator.default}
                 </button>
               ) : (
                 <button type="button" onClick={handleClickFlightFlying}>
-                  <SvgFlightFlying aria-hidden="true" /> Snap To Where You Are
+                  <SvgFlightFlying aria-hidden="true" />
+                  {buttonLabel.locator.activated}
                 </button>
               )}
             </li>
@@ -110,13 +112,13 @@ export const MenuButton = ({
                 disabled={!watchID}
                 onClick={handleClickFlightLanding}
               >
-                <SvgFlightLanding aria-hidden="true" /> Stop Showing Where You
-                Are
+                <SvgFlightLanding aria-hidden="true" />{' '}
+                {buttonLabel.locator.deactivate}
               </button>
             </li>
             <li>
               <button data-testid="last-focusable-element">
-                <SvgAdd aria-hidden="true" /> Save Place
+                <SvgAdd aria-hidden="true" /> {buttonLabel.save}
               </button>
             </li>
           </ListMenu>

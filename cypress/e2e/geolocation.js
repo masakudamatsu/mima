@@ -3,6 +3,7 @@ import {
   geolocationNotSupported,
   geolocationPermissionDenied,
   geolocationPositionUnavailable,
+  userLocationMarkerLabel,
 } from '../../src/utils/uiCopies';
 
 describe('Geolocation API happy path', () => {
@@ -36,13 +37,14 @@ describe('Geolocation API happy path', () => {
     });
     it(`shows user's current location`, () => {
       // verify initial state
-      cy.findByRole('img', {name: `You are here!`}).should('not.exist');
+      cy.findByRole('img', {name: userLocationMarkerLabel}).should('not.exist');
       // execute
       cy.findByRole('button', {name: buttonLabel.locator.default}).click();
       // verify
-      cy.findByRole('img', {name: `You are here!`, timeout: 20000}).should(
-        'be.visible',
-      );
+      cy.findByRole('img', {
+        name: userLocationMarkerLabel,
+        timeout: 20000,
+      }).should('be.visible');
     });
     it.skip(`shows user's current moving direction`, () => {
       // requires visual testing; see snapshot-geolocation.js
@@ -54,59 +56,67 @@ describe('Geolocation API happy path', () => {
   describe('after panning the map and clicking the button again', () => {
     beforeEach(() => {
       cy.findByRole('button', {name: buttonLabel.locator.default}).click();
-      cy.findByRole('img', {name: `You are here!`}).should('be.visible');
+      cy.findByRole('img', {name: userLocationMarkerLabel}).should(
+        'be.visible',
+      );
     });
     it(`shows user location inside the screen`, () => {
       // setting up
       cy.swipeScreenRightToLeft();
-      cy.findByRole('img', {name: `You are here!`}).should('be.hidden');
+      cy.findByRole('img', {name: userLocationMarkerLabel}).should('be.hidden');
       // execute
       cy.findByRole('button', {name: buttonLabel.locator.activated}).click();
       // verify
-      cy.findByRole('img', {name: `You are here!`, timeout: 20000}).should(
-        'be.visible',
-      );
+      cy.findByRole('img', {
+        name: userLocationMarkerLabel,
+        timeout: 20000,
+      }).should('be.visible');
     });
   });
   describe('after clicking the button in the menu', () => {
     it(`shows user's current location`, () => {
       // execute
       cy.findByRole('button', {name: buttonLabel.menu}).click();
-      cy.findByRole('button', {name: /find where you are/i}).click();
+      cy.get('nav')
+        .findAllByRole('button', {name: buttonLabel.locator.default})
+        .click();
       // verify
-      cy.findByRole('img', {name: `You are here!`, timeout: 20000}).should(
-        'be.visible',
-      );
+      cy.findByRole('img', {
+        name: userLocationMarkerLabel,
+        timeout: 20000,
+      }).should('be.visible');
     });
   });
   describe.skip('once user location is shown', () => {
     // we cannot test this case unless we can manage to mock watchPosition()
     beforeEach(() => {
       cy.findByRole('button', {name: buttonLabel.locator.default}).click();
-      cy.findByRole('img', {name: `You are here!`, timeout: 20000}).should(
-        'be.visible',
-      );
+      cy.findByRole('img', {
+        name: userLocationMarkerLabel,
+        timeout: 20000,
+      }).should('be.visible');
     });
     it.skip('menu includes the button to snap to user location', () => {
       // unable to test because we're unsure how to mock watchPosition(), with watchID returned
       // setting up
       cy.swipeScreenRightToLeft();
-      cy.findByRole('img', {name: `You are here!`}).should('be.hidden');
+      cy.findByRole('img', {name: userLocationMarkerLabel}).should('be.hidden');
       // execute
       cy.findByRole('button', {name: buttonLabel.menu}).click();
       // verify
-      cy.findByRole('button', {name: /snap to where you are/i}).click();
-      cy.findByRole('img', {name: `You are here!`, timeout: 20000}).should(
-        'be.visible',
-      );
+      cy.findByRole('button', {name: buttonLabel.locator.activated}).click();
+      cy.findByRole('img', {
+        name: userLocationMarkerLabel,
+        timeout: 20000,
+      }).should('be.visible');
     });
     it.skip('menu includes the button to stop tracking', () => {
       // unable to test because we're unsure how to mock watchPosition(), with watchID returned
       // execute
       cy.findByRole('button', {name: buttonLabel.menu}).click();
       // verify
-      cy.findByRole('button', {name: /stop showing where you are/i}).click();
-      cy.findByRole('img', {name: `You are here!`}).should('not.exist');
+      cy.findByRole('button', {name: buttonLabel.locator.deactivate}).click();
+      cy.findByRole('img', {name: userLocationMarkerLabel}).should('not.exist');
     });
     it.skip('switching to another tab stops tracking after 10 seconds', () => {
       // unable to test because we're unsure how to mock Page Visibility API

@@ -7,7 +7,7 @@ import {SavePlaceButton} from 'src/components/SavePlaceButton';
 import {SearchButton} from 'src/components/SearchButton';
 
 import {color} from 'src/utils/designtokens';
-import {userLocationMakerLabel} from 'src/utils/uiCopies';
+import {userLocationMarkerLabel} from 'src/utils/uiCopies';
 
 const flightIcon = {
   // source: Material Icons Flight: https://fonts.google.com/icons?icon.query=flight
@@ -127,7 +127,7 @@ export const Controls = ({mapObject}) => {
             userDirection,
             userLocation,
             mapObject,
-            markerLabelText: userLocationMakerLabel,
+            markerLabelText: userLocationMarkerLabel,
             svgIcon: flightIcon,
             accuracy: position.coords.accuracy,
           });
@@ -148,7 +148,7 @@ export const Controls = ({mapObject}) => {
                 userDirection,
                 userLocation,
                 mapObject,
-                markerLabelText: userLocationMakerLabel,
+                markerLabelText: userLocationMarkerLabel,
                 svgIcon: flightIcon,
                 accuracy: position.coords.accuracy,
               });
