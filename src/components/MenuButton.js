@@ -84,16 +84,19 @@ export const MenuButton = ({stopTracking, trackUserLocation, watchID}) => {
               </button>
             </li>
             <li>
-              {!watchID ? (
-                <button type="button" onClick={handleClickFlightTakeoff}>
-                  <SvgFlightTakeoff aria-hidden="true" /> Find Where You Are
-                </button>
-              ) : (
-                <button type="button" onClick={handleClickFlightLanding}>
-                  <SvgFlightLanding aria-hidden="true" /> Stop Showing Where You
-                  Are
-                </button>
-              )}
+              <button type="button" onClick={handleClickFlightTakeoff}>
+                <SvgFlightTakeoff aria-hidden="true" /> Find Where You Are
+              </button>
+            </li>
+            <li>
+              <button
+                type="button"
+                disabled={!watchID}
+                onClick={handleClickFlightLanding}
+              >
+                <SvgFlightLanding aria-hidden="true" /> Stop Showing Where You
+                Are
+              </button>
             </li>
             <li>
               <button data-testid="last-focusable-element">

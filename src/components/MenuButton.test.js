@@ -86,13 +86,13 @@ describe('Menu window content', () => {
     expect(mockProps.trackUserLocation).toHaveBeenCalledTimes(1);
     expect(screen.getByRole('heading', {hidden: true})).not.toBeVisible();
   });
-  it('includes save', () => {
-    expect(screen.getByRole('button', {name: /save place/i})).toBeVisible();
-  });
-  it('DOES NOT include flight landing icon menu', () => {
+  it('includes disabled flight landing icon menu', () => {
     expect(
       screen.queryByRole('button', {name: /stop showing where you are/i}),
-    ).not.toBeInTheDocument();
+    ).toBeDisabled();
+  });
+  it('includes save', () => {
+    expect(screen.getByRole('button', {name: /save place/i})).toBeVisible();
   });
 });
 

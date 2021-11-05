@@ -51,6 +51,13 @@ const styleListItemText = `
   font-weight: 700;
 `;
 
+const styleDisabledState = `
+  & button[disabled] {
+    opacity: 0.2;
+    pointer-events: none;
+  }
+`;
+
 export const ListMenu = styled.ul.attrs(props => ({
   role: 'list', // see https://www.scottohara.me/blog/2019/01/12/lists-and-safari.html
 }))`
@@ -60,5 +67,6 @@ export const ListMenu = styled.ul.attrs(props => ({
   ${positionListItemContent}
   ${styleListItemIcons}
   ${styleListItemText}
+  ${styleDisabledState}
   ${setColorScheme}
 `;
