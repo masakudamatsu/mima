@@ -62,11 +62,7 @@ describe('Once user location is being watched', () => {
   });
   it('Clicking locator button again after panning the map will show user location again', () => {
     // execute
-    cy.get('body')
-      .trigger('mousedown', {button: 0})
-      .trigger('mousemove', {clientX: 100, clientY: 100})
-      .trigger('mousemove', {clientX: 300, clientY: 500})
-      .trigger('mouseup');
+    cy.swipeScreenRightToLeft();
     cy.findByRole('button', {name: buttonLabel.locator.activated}).click();
     // verify
     cy.percySnapshot('current-location-once-activated', {

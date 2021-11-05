@@ -52,8 +52,20 @@ describe('Geolocation API happy path', () => {
     });
   });
   describe('after panning the map and clicking the button again', () => {
-    it.skip(`shows user location at the center of the screen`, () => {
-      // requires visual testing; see snapshot-geolocation.js
+    beforeEach(() => {
+      cy.findByRole('button', {name: buttonLabel.locator.default}).click();
+      cy.findByRole('img', {name: `You are here!`}).should('be.visible');
+    });
+    it(`shows user location inside the screen`, () => {
+      // setting up
+      cy.swipeScreenRightToLeft();
+      cy.findByRole('img', {name: `You are here!`}).should('be.hidden');
+      // execute
+      cy.findByRole('button', {name: buttonLabel.locator.activated}).click();
+      // verify
+      cy.findByRole('img', {name: `You are here!`, timeout: 20000}).should(
+        'be.visible',
+      );
     });
   });
   describe('after clicking the button in the menu', () => {

@@ -1,5 +1,19 @@
 import {userLocationMakerLabel} from '../../src/utils/uiCopies';
 
+// Swipe from right to left
+Cypress.Commands.add('swipeScreenRightToLeft', () => {
+  const screenWidth = Cypress.config('viewportWidth');
+  const screenHeight = Cypress.config('viewportHeight');
+  cy.get('body')
+    .trigger('mousedown', {button: 0})
+    .trigger('mousemove', {
+      clientX: screenWidth - 100,
+      clientY: screenHeight / 2,
+    })
+    .trigger('mousemove', {clientX: 100, clientY: screenHeight / 2})
+    .trigger('mouseup');
+});
+
 // Visit the app
 Cypress.Commands.add('visitAtDaytime', url => {
   cy.clock(Date.UTC(2021, 8, 28, 6), ['Date']); // https://docs.cypress.io/api/commands/clock#Function-names
