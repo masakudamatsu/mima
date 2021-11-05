@@ -211,6 +211,7 @@ export const Controls = ({mapObject}) => {
     <>
       {clientSideRendering && (
         <MenuButton
+          moveToCurrentLocation={moveToCurrentLocation}
           stopTracking={stopTracking}
           trackUserLocation={trackUserLocation}
           watchID={watchID}

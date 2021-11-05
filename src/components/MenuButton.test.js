@@ -9,6 +9,7 @@ import {buttonLabel, menuLabel} from 'src/utils/uiCopies';
 
 const accessibleName = buttonLabel.menu;
 const mockProps = {
+  moveToCurrentLocation: jest.fn().mockName('moveToCurrentLocation'),
   stopTracking: jest.fn().mockName('stopTracking'),
   trackUserLocation: jest.fn().mockName('trackUserLocation'),
   watchID: null,
@@ -103,6 +104,12 @@ describe('watchID prop', () => {
       wrapper: Wrapper.lightMode,
     });
     userEvent.click(screen.getByRole('button', {name: buttonLabel.menu}));
+  });
+  it('switches flight takeoff button with flight flying button', () => {
+    userEvent.click(
+      screen.getByRole('button', {name: /Snap To Where You Are/i}),
+    );
+    expect(mockProps.moveToCurrentLocation).toHaveBeenCalledTimes(1);
   });
   it('allows the user to stop tracking their location', () => {
     userEvent.click(

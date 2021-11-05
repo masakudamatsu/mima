@@ -12,12 +12,18 @@ import {SvgAdd} from 'src/elements/SvgAdd';
 import {SvgCloud} from 'src/elements/SvgCloud';
 import {SvgClose} from 'src/elements/SvgClose';
 import {SvgFlightLanding} from 'src/elements/SvgFlightLanding';
+import {SvgFlightFlying} from 'src/elements/SvgFlightFlying';
 import {SvgFlightTakeoff} from 'src/elements/SvgFlightTakeoff';
 import {SvgSearch} from 'src/elements/SvgSearch';
 
 import {buttonLabel, menuLabel} from 'src/utils/uiCopies';
 
-export const MenuButton = ({stopTracking, trackUserLocation, watchID}) => {
+export const MenuButton = ({
+  moveToCurrentLocation,
+  stopTracking,
+  trackUserLocation,
+  watchID,
+}) => {
   const nightMode = useContext(NightModeContext);
   const [open, setOpen] = useState(false);
 
@@ -46,6 +52,10 @@ export const MenuButton = ({stopTracking, trackUserLocation, watchID}) => {
   };
   const handleClickFlightTakeoff = () => {
     trackUserLocation();
+    setOpen(false);
+  };
+  const handleClickFlightFlying = () => {
+    moveToCurrentLocation();
     setOpen(false);
   };
   const handleClickFlightLanding = () => {
@@ -84,9 +94,15 @@ export const MenuButton = ({stopTracking, trackUserLocation, watchID}) => {
               </button>
             </li>
             <li>
-              <button type="button" onClick={handleClickFlightTakeoff}>
-                <SvgFlightTakeoff aria-hidden="true" /> Find Where You Are
-              </button>
+              {!watchID ? (
+                <button type="button" onClick={handleClickFlightTakeoff}>
+                  <SvgFlightTakeoff aria-hidden="true" /> Find Where You Are
+                </button>
+              ) : (
+                <button type="button" onClick={handleClickFlightFlying}>
+                  <SvgFlightFlying aria-hidden="true" /> Snap To Where You Are
+                </button>
+              )}
             </li>
             <li>
               <button
@@ -111,6 +127,7 @@ export const MenuButton = ({stopTracking, trackUserLocation, watchID}) => {
 };
 
 MenuButton.propTypes = {
+  moveToCurrentLocation: PropTypes.func,
   stopTracking: PropTypes.func,
   trackUserLocation: PropTypes.func,
   watchID: PropTypes.number,

@@ -80,8 +80,22 @@ describe('Geolocation API happy path', () => {
     });
   });
   describe.skip('once user location is shown', () => {
+    // we cannot test this case unless we can manage to mock watchPosition()
     beforeEach(() => {
       cy.findByRole('button', {name: buttonLabel.locator.default}).click();
+      cy.findByRole('img', {name: `You are here!`, timeout: 20000}).should(
+        'be.visible',
+      );
+    });
+    it.skip('menu includes the button to snap to user location', () => {
+      // unable to test because we're unsure how to mock watchPosition(), with watchID returned
+      // setting up
+      cy.swipeScreenRightToLeft();
+      cy.findByRole('img', {name: `You are here!`}).should('be.hidden');
+      // execute
+      cy.findByRole('button', {name: buttonLabel.menu}).click();
+      // verify
+      cy.findByRole('button', {name: /snap to where you are/i}).click();
       cy.findByRole('img', {name: `You are here!`, timeout: 20000}).should(
         'be.visible',
       );
