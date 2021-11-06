@@ -46,16 +46,6 @@ describe('ButtonSquare component', () => {
   fill: var(--button-label-color-default);
 }
 
-.c0[data-darkmode='false'] {
-  --button-label-color-default: rgb(90,90,90);
-  --button-label-color-focus: rgb(3,3,3);
-}
-
-.c0[data-darkmode='true'] {
-  --button-label-color-default: rgb(218,218,218);
-  --button-label-color-focus: rgb(255,255,255);
-}
-
 <div>
   <button
     class="c0"

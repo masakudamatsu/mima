@@ -40,17 +40,6 @@ const setButtonLabelColor = css`
   }
 `;
 
-const setColorScheme = css`
-  &[data-darkmode='false'] {
-    --button-label-color-default: ${color['dark-grey 100']};
-    --button-label-color-focus: ${color['black 100']};
-  }
-  &[data-darkmode='true'] {
-    --button-label-color-default: ${color['off-white 100']};
-    --button-label-color-focus: ${color['white 100']};
-  }
-`;
-
 // Define Button components
 export const ButtonSquare = styled.button`
   ${resetStyle}
@@ -58,5 +47,4 @@ export const ButtonSquare = styled.button`
   ${alignButtonLabel}
   ${positionButton}
   ${setButtonLabelColor}
-  ${setColorScheme}
 `;

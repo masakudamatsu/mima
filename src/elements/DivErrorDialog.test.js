@@ -21,9 +21,9 @@ test('renders UI correctly', () => {
 }
 
 .c0 button {
-  border: 1px solid var(--button-color);
+  border: 1px solid var(--error-dialog-button-color);
   border-radius: 4px;
-  color: var(--button-color);
+  color: var(--error-dialog-button-color);
   margin-right: 12px;
   min-height: 48px;
   min-width: 96px;
@@ -37,14 +37,6 @@ test('renders UI correctly', () => {
 .c0 button:focus:not(:focus-visible) {
   outline: none;
   outline-offset: initial;
-}
-
-.c0[data-darkmode='false'] {
-  --button-color: #4285F4;
-}
-
-.c0[data-darkmode='true'] {
-  --button-color: #1bb6ff;
 }
 
 <div>

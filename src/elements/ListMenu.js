@@ -2,22 +2,11 @@ import styled from 'styled-components';
 import {bodyText, color, dimension} from 'src/utils/designtokens';
 import {remify} from 'src/utils/remify';
 
-const setColorScheme = `
-  &[data-darkmode='false'] {  
-    --button-color: ${color['google-blue 100']};
-    --button-label-color-default: ${color['dark-grey 100']};
-  }
-  &[data-darkmode='true'] {
-    --button-color: ${color['google-blue-light 100']};
-    --button-label-color-default: ${color['off-white 100']};
-  }
-`;
-
 const drawDividers = `
-  border-bottom: 1px solid var(--button-color);
-  border-top: 1px solid var(--button-color);
+  border-bottom: 1px solid var(--menu-border-color);
+  border-top: 1px solid var(--menu-border-color);
   & li:not(:first-of-type) {
-    border-top: 1px solid var(--button-color);
+    border-top: 1px solid var(--menu-border-color);
   }
 `;
 
@@ -42,12 +31,12 @@ const positionListItemContent = `
 
 const styleListItemIcons = `
   & svg {
-    fill: var(--button-label-color-default);
+    fill: var(--menu-item-color);
   }
 `;
 
 const styleListItemText = `
-  color: var(--button-label-color-default);
+  color: var(--menu-item-color);
   font-weight: 700;
 `;
 
@@ -68,5 +57,4 @@ export const ListMenu = styled.ul.attrs(props => ({
   ${styleListItemIcons}
   ${styleListItemText}
   ${styleDisabledState}
-  ${setColorScheme}
 `;

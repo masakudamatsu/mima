@@ -3,15 +3,6 @@ import styled from 'styled-components';
 import {bodyText, capHeight, color, dimension} from 'src/utils/designtokens';
 import {remify} from 'src/utils/remify';
 
-const setColorScheme = `
-  &[data-darkmode='false'] {  
-    --button-color: ${color['google-blue 100']};
-  }
-  &[data-darkmode='true'] {
-    --button-color: ${color['google-blue-light 100']};
-  }
-`;
-
 export const DivErrorDialog = styled.div`
   & h1 + p {
     margin-top: -${remify(bodyText.spaceTop)};
@@ -23,9 +14,10 @@ export const DivErrorDialog = styled.div`
     margin-top: ${remify(capHeight[300] - bodyText.spaceBottom)};
   }
   & button {
-    border: ${dimension.button['border width 100']} solid var(--button-color);
+    border: ${dimension.button['border width 100']} solid
+      var(--error-dialog-button-color);
     border-radius: ${dimension.button['border radius 100']};
-    color: var(--button-color);
+    color: var(--error-dialog-button-color);
     margin-right: ${dimension.button['minimum target size 25']};
     min-height: ${dimension.button['minimum target size 100']};
     min-width: ${dimension.button['minimum target size 200']};
@@ -39,6 +31,5 @@ export const DivErrorDialog = styled.div`
     outline: none;
     outline-offset: initial;
   }
-  ${setColorScheme}
 `;
 // DivErrorDialog.propTypes = {};

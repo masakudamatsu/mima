@@ -10,14 +10,14 @@ test('renders UI correctly', () => {
   expect(container).toMatchInlineSnapshot(`
 .c0 {
   list-style: none;
-  border-bottom: 1px solid var(--button-color);
-  border-top: 1px solid var(--button-color);
-  color: var(--button-label-color-default);
+  border-bottom: 1px solid var(--menu-border-color);
+  border-top: 1px solid var(--menu-border-color);
+  color: var(--menu-item-color);
   font-weight: 700;
 }
 
 .c0 li:not(:first-of-type) {
-  border-top: 1px solid var(--button-color);
+  border-top: 1px solid var(--menu-border-color);
 }
 
 .c0 li {
@@ -44,22 +44,12 @@ test('renders UI correctly', () => {
 }
 
 .c0 svg {
-  fill: var(--button-label-color-default);
+  fill: var(--menu-item-color);
 }
 
 .c0 button[disabled] {
   opacity: 0.2;
   pointer-events: none;
-}
-
-.c0[data-darkmode='false'] {
-  --button-color: #4285F4;
-  --button-label-color-default: rgb(90,90,90);
-}
-
-.c0[data-darkmode='true'] {
-  --button-color: #1bb6ff;
-  --button-label-color-default: rgb(218,218,218);
 }
 
 <div>

@@ -16,19 +16,6 @@ const dimension = {
   'margin 200': `48px`,
 };
 
-const setColorScheme = `
-  &[data-darkmode='false'] {
-    --popup-background-color: ${color['white 93']};
-    --popup-shadow-color: ${color['white 63']};
-    --popup-text-color: ${color['dark-grey 100']};
-  }
-  &[data-darkmode='true'] {
-    --popup-background-color: ${color['mid-grey 80']};
-    --popup-shadow-color: ${color['mid-grey 42']};
-    --popup-text-color: ${color['off-white 100']};
-  }
-`;
-
 const setFontStyle = `
   font-family: ${bodyText.fontFamily};
   font-size: ${remify(bodyText.fontSize)};
@@ -84,7 +71,6 @@ const animateTransition = `
 
 export const DivPopup = styled.div`
   ${placeOverScrim}
-  ${setColorScheme}
   ${setFontStyle}
   ${setTextColor}
   ${setSize}

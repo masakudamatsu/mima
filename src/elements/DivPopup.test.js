@@ -22,18 +22,6 @@ test('renders UI correctly', () => {
   box-shadow: 0 0 16px 16px var(--popup-shadow-color),0 0 24px 16px var(--popup-shadow-color),0 0 32px 16px var(--popup-shadow-color);
 }
 
-.c0[data-darkmode='false'] {
-  --popup-background-color: rgba(255,255,255,0.93);
-  --popup-shadow-color: rgba(255,255,255,0.63);
-  --popup-text-color: rgb(90,90,90);
-}
-
-.c0[data-darkmode='true'] {
-  --popup-background-color: rgba(123,123,123,0.8);
-  --popup-shadow-color: rgba(123,123,123,0.42);
-  --popup-text-color: rgb(218,218,218);
-}
-
 .c0[data-slide-from="left"] {
   right: 24px;
   width: calc(100% - 24px);
