@@ -1,14 +1,15 @@
-export const userLocationMakerLabel = 'You are here!';
+export const userLocationMarkerLabel = 'You are here!';
 
 export const buttonLabel = {
   close: 'Close',
   locator: {
-    default: 'Start tracking current location',
-    activated: 'Show current location',
+    default: 'Track your location',
+    activated: 'Snap to your location',
+    deactivate: 'Stop tracking your location',
   },
   menu: 'Show menu',
-  save: 'Save a place',
-  search: 'Search a place',
+  save: 'Save place',
+  search: 'Search place',
 };
 
 export const menuLabel = 'Menu';

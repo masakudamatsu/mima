@@ -8,7 +8,12 @@ import {NightModeContext} from 'src/context/NightModeContext';
 import {buttonLabel, menuLabel} from 'src/utils/uiCopies';
 
 const accessibleName = buttonLabel.menu;
-const mockProps = {};
+const mockProps = {
+  moveToCurrentLocation: jest.fn().mockName('moveToCurrentLocation'),
+  stopTracking: jest.fn().mockName('stopTracking'),
+  trackUserLocation: jest.fn().mockName('trackUserLocation'),
+  watchID: null,
+};
 const Wrapper = {
   lightMode: ({children}) => (
     <NightModeContext.Provider value={false}>
@@ -75,15 +80,47 @@ describe('Menu window content', () => {
     userEvent.click(screen.getByRole('button', {name: buttonLabel.menu}));
   });
   it('includes search', () => {
-    expect(screen.getByRole('button', {name: /search place/i})).toBeVisible();
-  });
-  it('includes locator', () => {
     expect(
-      screen.getByRole('button', {name: /find where you are/i}),
+      screen.getByRole('button', {name: buttonLabel.search}),
     ).toBeVisible();
   });
+  it('includes flight takeoff icon menu, the clicking of which calls trackUserLocation() and closes the menu window', () => {
+    userEvent.click(
+      screen.getByRole('button', {name: buttonLabel.locator.default}),
+    );
+    expect(mockProps.trackUserLocation).toHaveBeenCalledTimes(1);
+    expect(screen.getByRole('heading', {hidden: true})).not.toBeVisible();
+  });
+  it('includes disabled flight landing icon menu', () => {
+    expect(
+      screen.queryByRole('button', {name: buttonLabel.locator.deactivate}),
+    ).toBeDisabled();
+  });
   it('includes save', () => {
-    expect(screen.getByRole('button', {name: /save place/i})).toBeVisible();
+    expect(screen.getByRole('button', {name: buttonLabel.save})).toBeVisible();
+  });
+});
+
+describe('watchID prop', () => {
+  const watchID = 2;
+  beforeEach(() => {
+    render(<MenuButton {...mockProps} watchID={watchID} />, {
+      wrapper: Wrapper.lightMode,
+    });
+    userEvent.click(screen.getByRole('button', {name: buttonLabel.menu}));
+  });
+  it('switches flight takeoff button with flight flying button', () => {
+    userEvent.click(
+      screen.getByRole('button', {name: buttonLabel.locator.activated}),
+    );
+    expect(mockProps.moveToCurrentLocation).toHaveBeenCalledTimes(1);
+  });
+  it('allows the user to stop tracking their location', () => {
+    userEvent.click(
+      screen.getByRole('button', {name: buttonLabel.locator.deactivate}),
+    );
+    expect(mockProps.stopTracking).toHaveBeenCalledTimes(1);
+    expect(mockProps.stopTracking).toHaveBeenCalledWith(watchID);
   });
 });
 

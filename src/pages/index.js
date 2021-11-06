@@ -4,19 +4,11 @@ import {index} from 'src/utils/metadata';
 
 import {NightModeContext} from 'src/context/NightModeContext';
 
-import {LocatorButton} from 'src/components/LocatorButton';
+import {Controls} from 'src/components/Controls';
 import {Map} from 'src/components/Map';
-import {MenuButton} from 'src/components/MenuButton';
 import {Noscript} from 'src/components/Noscript';
-import {SavePlaceButton} from 'src/components/SavePlaceButton';
-import {SearchButton} from 'src/components/SearchButton';
 
 function HomePage() {
-  const [clientSideRendering, setClientSideRendering] = useState(false);
-  useEffect(() => {
-    setClientSideRendering(true);
-  }, []);
-
   const nightMode = useContext(NightModeContext);
   useEffect(() => {
     document.body.dataset.darkmode = nightMode;
@@ -30,15 +22,10 @@ function HomePage() {
         <meta name="description" content={index.description} />
       </Head>
       <Noscript />
-      {clientSideRendering && <MenuButton />}
-      {clientSideRendering && <SearchButton />}
-      <section aria-label="controls">
-        {clientSideRendering && <LocatorButton mapObject={mapObject} />}
-        {clientSideRendering && <SavePlaceButton />}
-      </section>
+      <Controls mapObject={mapObject} />
       <Map setMapObject={setMapObject} />
     </>
-  ); // see https://codepen.io/masakudamatsu/pen/QWpbELb
+  );
 }
 
 export default HomePage;

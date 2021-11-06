@@ -47,6 +47,11 @@ test('renders UI correctly', () => {
   fill: var(--button-label-color-default);
 }
 
+.c0 button[disabled] {
+  opacity: 0.2;
+  pointer-events: none;
+}
+
 .c0[data-darkmode='false'] {
   --button-color: #4285F4;
   --button-label-color-default: rgb(90,90,90);

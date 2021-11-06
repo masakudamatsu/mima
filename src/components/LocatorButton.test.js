@@ -9,7 +9,10 @@ import {buttonLabel} from 'src/utils/uiCopies';
 
 const accessibleName = buttonLabel.locator.default;
 const mockProps = {
-  mapObject: {},
+  initializeUI: jest.fn().mockName('initializeUI'),
+  moveToCurrentLocation: jest.fn().mockName('moveToCurrentLocation'),
+  status: 'initial',
+  trackUserLocation: jest.fn().mockName('trackUserLocation'),
 };
 const Wrapper = {
   lightMode: ({children}) => (
@@ -42,21 +45,37 @@ describe('HTML checks', () => {
 });
 
 describe('Clicking the button', () => {
-  beforeEach(() => {
-    // Mock Geolocation API; otherwise it's "undefined"
-    // source: https://stackoverflow.com/a/43957674
-    const mockGeolocation = {
-      getCurrentPosition: jest.fn(),
-      watchPosition: jest.fn(),
-    };
-    global.navigator.geolocation = mockGeolocation;
-  });
-  test('toggles data-loading attribute value', () => {
+  test('calls trackUserLocation()', () => {
     render(<LocatorButton {...mockProps} />, {wrapper: Wrapper.lightMode});
+    userEvent.click(screen.getByRole('button', {name: accessibleName}));
+    expect(mockProps.trackUserLocation).toHaveBeenCalledTimes(1);
+  });
+});
+
+describe(`changes the button label with 'status' prop`, () => {
+  test('if loading, data-loading attribute turns true', () => {
+    render(<LocatorButton {...mockProps} status="loading" />, {
+      wrapper: Wrapper.lightMode,
+    });
     const button = screen.getByRole('button', {name: accessibleName});
-    expect(button).toHaveAttribute('data-loading', 'false');
-    userEvent.click(button);
     expect(button).toHaveAttribute('data-loading', 'true');
+  });
+  test('if watching, the button accessible name changes', () => {
+    render(<LocatorButton {...mockProps} status="watching" />, {
+      wrapper: Wrapper.lightMode,
+    });
+    expect(
+      screen.getByRole('button', {name: buttonLabel.locator.activated}),
+    ).toBeVisible();
+  });
+  test('if watching, clicking the button calls moveToCurrentLocation()', () => {
+    render(<LocatorButton {...mockProps} status="watching" />, {
+      wrapper: Wrapper.lightMode,
+    });
+    userEvent.click(
+      screen.getByRole('button', {name: buttonLabel.locator.activated}),
+    );
+    expect(mockProps.moveToCurrentLocation).toHaveBeenCalledTimes(1);
   });
 });
 
