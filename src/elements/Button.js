@@ -113,28 +113,6 @@ const setButtonShadow = css`
     stroke: none;
   }
 `;
-const setColorScheme = css`
-  &[data-darkmode='false'] {
-    --button-label-color-default: ${color['dark-grey 100']};
-    --button-label-color-focus: ${color['black 100']};
-    --button-color: ${color['white 93']};
-    --button-outline-color: ${color['light-grey 100']};
-    --button-outline-color-focus: ${color['focus-blue 100']};
-    --button-shadow-blur-radius-focus: ${dimension.glow['blur daytime']};
-    --button-shadow-color: ${color['black 33']};
-    --button-shadow-color-focus: ${color['focus-blue 100']};
-  }
-  &[data-darkmode='true'] {
-    --button-label-color-default: ${color['off-white 100']};
-    --button-label-color-focus: ${color['white 100']};
-    --button-color: ${color['mid-grey 80']};
-    --button-outline-color: ${color['off-black 100']};
-    --button-outline-color-focus: ${color['white 40']};
-    --button-shadow-blur-radius-focus: ${dimension.glow['blur nighttime']};
-    --button-shadow-color: ${color['black 60']};
-    --button-shadow-color-focus: ${color['white 100']};
-  }
-`;
 
 const flashing = keyframes`
   0% {
@@ -164,6 +142,5 @@ export const Button = styled.button`
   ${setButtonLabelColor}
   ${setButtonColor}
   ${setButtonShadow}
-  ${setColorScheme}
   ${blinkButton}
 `;

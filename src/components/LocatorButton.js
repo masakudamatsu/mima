@@ -1,9 +1,6 @@
-import {useContext} from 'react';
 import PropTypes from 'prop-types';
 
 import {ModalPopup} from 'src/components/ModalPopup';
-
-import {NightModeContext} from 'src/context/NightModeContext';
 
 import {Button} from 'src/elements/Button';
 import {DivErrorDialog} from 'src/elements/DivErrorDialog';
@@ -23,14 +20,10 @@ export const LocatorButton = ({
   status,
   trackUserLocation,
 }) => {
-  // UI states
-  const nightMode = useContext(NightModeContext);
-
   return (
     <>
       {status !== 'watching' ? (
         <Button
-          data-darkmode={nightMode}
           data-loading={status === 'loading'}
           data-position="bottom-right-second"
           data-testid="locator-button"
@@ -44,7 +37,6 @@ export const LocatorButton = ({
         </Button>
       ) : (
         <Button
-          data-darkmode={nightMode}
           data-position="bottom-right-second"
           onClick={moveToCurrentLocation}
           type="button"
@@ -61,7 +53,7 @@ export const LocatorButton = ({
         slideFrom="bottom"
         titleId="permission-denied"
       >
-        <DivErrorDialog data-darkmode={nightMode}>
+        <DivErrorDialog>
           <Heading as="h1" id="permission-denied">
             {geolocationPermissionDenied.what}
           </Heading>
@@ -83,7 +75,7 @@ export const LocatorButton = ({
         slideFrom="bottom"
         titleId="position-unavailable"
       >
-        <DivErrorDialog data-darkmode={nightMode}>
+        <DivErrorDialog>
           <Heading as="h1" id="position-unavailable">
             {geolocationPositionUnavailable.what}
           </Heading>
@@ -108,7 +100,7 @@ export const LocatorButton = ({
         slideFrom="bottom"
         titleId="geolocation-unsupported"
       >
-        <DivErrorDialog data-darkmode={nightMode}>
+        <DivErrorDialog>
           <Heading as="h1" id="geolocation-unsupported">
             {geolocationNotSupported.what}
           </Heading>

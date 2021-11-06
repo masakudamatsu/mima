@@ -107,28 +107,6 @@ describe('Button component', () => {
   stroke: none;
 }
 
-.c0[data-darkmode='false'] {
-  --button-label-color-default: rgb(90,90,90);
-  --button-label-color-focus: rgb(3,3,3);
-  --button-color: rgba(255,255,255,0.93);
-  --button-outline-color: rgb(148,148,148);
-  --button-outline-color-focus: rgb(69,159,189);
-  --button-shadow-blur-radius-focus: 5px;
-  --button-shadow-color: rgba(3,3,3,0.33);
-  --button-shadow-color-focus: rgb(69,159,189);
-}
-
-.c0[data-darkmode='true'] {
-  --button-label-color-default: rgb(218,218,218);
-  --button-label-color-focus: rgb(255,255,255);
-  --button-color: rgba(123,123,123,0.8);
-  --button-outline-color: rgb(43,43,43);
-  --button-outline-color-focus: rgba(255,255,255,0.4);
-  --button-shadow-blur-radius-focus: 10px;
-  --button-shadow-color: rgba(3,3,3,0.6);
-  --button-shadow-color-focus: rgb(255,255,255);
-}
-
 .c0[data-loading='true'] {
   -webkit-animation: bPkxfw 1500ms linear infinite;
   animation: bPkxfw 1500ms linear infinite;

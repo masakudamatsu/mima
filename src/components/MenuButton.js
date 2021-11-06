@@ -1,6 +1,5 @@
-import {useContext, useEffect, useState} from 'react';
+import {useEffect, useState} from 'react';
 import PropTypes from 'prop-types';
-import {NightModeContext} from 'src/context/NightModeContext';
 
 import {ModalPopup} from 'src/components/ModalPopup';
 import {Button} from 'src/elements/Button';
@@ -24,7 +23,6 @@ export const MenuButton = ({
   trackUserLocation,
   watchID,
 }) => {
-  const nightMode = useContext(NightModeContext);
   const [open, setOpen] = useState(false);
 
   // close menu with Esc key
@@ -65,7 +63,6 @@ export const MenuButton = ({
   return (
     <nav>
       <Button
-        data-darkmode={nightMode}
         data-position="top-left"
         data-testid="menu-button"
         onClick={handleClick}
@@ -80,14 +77,13 @@ export const MenuButton = ({
           </Heading>
           <ButtonSquare
             data-autofocus
-            data-darkmode={nightMode}
             data-testid="close-button-menu"
             onClick={handleClickCloseButton}
             type="button"
           >
             <SvgClose title={buttonLabel.close} />
           </ButtonSquare>
-          <ListMenu data-darkmode={nightMode}>
+          <ListMenu>
             <li>
               <button>
                 <SvgSearch aria-hidden="true" /> {buttonLabel.search}
