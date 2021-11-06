@@ -2,7 +2,7 @@ import {useContext, useEffect, useRef, useState} from 'react';
 import {Loader} from '@googlemaps/js-api-loader';
 import PropTypes from 'prop-types';
 
-import {ModalPopup} from 'src/components/ModalPopup';
+import {PlaceDataPopup} from 'src/components/PlaceDataPopup';
 
 import {Main} from 'src/elements/Main';
 
@@ -116,9 +116,13 @@ export const Map = ({setMapObject}) => {
     <>
       <Main ref={googlemap} />
       {selectedPlace && (
-        <ModalPopup hidden={false} slideFrom="bottom" titleId="selected-place">
+        <PlaceDataPopup
+          hidden={false}
+          slideFrom="bottom"
+          titleId="selected-place"
+        >
           <h2 id="selected-place">{selectedPlace.name}</h2>
-        </ModalPopup>
+        </PlaceDataPopup>
       )}
     </>
   );
