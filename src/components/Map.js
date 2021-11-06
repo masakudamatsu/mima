@@ -1,6 +1,8 @@
-import {useContext, useEffect, useRef} from 'react';
+import {useContext, useEffect, useRef, useState} from 'react';
 import {Loader} from '@googlemaps/js-api-loader';
 import PropTypes from 'prop-types';
+
+import {ModalPopup} from 'src/components/ModalPopup';
 
 import {Main} from 'src/elements/Main';
 
@@ -22,6 +24,7 @@ const cormorantBoldAsterisk = {
 export const Map = ({setMapObject}) => {
   const nightMode = useContext(NightModeContext);
   const googlemap = useRef(null);
+  const [selectedPlace, setSelectedPlace] = useState(null);
 
   useEffect(() => {
     const loader = new Loader({
@@ -85,25 +88,40 @@ export const Map = ({setMapObject}) => {
       };
       for (let i = 0; i < userData.places.length; i++) {
         const userPlace = userData.places[i];
-        new google.maps.Marker({
+        const marker = new google.maps.Marker({
           icon: {
             ...shapedAsAsterisk,
             ...pinnedAtCenter,
             ...colored,
           },
           map: map,
+          optimized: false,
           position: {
             lat: userPlace.latitude,
             lng: userPlace.longitude,
           },
           title: userPlace.name,
         });
+        marker.addListener('click', () => {
+          setSelectedPlace({
+            name: userPlace.name,
+          });
+        });
       }
       setMapObject(map);
     });
   }, [nightMode, setMapObject]);
 
-  return <Main ref={googlemap} />;
+  return (
+    <>
+      <Main ref={googlemap} />
+      {selectedPlace && (
+        <ModalPopup hidden={false} slideFrom="bottom" titleId="selected-place">
+          <h2 id="selected-place">{selectedPlace.name}</h2>
+        </ModalPopup>
+      )}
+    </>
+  );
 };
 
 Map.propTypes = {
