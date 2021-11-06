@@ -1,7 +1,7 @@
 import React from 'react';
 import {SearchButton} from './SearchButton';
 
-import {NightModeContext} from 'src/context/NightModeContext';
+import {NightModeContext} from 'src/wrappers/NightModeContext';
 
 // eslint-disable-next-line import/no-anonymous-default-export
 export default {

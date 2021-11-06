@@ -1,7 +1,7 @@
 import Head from 'next/head';
 
 import {GlobalStyle} from 'src/elements/GlobalStyle';
-import {NightModeProvider} from 'src/context/NightModeContext';
+import {NightModeProvider} from 'src/wrappers/NightModeContext';
 
 export default function App({Component, pageProps}) {
   return (

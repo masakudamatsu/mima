@@ -6,7 +6,7 @@ import {Main} from 'src/elements/Main';
 
 import userData from 'src/utils/mockUserData.json';
 
-import {NightModeContext} from 'src/context/NightModeContext';
+import {NightModeContext} from 'src/wrappers/NightModeContext';
 import {map as mapColor} from 'src/utils/designtokens';
 
 const mapIdDaytime = '83a67631594fbfff';
