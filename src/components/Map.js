@@ -154,6 +154,7 @@ export const Map = ({setMapObject}) => {
       <Main ref={googlemap} />
       {selectedPlace && (
         <PlaceDataPopup
+          handleClickOutside={closePlaceDetail}
           hidden={false}
           slideFrom="bottom"
           titleId="selected-place"

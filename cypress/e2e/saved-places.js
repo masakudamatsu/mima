@@ -52,4 +52,17 @@ describe('Once place detail is shown', () => {
       // while should('be.visible') won't fail in that case
     });
   });
+  describe('Pressing outside the place detail window', () => {
+    beforeEach(() => {
+      cy.get('body').click('center', {force: true});
+    });
+    it('Hides the place name (as heading)', () => {
+      cy.findByRole('heading', {name: placeName}).should('not.exist');
+    });
+    it('Keeps the place marker to be shown', () => {
+      cy.findByRole('button', {name: placeName}).click();
+      // This fails if another element covers it up
+      // while should('be.visible') won't fail in that case
+    });
+  });
 });
