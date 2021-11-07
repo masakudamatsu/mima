@@ -142,7 +142,7 @@ export const Map = ({setMapObject}) => {
         >
           <ButtonSquare
             data-autofocus
-            data-testid="close-button-menu"
+            data-testid="close-button-saved-place"
             onClick={handleClickCloseButton}
             type="button"
           >

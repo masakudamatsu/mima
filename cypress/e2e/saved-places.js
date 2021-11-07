@@ -15,6 +15,9 @@ describe('Clicking a saved place', () => {
     // this fails if another element covers it up
     // while should('be.visible') won't fail in that case
   });
+  it('Autofocuses the close button', () => {
+    cy.focused().should('have.attr', 'data-testid', 'close-button-saved-place');
+  });
 });
 
 describe('Once place detail is shown', () => {
