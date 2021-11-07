@@ -127,10 +127,28 @@ export const Map = ({setMapObject}) => {
     });
   }, [nightMode, setMapObject]);
 
-  const handleClickCloseButton = () => {
+  const closePlaceDetail = () => {
     map.current.panTo(selectedPlace.coordinates);
     setSelectedPlace(null);
   };
+
+  // close with Esc key
+  useEffect(() => {
+    const closeByEsc = event => {
+      if (event.key === 'Escape') {
+        closePlaceDetail();
+      }
+    };
+    if (selectedPlace) {
+      document.addEventListener('keydown', closeByEsc);
+    } else {
+      document.removeEventListener('keydown', closeByEsc);
+    }
+    return () => {
+      document.removeEventListener('keydown', closeByEsc);
+    }; // otherwise Jest/Testing-Library issues a warning
+  }, [selectedPlace]);
+
   return (
     <>
       <Main ref={googlemap} />
@@ -143,7 +161,7 @@ export const Map = ({setMapObject}) => {
           <ButtonSquare
             data-autofocus
             data-testid="close-button-saved-place"
-            onClick={handleClickCloseButton}
+            onClick={closePlaceDetail}
             type="button"
           >
             <SvgClose title={buttonLabel.close} />
