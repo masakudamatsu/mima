@@ -4,12 +4,15 @@ import PropTypes from 'prop-types';
 
 import {PlaceDataPopup} from 'src/components/PlaceDataPopup';
 
+import {ButtonSquare} from 'src/elements/ButtonSquare';
 import {Main} from 'src/elements/Main';
+import {SvgClose} from 'src/elements/SvgClose';
 
 import userData from 'src/utils/mockUserData.json';
 
 import {NightModeContext} from 'src/wrappers/NightModeContext';
 import {map as mapColor} from 'src/utils/designtokens';
+import {buttonLabel} from 'src/utils/uiCopies';
 
 const mapIdDaytime = '83a67631594fbfff';
 const mapIdNighttime = '2c8123c7734d3fb';
@@ -32,13 +35,14 @@ export const Map = ({setMapObject}) => {
     viewportSize.current.width = window.visualViewport.width;
   });
 
+  const map = useRef(null);
+
   useEffect(() => {
     const loader = new Loader({
       apiKey: process.env.NEXT_PUBLIC_API_KEY,
       version: 'weekly',
     });
 
-    let map; // in response to ESLint warning: "Assignments to the 'map' variable from inside React Hook use Effect will be lost after each render. To preserve the value over time, store it in a useRef Hook and keep the mutable value in the '.current' property. Oth erwise, you can move this variable directly inside useEffect"
     loader.load().then(() => {
       const google = window.google;
       const colorLoadingScreen = {
@@ -63,7 +67,7 @@ export const Map = ({setMapObject}) => {
         streetViewControl: false,
         zoomControl: false,
       };
-      map = new google.maps.Map(googlemap.current, {
+      map.current = new google.maps.Map(googlemap.current, {
         ...colorLoadingScreen,
         ...initialView,
         ...colorCustomized,
@@ -104,24 +108,29 @@ export const Map = ({setMapObject}) => {
             ...pinnedAtCenter,
             ...colored,
           },
-          map: map,
+          map: map.current,
           optimized: false,
           position: userPlaceCoordinates,
           title: userPlace.name,
         });
         // eslint-disable-next-line no-loop-func
         marker.addListener('click', () => {
-          map.panTo(userPlaceCoordinates);
-          map.panBy(0, viewportSize.current.height / 6);
+          map.current.panTo(userPlaceCoordinates);
+          map.current.panBy(0, viewportSize.current.height / 6);
           setSelectedPlace({
             name: userPlace.name,
+            coordinates: userPlaceCoordinates,
           });
         });
       }
-      setMapObject(map);
+      setMapObject(map.current);
     });
   }, [nightMode, setMapObject]);
 
+  const handleClickCloseButton = () => {
+    map.current.panTo(selectedPlace.coordinates);
+    setSelectedPlace(null);
+  };
   return (
     <>
       <Main ref={googlemap} />
@@ -131,6 +140,14 @@ export const Map = ({setMapObject}) => {
           slideFrom="bottom"
           titleId="selected-place"
         >
+          <ButtonSquare
+            data-autofocus
+            data-testid="close-button-menu"
+            onClick={handleClickCloseButton}
+            type="button"
+          >
+            <SvgClose title={buttonLabel.close} />
+          </ButtonSquare>
           <h2 id="selected-place">{selectedPlace.name}</h2>
         </PlaceDataPopup>
       )}
