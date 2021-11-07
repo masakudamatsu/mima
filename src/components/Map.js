@@ -88,6 +88,10 @@ export const Map = ({setMapObject}) => {
       };
       for (let i = 0; i < userData.places.length; i++) {
         const userPlace = userData.places[i];
+        const userPlaceCoordinates = new google.maps.LatLng(
+          userPlace.latitude,
+          userPlace.longitude,
+        );
         const marker = new google.maps.Marker({
           icon: {
             ...shapedAsAsterisk,
@@ -96,10 +100,7 @@ export const Map = ({setMapObject}) => {
           },
           map: map,
           optimized: false,
-          position: {
-            lat: userPlace.latitude,
-            lng: userPlace.longitude,
-          },
+          position: userPlaceCoordinates,
           title: userPlace.name,
         });
         marker.addListener('click', () => {
