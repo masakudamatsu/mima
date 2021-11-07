@@ -26,6 +26,12 @@ export const Map = ({setMapObject}) => {
   const googlemap = useRef(null);
   const [selectedPlace, setSelectedPlace] = useState(null);
 
+  const viewportSize = useRef({height: null, width: null});
+  useEffect(() => {
+    viewportSize.current.height = window.visualViewport.height;
+    viewportSize.current.width = window.visualViewport.width;
+  });
+
   useEffect(() => {
     const loader = new Loader({
       apiKey: process.env.NEXT_PUBLIC_API_KEY,
@@ -103,7 +109,10 @@ export const Map = ({setMapObject}) => {
           position: userPlaceCoordinates,
           title: userPlace.name,
         });
+        // eslint-disable-next-line no-loop-func
         marker.addListener('click', () => {
+          map.panTo(userPlaceCoordinates);
+          map.panBy(0, viewportSize.current.height / 6);
           setSelectedPlace({
             name: userPlace.name,
           });
