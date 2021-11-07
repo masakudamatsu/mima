@@ -2,6 +2,7 @@ import {useContext, useEffect, useRef, useState} from 'react';
 import {Loader} from '@googlemaps/js-api-loader';
 import PropTypes from 'prop-types';
 
+import {useOnEscKeyDown} from 'src/hooks/useOnEscKeyDown';
 import {PlaceDataPopup} from 'src/components/PlaceDataPopup';
 
 import {ButtonSquare} from 'src/elements/ButtonSquare';
@@ -133,21 +134,7 @@ export const Map = ({setMapObject}) => {
   };
 
   // close with Esc key
-  useEffect(() => {
-    const closeByEsc = event => {
-      if (event.key === 'Escape') {
-        closePlaceDetail();
-      }
-    };
-    if (selectedPlace) {
-      document.addEventListener('keydown', closeByEsc);
-    } else {
-      document.removeEventListener('keydown', closeByEsc);
-    }
-    return () => {
-      document.removeEventListener('keydown', closeByEsc);
-    }; // otherwise Jest/Testing-Library issues a warning
-  }, [selectedPlace]);
+  useOnEscKeyDown(selectedPlace, closePlaceDetail);
 
   return (
     <>

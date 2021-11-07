@@ -1,6 +1,7 @@
 import {useEffect, useState} from 'react';
 import PropTypes from 'prop-types';
 
+import {useOnEscKeyDown} from 'src/hooks/useOnEscKeyDown';
 import {ModalPopup} from 'src/components/ModalPopup';
 import {Button} from 'src/elements/Button';
 import {ButtonSquare} from 'src/elements/ButtonSquare';
@@ -24,41 +25,29 @@ export const MenuButton = ({
   watchID,
 }) => {
   const [open, setOpen] = useState(false);
+  const closeMenu = () => {
+    setOpen(false);
+  };
 
-  // close menu with Esc key
-  useEffect(() => {
-    const closeByEsc = event => {
-      if (event.key === 'Escape') {
-        setOpen(false);
-      }
-    };
-    if (open) {
-      document.addEventListener('keydown', closeByEsc);
-    } else {
-      document.removeEventListener('keydown', closeByEsc);
-    }
-    return () => {
-      document.removeEventListener('keydown', closeByEsc);
-    }; // otherwise Jest/Testing-Library issues a warning
-  }, [open]);
+  useOnEscKeyDown(open, closeMenu);
 
   const handleClick = () => {
     setOpen(true);
   };
   const handleClickCloseButton = () => {
-    setOpen(false);
+    closeMenu();
   };
   const handleClickFlightTakeoff = () => {
     trackUserLocation();
-    setOpen(false);
+    closeMenu();
   };
   const handleClickFlightFlying = () => {
     moveToCurrentLocation();
-    setOpen(false);
+    closeMenu();
   };
   const handleClickFlightLanding = () => {
     stopTracking(watchID);
-    setOpen(false);
+    closeMenu();
   };
   return (
     <nav>
