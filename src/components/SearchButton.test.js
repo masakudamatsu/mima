@@ -3,7 +3,7 @@ import {render, screen} from '@testing-library/react';
 import {axe} from 'jest-axe';
 
 import {SearchButton} from './SearchButton';
-import {NightModeContext} from 'src/context/NightModeContext';
+import {NightModeContext} from 'src/wrappers/NightModeContext';
 import {buttonLabel} from 'src/utils/uiCopies';
 
 const accessibleName = buttonLabel.search;

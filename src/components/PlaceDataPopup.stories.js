@@ -1,12 +1,12 @@
 import React from 'react';
-import {ModalPopup} from './ModalPopup';
+import {PlaceDataPopup} from './PlaceDataPopup';
 
 import {NightModeContext} from 'src/wrappers/NightModeContext';
 
 // eslint-disable-next-line import/no-anonymous-default-export
 export default {
-  title: 'ModalPopup component',
-  component: ModalPopup,
+  title: 'PlaceDataPopup component',
+  component: PlaceDataPopup,
   parameters: {
     backgrounds: {
       default: 'black',
@@ -21,29 +21,29 @@ export default {
 const mockContent = <p>This is a modal popup.</p>;
 
 // light mode
-function ModalPopupAtDay() {
+function PlaceDataPopupAtDay() {
   return (
     <NightModeContext.Provider value={false}>
-      <ModalPopup children={mockContent} />
+      <PlaceDataPopup children={mockContent} />
     </NightModeContext.Provider>
   );
 }
 
 export function DefaultStyle() {
-  return <ModalPopupAtDay />;
+  return <PlaceDataPopupAtDay />;
 }
 
 // night mode
-function ModalPopupAtNight() {
+function PlaceDataPopupAtNight() {
   return (
     <NightModeContext.Provider value={true}>
-      <ModalPopup children={mockContent} />
+      <PlaceDataPopup children={mockContent} />
     </NightModeContext.Provider>
   );
 }
 
 export function NightModeStyle() {
-  return <ModalPopupAtNight />;
+  return <PlaceDataPopupAtNight />;
 }
 NightModeStyle.parameters = {
   backgrounds: {

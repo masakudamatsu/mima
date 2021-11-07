@@ -38,6 +38,11 @@ test('renders UI correctly', () => {
   width: calc(100% - 48px);
 }
 
+.c0[data-height="one-third"] {
+  height: 34%;
+  top: 66%;
+}
+
 .c0[data-slide-from="left"] {
   -webkit-transform: translateX(-100%);
   -ms-transform: translateX(-100%);

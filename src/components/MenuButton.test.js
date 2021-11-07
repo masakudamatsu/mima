@@ -4,7 +4,7 @@ import userEvent from '@testing-library/user-event';
 import {axe} from 'jest-axe';
 
 import {MenuButton} from './MenuButton';
-import {NightModeContext} from 'src/context/NightModeContext';
+import {NightModeContext} from 'src/wrappers/NightModeContext';
 import {buttonLabel, menuLabel} from 'src/utils/uiCopies';
 
 const accessibleName = buttonLabel.menu;

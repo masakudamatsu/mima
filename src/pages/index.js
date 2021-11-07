@@ -2,7 +2,7 @@ import {useContext, useState, useEffect} from 'react';
 import Head from 'next/head';
 import {index} from 'src/utils/metadata';
 
-import {NightModeContext} from 'src/context/NightModeContext';
+import {NightModeContext} from 'src/wrappers/NightModeContext';
 
 import {Controls} from 'src/components/Controls';
 import {Map} from 'src/components/Map';

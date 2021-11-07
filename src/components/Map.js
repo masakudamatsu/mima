@@ -1,13 +1,19 @@
-import {useContext, useEffect, useRef} from 'react';
+import {useContext, useEffect, useRef, useState} from 'react';
 import {Loader} from '@googlemaps/js-api-loader';
 import PropTypes from 'prop-types';
 
+import {useOnEscKeyDown} from 'src/hooks/useOnEscKeyDown';
+import {PlaceDataPopup} from 'src/components/PlaceDataPopup';
+
+import {ButtonSquare} from 'src/elements/ButtonSquare';
 import {Main} from 'src/elements/Main';
+import {SvgClose} from 'src/elements/SvgClose';
 
 import userData from 'src/utils/mockUserData.json';
 
-import {NightModeContext} from 'src/context/NightModeContext';
+import {NightModeContext} from 'src/wrappers/NightModeContext';
 import {map as mapColor} from 'src/utils/designtokens';
+import {buttonLabel} from 'src/utils/uiCopies';
 
 const mapIdDaytime = '83a67631594fbfff';
 const mapIdNighttime = '2c8123c7734d3fb';
@@ -22,6 +28,15 @@ const cormorantBoldAsterisk = {
 export const Map = ({setMapObject}) => {
   const nightMode = useContext(NightModeContext);
   const googlemap = useRef(null);
+  const [selectedPlace, setSelectedPlace] = useState(null);
+
+  const viewportSize = useRef({height: null, width: null});
+  useEffect(() => {
+    viewportSize.current.height = window.visualViewport.height;
+    viewportSize.current.width = window.visualViewport.width;
+  });
+
+  const map = useRef(null);
 
   useEffect(() => {
     const loader = new Loader({
@@ -29,7 +44,6 @@ export const Map = ({setMapObject}) => {
       version: 'weekly',
     });
 
-    let map; // in response to ESLint warning: "Assignments to the 'map' variable from inside React Hook use Effect will be lost after each render. To preserve the value over time, store it in a useRef Hook and keep the mutable value in the '.current' property. Oth erwise, you can move this variable directly inside useEffect"
     loader.load().then(() => {
       const google = window.google;
       const colorLoadingScreen = {
@@ -54,7 +68,7 @@ export const Map = ({setMapObject}) => {
         streetViewControl: false,
         zoomControl: false,
       };
-      map = new google.maps.Map(googlemap.current, {
+      map.current = new google.maps.Map(googlemap.current, {
         ...colorLoadingScreen,
         ...initialView,
         ...colorCustomized,
@@ -85,25 +99,66 @@ export const Map = ({setMapObject}) => {
       };
       for (let i = 0; i < userData.places.length; i++) {
         const userPlace = userData.places[i];
-        new google.maps.Marker({
+        const userPlaceCoordinates = new google.maps.LatLng(
+          userPlace.latitude,
+          userPlace.longitude,
+        );
+        const marker = new google.maps.Marker({
           icon: {
             ...shapedAsAsterisk,
             ...pinnedAtCenter,
             ...colored,
           },
-          map: map,
-          position: {
-            lat: userPlace.latitude,
-            lng: userPlace.longitude,
-          },
+          map: map.current,
+          optimized: false,
+          position: userPlaceCoordinates,
           title: userPlace.name,
         });
+        // eslint-disable-next-line no-loop-func
+        marker.addListener('click', () => {
+          map.current.panTo(userPlaceCoordinates);
+          map.current.panBy(0, viewportSize.current.height / 6);
+          setSelectedPlace({
+            name: userPlace.name,
+            coordinates: userPlaceCoordinates,
+          });
+        });
       }
-      setMapObject(map);
+      setMapObject(map.current);
     });
   }, [nightMode, setMapObject]);
 
-  return <Main ref={googlemap} />;
+  const closePlaceDetail = () => {
+    map.current.panTo(selectedPlace.coordinates);
+    setSelectedPlace(null);
+  };
+
+  // close with Esc key
+  useOnEscKeyDown(selectedPlace, closePlaceDetail);
+
+  return (
+    <>
+      <Main ref={googlemap} />
+      {selectedPlace && (
+        <PlaceDataPopup
+          handleClickOutside={closePlaceDetail}
+          hidden={false}
+          slideFrom="bottom"
+          titleId="selected-place"
+        >
+          <ButtonSquare
+            data-autofocus
+            data-testid="close-button-saved-place"
+            onClick={closePlaceDetail}
+            type="button"
+          >
+            <SvgClose title={buttonLabel.close} />
+          </ButtonSquare>
+          <h2 id="selected-place">{selectedPlace.name}</h2>
+        </PlaceDataPopup>
+      )}
+    </>
+  );
 };
 
 Map.propTypes = {

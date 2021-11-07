@@ -42,6 +42,10 @@ const setSize = `
     right: ${dimension['margin 100']};
     width: calc(100% - ${dimension['margin 200']});  
   }
+  &[data-height="one-third"] {
+    height: 34%;
+    top: 66%;
+  }
 `;
 
 const animateTransition = `
