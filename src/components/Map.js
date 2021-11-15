@@ -1,5 +1,4 @@
 import {useContext, useEffect, useRef, useState} from 'react';
-import {Loader} from '@googlemaps/js-api-loader';
 import PropTypes from 'prop-types';
 
 import {useOnEscKeyDown} from 'src/hooks/useOnEscKeyDown';
@@ -39,93 +38,86 @@ export const Map = ({setMapObject}) => {
   const map = useRef(null);
 
   useEffect(() => {
-    const loader = new Loader({
-      apiKey: process.env.NEXT_PUBLIC_API_KEY,
-      version: 'weekly',
+    const google = window.google;
+    const colorLoadingScreen = {
+      backgroundColor: nightMode
+        ? mapColor.cityblocks.night
+        : mapColor.cityblocks.day,
+    };
+    const initialView = {
+      center: {
+        // Kiyamachi Rokkaku
+        lat: 35.006063,
+        lng: 135.769922,
+      },
+      zoom: 18, // to see the accuracy range circle of the current location
+    };
+    const colorCustomized = {
+      mapId: nightMode ? mapIdNighttime : mapIdDaytime,
+    };
+    const buttonsDisabled = {
+      fullscreenControl: false,
+      mapTypeControl: false,
+      streetViewControl: false,
+      zoomControl: false,
+    };
+    map.current = new google.maps.Map(googlemap.current, {
+      ...colorLoadingScreen,
+      ...initialView,
+      ...colorCustomized,
+      ...buttonsDisabled,
     });
-
-    loader.load().then(() => {
-      const google = window.google;
-      const colorLoadingScreen = {
-        backgroundColor: nightMode
-          ? mapColor.cityblocks.night
-          : mapColor.cityblocks.day,
-      };
-      const initialView = {
-        center: {
-          // Kiyamachi Rokkaku
-          lat: 35.006063,
-          lng: 135.769922,
+    // Add markers
+    const yellow = nightMode
+      ? {
+          fillColor: '#dfa513', // hue 42; chroma 80; luminance 9.53
+          strokeColor: '#efdba7', // hue 42; chroma 28.24; luminance 15.36
+        }
+      : {
+          fillColor: '#f6d410', // 51, 90.2, 14.34
+          strokeColor: '#463c01', // 51, 27.06, 1.93
+        };
+    const shapedAsAsterisk = {
+      path: cormorantBoldAsterisk.path,
+    };
+    const pinnedAtCenter = {
+      anchor: new google.maps.Point(
+        cormorantBoldAsterisk.width / 2,
+        cormorantBoldAsterisk.height / 2,
+      ), // to pin the icon at its center, rather than at its top-left (default)
+    };
+    const colored = {
+      fillOpacity: 1, // to disable the default value of 0
+      ...yellow,
+    };
+    for (let i = 0; i < userData.places.length; i++) {
+      const userPlace = userData.places[i];
+      const userPlaceCoordinates = new google.maps.LatLng(
+        userPlace.latitude,
+        userPlace.longitude,
+      );
+      const marker = new google.maps.Marker({
+        icon: {
+          ...shapedAsAsterisk,
+          ...pinnedAtCenter,
+          ...colored,
         },
-        zoom: 18, // to see the accuracy range circle of the current location
-      };
-      const colorCustomized = {
-        mapId: nightMode ? mapIdNighttime : mapIdDaytime,
-      };
-      const buttonsDisabled = {
-        fullscreenControl: false,
-        mapTypeControl: false,
-        streetViewControl: false,
-        zoomControl: false,
-      };
-      map.current = new google.maps.Map(googlemap.current, {
-        ...colorLoadingScreen,
-        ...initialView,
-        ...colorCustomized,
-        ...buttonsDisabled,
+        map: map.current,
+        optimized: false,
+        position: userPlaceCoordinates,
+        title: userPlace.name,
       });
-      // Add markers
-      const yellow = nightMode
-        ? {
-            fillColor: '#dfa513', // hue 42; chroma 80; luminance 9.53
-            strokeColor: '#efdba7', // hue 42; chroma 28.24; luminance 15.36
-          }
-        : {
-            fillColor: '#f6d410', // 51, 90.2, 14.34
-            strokeColor: '#463c01', // 51, 27.06, 1.93
-          };
-      const shapedAsAsterisk = {
-        path: cormorantBoldAsterisk.path,
-      };
-      const pinnedAtCenter = {
-        anchor: new google.maps.Point(
-          cormorantBoldAsterisk.width / 2,
-          cormorantBoldAsterisk.height / 2,
-        ), // to pin the icon at its center, rather than at its top-left (default)
-      };
-      const colored = {
-        fillOpacity: 1, // to disable the default value of 0
-        ...yellow,
-      };
-      for (let i = 0; i < userData.places.length; i++) {
-        const userPlace = userData.places[i];
-        const userPlaceCoordinates = new google.maps.LatLng(
-          userPlace.latitude,
-          userPlace.longitude,
-        );
-        const marker = new google.maps.Marker({
-          icon: {
-            ...shapedAsAsterisk,
-            ...pinnedAtCenter,
-            ...colored,
-          },
-          map: map.current,
-          optimized: false,
-          position: userPlaceCoordinates,
-          title: userPlace.name,
+      // eslint-disable-next-line no-loop-func
+      marker.addListener('click', () => {
+        map.current.panTo(userPlaceCoordinates);
+        map.current.panBy(0, viewportSize.current.height / 6);
+        setSelectedPlace({
+          name: userPlace.name,
+          coordinates: userPlaceCoordinates,
         });
-        // eslint-disable-next-line no-loop-func
-        marker.addListener('click', () => {
-          map.current.panTo(userPlaceCoordinates);
-          map.current.panBy(0, viewportSize.current.height / 6);
-          setSelectedPlace({
-            name: userPlace.name,
-            coordinates: userPlaceCoordinates,
-          });
-        });
-      }
-      setMapObject(map.current);
-    });
+      });
+    }
+    setMapObject(map.current);
   }, [nightMode, setMapObject]);
 
   const closePlaceDetail = () => {
