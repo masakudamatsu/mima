@@ -9,6 +9,7 @@ import {NightModeContext} from 'src/wrappers/NightModeContext';
 import {Controls} from 'src/components/Controls';
 import {Map} from 'src/components/Map';
 import {Noscript} from 'src/components/Noscript';
+import {SavedPlaces} from 'src/components/SavedPlaces';
 
 function HomePage() {
   const nightMode = useContext(NightModeContext);
@@ -27,6 +28,7 @@ function HomePage() {
       <Controls mapObject={mapObject} />
       <Wrapper apiKey={process.env.NEXT_PUBLIC_API_KEY} version="weekly">
         <Map setMapObject={setMapObject} />
+        <SavedPlaces mapObject={mapObject} />
       </Wrapper>
     </>
   );
