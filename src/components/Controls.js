@@ -56,9 +56,11 @@ export const Controls = ({mapObject}) => {
   function removeUserLocation() {
     if (marker.current) {
       marker.current.setMap(null); // remove the previous current location marker from the map
+      marker.current = null;
     }
     if (accuracyCircle.current) {
       accuracyCircle.current.setMap(null); // remove the previous circle from the map
+      accuracyCircle.current = null;
     }
   }
   function markUserLocation({
