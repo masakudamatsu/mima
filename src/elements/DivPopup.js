@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 // import PropTypes from 'prop-types';
-import {bodyText, color, duration, easing} from 'src/utils/designtokens';
+import {bodyText, duration, easing} from 'src/utils/designtokens';
 import {remify} from 'src/utils/remify';
 import {zIndex} from 'src/utils/zIndex';
 

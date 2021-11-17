@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import {bodyText, color, dimension} from 'src/utils/designtokens';
+import {bodyText, dimension} from 'src/utils/designtokens';
 import {remify} from 'src/utils/remify';
 
 const drawDividers = `
