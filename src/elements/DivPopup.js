@@ -27,6 +27,8 @@ const setTextColor = `
 `;
 
 const setSize = `
+  border-top-left-radius: ${dimension['border radius 100']};
+  border-top-right-radius: ${dimension['border radius 100']};
   height: calc(100% - ${dimension.popup['margin 100']});
   top: ${dimension.popup['margin 100']};
   &[data-slide-from="left"] {

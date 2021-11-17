@@ -70,6 +70,7 @@ export const map = {
 };
 
 export const dimension = {
+  'border radius 100': '4px',
   button: {
     'height 175': '84px',
     'height 100': '48px',

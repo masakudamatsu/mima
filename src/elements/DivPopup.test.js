@@ -16,6 +16,8 @@ test('renders UI correctly', () => {
   font-weight: 400;
   line-height: 1.25;
   color: var(--popup-text-color);
+  border-top-left-radius: 4px;
+  border-top-right-radius: 4px;
   height: calc(100% - 24px);
   top: 24px;
   padding: calc(48px - 16px);
