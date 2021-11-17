@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 // import PropTypes from 'prop-types';
-import {bodyText, duration, easing} from 'src/utils/designtokens';
+import {bodyText, dimension, duration, easing} from 'src/utils/designtokens';
 import {remify} from 'src/utils/remify';
 import {zIndex} from 'src/utils/zIndex';
 
@@ -8,13 +8,6 @@ const placeOverScrim = `
   position: absolute;
   z-index: ${zIndex.divPopup};  
 `;
-
-const dimension = {
-  'margin 66': `16px`,
-  'margin 100': `24px`,
-  'margin 133': `32px`,
-  'margin 200': `48px`,
-};
 
 const setFontStyle = `
   font-family: ${bodyText.fontFamily};
@@ -27,20 +20,20 @@ const setTextColor = `
 `;
 
 const setSize = `
-  height: calc(100% - ${dimension['margin 100']});
-  top: ${dimension['margin 100']};
+  height: calc(100% - ${dimension.popup['margin 100']});
+  top: ${dimension.popup['margin 100']};
   &[data-slide-from="left"] {
-    right: ${dimension['margin 100']};
-    width: calc(100% - ${dimension['margin 100']});  
+    right: ${dimension.popup['margin 100']};
+    width: calc(100% - ${dimension.popup['margin 100']});  
   }
   &[data-slide-from="right"] {
-    left: ${dimension['margin 100']};
-    width: calc(100% - ${dimension['margin 100']});  
+    left: ${dimension.popup['margin 100']};
+    width: calc(100% - ${dimension.popup['margin 100']});  
   }
   &[data-slide-from="bottom"] {
-    left: ${dimension['margin 100']};
-    right: ${dimension['margin 100']};
-    width: calc(100% - ${dimension['margin 200']});  
+    left: ${dimension.popup['margin 100']};
+    right: ${dimension.popup['margin 100']};
+    width: calc(100% - ${dimension.popup['margin 200']});  
   }
   &[data-height="one-third"] {
     height: 34%;
@@ -80,11 +73,11 @@ export const DivPopup = styled.div`
   ${setSize}
   ${animateTransition}
   background: var(--popup-background-color);
-  box-shadow: 0 0 ${dimension['margin 66']} ${dimension['margin 66']}
+  box-shadow: 0 0 ${dimension.popup['margin 66']}
+      ${dimension.popup['margin 66']} var(--popup-shadow-color),
+    0 0 ${dimension.popup['margin 100']} ${dimension.popup['margin 66']}
       var(--popup-shadow-color),
-    0 0 ${dimension['margin 100']} ${dimension['margin 66']}
-      var(--popup-shadow-color),
-    0 0 ${dimension['margin 133']} ${dimension['margin 66']}
+    0 0 ${dimension.popup['margin 133']} ${dimension.popup['margin 66']}
       var(--popup-shadow-color);
 `;
 

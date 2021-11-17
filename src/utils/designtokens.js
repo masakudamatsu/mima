@@ -99,6 +99,12 @@ export const dimension = {
     'blur daytime': '5px',
     'blur nighttime': '10px',
   },
+  popup: {
+    'margin 66': `16px`,
+    'margin 100': `24px`,
+    'margin 133': `32px`,
+    'margin 200': `48px`,
+  },
 };
 
 export const duration = {
