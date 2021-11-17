@@ -1,6 +1,7 @@
 import {useContext, useEffect, useRef, useState} from 'react';
 import PropTypes from 'prop-types';
 import Autolinker from 'autolinker';
+import DOMPurify from 'dompurify';
 
 import userData from 'src/utils/savedPlaces.json';
 
@@ -72,7 +73,7 @@ export const SavedPlaces = ({mapObject}) => {
           userData.features[i].geometry.coordinates[0],
         ),
         name: userData.features[i].properties.name,
-        note: userData.features[i].properties.note,
+        note: DOMPurify.sanitize(userData.features[i].properties.note),
       };
       const marker = new google.maps.Marker({
         icon: {
