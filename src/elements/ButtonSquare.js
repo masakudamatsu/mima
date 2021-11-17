@@ -1,6 +1,6 @@
 import styled, {css} from 'styled-components';
 
-import {color, dimension} from 'src/utils/designtokens';
+import {buttonSquare, color, dimension} from 'src/utils/designtokens';
 
 const resetStyle = css`
   background-color: ${color['white 0']};
@@ -8,8 +8,8 @@ const resetStyle = css`
 `;
 
 const setClickableArea = css`
-  height: ${dimension.button['minimum target size 100']};
-  width: ${dimension.button['minimum target size 100']};
+  height: ${buttonSquare.clickableArea};
+  width: ${buttonSquare.clickableArea};
 `;
 
 const alignButtonLabel = css`

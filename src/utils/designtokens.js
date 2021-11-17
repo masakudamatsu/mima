@@ -124,6 +124,21 @@ export const easing = {
   linear: 'linear',
 };
 
+export const buttonSquare = {
+  clickableArea: dimension.button['minimum target size 100'],
+};
+
+export const popup = {
+  blurRadius: {
+    'layer 1': dimension.popup['margin 66'],
+    'layer 2': dimension.popup['margin 100'],
+    'layer 3': dimension.popup['margin 133'],
+  },
+  spreadRadius: dimension.popup['margin 66'],
+};
+
+// Font styling
+
 const metrics = {
   'Noto Sans Regular': {
     fontFamily: `'Noto Sans', Verdana, sans-serif`,

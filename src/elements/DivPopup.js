@@ -1,6 +1,12 @@
 import styled from 'styled-components';
 // import PropTypes from 'prop-types';
-import {bodyText, dimension, duration, easing} from 'src/utils/designtokens';
+import {
+  bodyText,
+  dimension,
+  duration,
+  easing,
+  popup,
+} from 'src/utils/designtokens';
 import {remify} from 'src/utils/remify';
 import {zIndex} from 'src/utils/zIndex';
 
@@ -41,6 +47,16 @@ const setSize = `
   }
 `;
 
+const setBackground = `
+  background: var(--popup-background-color);
+  box-shadow: 0 0 ${popup.blurRadius['layer 1']}
+      ${popup.spreadRadius} var(--popup-shadow-color),
+    0 0 ${popup.blurRadius['layer 2']} ${popup.spreadRadius}
+      var(--popup-shadow-color),
+    0 0 ${popup.blurRadius['layer 3']} ${popup.spreadRadius}
+      var(--popup-shadow-color);
+`;
+
 const animateTransition = `
   &[data-slide-from="left"] {
     transform: translateX(-100%);
@@ -71,14 +87,8 @@ export const DivPopup = styled.div`
   ${setFontStyle}
   ${setTextColor}
   ${setSize}
+  ${setBackground}
   ${animateTransition}
-  background: var(--popup-background-color);
-  box-shadow: 0 0 ${dimension.popup['margin 66']}
-      ${dimension.popup['margin 66']} var(--popup-shadow-color),
-    0 0 ${dimension.popup['margin 100']} ${dimension.popup['margin 66']}
-      var(--popup-shadow-color),
-    0 0 ${dimension.popup['margin 133']} ${dimension.popup['margin 66']}
-      var(--popup-shadow-color);
 `;
 
 // DivPopup.propTypes = {};
