@@ -1,7 +1,8 @@
 import {buttonLabel} from '../../src/utils/uiCopies';
 
+const placeName = '出逢ひ茶屋おせん';
+
 describe('Clicking a saved place', () => {
-  const placeName = 'Osen';
   beforeEach(() => {
     cy.visit('/');
     cy.findByRole('button', {name: placeName}).click();
@@ -21,7 +22,6 @@ describe('Clicking a saved place', () => {
 });
 
 describe('Once place detail is shown', () => {
-  const placeName = 'Osen';
   beforeEach(() => {
     cy.visit('/');
     cy.findByRole('button', {name: placeName}).click();

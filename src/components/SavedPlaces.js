@@ -1,7 +1,7 @@
 import {useContext, useEffect, useRef, useState} from 'react';
 import PropTypes from 'prop-types';
 
-import userData from 'src/utils/mockUserData.json';
+import userData from 'src/utils/savedPlaces.json';
 
 import {PlaceDataPopup} from 'src/components/PlaceDataPopup';
 
@@ -58,11 +58,11 @@ export const SavedPlaces = ({mapObject}) => {
     };
 
     // Drop a marker to each saved place
-    for (let i = 0; i < userData.places.length; i++) {
-      const userPlace = userData.places[i];
+    for (let i = 0; i < userData.features.length; i++) {
+      const userPlace = userData.features[i];
       const userPlaceCoordinates = new google.maps.LatLng(
-        userPlace.latitude,
-        userPlace.longitude,
+        userPlace.geometry.coordinates[1],
+        userPlace.geometry.coordinates[0],
       );
       const marker = new google.maps.Marker({
         icon: {
@@ -72,14 +72,14 @@ export const SavedPlaces = ({mapObject}) => {
         },
         optimized: false,
         position: userPlaceCoordinates,
-        title: userPlace.name,
+        title: userPlace.properties.name,
       });
       // eslint-disable-next-line no-loop-func
       marker.addListener('click', () => {
         mapObject.panTo(userPlaceCoordinates);
         mapObject.panBy(0, viewportSize.current.height / 6);
         setSelectedPlace({
-          name: userPlace.name,
+          name: userPlace.properties.name,
           coordinates: userPlaceCoordinates,
         });
       });

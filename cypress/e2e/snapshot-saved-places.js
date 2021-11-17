@@ -1,7 +1,8 @@
 import {buttonLabel} from '../../src/utils/uiCopies';
 
+const placeName = '出逢ひ茶屋おせん';
+
 describe('After clicking a saved place', () => {
-  const placeName = 'Osen';
   describe('UI changes as expected', () => {
     it('Daytime', () => {
       cy.visitAtDaytime('/');
