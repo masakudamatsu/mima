@@ -65,11 +65,15 @@ export const SavedPlaces = ({mapObject}) => {
 
     // Drop a marker to each saved place
     for (let i = 0; i < userData.features.length; i++) {
-      const userPlace = userData.features[i];
-      const userPlaceCoordinates = new google.maps.LatLng(
-        userPlace.geometry.coordinates[1],
-        userPlace.geometry.coordinates[0],
-      );
+      // Retrieve data to be used
+      const userPlace = {
+        coordinates: new google.maps.LatLng(
+          userData.features[i].geometry.coordinates[1],
+          userData.features[i].geometry.coordinates[0],
+        ),
+        name: userData.features[i].properties.name,
+        note: userData.features[i].properties.note,
+      };
       const marker = new google.maps.Marker({
         icon: {
           ...shapedAsAsterisk,
@@ -77,17 +81,17 @@ export const SavedPlaces = ({mapObject}) => {
           ...colored,
         },
         optimized: false,
-        position: userPlaceCoordinates,
-        title: userPlace.properties.name,
+        position: userPlace.coordinates,
+        title: userPlace.name,
       });
       // eslint-disable-next-line no-loop-func
       marker.addListener('click', () => {
-        mapObject.panTo(userPlaceCoordinates);
+        mapObject.panTo(userPlace.coordinates);
         mapObject.panBy(0, viewportSize.current.height / 6);
         setSelectedPlace({
-          name: userPlace.properties.name,
-          coordinates: userPlaceCoordinates,
-          note: autolinker.link(userPlace.properties.note),
+          name: userPlace.name,
+          coordinates: userPlace.coordinates,
+          note: autolinker.link(userPlace.note),
         });
       });
       marker.setMap(mapObject);
