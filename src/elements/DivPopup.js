@@ -2,6 +2,7 @@ import styled from 'styled-components';
 // import PropTypes from 'prop-types';
 import {
   bodyText,
+  buttonSquare,
   dimension,
   duration,
   easing,
@@ -57,6 +58,10 @@ const setBackground = `
       var(--popup-shadow-color);
 `;
 
+const setPadding = `
+  padding: calc(${buttonSquare.clickableArea} - ${popup.spreadRadius});
+`;
+
 const animateTransition = `
   &[data-slide-from="left"] {
     transform: translateX(-100%);
@@ -87,6 +92,7 @@ export const DivPopup = styled.div`
   ${setFontStyle}
   ${setTextColor}
   ${setSize}
+  ${setPadding}
   ${setBackground}
   ${animateTransition}
 `;
