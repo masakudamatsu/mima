@@ -1,5 +1,6 @@
 import {useContext, useEffect, useRef, useState} from 'react';
 import PropTypes from 'prop-types';
+import Autolinker from 'autolinker';
 
 import userData from 'src/utils/savedPlaces.json';
 
@@ -57,6 +58,11 @@ export const SavedPlaces = ({mapObject}) => {
       ...yellow,
     };
 
+    // Prepare for converting URL text into link
+    const autolinker = new Autolinker({
+      truncate: 25,
+    }); // https://github.com/gregjacobs/Autolinker.js#usage
+
     // Drop a marker to each saved place
     for (let i = 0; i < userData.features.length; i++) {
       const userPlace = userData.features[i];
@@ -81,6 +87,7 @@ export const SavedPlaces = ({mapObject}) => {
         setSelectedPlace({
           name: userPlace.properties.name,
           coordinates: userPlaceCoordinates,
+          note: autolinker.link(userPlace.properties.note),
         });
       });
       marker.setMap(mapObject);
@@ -113,6 +120,12 @@ export const SavedPlaces = ({mapObject}) => {
             <SvgClose title={buttonLabel.close} />
           </ButtonSquare>
           <h2 id="selected-place">{selectedPlace.name}</h2>
+          <p>(Links will open in a new tab)</p>
+          <p
+            dangerouslySetInnerHTML={{
+              __html: selectedPlace.note,
+            }}
+          />
         </PlaceDataPopup>
       )}
     </>
