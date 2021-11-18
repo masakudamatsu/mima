@@ -24,6 +24,9 @@ const setFontStyle = `
 `;
 const setTextColor = `
   color: var(--popup-text-color);
+  & a {
+    color: var(--link-text-color);
+  }
 `;
 
 const setSize = `

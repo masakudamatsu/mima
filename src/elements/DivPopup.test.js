@@ -25,6 +25,10 @@ test('renders UI correctly', () => {
   box-shadow: 0 0 16px 16px var(--popup-shadow-color), 0 0 24px 16px var(--popup-shadow-color), 0 0 32px 16px var(--popup-shadow-color);
 }
 
+.c0 a {
+  color: var(--link-text-color);
+}
+
 .c0[data-slide-from="left"] {
   right: 24px;
   width: calc(100% - 24px);
