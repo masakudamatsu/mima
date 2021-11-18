@@ -16,10 +16,17 @@ test('renders UI correctly', () => {
   font-weight: 400;
   line-height: 1.25;
   color: var(--popup-text-color);
+  border-top-left-radius: 4px;
+  border-top-right-radius: 4px;
   height: calc(100% - 24px);
   top: 24px;
+  padding: calc(48px - 16px);
   background: var(--popup-background-color);
-  box-shadow: 0 0 16px 16px var(--popup-shadow-color),0 0 24px 16px var(--popup-shadow-color),0 0 32px 16px var(--popup-shadow-color);
+  box-shadow: 0 0 16px 16px var(--popup-shadow-color), 0 0 24px 16px var(--popup-shadow-color), 0 0 32px 16px var(--popup-shadow-color);
+}
+
+.c0 a {
+  color: var(--link-text-color);
 }
 
 .c0[data-slide-from="left"] {

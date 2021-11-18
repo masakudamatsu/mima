@@ -70,6 +70,7 @@ export const map = {
 };
 
 export const dimension = {
+  'border radius 100': '4px',
   button: {
     'height 175': '84px',
     'height 100': '48px',
@@ -99,6 +100,12 @@ export const dimension = {
     'blur daytime': '5px',
     'blur nighttime': '10px',
   },
+  popup: {
+    'margin 66': `16px`,
+    'margin 100': `24px`,
+    'margin 133': `32px`,
+    'margin 200': `48px`,
+  },
 };
 
 export const duration = {
@@ -117,6 +124,21 @@ export const easing = {
   decelerate: 'cubic-bezier(0.0, 0.0, 0.2, 1)',
   linear: 'linear',
 };
+
+export const buttonSquare = {
+  clickableArea: dimension.button['minimum target size 100'],
+};
+
+export const popup = {
+  blurRadius: {
+    'layer 1': dimension.popup['margin 66'],
+    'layer 2': dimension.popup['margin 100'],
+    'layer 3': dimension.popup['margin 133'],
+  },
+  spreadRadius: dimension.popup['margin 66'],
+};
+
+// Font styling
 
 const metrics = {
   'Noto Sans Regular': {

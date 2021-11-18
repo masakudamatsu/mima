@@ -25,8 +25,8 @@ describe('ButtonSquare component', () => {
   -ms-flex-pack: center;
   justify-content: center;
   position: absolute;
-  top: 24px;
-  right: 24px;
+  right: -16px;
+  top: -16px;
 }
 
 .c0 svg {

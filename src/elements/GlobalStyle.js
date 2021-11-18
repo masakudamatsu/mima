@@ -33,6 +33,7 @@ const setColorScheme = `
     --button-shadow-color: ${color['black 33']};
     --button-shadow-color-focus: ${color['focus-blue 100']};
     --error-dialog-button-color: ${color['google-blue 100']};
+    --link-text-color: ${color['google-blue 100']};
     --menu-border-color: ${color['google-blue 100']};
     --menu-item-color: ${color['dark-grey 100']};
     --popup-background-color: ${color['white 93']};
@@ -49,6 +50,7 @@ const setColorScheme = `
     --button-shadow-color: ${color['black 60']};
     --button-shadow-color-focus: ${color['white 100']};
     --error-dialog-button-color: ${color['google-blue-light 100']};
+    --link-text-color: ${color['google-blue-light 100']}; 
     --menu-border-color: ${color['google-blue-light 100']};
     --menu-item-color: ${color['off-white 100']};
     --popup-background-color: ${color['mid-grey 80']};

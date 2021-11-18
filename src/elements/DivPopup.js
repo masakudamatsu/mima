@@ -1,6 +1,13 @@
 import styled from 'styled-components';
 // import PropTypes from 'prop-types';
-import {bodyText, color, duration, easing} from 'src/utils/designtokens';
+import {
+  bodyText,
+  buttonSquare,
+  dimension,
+  duration,
+  easing,
+  popup,
+} from 'src/utils/designtokens';
 import {remify} from 'src/utils/remify';
 import {zIndex} from 'src/utils/zIndex';
 
@@ -8,13 +15,6 @@ const placeOverScrim = `
   position: absolute;
   z-index: ${zIndex.divPopup};  
 `;
-
-const dimension = {
-  'margin 66': `16px`,
-  'margin 100': `24px`,
-  'margin 133': `32px`,
-  'margin 200': `48px`,
-};
 
 const setFontStyle = `
   font-family: ${bodyText.fontFamily};
@@ -24,28 +24,47 @@ const setFontStyle = `
 `;
 const setTextColor = `
   color: var(--popup-text-color);
+  & a {
+    color: var(--link-text-color);
+  }
 `;
 
 const setSize = `
-  height: calc(100% - ${dimension['margin 100']});
-  top: ${dimension['margin 100']};
+  border-top-left-radius: ${dimension['border radius 100']};
+  border-top-right-radius: ${dimension['border radius 100']};
+  height: calc(100% - ${dimension.popup['margin 100']});
+  top: ${dimension.popup['margin 100']};
   &[data-slide-from="left"] {
-    right: ${dimension['margin 100']};
-    width: calc(100% - ${dimension['margin 100']});  
+    right: ${dimension.popup['margin 100']};
+    width: calc(100% - ${dimension.popup['margin 100']});  
   }
   &[data-slide-from="right"] {
-    left: ${dimension['margin 100']};
-    width: calc(100% - ${dimension['margin 100']});  
+    left: ${dimension.popup['margin 100']};
+    width: calc(100% - ${dimension.popup['margin 100']});  
   }
   &[data-slide-from="bottom"] {
-    left: ${dimension['margin 100']};
-    right: ${dimension['margin 100']};
-    width: calc(100% - ${dimension['margin 200']});  
+    left: ${dimension.popup['margin 100']};
+    right: ${dimension.popup['margin 100']};
+    width: calc(100% - ${dimension.popup['margin 200']});  
   }
   &[data-height="one-third"] {
     height: 34%;
     top: 66%;
   }
+`;
+
+const setBackground = `
+  background: var(--popup-background-color);
+  box-shadow: 0 0 ${popup.blurRadius['layer 1']}
+      ${popup.spreadRadius} var(--popup-shadow-color),
+    0 0 ${popup.blurRadius['layer 2']} ${popup.spreadRadius}
+      var(--popup-shadow-color),
+    0 0 ${popup.blurRadius['layer 3']} ${popup.spreadRadius}
+      var(--popup-shadow-color);
+`;
+
+const setPadding = `
+  padding: calc(${buttonSquare.clickableArea} - ${popup.spreadRadius});
 `;
 
 const animateTransition = `
@@ -78,14 +97,9 @@ export const DivPopup = styled.div`
   ${setFontStyle}
   ${setTextColor}
   ${setSize}
+  ${setPadding}
+  ${setBackground}
   ${animateTransition}
-  background: var(--popup-background-color);
-  box-shadow: 0 0 ${dimension['margin 66']} ${dimension['margin 66']}
-      var(--popup-shadow-color),
-    0 0 ${dimension['margin 100']} ${dimension['margin 66']}
-      var(--popup-shadow-color),
-    0 0 ${dimension['margin 133']} ${dimension['margin 66']}
-      var(--popup-shadow-color);
 `;
 
 // DivPopup.propTypes = {};

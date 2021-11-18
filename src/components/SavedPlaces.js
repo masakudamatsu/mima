@@ -1,7 +1,9 @@
 import {useContext, useEffect, useRef, useState} from 'react';
 import PropTypes from 'prop-types';
+import Autolinker from 'autolinker';
+import DOMPurify from 'dompurify';
 
-import userData from 'src/utils/mockUserData.json';
+import userData from 'src/utils/savedPlaces.json';
 
 import {PlaceDataPopup} from 'src/components/PlaceDataPopup';
 
@@ -57,13 +59,22 @@ export const SavedPlaces = ({mapObject}) => {
       ...yellow,
     };
 
+    // Prepare for converting URL text into link
+    const autolinker = new Autolinker({
+      truncate: 25,
+    }); // https://github.com/gregjacobs/Autolinker.js#usage
+
     // Drop a marker to each saved place
-    for (let i = 0; i < userData.places.length; i++) {
-      const userPlace = userData.places[i];
-      const userPlaceCoordinates = new google.maps.LatLng(
-        userPlace.latitude,
-        userPlace.longitude,
-      );
+    for (let i = 0; i < userData.features.length; i++) {
+      // Retrieve data to be used
+      const userPlace = {
+        coordinates: new google.maps.LatLng(
+          userData.features[i].geometry.coordinates[1],
+          userData.features[i].geometry.coordinates[0],
+        ),
+        name: userData.features[i].properties.name,
+        note: DOMPurify.sanitize(userData.features[i].properties.note),
+      };
       const marker = new google.maps.Marker({
         icon: {
           ...shapedAsAsterisk,
@@ -71,16 +82,17 @@ export const SavedPlaces = ({mapObject}) => {
           ...colored,
         },
         optimized: false,
-        position: userPlaceCoordinates,
+        position: userPlace.coordinates,
         title: userPlace.name,
       });
       // eslint-disable-next-line no-loop-func
       marker.addListener('click', () => {
-        mapObject.panTo(userPlaceCoordinates);
+        mapObject.panTo(userPlace.coordinates);
         mapObject.panBy(0, viewportSize.current.height / 6);
         setSelectedPlace({
           name: userPlace.name,
-          coordinates: userPlaceCoordinates,
+          coordinates: userPlace.coordinates,
+          note: autolinker.link(userPlace.note),
         });
       });
       marker.setMap(mapObject);
@@ -113,6 +125,12 @@ export const SavedPlaces = ({mapObject}) => {
             <SvgClose title={buttonLabel.close} />
           </ButtonSquare>
           <h2 id="selected-place">{selectedPlace.name}</h2>
+          <p>(Links will open in a new tab)</p>
+          <p
+            dangerouslySetInnerHTML={{
+              __html: selectedPlace.note,
+            }}
+          />
         </PlaceDataPopup>
       )}
     </>

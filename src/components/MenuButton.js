@@ -1,4 +1,4 @@
-import {useEffect, useState} from 'react';
+import {useState} from 'react';
 import PropTypes from 'prop-types';
 
 import {useOnEscKeyDown} from 'src/hooks/useOnEscKeyDown';

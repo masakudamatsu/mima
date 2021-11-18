@@ -1,13 +1,17 @@
 import {buttonLabel} from '../../src/utils/uiCopies';
 
+const placeName = '出逢ひ茶屋おせん';
+
 describe('Clicking a saved place', () => {
-  const placeName = 'Osen';
   beforeEach(() => {
     cy.visit('/');
     cy.findByRole('button', {name: placeName}).click();
   });
   it('Shows the place name (as heading)', () => {
     cy.findByRole('heading', {name: placeName}).should('be.visible');
+  });
+  it('Shows the note with URL text as a link on the place', () => {
+    cy.findByRole('link', {name: /asahi\.com.*/i}).should('be.visible');
   });
   it('Keeps the place marker to be shown', () => {
     // UI snapshot is also taken in snapshot-saved-places.js
@@ -21,7 +25,6 @@ describe('Clicking a saved place', () => {
 });
 
 describe('Once place detail is shown', () => {
-  const placeName = 'Osen';
   beforeEach(() => {
     cy.visit('/');
     cy.findByRole('button', {name: placeName}).click();
