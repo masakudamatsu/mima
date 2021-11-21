@@ -6,7 +6,6 @@ import {
   dimension,
   duration,
   easing,
-  popup,
 } from 'src/utils/designtokens';
 import {remify} from 'src/utils/remify';
 import {zIndex} from 'src/utils/zIndex';
@@ -30,41 +29,54 @@ const setTextColor = `
 `;
 
 const setSize = `
-  border-top-left-radius: ${dimension['border radius 100']};
-  border-top-right-radius: ${dimension['border radius 100']};
   height: calc(100% - ${dimension.popup['margin 100']});
   top: ${dimension.popup['margin 100']};
   &[data-slide-from="left"] {
+    height: 100%;
     right: ${dimension.popup['margin 100']};
+    top 0;
     width: calc(100% - ${dimension.popup['margin 100']});  
   }
   &[data-slide-from="right"] {
+    height: 100%;
     left: ${dimension.popup['margin 100']};
+    top 0;
     width: calc(100% - ${dimension.popup['margin 100']});  
   }
   &[data-slide-from="bottom"] {
-    left: ${dimension.popup['margin 100']};
-    right: ${dimension.popup['margin 100']};
-    width: calc(100% - ${dimension.popup['margin 200']});  
+    height: 100%; /* calc(100% - ${dimension.popup['margin 100']}); */
+    left: 0;
+    top: 0; /*${dimension.popup['margin 100']}; */
+    width: 100%;
   }
   &[data-height="one-third"] {
     height: 34%;
+    left: 0;
     top: 66%;
+    width: 100%;
   }
 `;
 
 const setBackground = `
-  background: var(--popup-background-color);
-  box-shadow: 0 0 ${popup.blurRadius['layer 1']}
-      ${popup.spreadRadius} var(--popup-shadow-color),
-    0 0 ${popup.blurRadius['layer 2']} ${popup.spreadRadius}
-      var(--popup-shadow-color),
-    0 0 ${popup.blurRadius['layer 3']} ${popup.spreadRadius}
-      var(--popup-shadow-color);
+  /* Firefox */
+  background: var(--popup-background-color-firefox);
+  box-shadow: 
+  ${dimension.glow.offset} 
+  8px 8px
+  var(--popup-glow-color-firefox);
+  /* Other modern browsers */
+  @supports (backdrop-filter: blur(8px)) {
+    background: var(--popup-background-color);
+    backdrop-filter: blur(8px);  
+    box-shadow: 
+    ${dimension.glow.offset} 
+    8px 8px
+    var(--popup-glow-color);
+  } 
 `;
 
 const setPadding = `
-  padding: calc(${buttonSquare.clickableArea} - ${popup.spreadRadius});
+  padding: ${buttonSquare.clickableArea};
 `;
 
 const animateTransition = `

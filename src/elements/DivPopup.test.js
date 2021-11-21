@@ -16,13 +16,11 @@ test('renders UI correctly', () => {
   font-weight: 400;
   line-height: 1.25;
   color: var(--popup-text-color);
-  border-top-left-radius: 4px;
-  border-top-right-radius: 4px;
   height: calc(100% - 24px);
   top: 24px;
-  padding: calc(48px - 16px);
-  background: var(--popup-background-color);
-  box-shadow: 0 0 16px 16px var(--popup-shadow-color), 0 0 24px 16px var(--popup-shadow-color), 0 0 32px 16px var(--popup-shadow-color);
+  padding: 48px;
+  background: var(--popup-background-color-firefox);
+  box-shadow: 0px 0px  8px 8px var(--popup-glow-color-firefox);
 }
 
 .c0 a {
@@ -30,24 +28,31 @@ test('renders UI correctly', () => {
 }
 
 .c0[data-slide-from="left"] {
+  height: 100%;
   right: 24px;
+  top: 0;
   width: calc(100% - 24px);
 }
 
 .c0[data-slide-from="right"] {
+  height: 100%;
   left: 24px;
+  top: 0;
   width: calc(100% - 24px);
 }
 
 .c0[data-slide-from="bottom"] {
-  left: 24px;
-  right: 24px;
-  width: calc(100% - 48px);
+  height: 100%;
+  left: 0;
+  top: 0;
+  width: 100%;
 }
 
 .c0[data-height="one-third"] {
   height: 34%;
+  left: 0;
   top: 66%;
+  width: 100%;
 }
 
 .c0[data-slide-from="left"] {
@@ -83,6 +88,15 @@ test('renders UI correctly', () => {
   -webkit-transition: opcacity 100ms linear, -webkit-transform 450ms cubic-bezier(0.0,0.0,0.2,1);
   -webkit-transition: opcacity 100ms linear, transform 450ms cubic-bezier(0.0,0.0,0.2,1);
   transition: opcacity 100ms linear, transform 450ms cubic-bezier(0.0,0.0,0.2,1);
+}
+
+@supports (-webkit-backdrop-filter:blur(8px)) or (backdrop-filter:blur(8px)) {
+  .c0 {
+    background: var(--popup-background-color);
+    -webkit-backdrop-filter: blur(8px);
+    backdrop-filter: blur(8px);
+    box-shadow: 0px 0px  8px 8px var(--popup-glow-color);
+  }
 }
 
 <div>
