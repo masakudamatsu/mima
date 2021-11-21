@@ -16,11 +16,9 @@ test('renders UI correctly', () => {
   font-weight: 400;
   line-height: 1.25;
   color: var(--popup-text-color);
-  border-top-left-radius: 4px;
-  border-top-right-radius: 4px;
   height: calc(100% - 24px);
   top: 24px;
-  padding: calc(48px - 16px);
+  padding: 48px;
   background: var(--popup-background-color-firefox);
   box-shadow: 0px 0px  8px 8px var(--popup-glow-color-firefox);
 }
@@ -30,24 +28,31 @@ test('renders UI correctly', () => {
 }
 
 .c0[data-slide-from="left"] {
+  height: 100%;
   right: 24px;
+  top: 0;
   width: calc(100% - 24px);
 }
 
 .c0[data-slide-from="right"] {
+  height: 100%;
   left: 24px;
+  top: 0;
   width: calc(100% - 24px);
 }
 
 .c0[data-slide-from="bottom"] {
-  left: 24px;
-  right: 24px;
-  width: calc(100% - 48px);
+  height: 100%;
+  left: 0;
+  top: 0;
+  width: 100%;
 }
 
 .c0[data-height="one-third"] {
   height: 34%;
+  left: 0;
   top: 66%;
+  width: 100%;
 }
 
 .c0[data-slide-from="left"] {

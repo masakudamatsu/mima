@@ -71,7 +71,6 @@ export const map = {
 };
 
 export const dimension = {
-  'border radius 100': '4px',
   button: {
     'height 175': '84px',
     'height 100': '48px',
@@ -128,10 +127,6 @@ export const easing = {
 
 export const buttonSquare = {
   clickableArea: dimension.button['minimum target size 100'],
-};
-
-export const popup = {
-  spreadRadius: dimension.popup['margin 66'],
 };
 
 // Font styling

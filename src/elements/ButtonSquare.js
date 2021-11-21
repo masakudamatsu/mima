@@ -1,6 +1,6 @@
 import styled, {css} from 'styled-components';
 
-import {buttonSquare, color, popup} from 'src/utils/designtokens';
+import {buttonSquare, color} from 'src/utils/designtokens';
 
 const resetStyle = css`
   background-color: ${color['white 0']};
@@ -20,8 +20,8 @@ const alignButtonLabel = css`
 
 const positionButton = css`
   position: absolute;
-  right: -${popup.spreadRadius};
-  top: -${popup.spreadRadius};
+  right: 0;
+  top: 0;
 `;
 
 const setButtonLabelColor = css`
