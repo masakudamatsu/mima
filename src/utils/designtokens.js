@@ -6,7 +6,7 @@ export const color = {
 
   // daytime
   'white 93': `rgba(255,255,255,0.93)`,
-  'white 63': `rgba(255,255,255,0.63)`,
+  'white 75': `rgba(255,255,255,0.75)`,
   'day-light-grey 100': '#aaaaaa', // 9.03 = day-mid-grey 100 * 3
   'light-grey 100': `rgb(148, 148, 148)`, // 6.92 white 100 / 3
   'day-mid-grey 100': 'rgb(137, 137, 137)', // '#898989', // 6 = pale-cyan 100 / 1.5
@@ -26,7 +26,8 @@ export const color = {
   'off-white 100': `rgb(218,218,218)`, // 15.02 = white 100 / 1.5
   'night-light-grey 100': '#929292', // 6.74 = off-black 100 * 4.5
   'mid-grey 80': `rgba(123,123,123,0.8)`, // 4.96 = dull-orange 100
-  'mid-grey 42': `rgba(123,123,123,0.42)`,
+  'glass-grey 90': `rgba(113,113,113,0.9)`, // to ensure 4.5:1 contrast against `off-white 100` when blurred with dull-orange 100
+  'glass-grey 75': `rgba(113,113,113,0.75)`, // to ensure 4.5:1 contrast against `off-white 100` when blurred with dull-orange 100
   'night-mid-grey 100': '#757575', // 4.55 = off-black 100 * 3
   'dull-orange 100': '#ae6f2f', // 5.11 = greyish-green 100 * 1.5
   'greyish-green 100': '#4c664c', // 3.31 = greyish-cyan 100 * 1.5
@@ -130,11 +131,6 @@ export const buttonSquare = {
 };
 
 export const popup = {
-  blurRadius: {
-    'layer 1': dimension.popup['margin 66'],
-    'layer 2': dimension.popup['margin 100'],
-    'layer 3': dimension.popup['margin 133'],
-  },
   spreadRadius: dimension.popup['margin 66'],
 };
 

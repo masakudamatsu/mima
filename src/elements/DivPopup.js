@@ -54,13 +54,21 @@ const setSize = `
 `;
 
 const setBackground = `
-  background: var(--popup-background-color);
-  box-shadow: 0 0 ${popup.blurRadius['layer 1']}
-      ${popup.spreadRadius} var(--popup-shadow-color),
-    0 0 ${popup.blurRadius['layer 2']} ${popup.spreadRadius}
-      var(--popup-shadow-color),
-    0 0 ${popup.blurRadius['layer 3']} ${popup.spreadRadius}
-      var(--popup-shadow-color);
+  /* Firefox */
+  background: var(--popup-background-color-firefox);
+  box-shadow: 
+  ${dimension.glow.offset} 
+  8px 8px
+  var(--popup-glow-color-firefox);
+  /* Other modern browsers */
+  @supports (backdrop-filter: blur(8px)) {
+    background: var(--popup-background-color);
+    backdrop-filter: blur(8px);  
+    box-shadow: 
+    ${dimension.glow.offset} 
+    8px 8px
+    var(--popup-glow-color);
+  } 
 `;
 
 const setPadding = `

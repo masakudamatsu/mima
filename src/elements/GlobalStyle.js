@@ -36,8 +36,10 @@ const setColorScheme = `
     --link-text-color: ${color['google-blue 100']};
     --menu-border-color: ${color['google-blue 100']};
     --menu-item-color: ${color['dark-grey 100']};
-    --popup-background-color: ${color['white 93']};
-    --popup-shadow-color: ${color['white 63']};
+    --popup-background-color: ${color['white 75']};
+    --popup-glow-color: ${color['white 75']};
+    --popup-background-color-firefox: ${color['white 93']};
+    --popup-glow-color-firefox: ${color['white 93']};
     --popup-text-color: ${color['dark-grey 100']};
   }
   body[data-darkmode='true'] {
@@ -53,8 +55,10 @@ const setColorScheme = `
     --link-text-color: ${color['google-blue-light 100']}; 
     --menu-border-color: ${color['google-blue-light 100']};
     --menu-item-color: ${color['off-white 100']};
-    --popup-background-color: ${color['mid-grey 80']};
-    --popup-shadow-color: ${color['mid-grey 42']};
+    --popup-background-color: ${color['glass-grey 75']};
+    --popup-glow-color: ${color['glass-grey 75']};
+    --popup-background-color-firefox: ${color['glass-grey 90']};
+    --popup-glow-color-firefox: ${color['glass-grey 90']};
     --popup-text-color: ${color['off-white 100']};
   }
 `;

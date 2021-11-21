@@ -21,8 +21,8 @@ test('renders UI correctly', () => {
   height: calc(100% - 24px);
   top: 24px;
   padding: calc(48px - 16px);
-  background: var(--popup-background-color);
-  box-shadow: 0 0 16px 16px var(--popup-shadow-color), 0 0 24px 16px var(--popup-shadow-color), 0 0 32px 16px var(--popup-shadow-color);
+  background: var(--popup-background-color-firefox);
+  box-shadow: 0px 0px  8px 8px var(--popup-glow-color-firefox);
 }
 
 .c0 a {
@@ -83,6 +83,15 @@ test('renders UI correctly', () => {
   -webkit-transition: opcacity 100ms linear, -webkit-transform 450ms cubic-bezier(0.0,0.0,0.2,1);
   -webkit-transition: opcacity 100ms linear, transform 450ms cubic-bezier(0.0,0.0,0.2,1);
   transition: opcacity 100ms linear, transform 450ms cubic-bezier(0.0,0.0,0.2,1);
+}
+
+@supports (-webkit-backdrop-filter:blur(8px)) or (backdrop-filter:blur(8px)) {
+  .c0 {
+    background: var(--popup-background-color);
+    -webkit-backdrop-filter: blur(8px);
+    backdrop-filter: blur(8px);
+    box-shadow: 0px 0px  8px 8px var(--popup-glow-color);
+  }
 }
 
 <div>
