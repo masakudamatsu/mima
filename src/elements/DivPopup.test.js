@@ -18,13 +18,25 @@ test('renders UI correctly', () => {
   color: var(--popup-text-color);
   height: calc(100% - 24px);
   top: 24px;
-  padding: 48px;
+  padding: 0 48px 48px 48px;
   background: var(--popup-background-color-firefox);
   box-shadow: 0px 0px  8px 8px var(--popup-glow-color-firefox);
 }
 
 .c0 a {
   color: var(--link-text-color);
+}
+
+.c0 h1 + p {
+  margin-top: -0.2836rem;
+}
+
+.c0 p + p {
+  margin-top: 0.4965rem;
+}
+
+.c0 p + button {
+  margin-top: 1.1112rem;
 }
 
 .c0[data-slide-from="left"] {
@@ -48,7 +60,7 @@ test('renders UI correctly', () => {
   width: 100%;
 }
 
-.c0[data-height="one-third"] {
+.c0[data-placedatapopup="true"] {
   height: 34%;
   left: 0;
   top: 66%;

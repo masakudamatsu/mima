@@ -8,6 +8,7 @@ import userData from 'src/utils/savedPlaces.json';
 import {PlaceDataPopup} from 'src/components/PlaceDataPopup';
 
 import {ButtonSquare} from 'src/elements/ButtonSquare';
+import {H2PlaceName} from 'src/elements/H2PlaceName';
 import {SvgClose} from 'src/elements/SvgClose';
 
 import {useOnEscKeyDown} from 'src/hooks/useOnEscKeyDown';
@@ -124,7 +125,7 @@ export const SavedPlaces = ({mapObject}) => {
           >
             <SvgClose title={buttonLabel.close} />
           </ButtonSquare>
-          <h2 id="selected-place">{selectedPlace.name}</h2>
+          <H2PlaceName id="selected-place">{selectedPlace.name}</H2PlaceName>
           <p>(Links will open in a new tab)</p>
           <p
             dangerouslySetInnerHTML={{

@@ -3,6 +3,8 @@ import styled from 'styled-components';
 import {
   bodyText,
   buttonSquare,
+  capHeight,
+  color,
   dimension,
   duration,
   easing,
@@ -28,6 +30,18 @@ const setTextColor = `
   }
 `;
 
+const setVerticalSpacing = `
+  & h1 + p {
+    margin-top: -${remify(bodyText.spaceTop)};
+  }
+  & p + p {
+    margin-top: ${remify(bodyText.spaceBetweenParagraphs)};
+  }
+  & p + button {
+    margin-top: ${remify(capHeight[300] - bodyText.spaceBottom)};
+  }
+`;
+
 const setSize = `
   height: calc(100% - ${dimension.popup['margin 100']});
   top: ${dimension.popup['margin 100']};
@@ -49,7 +63,7 @@ const setSize = `
     top: 0; /*${dimension.popup['margin 100']}; */
     width: 100%;
   }
-  &[data-height="one-third"] {
+  &[data-placedatapopup="true"] {
     height: 34%;
     left: 0;
     top: 66%;
@@ -76,7 +90,7 @@ const setBackground = `
 `;
 
 const setPadding = `
-  padding: ${buttonSquare.clickableArea};
+  padding: 0 ${buttonSquare.clickableArea} ${buttonSquare.clickableArea} ${buttonSquare.clickableArea};
 `;
 
 const animateTransition = `
@@ -108,6 +122,7 @@ export const DivPopup = styled.div`
   ${placeOverScrim}
   ${setFontStyle}
   ${setTextColor}
+  ${setVerticalSpacing}
   ${setSize}
   ${setPadding}
   ${setBackground}

@@ -5,7 +5,6 @@ import {useOnEscKeyDown} from 'src/hooks/useOnEscKeyDown';
 import {ModalPopup} from 'src/components/ModalPopup';
 import {Button} from 'src/elements/Button';
 import {ButtonSquare} from 'src/elements/ButtonSquare';
-import {DivMenu} from 'src/elements/DivMenu';
 import {Heading} from 'src/elements/Heading';
 import {ListMenu} from 'src/elements/ListMenu';
 import {SvgAdd} from 'src/elements/SvgAdd';
@@ -60,54 +59,52 @@ export const MenuButton = ({
         <SvgCloud icon="menu" title={buttonLabel.menu} />
       </Button>
       <ModalPopup hidden={!open} slideFrom="left" titleId="menu-label">
-        <DivMenu>
-          <Heading as="h2" id="menu-label">
-            {menuLabel}
-          </Heading>
-          <ButtonSquare
-            data-autofocus
-            data-testid="close-button-menu"
-            onClick={handleClickCloseButton}
-            type="button"
-          >
-            <SvgClose title={buttonLabel.close} />
-          </ButtonSquare>
-          <ListMenu>
-            <li>
-              <button>
-                <SvgSearch aria-hidden="true" /> {buttonLabel.search}
+        <Heading as="h2" id="menu-label">
+          {menuLabel}
+        </Heading>
+        <ButtonSquare
+          data-autofocus
+          data-testid="close-button-menu"
+          onClick={handleClickCloseButton}
+          type="button"
+        >
+          <SvgClose title={buttonLabel.close} />
+        </ButtonSquare>
+        <ListMenu>
+          <li>
+            <button>
+              <SvgSearch aria-hidden="true" /> {buttonLabel.search}
+            </button>
+          </li>
+          <li>
+            {!watchID ? (
+              <button type="button" onClick={handleClickFlightTakeoff}>
+                <SvgFlightTakeoff aria-hidden="true" />{' '}
+                {buttonLabel.locator.default}
               </button>
-            </li>
-            <li>
-              {!watchID ? (
-                <button type="button" onClick={handleClickFlightTakeoff}>
-                  <SvgFlightTakeoff aria-hidden="true" />{' '}
-                  {buttonLabel.locator.default}
-                </button>
-              ) : (
-                <button type="button" onClick={handleClickFlightFlying}>
-                  <SvgFlightFlying aria-hidden="true" />
-                  {buttonLabel.locator.activated}
-                </button>
-              )}
-            </li>
-            <li>
-              <button
-                type="button"
-                disabled={!watchID}
-                onClick={handleClickFlightLanding}
-              >
-                <SvgFlightLanding aria-hidden="true" />{' '}
-                {buttonLabel.locator.deactivate}
+            ) : (
+              <button type="button" onClick={handleClickFlightFlying}>
+                <SvgFlightFlying aria-hidden="true" />
+                {buttonLabel.locator.activated}
               </button>
-            </li>
-            <li>
-              <button data-testid="last-focusable-element">
-                <SvgAdd aria-hidden="true" /> {buttonLabel.save}
-              </button>
-            </li>
-          </ListMenu>
-        </DivMenu>
+            )}
+          </li>
+          <li>
+            <button
+              type="button"
+              disabled={!watchID}
+              onClick={handleClickFlightLanding}
+            >
+              <SvgFlightLanding aria-hidden="true" />{' '}
+              {buttonLabel.locator.deactivate}
+            </button>
+          </li>
+          <li>
+            <button data-testid="last-focusable-element">
+              <SvgAdd aria-hidden="true" /> {buttonLabel.save}
+            </button>
+          </li>
+        </ListMenu>
       </ModalPopup>
     </nav>
   );
