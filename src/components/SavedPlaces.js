@@ -126,7 +126,6 @@ export const SavedPlaces = ({mapObject}) => {
             <SvgClose title={buttonLabel.close} />
           </ButtonSquare>
           <H2PlaceName id="selected-place">{selectedPlace.name}</H2PlaceName>
-          <p>(Links will open in a new tab)</p>
           <p
             dangerouslySetInnerHTML={{
               __html: selectedPlace.note,
