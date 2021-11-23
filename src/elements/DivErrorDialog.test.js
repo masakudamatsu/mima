@@ -20,25 +20,6 @@ test('renders UI correctly', () => {
   margin-top: 1.1112rem;
 }
 
-.c0 button {
-  border: 1px solid var(--error-dialog-button-color);
-  border-radius: 4px;
-  color: var(--error-dialog-button-color);
-  margin-right: 12px;
-  min-height: 48px;
-  min-width: 96px;
-}
-
-.c0 button:focus {
-  outline: 2px solid rgb(69,159,189);
-  outline-offset: 2px;
-}
-
-.c0 button:focus:not(:focus-visible) {
-  outline: none;
-  outline-offset: initial;
-}
-
 <div>
   <div
     class="c0"

@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import {ModalPopup} from 'src/components/ModalPopup';
 
 import {Button} from 'src/elements/Button';
+import {ButtonDialog} from 'src/elements/ButtonDialog';
 import {DivErrorDialog} from 'src/elements/DivErrorDialog';
 import {Heading} from 'src/elements/Heading';
 import {SvgCloud} from 'src/elements/SvgCloud';
@@ -59,14 +60,14 @@ export const LocatorButton = ({
           </Heading>
           <p>{geolocationPermissionDenied.why}</p>
           <p>{geolocationPermissionDenied.how}</p>
-          <button
+          <ButtonDialog
             data-autofocus
             data-testid="close-button-denied"
             onClick={initializeUI}
             type="button"
           >
             {geolocationPermissionDenied.button}
-          </button>
+          </ButtonDialog>
         </DivErrorDialog>
       </ModalPopup>
       <ModalPopup
@@ -81,17 +82,17 @@ export const LocatorButton = ({
           </Heading>
           <p>{geolocationPositionUnavailable.why}</p>
           <p>{geolocationPositionUnavailable.how}</p>
-          <button onClick={trackUserLocation} type="button">
+          <ButtonDialog onClick={trackUserLocation} type="button">
             {geolocationPositionUnavailable.button.primary}
-          </button>
-          <button
+          </ButtonDialog>
+          <ButtonDialog
             data-autofocus
             data-testid="close-button-unavailable"
             onClick={initializeUI}
             type="button"
           >
             {geolocationPositionUnavailable.button.secondary}
-          </button>{' '}
+          </ButtonDialog>{' '}
         </DivErrorDialog>
       </ModalPopup>
       <ModalPopup
@@ -106,14 +107,14 @@ export const LocatorButton = ({
           </Heading>
           <p>{geolocationNotSupported.why}</p>
           <p>{geolocationNotSupported.how}</p>
-          <button
+          <ButtonDialog
             data-autofocus
             data-testid="close-button-unsupported"
             onClick={initializeUI}
             type="button"
           >
             {geolocationNotSupported.button}
-          </button>
+          </ButtonDialog>
         </DivErrorDialog>
       </ModalPopup>
     </>
