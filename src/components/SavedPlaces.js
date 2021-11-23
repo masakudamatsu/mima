@@ -7,6 +7,7 @@ import userData from 'src/utils/savedPlaces.json';
 
 import {PlaceDataPopup} from 'src/components/PlaceDataPopup';
 
+import {ButtonDialog} from 'src/elements/ButtonDialog';
 import {ButtonSquare} from 'src/elements/ButtonSquare';
 import {H2PlaceName} from 'src/elements/H2PlaceName';
 import {SvgClose} from 'src/elements/SvgClose';
@@ -131,6 +132,7 @@ export const SavedPlaces = ({mapObject}) => {
               __html: selectedPlace.note,
             }}
           />
+          <ButtonDialog type="button">{buttonLabel.edit}</ButtonDialog>
         </PlaceDataPopup>
       )}
     </>

@@ -40,6 +40,9 @@ const setVerticalSpacing = `
   & p + button {
     margin-top: ${remify(capHeight[300] - bodyText.spaceBottom)};
   }
+  &[data-placedatapopup="true"] p + button {
+    margin-top: ${remify(capHeight[200] - bodyText.spaceBottom)};
+  }
 `;
 
 const setSize = `

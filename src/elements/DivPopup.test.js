@@ -39,6 +39,10 @@ test('renders UI correctly', () => {
   margin-top: 1.1112rem;
 }
 
+.c0[data-placedatapopup="true"] p + button {
+  margin-top: 0.7801rem;
+}
+
 .c0[data-slide-from="left"] {
   height: 100%;
   right: 24px;

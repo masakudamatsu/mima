@@ -2,6 +2,7 @@ export const userLocationMarkerLabel = 'You are here!';
 
 export const buttonLabel = {
   close: 'Close',
+  edit: 'Edit note',
   locator: {
     default: 'Track your location',
     activated: 'Snap to your location',
