@@ -18,7 +18,7 @@ test('renders UI correctly', () => {
   color: var(--popup-text-color);
   height: calc(100% - 24px);
   top: 24px;
-  padding: 48px;
+  padding: 0 48px 48px 48px;
   background: var(--popup-background-color-firefox);
   box-shadow: 0px 0px  8px 8px var(--popup-glow-color-firefox);
 }

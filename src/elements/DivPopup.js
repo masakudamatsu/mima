@@ -76,7 +76,7 @@ const setBackground = `
 `;
 
 const setPadding = `
-  padding: ${buttonSquare.clickableArea};
+  padding: 0 ${buttonSquare.clickableArea} ${buttonSquare.clickableArea} ${buttonSquare.clickableArea};
 `;
 
 const animateTransition = `
