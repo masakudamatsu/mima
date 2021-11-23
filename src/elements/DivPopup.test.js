@@ -27,6 +27,18 @@ test('renders UI correctly', () => {
   color: var(--link-text-color);
 }
 
+.c0 h1 + p {
+  margin-top: -0.2836rem;
+}
+
+.c0 p + p {
+  margin-top: 0.4965rem;
+}
+
+.c0 p + button {
+  margin-top: 1.1112rem;
+}
+
 .c0[data-slide-from="left"] {
   height: 100%;
   right: 24px;

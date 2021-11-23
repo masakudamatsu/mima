@@ -3,6 +3,8 @@ import styled from 'styled-components';
 import {
   bodyText,
   buttonSquare,
+  capHeight,
+  color,
   dimension,
   duration,
   easing,
@@ -25,6 +27,18 @@ const setTextColor = `
   color: var(--popup-text-color);
   & a {
     color: var(--link-text-color);
+  }
+`;
+
+const setVerticalSpacing = `
+  & h1 + p {
+    margin-top: -${remify(bodyText.spaceTop)};
+  }
+  & p + p {
+    margin-top: ${remify(bodyText.spaceBetweenParagraphs)};
+  }
+  & p + button {
+    margin-top: ${remify(capHeight[300] - bodyText.spaceBottom)};
   }
 `;
 
@@ -108,6 +122,7 @@ export const DivPopup = styled.div`
   ${placeOverScrim}
   ${setFontStyle}
   ${setTextColor}
+  ${setVerticalSpacing}
   ${setSize}
   ${setPadding}
   ${setBackground}
