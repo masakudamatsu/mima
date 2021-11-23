@@ -258,3 +258,44 @@ export const heading = {
     return capHeight[300] - this.spaceTop;
   },
 };
+
+export const h2PlaceName = {
+  fontFamily: metrics['Noto Sans Display Bold'].fontFamily,
+  fontSize: getFontSize({
+    capHeight: capHeight[200],
+    metrics: metrics['Noto Sans Display Bold'],
+  }),
+  fontWeight: metrics['Noto Sans Display Bold'].fontWeight,
+  get lineHeight() {
+    const xHeight =
+      this.fontSize *
+      (metrics['Noto Sans Display Bold'].xHeight /
+        metrics['Noto Sans Display Bold'].unitsPerEm);
+    const spaceBetweenLines = xHeight;
+    const lineHeight = xHeight + spaceBetweenLines;
+    return round(lineHeight / this.fontSize, 4);
+  },
+  normalLineHeight: 1.43,
+  get spaceTop() {
+    return getSpaceToCrop('top', {
+      fontSize: this.fontSize,
+      font: metrics['Noto Sans Display Bold'],
+      lineHeight: this.lineHeight,
+      normalLineHeight: this.normalLineHeight,
+    });
+  },
+  get spaceBottom() {
+    return getSpaceToCrop('bottom', {
+      fontSize: this.fontSize,
+      font: metrics['Noto Sans Display Bold'],
+      lineHeight: this.lineHeight,
+      normalLineHeight: this.normalLineHeight,
+    });
+  },
+  get paddingBottom() {
+    return capHeight[200] - this.spaceBottom;
+  },
+  get paddingTop() {
+    return capHeight[200] - this.spaceTop;
+  },
+};
