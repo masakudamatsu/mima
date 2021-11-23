@@ -9,11 +9,13 @@ import {PlaceDataPopup} from 'src/components/PlaceDataPopup';
 
 import {ButtonDialog} from 'src/elements/ButtonDialog';
 import {ButtonSquare} from 'src/elements/ButtonSquare';
+import {DivParagraphHolder} from 'src/elements/DivParagraphHolder';
 import {H2PlaceName} from 'src/elements/H2PlaceName';
 import {SvgClose} from 'src/elements/SvgClose';
 
 import {useOnEscKeyDown} from 'src/hooks/useOnEscKeyDown';
 import {buttonLabel} from 'src/utils/uiCopies';
+import {getHtmlFromSlate} from 'src/utils/getHTMLfromSlate';
 import {NightModeContext} from 'src/wrappers/NightModeContext';
 
 export const SavedPlaces = ({mapObject}) => {
@@ -75,7 +77,9 @@ export const SavedPlaces = ({mapObject}) => {
           userData.features[i].geometry.coordinates[0],
         ),
         name: userData.features[i].properties.name,
-        note: DOMPurify.sanitize(userData.features[i].properties.note),
+        note: DOMPurify.sanitize(
+          getHtmlFromSlate(userData.features[i].properties.note),
+        ),
       };
       const marker = new google.maps.Marker({
         icon: {
@@ -127,7 +131,7 @@ export const SavedPlaces = ({mapObject}) => {
             <SvgClose title={buttonLabel.close} />
           </ButtonSquare>
           <H2PlaceName id="selected-place">{selectedPlace.name}</H2PlaceName>
-          <p
+          <DivParagraphHolder
             dangerouslySetInnerHTML={{
               __html: selectedPlace.note,
             }}

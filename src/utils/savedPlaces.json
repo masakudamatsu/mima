@@ -11,7 +11,18 @@
         "country code": "JP",
         "Google Maps URL": "http://maps.google.com/?cid=11397677192332095799",
         "name": "Okaffe Kyoto",
-        "note": "https://okaffe.kyoto/menu/cafe_menu/"
+        "note": {
+          "children": [
+            {
+              "type": "paragraph",
+              "children": [
+                {
+                  "text": "https://okaffe.kyoto/menu/cafe_menu/"
+                }
+              ]
+            }
+          ]
+        }
       },
       "type": "Feature"
     },
@@ -25,7 +36,18 @@
         "country code": "JP",
         "Google Maps URL": "http://maps.google.com/?cid=1227974347151193049",
         "name": "Bread & Espresso & Arashiyama Garden",
-        "note": "https://www.instagram.com/bread.espresso.and.arashiyama/"
+        "note": {
+          "children": [
+            {
+              "type": "paragraph",
+              "children": [
+                {
+                  "text": "https://www.instagram.com/bread.espresso.and.arashiyama/"
+                }
+              ]
+            }
+          ]
+        }
       },
       "type": "Feature"
     },
@@ -39,7 +61,18 @@
         "country code": "JP",
         "Google Maps URL": "http://maps.google.com/?cid=5220687755832863894",
         "name": "D&DEPARTMENT KYOTO d食堂 京都",
-        "note": "https://gotrip.jp/2019/05/113932/"
+        "note": {
+          "children": [
+            {
+              "type": "paragraph",
+              "children": [
+                {
+                  "text": "https://gotrip.jp/2019/05/113932/"
+                }
+              ]
+            }
+          ]
+        }
       },
       "type": "Feature"
     },
@@ -53,7 +86,18 @@
         "country code": "JP",
         "Google Maps URL": "http://maps.google.com/?cid=2755578752090318796",
         "name": "Lorimer Kyoto",
-        "note": "https://www.asahi.com/and/article/20210806/407331671/"
+        "note": {
+          "children": [
+            {
+              "type": "paragraph",
+              "children": [
+                {
+                  "text": "https://www.asahi.com/and/article/20210806/407331671/"
+                }
+              ]
+            }
+          ]
+        }
       },
       "type": "Feature"
     },
@@ -67,7 +111,18 @@
         "country code": "JP",
         "Google Maps URL": "http://maps.google.com/?cid=540503174389752899",
         "name": "Fukuda Art Museum",
-        "note": "https://bunshun.jp/articles/-/14067"
+        "note": {
+          "children": [
+            {
+              "type": "paragraph",
+              "children": [
+                {
+                  "text": "https://bunshun.jp/articles/-/14067"
+                }
+              ]
+            }
+          ]
+        }
       },
       "type": "Feature"
     },
@@ -81,7 +136,18 @@
         "country code": "JP",
         "Google Maps URL": "http://maps.google.com/?cid=14329270928985000839",
         "name": "出逢ひ茶屋おせん",
-        "note": "https://www.asahi.com/and/article/20201225/300307708/"
+        "note": {
+          "children": [
+            {
+              "type": "paragraph",
+              "children": [
+                {
+                  "text": "https://www.asahi.com/and/article/20201225/300307708/"
+                }
+              ]
+            }
+          ]
+        }
       },
       "type": "Feature"
     },
@@ -95,7 +161,18 @@
         "country code": "JP",
         "Google Maps URL": "http://maps.google.com/?cid=13724563353852976456",
         "name": "GION NITI",
-        "note": ""
+        "note": {
+          "children": [
+            {
+              "type": "paragraph",
+              "children": [
+                {
+                  "text": ""
+                }
+              ]
+            }
+          ]
+        }
       },
       "type": "Feature"
     },
@@ -109,7 +186,18 @@
         "country code": "JP",
         "Google Maps URL": "http://maps.google.com/?cid=17532417395355382157",
         "name": "Walden Woods Kyoto",
-        "note": "https://madamefigaro.jp/series/kyoto/181004-coffee.html"
+        "note": {
+          "children": [
+            {
+              "type": "paragraph",
+              "children": [
+                {
+                  "text": "https://madamefigaro.jp/series/kyoto/181004-coffee.html"
+                }
+              ]
+            }
+          ]
+        }
       },
       "type": "Feature"
     }
