@@ -26,8 +26,8 @@ export const PlaceDataPopup = ({
         aria-hidden={hidden}
       >
         <DivPopup
-          data-height="one-third"
           data-hidden={hidden}
+          data-placedatapopup="true"
           data-slide-from={slideFrom}
           role="document"
         >

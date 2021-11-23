@@ -48,7 +48,7 @@ test('renders UI correctly', () => {
   width: 100%;
 }
 
-.c0[data-height="one-third"] {
+.c0[data-placedatapopup="true"] {
   height: 34%;
   left: 0;
   top: 66%;

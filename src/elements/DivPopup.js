@@ -49,7 +49,7 @@ const setSize = `
     top: 0; /*${dimension.popup['margin 100']}; */
     width: 100%;
   }
-  &[data-height="one-third"] {
+  &[data-placedatapopup="true"] {
     height: 34%;
     left: 0;
     top: 66%;
