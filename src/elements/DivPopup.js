@@ -4,7 +4,6 @@ import {
   bodyText,
   buttonSquare,
   capHeight,
-  color,
   dimension,
   duration,
   easing,
