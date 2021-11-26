@@ -13,8 +13,6 @@ import {ButtonDialog} from 'src/elements/ButtonDialog';
 import {ButtonSquare} from 'src/elements/ButtonSquare';
 import {DivParagraphHolder} from 'src/elements/DivParagraphHolder';
 import {H2PlaceName} from 'src/elements/H2PlaceName';
-import {HeaderEditor} from 'src/elements/HeaderEditor';
-import {Heading} from 'src/elements/Heading';
 import {SvgClose} from 'src/elements/SvgClose';
 
 import {useOnEscKeyDown} from 'src/hooks/useOnEscKeyDown';
@@ -132,22 +130,7 @@ export const SavedPlaces = ({mapObject}) => {
     const content = [titleNode].concat(selectedPlace.note);
     return (
       <ModalPopup hidden={false} slideFrom="bottom" titleId="edit-place-info">
-        <form>
-          <HeaderEditor>
-            <Heading as="h1">Edit place info</Heading>
-            <section>
-              <button
-                onClick={() => {
-                  setEditMode(false);
-                }}
-                type="button"
-              >
-                Cancel
-              </button>
-            </section>
-          </HeaderEditor>
-          <PlaceInfoEditor content={content} />
-        </form>
+        <PlaceInfoEditor content={content} setEditMode={setEditMode} />
       </ModalPopup>
     );
   };

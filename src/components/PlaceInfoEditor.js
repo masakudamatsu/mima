@@ -8,6 +8,8 @@ import {Transforms, createEditor, Node, Element as SlateElement} from 'slate';
 import {withHistory} from 'slate-history';
 
 import {H2PlaceName} from 'src/elements/H2PlaceName';
+import {HeaderEditor} from 'src/elements/HeaderEditor';
+import {Heading} from 'src/elements/Heading';
 
 const withLayout = editor => {
   const {normalizeNode} = editor;
@@ -73,7 +75,7 @@ const Element = ({attributes, children, element}) => {
   }
 };
 
-export const PlaceInfoEditor = ({content}) => {
+export const PlaceInfoEditor = ({content, setEditMode}) => {
   const editor = useMemo(
     () => withLayout(withHistory(withReact(createEditor()))),
     [],
@@ -81,17 +83,33 @@ export const PlaceInfoEditor = ({content}) => {
   const [value, setValue] = useState(content);
   const renderElement = useCallback(props => <Element {...props} />, []);
   return (
-    <Slate editor={editor} value={value} onChange={value => setValue(value)}>
-      <Editable
-        data-autofocus // autoFocus won't work due to the use of react-focus-lock package
-        placeholder="Enter a place name"
-        renderElement={renderElement}
-        spellCheck
-      />
-    </Slate>
+    <form>
+      <Slate editor={editor} value={value} onChange={value => setValue(value)}>
+        <HeaderEditor>
+          <Heading as="h1">Edit place info</Heading>
+          <section>
+            <button
+              onClick={() => {
+                setEditMode(false);
+              }}
+              type="button"
+            >
+              Cancel
+            </button>
+          </section>
+        </HeaderEditor>
+        <Editable
+          data-autofocus // autoFocus won't work due to the use of react-focus-lock package
+          placeholder="Enter a place name"
+          renderElement={renderElement}
+          spellCheck
+        />
+      </Slate>
+    </form>
   );
 };
 
 PlaceInfoEditor.propTypes = {
   content: PropTypes.arrayOf(Object),
+  setEditMode: PropTypes.func,
 };
