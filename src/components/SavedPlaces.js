@@ -190,6 +190,6 @@ export const SavedPlaces = ({mapObject}) => {
   return null;
 };
 
-Map.propTypes = {
+SavedPlaces.propTypes = {
   mapObject: PropTypes.object,
 };
