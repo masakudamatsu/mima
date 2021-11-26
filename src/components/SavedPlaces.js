@@ -5,12 +5,16 @@ import DOMPurify from 'dompurify';
 
 import userData from 'src/utils/savedPlaces.json';
 
+import {ModalPopup} from './ModalPopup';
 import {PlaceDataPopup} from 'src/components/PlaceDataPopup';
+import {PlaceInfoEditor} from 'src/components/PlaceInfoEditor';
 
 import {ButtonDialog} from 'src/elements/ButtonDialog';
 import {ButtonSquare} from 'src/elements/ButtonSquare';
 import {DivParagraphHolder} from 'src/elements/DivParagraphHolder';
 import {H2PlaceName} from 'src/elements/H2PlaceName';
+import {HeaderEditor} from 'src/elements/HeaderEditor';
+import {Heading} from 'src/elements/Heading';
 import {SvgClose} from 'src/elements/SvgClose';
 
 import {useOnEscKeyDown} from 'src/hooks/useOnEscKeyDown';
@@ -22,6 +26,7 @@ export const SavedPlaces = ({mapObject}) => {
   const nightMode = useContext(NightModeContext);
 
   const [selectedPlace, setSelectedPlace] = useState(null);
+  const [editMode, setEditMode] = useState(false);
 
   const viewportSize = useRef({height: null, width: null});
   useEffect(() => {
@@ -77,7 +82,8 @@ export const SavedPlaces = ({mapObject}) => {
           userData.features[i].geometry.coordinates[0],
         ),
         name: userData.features[i].properties.name,
-        note: DOMPurify.sanitize(
+        note: userData.features[i].properties.note.children,
+        noteHtml: DOMPurify.sanitize(
           getHtmlFromSlate(userData.features[i].properties.note),
         ),
       };
@@ -98,7 +104,8 @@ export const SavedPlaces = ({mapObject}) => {
         setSelectedPlace({
           name: userPlace.name,
           coordinates: userPlace.coordinates,
-          note: autolinker.link(userPlace.note),
+          note: userPlace.note,
+          noteHtml: autolinker.link(userPlace.noteHtml),
         });
       });
       marker.setMap(mapObject);
@@ -113,34 +120,74 @@ export const SavedPlaces = ({mapObject}) => {
   // close with Esc key
   useOnEscKeyDown(selectedPlace, closePlaceDetail);
 
-  return (
-    <>
-      {selectedPlace && (
-        <PlaceDataPopup
-          handleClickOutside={closePlaceDetail}
-          hidden={false}
-          slideFrom="bottom"
-          titleId="selected-place"
-        >
-          <ButtonSquare
-            data-autofocus
-            data-testid="close-button-saved-place"
-            onClick={closePlaceDetail}
-            type="button"
-          >
-            <SvgClose title={buttonLabel.close} />
-          </ButtonSquare>
-          <H2PlaceName id="selected-place">{selectedPlace.name}</H2PlaceName>
-          <DivParagraphHolder
-            dangerouslySetInnerHTML={{
-              __html: selectedPlace.note,
-            }}
-          />
-          <ButtonDialog type="button">{buttonLabel.edit}</ButtonDialog>
-        </PlaceDataPopup>
-      )}
-    </>
+  const EditModeUI = ({selectedPlace}) => {
+    const titleNode = {
+      type: 'title',
+      children: [
+        {
+          text: selectedPlace.name,
+        },
+      ],
+    };
+    const content = [titleNode].concat(selectedPlace.note);
+    return (
+      <ModalPopup hidden={false} slideFrom="bottom" titleId="edit-place-info">
+        <form>
+          <HeaderEditor>
+            <Heading as="h1">Edit place info</Heading>
+            <section>
+              <button
+                onClick={() => {
+                  setEditMode(false);
+                }}
+                type="button"
+              >
+                Cancel
+              </button>
+            </section>
+          </HeaderEditor>
+          <PlaceInfoEditor content={content} />
+        </form>
+      </ModalPopup>
+    );
+  };
+
+  const PlaceInfoUI = ({selectedPlace}) => (
+    <PlaceDataPopup
+      handleClickOutside={closePlaceDetail}
+      hidden={false}
+      slideFrom="bottom"
+      titleId="selected-place"
+    >
+      <ButtonSquare
+        data-autofocus
+        data-testid="close-button-saved-place"
+        onClick={closePlaceDetail}
+        type="button"
+      >
+        <SvgClose title={buttonLabel.close} />
+      </ButtonSquare>
+      <H2PlaceName id="selected-place">{selectedPlace.name}</H2PlaceName>
+      <DivParagraphHolder
+        dangerouslySetInnerHTML={{
+          __html: selectedPlace.noteHtml,
+        }}
+      />
+      <ButtonDialog onClick={() => setEditMode(true)} type="button">
+        {buttonLabel.edit}
+      </ButtonDialog>
+    </PlaceDataPopup>
   );
+
+  if (selectedPlace) {
+    return editMode ? (
+      <EditModeUI selectedPlace={selectedPlace} />
+    ) : (
+      <PlaceInfoUI selectedPlace={selectedPlace} />
+    );
+  }
+
+  return null;
 };
 
 Map.propTypes = {

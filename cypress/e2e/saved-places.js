@@ -68,4 +68,24 @@ describe('Once place detail is shown', () => {
       // while should('be.visible') won't fail in that case
     });
   });
+  describe('Pressing Edit button', () => {
+    beforeEach(() => {
+      cy.findByRole('button', {name: buttonLabel.edit}).click();
+    });
+    it('Shows the text editor', () => {
+      cy.findByRole('textbox').type('abc ');
+      cy.contains('abc');
+    });
+    it('Shows Cancel button to discard any changes, close the editor, and autofocus Close button', () => {
+      cy.findByRole('textbox').type('abc ');
+      cy.findByRole('button', {name: /cancel/i}).click();
+      cy.findByText('abc').should('not.exist');
+      cy.findByRole('link', {name: /asahi\.com.*/i}).should('be.visible');
+      cy.focused().should(
+        'have.attr',
+        'data-testid',
+        'close-button-saved-place',
+      );
+    });
+  });
 });
