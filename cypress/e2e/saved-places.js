@@ -76,6 +76,9 @@ describe('Once place detail is shown', () => {
       cy.findByRole('textbox').type('abc ');
       cy.contains('abc');
     });
+    it('Focuses the note field', () => {
+      cy.focused().should('have.attr', 'role', 'textbox');
+    });
     it('Shows Cancel button to discard any changes, close the editor, and autofocus Close button', () => {
       cy.findByRole('textbox').type('abc ');
       cy.findByRole('button', {name: /cancel/i}).click();
