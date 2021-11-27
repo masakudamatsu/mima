@@ -79,7 +79,12 @@ const Element = ({attributes, children, element}) => {
   }
 };
 
-export const PlaceInfoEditor = ({placeName, placeNoteArray, setEditMode}) => {
+export const PlaceInfoEditor = ({
+  placeName,
+  placeNoteArray,
+  setEditMode,
+  updateData,
+}) => {
   const editor = useMemo(
     () => withLayout(withHistory(withReact(createEditor()))),
     [],
@@ -98,6 +103,8 @@ export const PlaceInfoEditor = ({placeName, placeNoteArray, setEditMode}) => {
 
   const handleClickSave = event => {
     event.preventDefault();
+    const [title, ...noteArray] = value;
+    updateData([title, noteArray]);
     setEditMode(false);
   };
 
@@ -141,4 +148,5 @@ PlaceInfoEditor.propTypes = {
   placeName: PropTypes.string,
   placeNoteArray: PropTypes.arrayOf(Object),
   setEditMode: PropTypes.func,
+  updateData: PropTypes.func,
 };

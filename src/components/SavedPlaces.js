@@ -117,11 +117,27 @@ export const SavedPlaces = ({mapObject}) => {
     const selectedPlaceNoteHtml = DOMPurify.sanitize(
       getHtmlFromSlate({children: selectedPlaceNoteArray}),
     );
+
+    const updateData = ([newTitle, newNoteArray]) => {
+      const newData = {
+        name: newTitle.children[0].text,
+        note: newNoteArray,
+      };
+      // // update user data
+      const newUserData = {...userData};
+      newUserData.features[selectedPlaceIndex].properties = {
+        ...userData.features[selectedPlaceIndex].properties,
+        ...newData,
+      };
+      setUserData(newUserData);
+    };
+
     return editMode ? (
       <PlaceInfoEditor
         placeName={selectedPlaceName}
         placeNoteArray={selectedPlaceNoteArray}
         setEditMode={setEditMode}
+        updateData={updateData}
       />
     ) : (
       <PlaceInfo

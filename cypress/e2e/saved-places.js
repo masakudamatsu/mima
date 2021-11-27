@@ -113,6 +113,10 @@ describe('Once place info editor is shown', () => {
       cy.findByRole('button', {name: /cancel/i}).click();
       cy.findByText('abc').should('not.exist');
     });
+    it('Pressing Save button changes place name', () => {
+      cy.findByRole('button', {name: /save/i}).click();
+      cy.findByText('abc ' + placeName).should('be.visible');
+    });
   });
   describe('Adding text to place note and ...', () => {
     beforeEach(() => {
@@ -122,6 +126,10 @@ describe('Once place info editor is shown', () => {
       cy.findByRole('button', {name: /cancel/i}).click();
       cy.findByText('abc').should('not.exist');
     });
+    it('Pressing Save button changes place note', () => {
+      cy.findByRole('button', {name: /save/i}).click();
+      cy.findByText(/abc */).should('be.visible');
+    });
   });
   describe('Adding URL to place note and ...', () => {
     beforeEach(() => {
@@ -130,6 +138,10 @@ describe('Once place info editor is shown', () => {
     it('Pressing Cancel button discards any change', () => {
       cy.findByRole('button', {name: /cancel/i}).click();
       cy.findByRole('link', {name: /google\.com.*/i}).should('not.exist');
+    });
+    it('Pressing Save button changes place note', () => {
+      cy.findByRole('button', {name: /save/i}).click();
+      cy.findByRole('link', {name: /google\.com.*/i}).should('be.visible');
     });
   });
 });
