@@ -88,6 +88,15 @@ describe('Once place detail is shown', () => {
         'close-button-saved-place',
       );
     });
+    it('Shows Save button, the pressing of which closes the editor and focuses the Close button', () => {
+      cy.findByRole('button', {name: /save/i}).click();
+      cy.findByRole('link', {name: /asahi\.com.*/i}).should('be.visible');
+      cy.focused().should(
+        'have.attr',
+        'data-testid',
+        'close-button-saved-place',
+      );
+    });
   });
 });
 describe('Once place info editor is shown', () => {

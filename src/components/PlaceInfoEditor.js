@@ -96,6 +96,11 @@ export const PlaceInfoEditor = ({placeName, placeNoteArray, setEditMode}) => {
   const [value, setValue] = useState(content);
   const renderElement = useCallback(props => <Element {...props} />, []);
 
+  const handleClickSave = event => {
+    event.preventDefault();
+    setEditMode(false);
+  };
+
   return (
     <ModalPopup hidden={false} slideFrom="bottom" titleId="edit-place-info">
       <form>
@@ -114,6 +119,9 @@ export const PlaceInfoEditor = ({placeName, placeNoteArray, setEditMode}) => {
                 type="button"
               >
                 {buttonLabel.cancel}
+              </button>
+              <button onClick={handleClickSave} type="button">
+                {buttonLabel.saveEdit}
               </button>
             </section>
           </HeaderEditor>

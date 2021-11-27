@@ -11,6 +11,7 @@ export const buttonLabel = {
   },
   menu: 'Show menu',
   save: 'Save place',
+  saveEdit: 'Save',
   search: 'Search place',
 };
 
