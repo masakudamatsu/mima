@@ -123,6 +123,8 @@ export const SavedPlaces = ({mapObject}) => {
         name: newTitle.children[0].text,
         note: newNoteArray,
       };
+      // update place marker's accessible name
+      selectedPlace.marker.setTitle(newData.name);
       // // update user data
       const newUserData = {...userData};
       newUserData.features[selectedPlaceIndex].properties = {

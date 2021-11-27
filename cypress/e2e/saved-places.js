@@ -116,6 +116,7 @@ describe('Once place info editor is shown', () => {
     it('Pressing Save button changes place name', () => {
       cy.findByRole('button', {name: /save/i}).click();
       cy.findByText('abc ' + placeName).should('be.visible');
+      cy.findByRole('button', {name: 'abc ' + placeName}).should('be.visible');
     });
   });
   describe('Adding text to place note and ...', () => {
