@@ -79,16 +79,48 @@ describe('Once place detail is shown', () => {
     it('Focuses the note field', () => {
       cy.focused().should('have.attr', 'role', 'textbox');
     });
-    it('Shows Cancel button to discard any changes, close the editor, and autofocus Close button', () => {
-      cy.findByRole('textbox').type('abc ');
+    it('Shows Cancel button, the pressing of which closes the editor and focuses the Close button', () => {
       cy.findByRole('button', {name: /cancel/i}).click();
-      cy.findByText('abc').should('not.exist');
       cy.findByRole('link', {name: /asahi\.com.*/i}).should('be.visible');
       cy.focused().should(
         'have.attr',
         'data-testid',
         'close-button-saved-place',
       );
+    });
+  });
+});
+describe('Once place info editor is shown', () => {
+  beforeEach(() => {
+    cy.visit('/');
+    cy.findByRole('button', {name: placeName}).click();
+    cy.findByRole('button', {name: buttonLabel.edit}).click();
+  });
+  describe('Editing place name and ...', () => {
+    beforeEach(() => {
+      cy.findByRole('textbox').type('abc ');
+    });
+    it('Pressing Cancel button discards any change', () => {
+      cy.findByRole('button', {name: /cancel/i}).click();
+      cy.findByText('abc').should('not.exist');
+    });
+  });
+  describe('Adding text to place note and ...', () => {
+    beforeEach(() => {
+      cy.findByRole('textbox').type('{downarrow}abc ');
+    });
+    it('Pressing Cancel button discards any change', () => {
+      cy.findByRole('button', {name: /cancel/i}).click();
+      cy.findByText('abc').should('not.exist');
+    });
+  });
+  describe('Adding URL to place note and ...', () => {
+    beforeEach(() => {
+      cy.findByRole('textbox').type('{downarrow}https://google.com ');
+    });
+    it('Pressing Cancel button discards any change', () => {
+      cy.findByRole('button', {name: /cancel/i}).click();
+      cy.findByRole('link', {name: /google\.com.*/i}).should('not.exist');
     });
   });
 });
