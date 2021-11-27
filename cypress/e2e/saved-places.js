@@ -118,6 +118,11 @@ describe('Once place info editor is shown', () => {
       cy.findByText('abc ' + placeName).should('be.visible');
       cy.findByRole('button', {name: 'abc ' + placeName}).should('be.visible');
     });
+    it('Changes persist after refreshing the page', () => {
+      cy.findByRole('button', {name: /save/i}).click();
+      cy.reload();
+      cy.findByRole('button', {name: 'abc ' + placeName}).should('be.visible');
+    });
   });
   describe('Adding text to place note and ...', () => {
     beforeEach(() => {
