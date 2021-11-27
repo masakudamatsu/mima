@@ -1,6 +1,7 @@
 export const userLocationMarkerLabel = 'You are here!';
 
 export const buttonLabel = {
+  cancel: 'Cancel',
   close: 'Close',
   edit: 'Edit',
   locator: {

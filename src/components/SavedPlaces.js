@@ -1,26 +1,23 @@
 import {useContext, useEffect, useRef, useState} from 'react';
 import PropTypes from 'prop-types';
-import Autolinker from 'autolinker';
 import DOMPurify from 'dompurify';
 
-import userData from 'src/utils/savedPlaces.json';
+import savedPlaces from 'src/utils/savedPlaces.json';
 
-import {ModalPopup} from './ModalPopup';
-import {PlaceDataPopup} from 'src/components/PlaceDataPopup';
+import {PlaceInfo} from 'src/components/PlaceInfo';
 import {PlaceInfoEditor} from 'src/components/PlaceInfoEditor';
 
-import {ButtonDialog} from 'src/elements/ButtonDialog';
-import {ButtonSquare} from 'src/elements/ButtonSquare';
-import {DivParagraphHolder} from 'src/elements/DivParagraphHolder';
-import {H2PlaceName} from 'src/elements/H2PlaceName';
-import {SvgClose} from 'src/elements/SvgClose';
-
+import {useSessionStorageState} from 'src/hooks/useSessionStorageState';
 import {useOnEscKeyDown} from 'src/hooks/useOnEscKeyDown';
-import {buttonLabel} from 'src/utils/uiCopies';
 import {getHtmlFromSlate} from 'src/utils/getHTMLfromSlate';
 import {NightModeContext} from 'src/wrappers/NightModeContext';
 
 export const SavedPlaces = ({mapObject}) => {
+  const [userData, setUserData] = useSessionStorageState(
+    'userData',
+    savedPlaces,
+  );
+
   const nightMode = useContext(NightModeContext);
 
   const [selectedPlace, setSelectedPlace] = useState(null);
@@ -66,24 +63,16 @@ export const SavedPlaces = ({mapObject}) => {
       ...yellow,
     };
 
-    // Prepare for converting URL text into link
-    const autolinker = new Autolinker({
-      truncate: 25,
-    }); // https://github.com/gregjacobs/Autolinker.js#usage
-
     // Drop a marker to each saved place
     for (let i = 0; i < userData.features.length; i++) {
       // Retrieve data to be used
       const userPlace = {
+        id: userData.features[i].properties.id,
         coordinates: new google.maps.LatLng(
           userData.features[i].geometry.coordinates[1],
           userData.features[i].geometry.coordinates[0],
         ),
         name: userData.features[i].properties.name,
-        note: userData.features[i].properties.note.children,
-        noteHtml: DOMPurify.sanitize(
-          getHtmlFromSlate(userData.features[i].properties.note),
-        ),
       };
       const marker = new google.maps.Marker({
         icon: {
@@ -100,73 +89,47 @@ export const SavedPlaces = ({mapObject}) => {
         mapObject.panTo(userPlace.coordinates);
         mapObject.panBy(0, viewportSize.current.height / 6);
         setSelectedPlace({
-          name: userPlace.name,
+          id: userPlace.id,
           coordinates: userPlace.coordinates,
-          note: userPlace.note,
-          noteHtml: autolinker.link(userPlace.noteHtml),
+          marker: marker,
         });
       });
       marker.setMap(mapObject);
     }
-  }, [mapObject, nightMode]);
+  }, [mapObject, nightMode, userData.features]);
 
-  const closePlaceDetail = () => {
+  const closePlaceInfo = () => {
     mapObject.panTo(selectedPlace.coordinates);
     setSelectedPlace(null);
   };
 
   // close with Esc key
-  useOnEscKeyDown(selectedPlace, closePlaceDetail);
-
-  const EditModeUI = ({selectedPlace}) => {
-    const titleNode = {
-      type: 'title',
-      children: [
-        {
-          text: selectedPlace.name,
-        },
-      ],
-    };
-    const content = [titleNode].concat(selectedPlace.note);
-    return (
-      <ModalPopup hidden={false} slideFrom="bottom" titleId="edit-place-info">
-        <PlaceInfoEditor content={content} setEditMode={setEditMode} />
-      </ModalPopup>
-    );
-  };
-
-  const PlaceInfoUI = ({selectedPlace}) => (
-    <PlaceDataPopup
-      handleClickOutside={closePlaceDetail}
-      hidden={false}
-      slideFrom="bottom"
-      titleId="selected-place"
-    >
-      <ButtonSquare
-        data-autofocus
-        data-testid="close-button-saved-place"
-        onClick={closePlaceDetail}
-        type="button"
-      >
-        <SvgClose title={buttonLabel.close} />
-      </ButtonSquare>
-      <H2PlaceName id="selected-place">{selectedPlace.name}</H2PlaceName>
-      <DivParagraphHolder
-        dangerouslySetInnerHTML={{
-          __html: selectedPlace.noteHtml,
-        }}
-      />
-      <ButtonDialog onClick={() => setEditMode(true)} type="button">
-        {buttonLabel.edit}
-      </ButtonDialog>
-    </PlaceDataPopup>
-  );
+  useOnEscKeyDown(selectedPlace, closePlaceInfo);
 
   if (selectedPlace) {
+    const selectedPlaceIndex = userData.features.findIndex(
+      feature => feature.properties.id === selectedPlace.id,
+    );
+    const selectedPlaceName =
+      userData.features[selectedPlaceIndex].properties.name;
+    const selectedPlaceNoteArray =
+      userData.features[selectedPlaceIndex].properties.note;
+    const selectedPlaceNoteHtml = DOMPurify.sanitize(
+      getHtmlFromSlate({children: selectedPlaceNoteArray}),
+    );
     return editMode ? (
-      <EditModeUI selectedPlace={selectedPlace} />
+      <PlaceInfoEditor
+        placeName={selectedPlaceName}
+        placeNoteArray={selectedPlaceNoteArray}
+        setEditMode={setEditMode}
+      />
     ) : (
-      <PlaceInfoUI selectedPlace={selectedPlace} />
+      <PlaceInfo
+        closePlaceInfo={closePlaceInfo}
+        placeName={selectedPlaceName}
+        placeNoteHtml={selectedPlaceNoteHtml}
+        setEditMode={setEditMode}
+      />
     );
   }
 

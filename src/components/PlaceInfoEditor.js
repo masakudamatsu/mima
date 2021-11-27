@@ -7,9 +7,13 @@ import {Slate, Editable, withReact} from 'slate-react';
 import {Transforms, createEditor, Node, Element as SlateElement} from 'slate';
 import {withHistory} from 'slate-history';
 
+import {ModalPopup} from 'src/components/ModalPopup';
+
 import {H2PlaceName} from 'src/elements/H2PlaceName';
 import {HeaderEditor} from 'src/elements/HeaderEditor';
 import {Heading} from 'src/elements/Heading';
+
+import {buttonLabel} from 'src/utils/uiCopies';
 
 const withLayout = editor => {
   const {normalizeNode} = editor;
@@ -75,41 +79,58 @@ const Element = ({attributes, children, element}) => {
   }
 };
 
-export const PlaceInfoEditor = ({content, setEditMode}) => {
+export const PlaceInfoEditor = ({placeName, placeNoteArray, setEditMode}) => {
   const editor = useMemo(
     () => withLayout(withHistory(withReact(createEditor()))),
     [],
   );
+  const titleNode = {
+    type: 'title',
+    children: [
+      {
+        text: placeName,
+      },
+    ],
+  };
+  const content = [titleNode].concat(placeNoteArray);
   const [value, setValue] = useState(content);
   const renderElement = useCallback(props => <Element {...props} />, []);
+
   return (
-    <form>
-      <Slate editor={editor} value={value} onChange={value => setValue(value)}>
-        <HeaderEditor>
-          <Heading as="h1">Edit place info</Heading>
-          <section>
-            <button
-              onClick={() => {
-                setEditMode(false);
-              }}
-              type="button"
-            >
-              Cancel
-            </button>
-          </section>
-        </HeaderEditor>
-        <Editable
-          data-autofocus // autoFocus won't work due to the use of react-focus-lock package
-          placeholder="Enter a place name"
-          renderElement={renderElement}
-          spellCheck
-        />
-      </Slate>
-    </form>
+    <ModalPopup hidden={false} slideFrom="bottom" titleId="edit-place-info">
+      <form>
+        <Slate
+          editor={editor}
+          value={value}
+          onChange={value => setValue(value)}
+        >
+          <HeaderEditor>
+            <Heading as="h1">Edit place info</Heading>
+            <section>
+              <button
+                onClick={() => {
+                  setEditMode(false);
+                }}
+                type="button"
+              >
+                {buttonLabel.cancel}
+              </button>
+            </section>
+          </HeaderEditor>
+          <Editable
+            data-autofocus // autoFocus won't work due to the use of react-focus-lock package
+            placeholder="Enter a place name"
+            renderElement={renderElement}
+            spellCheck
+          />
+        </Slate>
+      </form>
+    </ModalPopup>
   );
 };
 
 PlaceInfoEditor.propTypes = {
-  content: PropTypes.arrayOf(Object),
+  placeName: PropTypes.string,
+  placeNoteArray: PropTypes.arrayOf(Object),
   setEditMode: PropTypes.func,
 };

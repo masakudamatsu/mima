@@ -10,19 +10,18 @@
         "address": "235-2 Shinmeicho, Shimogyo Ward, Kyoto, 600-8092, Japan",
         "country code": "JP",
         "Google Maps URL": "http://maps.google.com/?cid=11397677192332095799",
+        "id": "0",
         "name": "Okaffe Kyoto",
-        "note": {
-          "children": [
-            {
-              "type": "paragraph",
-              "children": [
-                {
-                  "text": "https://okaffe.kyoto/menu/cafe_menu/"
-                }
-              ]
-            }
-          ]
-        }
+        "note": [
+          {
+            "type": "paragraph",
+            "children": [
+              {
+                "text": "https://okaffe.kyoto/menu/cafe_menu/"
+              }
+            ]
+          }
+        ]
       },
       "type": "Feature"
     },
@@ -35,19 +34,18 @@
         "address": "45-15 Sagatenryuji Susukinobabacho, Ukyo Ward, Kyoto, 616-8385, Japan",
         "country code": "JP",
         "Google Maps URL": "http://maps.google.com/?cid=1227974347151193049",
+        "id": "1",
         "name": "Bread & Espresso & Arashiyama Garden",
-        "note": {
-          "children": [
-            {
-              "type": "paragraph",
-              "children": [
-                {
-                  "text": "https://www.instagram.com/bread.espresso.and.arashiyama/"
-                }
-              ]
-            }
-          ]
-        }
+        "note": [
+          {
+            "type": "paragraph",
+            "children": [
+              {
+                "text": "https://www.instagram.com/bread.espresso.and.arashiyama/"
+              }
+            ]
+          }
+        ]
       },
       "type": "Feature"
     },
@@ -60,19 +58,18 @@
         "address": "Japan, 〒600-8084 Kyoto, Shimogyo Ward, Shinkaicho, 397 本山佛光寺内",
         "country code": "JP",
         "Google Maps URL": "http://maps.google.com/?cid=5220687755832863894",
+        "id": "2",
         "name": "D&DEPARTMENT KYOTO d食堂 京都",
-        "note": {
-          "children": [
-            {
-              "type": "paragraph",
-              "children": [
-                {
-                  "text": "https://gotrip.jp/2019/05/113932/"
-                }
-              ]
-            }
-          ]
-        }
+        "note": [
+          {
+            "type": "paragraph",
+            "children": [
+              {
+                "text": "https://gotrip.jp/2019/05/113932/"
+              }
+            ]
+          }
+        ]
       },
       "type": "Feature"
     },
@@ -85,19 +82,18 @@
         "address": "143 Hashizumecho, Shimogyo Ward, Kyoto, 600-8183, Japan",
         "country code": "JP",
         "Google Maps URL": "http://maps.google.com/?cid=2755578752090318796",
+        "id": "3",
         "name": "Lorimer Kyoto",
-        "note": {
-          "children": [
-            {
-              "type": "paragraph",
-              "children": [
-                {
-                  "text": "https://www.asahi.com/and/article/20210806/407331671/"
-                }
-              ]
-            }
-          ]
-        }
+        "note": [
+          {
+            "type": "paragraph",
+            "children": [
+              {
+                "text": "https://www.asahi.com/and/article/20210806/407331671/"
+              }
+            ]
+          }
+        ]
       },
       "type": "Feature"
     },
@@ -110,19 +106,18 @@
         "address": "3-16 Sagatenryuji Susukinobabacho, Ukyo Ward, Kyoto, 616-8385, Japan",
         "country code": "JP",
         "Google Maps URL": "http://maps.google.com/?cid=540503174389752899",
+        "id": "4",
         "name": "Fukuda Art Museum",
-        "note": {
-          "children": [
-            {
-              "type": "paragraph",
-              "children": [
-                {
-                  "text": "https://bunshun.jp/articles/-/14067"
-                }
-              ]
-            }
-          ]
-        }
+        "note": [
+          {
+            "type": "paragraph",
+            "children": [
+              {
+                "text": "https://bunshun.jp/articles/-/14067"
+              }
+            ]
+          }
+        ]
       },
       "type": "Feature"
     },
@@ -135,19 +130,18 @@
         "address": "307-1 Bizenjimacho, Nakagyo Ward, Kyoto, 604-8023, Japan",
         "country code": "JP",
         "Google Maps URL": "http://maps.google.com/?cid=14329270928985000839",
+        "id": "5",
         "name": "出逢ひ茶屋おせん",
-        "note": {
-          "children": [
-            {
-              "type": "paragraph",
-              "children": [
-                {
-                  "text": "https://www.asahi.com/and/article/20201225/300307708/"
-                }
-              ]
-            }
-          ]
-        }
+        "note": [
+          {
+            "type": "paragraph",
+            "children": [
+              {
+                "text": "https://www.asahi.com/and/article/20201225/300307708/"
+              }
+            ]
+          }
+        ]
       },
       "type": "Feature"
     },
@@ -160,19 +154,18 @@
         "address": "570-8 Gionmachi Minamigawa, Higashiyama Ward, Kyoto, 605-0074, Japan",
         "country code": "JP",
         "Google Maps URL": "http://maps.google.com/?cid=13724563353852976456",
+        "id": "6",
         "name": "GION NITI",
-        "note": {
-          "children": [
-            {
-              "type": "paragraph",
-              "children": [
-                {
-                  "text": ""
-                }
-              ]
-            }
-          ]
-        }
+        "note": [
+          {
+            "type": "paragraph",
+            "children": [
+              {
+                "text": ""
+              }
+            ]
+          }
+        ]
       },
       "type": "Feature"
     },
@@ -185,19 +178,18 @@
         "address": "508-1 Sakaecho, Shimogyo Ward, Kyoto, 600-8194, Japan",
         "country code": "JP",
         "Google Maps URL": "http://maps.google.com/?cid=17532417395355382157",
+        "id": "7",
         "name": "Walden Woods Kyoto",
-        "note": {
-          "children": [
-            {
-              "type": "paragraph",
-              "children": [
-                {
-                  "text": "https://madamefigaro.jp/series/kyoto/181004-coffee.html"
-                }
-              ]
-            }
-          ]
-        }
+        "note": [
+          {
+            "type": "paragraph",
+            "children": [
+              {
+                "text": "https://madamefigaro.jp/series/kyoto/181004-coffee.html"
+              }
+            ]
+          }
+        ]
       },
       "type": "Feature"
     }
