@@ -17,6 +17,22 @@ test('renders UI correctly', () => {
   padding-top: 0.9833rem;
 }
 
+.c0[data-editor] {
+  font-size: 1.0504rem;
+  line-height: 1.092;
+  padding-bottom: 0.6197rem;
+  padding-top: 0.5546rem;
+}
+
+@media screen and (min-width:540px) {
+  .c0[data-editor] {
+    font-size: 1.8623rem;
+    line-height: 1.092;
+    padding-bottom: 1.0988rem;
+    padding-top: 0.9833rem;
+  }
+}
+
 <div>
   <h1
     class="c0"

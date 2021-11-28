@@ -18,7 +18,7 @@ test('renders UI correctly', () => {
   color: var(--popup-text-color);
   height: calc(100% - 24px);
   top: 24px;
-  padding: 0 48px 48px 48px;
+  padding: 0 10px 10px 10px;
   background: var(--popup-background-color-firefox);
   box-shadow: 0px 0px  8px 8px var(--popup-glow-color-firefox);
 }
@@ -37,6 +37,10 @@ test('renders UI correctly', () => {
 
 .c0 p + button {
   margin-top: 1.1112rem;
+}
+
+.c0[data-placedatapopup="true"] p + button {
+  margin-top: 0.7801rem;
 }
 
 .c0[data-slide-from="left"] {
@@ -100,6 +104,12 @@ test('renders UI correctly', () => {
   -webkit-transition: opcacity 100ms linear, -webkit-transform 450ms cubic-bezier(0.0,0.0,0.2,1);
   -webkit-transition: opcacity 100ms linear, transform 450ms cubic-bezier(0.0,0.0,0.2,1);
   transition: opcacity 100ms linear, transform 450ms cubic-bezier(0.0,0.0,0.2,1);
+}
+
+@media screen and (min-width:540px) {
+  .c0 {
+    padding: 0 48px 48px 48px;
+  }
 }
 
 @supports (-webkit-backdrop-filter:blur(8px)) or (backdrop-filter:blur(8px)) {

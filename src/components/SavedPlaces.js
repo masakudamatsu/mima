@@ -1,24 +1,27 @@
 import {useContext, useEffect, useRef, useState} from 'react';
 import PropTypes from 'prop-types';
-import Autolinker from 'autolinker';
 import DOMPurify from 'dompurify';
 
-import userData from 'src/utils/savedPlaces.json';
+import savedPlaces from 'src/utils/savedPlaces.json';
 
-import {PlaceDataPopup} from 'src/components/PlaceDataPopup';
+import {PlaceInfo} from 'src/components/PlaceInfo';
+import {PlaceInfoEditor} from 'src/components/PlaceInfoEditor';
 
-import {ButtonSquare} from 'src/elements/ButtonSquare';
-import {H2PlaceName} from 'src/elements/H2PlaceName';
-import {SvgClose} from 'src/elements/SvgClose';
-
+import {useSessionStorageState} from 'src/hooks/useSessionStorageState';
 import {useOnEscKeyDown} from 'src/hooks/useOnEscKeyDown';
-import {buttonLabel} from 'src/utils/uiCopies';
+import {getHtmlFromSlate} from 'src/utils/getHtmlFromSlate';
 import {NightModeContext} from 'src/wrappers/NightModeContext';
 
 export const SavedPlaces = ({mapObject}) => {
+  const [userData, setUserData] = useSessionStorageState(
+    'userData',
+    savedPlaces,
+  );
+
   const nightMode = useContext(NightModeContext);
 
   const [selectedPlace, setSelectedPlace] = useState(null);
+  const [editMode, setEditMode] = useState(false);
 
   const viewportSize = useRef({height: null, width: null});
   useEffect(() => {
@@ -60,21 +63,16 @@ export const SavedPlaces = ({mapObject}) => {
       ...yellow,
     };
 
-    // Prepare for converting URL text into link
-    const autolinker = new Autolinker({
-      truncate: 25,
-    }); // https://github.com/gregjacobs/Autolinker.js#usage
-
     // Drop a marker to each saved place
     for (let i = 0; i < userData.features.length; i++) {
       // Retrieve data to be used
       const userPlace = {
+        id: userData.features[i].properties.id,
         coordinates: new google.maps.LatLng(
           userData.features[i].geometry.coordinates[1],
           userData.features[i].geometry.coordinates[0],
         ),
         name: userData.features[i].properties.name,
-        note: DOMPurify.sanitize(userData.features[i].properties.note),
       };
       const marker = new google.maps.Marker({
         icon: {
@@ -91,53 +89,71 @@ export const SavedPlaces = ({mapObject}) => {
         mapObject.panTo(userPlace.coordinates);
         mapObject.panBy(0, viewportSize.current.height / 6);
         setSelectedPlace({
-          name: userPlace.name,
+          id: userPlace.id,
           coordinates: userPlace.coordinates,
-          note: autolinker.link(userPlace.note),
+          marker: marker,
         });
       });
       marker.setMap(mapObject);
     }
-  }, [mapObject, nightMode]);
+  }, [mapObject, nightMode, userData.features]);
 
-  const closePlaceDetail = () => {
+  const closePlaceInfo = () => {
     mapObject.panTo(selectedPlace.coordinates);
     setSelectedPlace(null);
   };
 
   // close with Esc key
-  useOnEscKeyDown(selectedPlace, closePlaceDetail);
+  useOnEscKeyDown(selectedPlace, closePlaceInfo);
 
-  return (
-    <>
-      {selectedPlace && (
-        <PlaceDataPopup
-          handleClickOutside={closePlaceDetail}
-          hidden={false}
-          slideFrom="bottom"
-          titleId="selected-place"
-        >
-          <ButtonSquare
-            data-autofocus
-            data-testid="close-button-saved-place"
-            onClick={closePlaceDetail}
-            type="button"
-          >
-            <SvgClose title={buttonLabel.close} />
-          </ButtonSquare>
-          <H2PlaceName id="selected-place">{selectedPlace.name}</H2PlaceName>
-          <p>(Links will open in a new tab)</p>
-          <p
-            dangerouslySetInnerHTML={{
-              __html: selectedPlace.note,
-            }}
-          />
-        </PlaceDataPopup>
-      )}
-    </>
-  );
+  if (selectedPlace) {
+    const selectedPlaceIndex = userData.features.findIndex(
+      feature => feature.properties.id === selectedPlace.id,
+    );
+    const selectedPlaceName =
+      userData.features[selectedPlaceIndex].properties.name;
+    const selectedPlaceNoteArray =
+      userData.features[selectedPlaceIndex].properties.note;
+    const selectedPlaceNoteHtml = DOMPurify.sanitize(
+      getHtmlFromSlate({children: selectedPlaceNoteArray}),
+    );
+
+    const updateData = ([newTitle, newNoteArray]) => {
+      const newData = {
+        name: newTitle.children[0].text,
+        note: newNoteArray,
+      };
+      // update place marker's accessible name
+      selectedPlace.marker.setTitle(newData.name);
+      // // update user data
+      const newUserData = {...userData};
+      newUserData.features[selectedPlaceIndex].properties = {
+        ...userData.features[selectedPlaceIndex].properties,
+        ...newData,
+      };
+      setUserData(newUserData);
+    };
+
+    return editMode ? (
+      <PlaceInfoEditor
+        placeName={selectedPlaceName}
+        placeNoteArray={selectedPlaceNoteArray}
+        setEditMode={setEditMode}
+        updateData={updateData}
+      />
+    ) : (
+      <PlaceInfo
+        closePlaceInfo={closePlaceInfo}
+        placeName={selectedPlaceName}
+        placeNoteHtml={selectedPlaceNoteHtml}
+        setEditMode={setEditMode}
+      />
+    );
+  }
+
+  return null;
 };
 
-Map.propTypes = {
+SavedPlaces.propTypes = {
   mapObject: PropTypes.object,
 };

@@ -1,4 +1,9 @@
 import {buttonLabel} from '../../src/utils/uiCopies';
+import {dimension} from '../../src/utils/designtokens';
+
+const errorUIbreakpoints = [
+  Number(dimension.breakpoint.divPopup.padding.slice(0, -2)),
+];
 
 describe('After clicking the location button', () => {
   const initialLat = 35.011565;
@@ -92,7 +97,7 @@ errorCodes.forEach(errorCode => {
       cy.findByRole('button', {name: buttonLabel.locator.default}).click();
       // verify
       cy.percySnapshot(`current-location-error-${errorCode}-daytime`, {
-        widths: [320, 768, 1024],
+        widths: [320, ...errorUIbreakpoints, 768, 1024],
       });
     });
     it('Clicking the locator button pops up a dark-mode dialog at nighttime', () => {
@@ -113,7 +118,7 @@ errorCodes.forEach(errorCode => {
       cy.findByRole('button', {name: buttonLabel.locator.default}).click();
       // verify
       cy.percySnapshot(`current-location-error-${errorCode}-nighttime`, {
-        widths: [320, 768, 1024],
+        widths: [320, ...errorUIbreakpoints, 768, 1024],
       });
     });
   });
@@ -134,7 +139,7 @@ describe('Geolocation API unsupported', () => {
     cy.findByRole('button', {name: buttonLabel.locator.default}).click();
     // verify
     cy.percySnapshot(`current-location-not-supported-daytime`, {
-      widths: [320, 768, 1024],
+      widths: [320, ...errorUIbreakpoints, 768, 1024],
     });
   });
   it('Clicking the locator button pops up a dark-mode dialog at nighttime', () => {
@@ -151,7 +156,7 @@ describe('Geolocation API unsupported', () => {
     cy.findByRole('button', {name: buttonLabel.locator.default}).click();
     // verify
     cy.percySnapshot(`current-location-not-supported-nighttime`, {
-      widths: [320, 768, 1024],
+      widths: [320, ...errorUIbreakpoints, 768, 1024],
     });
   });
 });

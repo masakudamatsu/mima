@@ -11,8 +11,8 @@ const setShape = css`
 `;
 
 const setColor = css`
-  border-color: var(--error-dialog-button-color);
-  color: var(--error-dialog-button-color);
+  border-color: var(--dialog-button-color);
+  color: var(--dialog-button-color);
 `;
 
 const setSpaceToNextButton = `

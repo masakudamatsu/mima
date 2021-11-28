@@ -4,7 +4,6 @@ import {
   bodyText,
   buttonSquare,
   capHeight,
-  color,
   dimension,
   duration,
   easing,
@@ -39,6 +38,9 @@ const setVerticalSpacing = `
   }
   & p + button {
     margin-top: ${remify(capHeight[300] - bodyText.spaceBottom)};
+  }
+  &[data-placedatapopup="true"] p + button {
+    margin-top: ${remify(capHeight[200] - bodyText.spaceBottom)};
   }
 `;
 
@@ -90,7 +92,10 @@ const setBackground = `
 `;
 
 const setPadding = `
-  padding: 0 ${buttonSquare.clickableArea} ${buttonSquare.clickableArea} ${buttonSquare.clickableArea};
+  padding: 0 10px 10px 10px;
+  @media screen and (min-width: ${dimension.breakpoint.divPopup.padding}) {
+    padding: 0 ${buttonSquare.clickableArea} ${buttonSquare.clickableArea} ${buttonSquare.clickableArea};
+  }
 `;
 
 const animateTransition = `

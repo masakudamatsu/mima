@@ -68,4 +68,86 @@ describe('Once place detail is shown', () => {
       // while should('be.visible') won't fail in that case
     });
   });
+  describe('Pressing Edit button', () => {
+    beforeEach(() => {
+      cy.findByRole('button', {name: buttonLabel.edit}).click();
+    });
+    it('Shows the text editor', () => {
+      cy.findByRole('textbox').type('abc ');
+      cy.contains('abc');
+    });
+    it('Focuses the note field', () => {
+      cy.focused().should('have.attr', 'role', 'textbox');
+    });
+    it('Shows Cancel button, the pressing of which closes the editor and focuses the Close button', () => {
+      cy.findByRole('button', {name: /cancel/i}).click();
+      cy.findByRole('link', {name: /asahi\.com.*/i}).should('be.visible');
+      cy.focused().should(
+        'have.attr',
+        'data-testid',
+        'close-button-saved-place',
+      );
+    });
+    it('Shows Save button, the pressing of which closes the editor and focuses the Close button', () => {
+      cy.findByRole('button', {name: /save/i}).click();
+      cy.findByRole('link', {name: /asahi\.com.*/i}).should('be.visible');
+      cy.focused().should(
+        'have.attr',
+        'data-testid',
+        'close-button-saved-place',
+      );
+    });
+  });
+});
+describe('Once place info editor is shown', () => {
+  beforeEach(() => {
+    cy.visit('/');
+    cy.findByRole('button', {name: placeName}).click();
+    cy.findByRole('button', {name: buttonLabel.edit}).click();
+  });
+  describe('Editing place name and ...', () => {
+    beforeEach(() => {
+      cy.findByRole('textbox').type('abc ');
+    });
+    it('Pressing Cancel button discards any change', () => {
+      cy.findByRole('button', {name: /cancel/i}).click();
+      cy.findByText('abc').should('not.exist');
+    });
+    it('Pressing Save button changes place name', () => {
+      cy.findByRole('button', {name: /save/i}).click();
+      cy.findByText('abc ' + placeName).should('be.visible');
+      cy.findByRole('button', {name: 'abc ' + placeName}).should('be.visible');
+    });
+    it('Changes persist after refreshing the page', () => {
+      cy.findByRole('button', {name: /save/i}).click();
+      cy.reload();
+      cy.findByRole('button', {name: 'abc ' + placeName}).should('be.visible');
+    });
+  });
+  describe('Adding text to place note and ...', () => {
+    beforeEach(() => {
+      cy.findByRole('textbox').type('{downarrow}abc ');
+    });
+    it('Pressing Cancel button discards any change', () => {
+      cy.findByRole('button', {name: /cancel/i}).click();
+      cy.findByText('abc').should('not.exist');
+    });
+    it('Pressing Save button changes place note', () => {
+      cy.findByRole('button', {name: /save/i}).click();
+      cy.findByText(/abc */).should('be.visible');
+    });
+  });
+  describe('Adding URL to place note and ...', () => {
+    beforeEach(() => {
+      cy.findByRole('textbox').type('{downarrow}https://google.com ');
+    });
+    it('Pressing Cancel button discards any change', () => {
+      cy.findByRole('button', {name: /cancel/i}).click();
+      cy.findByRole('link', {name: /google\.com.*/i}).should('not.exist');
+    });
+    it('Pressing Save button changes place note', () => {
+      cy.findByRole('button', {name: /save/i}).click();
+      cy.findByRole('link', {name: /google\.com.*/i}).should('be.visible');
+    });
+  });
 });
