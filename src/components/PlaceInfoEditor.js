@@ -117,7 +117,9 @@ export const PlaceInfoEditor = ({
           onChange={value => setValue(value)}
         >
           <HeaderEditor>
-            <Heading as="h1">Edit place info</Heading>
+            <Heading as="h1" data-editor>
+              Edit place info
+            </Heading>
             <section>
               <button
                 onClick={() => {

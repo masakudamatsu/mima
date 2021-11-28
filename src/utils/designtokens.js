@@ -225,42 +225,85 @@ export const bodyText = {
 
 export const heading = {
   fontFamily: metrics['Noto Sans Display Bold'].fontFamily,
-  fontSize: getFontSize({
-    capHeight: capHeight[300],
-    metrics: metrics['Noto Sans Display Bold'],
-  }),
+  fontSize: {
+    narrowScreen: getFontSize({
+      capHeight: capHeight[100],
+      metrics: metrics['Noto Sans Display Bold'],
+    }),
+    wideScreen: getFontSize({
+      capHeight: capHeight[300],
+      metrics: metrics['Noto Sans Display Bold'],
+    }),
+  },
   fontWeight: metrics['Noto Sans Display Bold'].fontWeight,
   get lineHeight() {
-    const xHeight =
-      this.fontSize *
-      (metrics['Noto Sans Display Bold'].xHeight /
-        metrics['Noto Sans Display Bold'].unitsPerEm);
+    const xHeight = {
+      narrowScreen:
+        this.fontSize.narrowScreen *
+        (metrics['Noto Sans Display Bold'].xHeight /
+          metrics['Noto Sans Display Bold'].unitsPerEm),
+      wideScreen:
+        this.fontSize.wideScreen *
+        (metrics['Noto Sans Display Bold'].xHeight /
+          metrics['Noto Sans Display Bold'].unitsPerEm),
+    };
     const spaceBetweenLines = xHeight;
-    const lineHeight = xHeight + spaceBetweenLines;
-    return round(lineHeight / this.fontSize, 4);
+    const lineHeight = {
+      narrowScreen: xHeight.narrowScreen + spaceBetweenLines.narrowScreen,
+      wideScreen: xHeight.wideScreen + spaceBetweenLines.wideScreen,
+    };
+    return {
+      narrowScreen: round(
+        lineHeight.narrowScreen / this.fontSize.narrowScreen,
+        4,
+      ),
+      wideScreen: round(lineHeight.wideScreen / this.fontSize.wideScreen, 4),
+    };
   },
   normalLineHeight: 1.43,
   get spaceTop() {
-    return getSpaceToCrop('top', {
-      fontSize: this.fontSize,
-      font: metrics['Noto Sans Display Bold'],
-      lineHeight: this.lineHeight,
-      normalLineHeight: this.normalLineHeight,
-    });
+    return {
+      narrowScreen: getSpaceToCrop('top', {
+        fontSize: this.fontSize.narrowScreen,
+        font: metrics['Noto Sans Display Bold'],
+        lineHeight: this.lineHeight.narrowScreen,
+        normalLineHeight: this.normalLineHeight,
+      }),
+      wideScreen: getSpaceToCrop('top', {
+        fontSize: this.fontSize.wideScreen,
+        font: metrics['Noto Sans Display Bold'],
+        lineHeight: this.lineHeight.wideScreen,
+        normalLineHeight: this.normalLineHeight,
+      }),
+    };
   },
   get spaceBottom() {
-    return getSpaceToCrop('bottom', {
-      fontSize: this.fontSize,
-      font: metrics['Noto Sans Display Bold'],
-      lineHeight: this.lineHeight,
-      normalLineHeight: this.normalLineHeight,
-    });
+    return {
+      narrowScreen: getSpaceToCrop('bottom', {
+        fontSize: this.fontSize.narrowScreen,
+        font: metrics['Noto Sans Display Bold'],
+        lineHeight: this.lineHeight.narrowScreen,
+        normalLineHeight: this.normalLineHeight,
+      }),
+      wideScreen: getSpaceToCrop('bottom', {
+        fontSize: this.fontSize.wideScreen,
+        font: metrics['Noto Sans Display Bold'],
+        lineHeight: this.lineHeight.wideScreen,
+        normalLineHeight: this.normalLineHeight,
+      }),
+    };
   },
   get paddingBottom() {
-    return capHeight[300] - this.spaceBottom;
+    return {
+      narrowScreen: capHeight[100] - this.spaceBottom.narrowScreen,
+      wideScreen: capHeight[300] - this.spaceBottom.wideScreen,
+    };
   },
   get paddingTop() {
-    return capHeight[300] - this.spaceTop;
+    return {
+      narrowScreen: capHeight[100] - this.spaceTop.narrowScreen,
+      wideScreen: capHeight[300] - this.spaceTop.wideScreen,
+    };
   },
 };
 
