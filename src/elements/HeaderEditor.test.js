@@ -37,6 +37,10 @@ test('renders UI correctly', () => {
   box-shadow: 0px 0px var(--button-shadow-blur-radius-focus) var(--button-shadow-color-focus);
 }
 
+.c0 button[data-save] {
+  color: var(--dialog-button-color);
+}
+
 @media screen and (min-width:380px) {
   .c0 button {
     width: 96px;

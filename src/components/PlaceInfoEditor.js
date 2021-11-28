@@ -129,7 +129,7 @@ export const PlaceInfoEditor = ({
               >
                 {buttonLabel.cancel}
               </button>
-              <button onClick={handleClickSave} type="button">
+              <button data-save onClick={handleClickSave} type="button">
                 {buttonLabel.saveEdit}
               </button>
             </section>

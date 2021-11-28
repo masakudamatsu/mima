@@ -21,4 +21,7 @@ export const HeaderEditor = styled.header`
     box-shadow: ${dimension.glow['offset']}
       var(--button-shadow-blur-radius-focus) var(--button-shadow-color-focus);
   }
+  & button[data-save] {
+    color: var(--dialog-button-color);
+  }
 `;
