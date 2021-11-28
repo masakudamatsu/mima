@@ -9,7 +9,7 @@ import {PlaceInfoEditor} from 'src/components/PlaceInfoEditor';
 
 import {useSessionStorageState} from 'src/hooks/useSessionStorageState';
 import {useOnEscKeyDown} from 'src/hooks/useOnEscKeyDown';
-import {getHtmlFromSlate} from 'src/utils/getHTMLfromSlate';
+import {getHtmlFromSlate} from 'src/utils/getHtmlFromSlate';
 import {NightModeContext} from 'src/wrappers/NightModeContext';
 
 export const SavedPlaces = ({mapObject}) => {
