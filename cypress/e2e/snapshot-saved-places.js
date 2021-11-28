@@ -38,4 +38,28 @@ describe('After clicking a saved place', () => {
       });
     });
   });
+  describe('Clicking Edit button', () => {
+    describe('UI changes as expected', () => {
+      it('Daytime', () => {
+        cy.visitAtDaytime('/');
+        cy.waitForMapToLoad();
+        cy.findByRole('button', {name: placeName}).click();
+        cy.findByRole('button', {name: buttonLabel.edit}).click();
+        // verify
+        cy.percySnapshot('saved-place-after-edit-daytime', {
+          widths: [320, 768, 1024],
+        });
+      });
+      it('Nighttime', () => {
+        cy.visitAtNight('/');
+        cy.waitForMapToLoad();
+        cy.findByRole('button', {name: placeName}).click();
+        cy.findByRole('button', {name: buttonLabel.edit}).click();
+        // verify
+        cy.percySnapshot('saved-place-after-edit-night', {
+          widths: [320, 768, 1024],
+        });
+      });
+    });
+  });
 });
