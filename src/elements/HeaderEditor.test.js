@@ -28,13 +28,19 @@ test('renders UI correctly', () => {
 .c0 button {
   height: 48px;
   text-transform: uppercase;
-  width: 96px;
+  width: 72px;
 }
 
 .c0 button:focus {
   border: 1px solid var(--button-outline-color-focus);
   border-radius: 8px;
   box-shadow: 0px 0px var(--button-shadow-blur-radius-focus) var(--button-shadow-color-focus);
+}
+
+@media screen and (min-width:380px) {
+  .c0 button {
+    width: 96px;
+  }
 }
 
 <div>

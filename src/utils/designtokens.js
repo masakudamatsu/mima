@@ -75,6 +75,9 @@ export const dimension = {
     divPopup: {
       padding: '540px',
     },
+    headerEditor: {
+      buttonWidth: '380px',
+    },
   },
   button: {
     'height 175': '84px',
@@ -84,6 +87,7 @@ export const dimension = {
     'width 100': '56px',
     'width 25': '14px',
     'minimum target size 200': '96px',
+    'minimum target size 150': '72px',
     'minimum target size 100': '48px', // https://web.dev/accessible-tap-targets/
     'minimum target size 75': '36px',
     'minimum target size 50': '24px', // https://web.dev/accessible-tap-targets/

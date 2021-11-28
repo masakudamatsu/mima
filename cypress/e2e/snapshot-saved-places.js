@@ -6,6 +6,7 @@ const infoUIbreakpoints = [
   Number(dimension.breakpoint.divPopup.padding.slice(0, -2)),
 ];
 const editorUIbreakpoints = [
+  Number(dimension.breakpoint.headerEditor.buttonWidth.slice(0, -2)),
   Number(dimension.breakpoint.divPopup.padding.slice(0, -2)),
 ];
 describe('After clicking a saved place', () => {

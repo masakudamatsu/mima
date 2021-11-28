@@ -9,7 +9,11 @@ export const HeaderEditor = styled.header`
   & button {
     height: ${dimension.button['minimum target size 100']};
     text-transform: uppercase;
-    width: ${dimension.button['minimum target size 200']};
+    width: ${dimension.button['minimum target size 150']};
+    @media screen and (min-width: ${dimension.breakpoint.headerEditor
+        .buttonWidth}) {
+      width: ${dimension.button['minimum target size 200']};
+    }
   }
   & button:focus {
     border: 1px solid var(--button-outline-color-focus);
