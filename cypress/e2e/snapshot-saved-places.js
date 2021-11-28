@@ -1,7 +1,13 @@
 import {buttonLabel} from '../../src/utils/uiCopies';
+import {dimension} from '../../src/utils/designtokens';
 
 const placeName = '出逢ひ茶屋おせん';
-
+const infoUIbreakpoints = [
+  Number(dimension.breakpoint.divPopup.padding.slice(0, -2)),
+];
+const editorUIbreakpoints = [
+  Number(dimension.breakpoint.divPopup.padding.slice(0, -2)),
+];
 describe('After clicking a saved place', () => {
   describe('UI changes as expected', () => {
     it('Daytime', () => {
@@ -11,7 +17,7 @@ describe('After clicking a saved place', () => {
       cy.findByRole('button', {name: placeName}).click();
       // verify
       cy.percySnapshot('saved-place-after-click-daytime', {
-        widths: [320, 768, 1024],
+        widths: [320, ...infoUIbreakpoints, 768, 1024],
       });
     });
     it('Nighttime', () => {
@@ -21,7 +27,7 @@ describe('After clicking a saved place', () => {
       cy.findByRole('button', {name: placeName}).click();
       // verify
       cy.percySnapshot('saved-place-after-click-nighttime', {
-        widths: [320, 768, 1024],
+        widths: [320, ...infoUIbreakpoints, 768, 1024],
       });
     });
   });
@@ -47,7 +53,7 @@ describe('After clicking a saved place', () => {
         cy.findByRole('button', {name: buttonLabel.edit}).click();
         // verify
         cy.percySnapshot('saved-place-after-edit-daytime', {
-          widths: [320, 768, 1024],
+          widths: [320, ...editorUIbreakpoints, 768, 1024],
         });
       });
       it('Nighttime', () => {
@@ -57,7 +63,7 @@ describe('After clicking a saved place', () => {
         cy.findByRole('button', {name: buttonLabel.edit}).click();
         // verify
         cy.percySnapshot('saved-place-after-edit-night', {
-          widths: [320, 768, 1024],
+          widths: [320, ...editorUIbreakpoints, 768, 1024],
         });
       });
     });

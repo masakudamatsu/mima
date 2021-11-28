@@ -71,6 +71,11 @@ export const map = {
 };
 
 export const dimension = {
+  breakpoint: {
+    divPopup: {
+      padding: '540px',
+    },
+  },
   button: {
     'height 175': '84px',
     'height 100': '48px',
