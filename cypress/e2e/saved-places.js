@@ -126,7 +126,10 @@ describe('Once place info editor is shown', () => {
   });
   describe('Adding text to place note and ...', () => {
     beforeEach(() => {
-      cy.findByRole('textbox').type('{downarrow}abc ');
+      cy.findByRole('textbox').type('{downarrow}');
+      cy.focused().type('abc');
+      // verify
+      cy.findByRole('textbox').get('p').contains('abc');
     });
     it('Pressing Cancel button discards any change', () => {
       cy.findByRole('button', {name: /cancel/i}).click();
@@ -139,7 +142,10 @@ describe('Once place info editor is shown', () => {
   });
   describe('Adding URL to place note and ...', () => {
     beforeEach(() => {
-      cy.findByRole('textbox').type('{downarrow}https://google.com ');
+      cy.findByRole('textbox').type('{downarrow}');
+      cy.focused().type('https://google.com ');
+      // verify
+      cy.findByRole('textbox').get('p').contains('https://google.com');
     });
     it('Pressing Cancel button discards any change', () => {
       cy.findByRole('button', {name: /cancel/i}).click();
