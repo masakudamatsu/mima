@@ -67,7 +67,7 @@
   "homepage": "https://mima.pages.dev",
   "dependencies": {
     "@googlemaps/js-api-loader": "1.12.1",
-    "@googlemaps/react-wrapper": "1.1.12",
+    "@googlemaps/react-wrapper": "1.1.15",
     "autolinker": "3.14.3",
     "dompurify": "2.3.3",
     "escape-html": "1.0.3",
