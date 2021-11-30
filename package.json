@@ -50,7 +50,8 @@
     "storybook": "start-storybook -p 6006 -s ./public",
     "build-storybook": "build-storybook -s ./public",
     "chromatic": "chromatic",
-    "analyze": "ANALYZE=true next build"
+    "analyze": "ANALYZE=true next build",
+    "hygen-element": "npx hygen element new"
   },
   "repository": {
     "type": "git",
