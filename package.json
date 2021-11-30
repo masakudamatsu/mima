@@ -51,6 +51,7 @@
     "build-storybook": "build-storybook -s ./public",
     "chromatic": "chromatic",
     "analyze": "ANALYZE=true next build",
+    "hygen-component": "npx hygen component new",
     "hygen-element": "npx hygen element new"
   },
   "repository": {
