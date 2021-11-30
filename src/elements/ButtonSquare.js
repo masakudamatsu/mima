@@ -1,30 +1,30 @@
-import styled, {css} from 'styled-components';
+import styled from 'styled-components';
 
 import {buttonSquare, color} from 'src/utils/designtokens';
 
-const resetStyle = css`
+const resetStyle = `
   background-color: ${color['white 0']};
   border: none;
 `;
 
-const setClickableArea = css`
+const setClickableArea = `
   height: ${buttonSquare.clickableArea};
   width: ${buttonSquare.clickableArea};
 `;
 
-const alignButtonLabel = css`
+const alignButtonLabel = `
   align-items: center;
   display: flex;
   justify-content: center;
 `;
 
-const positionButton = css`
+const positionButton = `
   position: absolute;
   right: 0;
   top: 0;
 `;
 
-const setButtonLabelColor = css`
+const setButtonLabelColor = `
   & svg {
     fill: var(--button-label-color-default);
   }

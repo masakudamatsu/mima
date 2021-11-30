@@ -3,28 +3,28 @@ import styled, {css, keyframes} from 'styled-components';
 import {color, dimension, duration, easing} from 'src/utils/designtokens';
 import {zIndex} from 'src/utils/zIndex';
 
-const resetStyle = css`
+const resetStyle = `
   background-color: ${color['white 0']};
   border: none;
 `;
 
-const setClickableArea = css`
+const setClickableArea = `
   height: ${dimension.button['height 100']};
   width: ${dimension.button['width 100']};
 `;
 
-const alignButtonLabel = css`
+const alignButtonLabel = `
   align-items: center;
   display: flex;
   justify-content: center;
 `;
 
-const showButtonAboveMap = css`
+const showButtonAboveMap = `
   position: absolute;
   z-index: ${zIndex.button};
 `;
 
-const positionButton = css`
+const positionButton = `
   &[data-position='top-left'] {
     top: ${dimension.button['height 25']};
     left: ${dimension.button['width 25']};
@@ -34,9 +34,7 @@ const positionButton = css`
     right: ${dimension.button['width 25']};
   }
   &[data-position='bottom-right'] {
-    bottom: ${dimension.button[
-      'height 50'
-    ]}; /* Google Maps's default text legend takes up space (about dimension.button['height 25']) at the bottom */
+    bottom: ${dimension.button['height 50']}; /* Google Maps's default text legend takes up space (about dimension.button['height 25']) at the bottom */
     right: ${dimension.button['width 25']};
   }
   &[data-position='bottom-right-second'] {
@@ -45,7 +43,7 @@ const positionButton = css`
   }
 `;
 
-const setButtonLabelColor = css`
+const setButtonLabelColor = `
   & svg {
     fill: var(--button-label-color-default);
   }
@@ -60,7 +58,7 @@ const setButtonLabelColor = css`
     fill: var(--button-label-color-default);
   }
 `;
-const setButtonColor = css`
+const setButtonColor = `
   & #cloud {
     fill: var(--button-color);
   }
@@ -82,7 +80,7 @@ const buttonShadow = {
     );
   `,
 };
-const setButtonShadow = css`
+const setButtonShadow = `
   & #cloud {
     ${buttonShadow.edge}
   }

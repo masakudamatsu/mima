@@ -1,4 +1,3 @@
-import {css} from 'styled-components';
 import {remify} from './remify';
 
 export function cssLinkText({
@@ -10,7 +9,7 @@ export function cssLinkText({
   underlineWidth,
   spaceBelowBaseline,
 }) {
-  return css`
+  return `
     &:link,
     &:visited {
       background: ${backgroundColorOnHover}; /* Fallback for browsers incompatible with CSS Gradient (https://caniuse.com/css-gradients) */
