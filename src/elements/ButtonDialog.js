@@ -1,8 +1,8 @@
-import styled, {css} from 'styled-components';
+import styled from 'styled-components';
 
 import {color, dimension} from 'src/utils/designtokens';
 
-const setShape = css`
+const setShape = `
   border-radius: ${dimension.button['border radius 100']};
   border-style: solid;
   border-width: ${dimension.button['border width 100']};
@@ -10,7 +10,7 @@ const setShape = css`
   min-width: ${dimension.button['minimum target size 200']};
 `;
 
-const setColor = css`
+const setColor = `
   border-color: var(--dialog-button-color);
   color: var(--dialog-button-color);
 `;
