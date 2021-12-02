@@ -1,5 +1,4 @@
 import styled from 'styled-components';
-// import PropTypes from 'prop-types';
 
 export const DivDialog = styled.div`
   &[aria-hidden='true'] {
@@ -9,5 +8,3 @@ export const DivDialog = styled.div`
     display: block;
   }
 `;
-
-// DivDialog.propTypes = {};

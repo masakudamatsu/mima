@@ -1,5 +1,4 @@
 import styled from 'styled-components';
-// import PropTypes from 'prop-types';
 import {zIndex} from 'src/utils/zIndex';
 
 export const DivScrim = styled.div`
@@ -8,5 +7,3 @@ export const DivScrim = styled.div`
   width: 100%;
   z-index: ${zIndex.divScrim};
 `;
-
-// DivScrim.propTypes = {};

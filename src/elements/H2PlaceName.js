@@ -1,5 +1,4 @@
 import styled from 'styled-components';
-// import PropTypes from 'prop-types';
 import {h2PlaceName} from 'src/utils/designtokens';
 import {remify} from 'src/utils/remify';
 
@@ -11,5 +10,3 @@ export const H2PlaceName = styled.h2`
   padding-bottom: ${remify(h2PlaceName.paddingBottom)};
   padding-top: ${remify(h2PlaceName.paddingTop)};
 `;
-
-// H2PlaceName.propTypes = {};

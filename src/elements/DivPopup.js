@@ -1,5 +1,4 @@
 import styled from 'styled-components';
-// import PropTypes from 'prop-types';
 import {
   bodyText,
   buttonSquare,
@@ -133,5 +132,3 @@ export const DivPopup = styled.div`
   ${setBackground}
   ${animateTransition}
 `;
-
-// DivPopup.propTypes = {};
