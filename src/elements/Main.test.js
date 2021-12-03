@@ -13,6 +13,7 @@ test('renders UI correctly', () => {
 <div>
   <main
     class="c0"
+    id="map"
   />
 </div>
 `);

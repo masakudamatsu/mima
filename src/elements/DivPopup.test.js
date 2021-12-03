@@ -19,8 +19,8 @@ test('renders UI correctly', () => {
   height: calc(100% - 24px);
   top: 24px;
   padding: 0 10px 10px 10px;
-  background: var(--popup-background-color-firefox);
-  box-shadow: 0px 0px  8px 8px var(--popup-glow-color-firefox);
+  background-color: var(--popup-background-color-fallback);
+  box-shadow: 0px 0px  8px 8px var(--popup-glow-color-fallback);
 }
 
 .c0 a {
@@ -114,10 +114,43 @@ test('renders UI correctly', () => {
 
 @supports (-webkit-backdrop-filter:blur(8px)) or (backdrop-filter:blur(8px)) {
   .c0 {
-    background: var(--popup-background-color);
+    background-color: var(--popup-background-color);
     -webkit-backdrop-filter: blur(8px);
     backdrop-filter: blur(8px);
     box-shadow: 0px 0px  8px 8px var(--popup-glow-color);
+  }
+}
+
+@supports (background-image:-moz-element(#map)) and (not (backdrop-filter:blur(8px))) {
+  .c0 {
+    background-color: transparent;
+    box-shadow: none;
+  }
+
+  .c0::before {
+    background-attachment: fixed;
+    background-image: -moz-element(#map);
+    content: "";
+    -webkit-filter: blur(8px);
+    filter: blur(8px);
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    z-index: -2;
+  }
+
+  .c0::after {
+    background-color: var(--popup-background-color);
+    box-shadow: 0px 0px  8px 8px var(--popup-glow-color);
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    z-index: -1;
   }
 }
 
