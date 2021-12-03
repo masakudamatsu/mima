@@ -38,8 +38,8 @@ const setColorScheme = `
     --menu-item-color: ${color['dark-grey 100']};
     --popup-background-color: ${color['white 75']};
     --popup-glow-color: ${color['white 75']};
-    --popup-background-color-firefox: ${color['white 93']};
-    --popup-glow-color-firefox: ${color['white 93']};
+    --popup-background-color-fallback: ${color['white 93']};
+    --popup-glow-color-fallback: ${color['white 93']};
     --popup-text-color: ${color['dark-grey 100']};
   }
   body[data-darkmode='true'] {
@@ -57,8 +57,8 @@ const setColorScheme = `
     --menu-item-color: ${color['off-white 100']};
     --popup-background-color: ${color['glass-grey 75']};
     --popup-glow-color: ${color['glass-grey 75']};
-    --popup-background-color-firefox: ${color['glass-grey 90']};
-    --popup-glow-color-firefox: ${color['glass-grey 90']};
+    --popup-background-color-fallback: ${color['glass-grey 90']};
+    --popup-glow-color-fallback: ${color['glass-grey 90']};
     --popup-text-color: ${color['off-white 100']};
   }
 `;
