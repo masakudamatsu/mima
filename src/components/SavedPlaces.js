@@ -12,11 +12,11 @@ import {getHtmlFromSlate} from 'src/utils/getHtmlFromSlate';
 import {NightModeContext} from 'src/wrappers/NightModeContext';
 
 import dynamic from 'next/dynamic';
-const PlaceInfoEditor = dynamic(() =>
+const importPlaceInfoEditor = () =>
   import('src/components/PlaceInfoEditor').then(
     module => module.PlaceInfoEditor,
-  ),
-);
+  );
+const PlaceInfoEditor = dynamic(importPlaceInfoEditor);
 
 export const SavedPlaces = ({mapObject}) => {
   const [userData, setUserData] = useSessionStorageState(
@@ -150,6 +150,7 @@ export const SavedPlaces = ({mapObject}) => {
     ) : (
       <PlaceInfo
         closePlaceInfo={closePlaceInfo}
+        importPlaceInfoEditor={importPlaceInfoEditor}
         placeName={selectedPlaceName}
         placeNoteHtml={selectedPlaceNoteHtml}
         setEditMode={setEditMode}
