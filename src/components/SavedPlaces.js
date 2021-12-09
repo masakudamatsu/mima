@@ -5,12 +5,18 @@ import DOMPurify from 'dompurify';
 import savedPlaces from 'src/utils/savedPlaces.json';
 
 import {PlaceInfo} from 'src/components/PlaceInfo';
-import {PlaceInfoEditor} from 'src/components/PlaceInfoEditor';
 
 import {useSessionStorageState} from 'src/hooks/useSessionStorageState';
 import {useOnEscKeyDown} from 'src/hooks/useOnEscKeyDown';
 import {getHtmlFromSlate} from 'src/utils/getHtmlFromSlate';
 import {NightModeContext} from 'src/wrappers/NightModeContext';
+
+import dynamic from 'next/dynamic';
+const PlaceInfoEditor = dynamic(() =>
+  import('src/components/PlaceInfoEditor').then(
+    module => module.PlaceInfoEditor,
+  ),
+);
 
 export const SavedPlaces = ({mapObject}) => {
   const [userData, setUserData] = useSessionStorageState(
