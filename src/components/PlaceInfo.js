@@ -16,6 +16,7 @@ const autolinker = new Autolinker({
 
 export const PlaceInfo = ({
   closePlaceInfo,
+  importPlaceInfoEditor,
   placeName,
   placeNoteHtml,
   setEditMode,
@@ -41,7 +42,12 @@ export const PlaceInfo = ({
           __html: autolinker.link(placeNoteHtml),
         }}
       />
-      <ButtonDialog onClick={() => setEditMode(true)} type="button">
+      <ButtonDialog
+        onClick={() => setEditMode(true)}
+        onFocus={importPlaceInfoEditor}
+        onMouseEnter={importPlaceInfoEditor}
+        type="button"
+      >
         {buttonLabel.edit}
       </ButtonDialog>
     </PlaceDataPopup>
@@ -50,6 +56,7 @@ export const PlaceInfo = ({
 
 PlaceInfo.propTypes = {
   closePlaceInfo: PropTypes.func,
+  importPlaceInfoEditor: PropTypes.func,
   placeName: PropTypes.string,
   placeNoteHtml: PropTypes.string,
   setEditMode: PropTypes.func,
