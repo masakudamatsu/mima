@@ -8,8 +8,12 @@ import {buttonLabel} from 'src/utils/uiCopies';
 export const SearchButton = () => {
   return (
     <form role="search">
-      <Button data-position="top-right" type="button">
-        <SvgCloud icon="search" title={buttonLabel.search} />
+      <Button
+        aria-label={buttonLabel.search}
+        data-position="top-right"
+        type="button"
+      >
+        <SvgCloud icon="search" />
       </Button>
     </form>
   );

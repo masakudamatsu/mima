@@ -24,27 +24,23 @@ export const LocatorButton = ({
     <>
       {status !== 'watching' ? (
         <Button
+          aria-label={buttonLabel.locator.default}
           data-loading={status === 'loading'}
           data-position="bottom-right-second"
           data-testid="locator-button"
           onClick={trackUserLocation}
           type="button"
         >
-          <SvgCloud
-            icon={'flightTakeoff'}
-            title={buttonLabel.locator.default}
-          />
+          <SvgCloud icon={'flightTakeoff'} />
         </Button>
       ) : (
         <Button
+          aria-label={buttonLabel.locator.activated}
           data-position="bottom-right-second"
           onClick={moveToCurrentLocation}
           type="button"
         >
-          <SvgCloud
-            icon={'flightFlying'}
-            title={buttonLabel.locator.activated}
-          />
+          <SvgCloud icon={'flightFlying'} />
         </Button>
       )}
       <ModalPopup
