@@ -6,13 +6,15 @@ it('Landmark roles are given appropriately', () => {
   cy.log('*** Main role for map ***');
   cy.findByRole('main').contains(/map data/i);
   cy.log('*** Navigation role for menu button ***');
-  cy.findByRole('navigation').contains(buttonLabel.menu);
+  cy.findByRole('navigation').findByRole('button', {name: buttonLabel.menu});
   cy.log('*** Search role for search button ***');
-  cy.findByRole('search').contains(buttonLabel.search);
+  cy.findByRole('search').findByRole('button', {name: buttonLabel.search});
   cy.log('*** Region role for save button ***');
-  cy.findByRole('region', {name: 'controls'}).contains(buttonLabel.save);
+  cy.findByRole('region', {name: 'controls'}).findByRole('button', {
+    name: buttonLabel.save,
+  });
   cy.log('*** Region role for locator button ***');
-  cy.findByRole('region', {name: 'controls'}).contains(
-    buttonLabel.locator.default,
-  );
+  cy.findByRole('region', {name: 'controls'}).findByRole('button', {
+    name: buttonLabel.locator.default,
+  });
 });
