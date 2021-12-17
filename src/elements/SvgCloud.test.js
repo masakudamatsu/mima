@@ -11,12 +11,8 @@ const mockProps = {
 test('sets the SVG image size explicitly', () => {
   render(<SvgCloud {...mockProps} />);
   // Otherwise Safari fails to render the SVG image as a button label
-  expect(screen.getByRole('img', {name: mockProps.title})).toHaveAttribute(
-    'width',
-  );
-  expect(screen.getByRole('img', {name: mockProps.title})).toHaveAttribute(
-    'height',
-  );
+  expect(screen.getByTestId('svg-cloud')).toHaveAttribute('width');
+  expect(screen.getByTestId('svg-cloud')).toHaveAttribute('height');
 });
 
 describe('renders UI with each prop correctly', () => {
@@ -25,17 +21,12 @@ describe('renders UI with each prop correctly', () => {
     expect(container).toMatchInlineSnapshot(`
 <div>
   <svg
-    aria-labelledby="add"
+    aria-hidden="true"
+    data-testid="svg-cloud"
     height="48px"
-    role="img"
     viewBox="0 0 56 48"
     width="56px"
   >
-    <title
-      id="add"
-    >
-      mock accessible name
-    </title>
     <path
       d="M45.4620546,13.6147645 C51.6790144,16.4506152 56,22.7206975 56,30 C56,39.9411255 47.9411255,48 38,48 C32.9385058,48 28.3649488,45.9108926 25.09456,42.5479089 C22.9175971,43.482463 20.5192372,44 18,44 C8.0588745,44 0,35.9411255 0,26 C0,17.9805361 5.24437759,11.1859622 12.4906291,8.85878199 C15.6225135,3.55654277 21.3959192,0 28,0 C36.428553,0 43.5040602,5.79307725 45.4620546,13.6147645 Z"
       id="cloud"
@@ -54,17 +45,12 @@ describe('renders UI with each prop correctly', () => {
     expect(container).toMatchInlineSnapshot(`
 <div>
   <svg
-    aria-labelledby="flightFlying"
+    aria-hidden="true"
+    data-testid="svg-cloud"
     height="48px"
-    role="img"
     viewBox="0 0 56 48"
     width="56px"
   >
-    <title
-      id="flightFlying"
-    >
-      mock accessible name
-    </title>
     <path
       d="M45.4620546,13.6147645 C51.6790144,16.4506152 56,22.7206975 56,30 C56,39.9411255 47.9411255,48 38,48 C32.9385058,48 28.3649488,45.9108926 25.09456,42.5479089 C22.9175971,43.482463 20.5192372,44 18,44 C8.0588745,44 0,35.9411255 0,26 C0,17.9805361 5.24437759,11.1859622 12.4906291,8.85878199 C15.6225135,3.55654277 21.3959192,0 28,0 C36.428553,0 43.5040602,5.79307725 45.4620546,13.6147645 Z"
       id="cloud"
@@ -85,17 +71,12 @@ describe('renders UI with each prop correctly', () => {
     expect(container).toMatchInlineSnapshot(`
 <div>
   <svg
-    aria-labelledby="flightTakeoff"
+    aria-hidden="true"
+    data-testid="svg-cloud"
     height="48px"
-    role="img"
     viewBox="0 0 56 48"
     width="56px"
   >
-    <title
-      id="flightTakeoff"
-    >
-      mock accessible name
-    </title>
     <path
       d="M45.4620546,13.6147645 C51.6790144,16.4506152 56,22.7206975 56,30 C56,39.9411255 47.9411255,48 38,48 C32.9385058,48 28.3649488,45.9108926 25.09456,42.5479089 C22.9175971,43.482463 20.5192372,44 18,44 C8.0588745,44 0,35.9411255 0,26 C0,17.9805361 5.24437759,11.1859622 12.4906291,8.85878199 C15.6225135,3.55654277 21.3959192,0 28,0 C36.428553,0 43.5040602,5.79307725 45.4620546,13.6147645 Z"
       id="cloud"
@@ -114,17 +95,12 @@ describe('renders UI with each prop correctly', () => {
     expect(container).toMatchInlineSnapshot(`
 <div>
   <svg
-    aria-labelledby="menu"
+    aria-hidden="true"
+    data-testid="svg-cloud"
     height="48px"
-    role="img"
     viewBox="0 0 56 48"
     width="56px"
   >
-    <title
-      id="menu"
-    >
-      mock accessible name
-    </title>
     <path
       d="M45.4620546,13.6147645 C51.6790144,16.4506152 56,22.7206975 56,30 C56,39.9411255 47.9411255,48 38,48 C32.9385058,48 28.3649488,45.9108926 25.09456,42.5479089 C22.9175971,43.482463 20.5192372,44 18,44 C8.0588745,44 0,35.9411255 0,26 C0,17.9805361 5.24437759,11.1859622 12.4906291,8.85878199 C15.6225135,3.55654277 21.3959192,0 28,0 C36.428553,0 43.5040602,5.79307725 45.4620546,13.6147645 Z"
       id="cloud"
@@ -143,17 +119,12 @@ describe('renders UI with each prop correctly', () => {
     expect(container).toMatchInlineSnapshot(`
 <div>
   <svg
-    aria-labelledby="search"
+    aria-hidden="true"
+    data-testid="svg-cloud"
     height="48px"
-    role="img"
     viewBox="0 0 56 48"
     width="56px"
   >
-    <title
-      id="search"
-    >
-      mock accessible name
-    </title>
     <path
       d="M45.4620546,13.6147645 C51.6790144,16.4506152 56,22.7206975 56,30 C56,39.9411255 47.9411255,48 38,48 C32.9385058,48 28.3649488,45.9108926 25.09456,42.5479089 C22.9175971,43.482463 20.5192372,44 18,44 C8.0588745,44 0,35.9411255 0,26 C0,17.9805361 5.24437759,11.1859622 12.4906291,8.85878199 C15.6225135,3.55654277 21.3959192,0 28,0 C36.428553,0 43.5040602,5.79307725 45.4620546,13.6147645 Z"
       id="cloud"
@@ -172,17 +143,12 @@ describe('renders UI with each prop correctly', () => {
     expect(container).toMatchInlineSnapshot(`
 <div>
   <svg
-    aria-labelledby=""
+    aria-hidden="true"
+    data-testid="svg-cloud"
     height="48px"
-    role="img"
     viewBox="0 0 56 48"
     width="56px"
   >
-    <title
-      id=""
-    >
-      mock accessible name
-    </title>
     <path
       d="M45.4620546,13.6147645 C51.6790144,16.4506152 56,22.7206975 56,30 C56,39.9411255 47.9411255,48 38,48 C32.9385058,48 28.3649488,45.9108926 25.09456,42.5479089 C22.9175971,43.482463 20.5192372,44 18,44 C8.0588745,44 0,35.9411255 0,26 C0,17.9805361 5.24437759,11.1859622 12.4906291,8.85878199 C15.6225135,3.55654277 21.3959192,0 28,0 C36.428553,0 43.5040602,5.79307725 45.4620546,13.6147645 Z"
       id="cloud"
@@ -191,11 +157,6 @@ describe('renders UI with each prop correctly', () => {
 </div>
 `);
   });
-});
-
-test('has accessible name set by the title prop', () => {
-  render(<SvgCloud {...mockProps} />);
-  expect(screen.getByTitle(mockProps.title)).toBeInTheDocument();
 });
 
 test('Accessibility checks', async () => {

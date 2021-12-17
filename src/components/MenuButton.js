@@ -51,12 +51,13 @@ export const MenuButton = ({
   return (
     <nav>
       <Button
+        aria-label={buttonLabel.menu}
         data-position="top-left"
         data-testid="menu-button"
         onClick={handleClick}
         type="button"
       >
-        <SvgCloud icon="menu" title={buttonLabel.menu} />
+        <SvgCloud icon="menu" />
       </Button>
       <ModalPopup hidden={!open} slideFrom="left" titleId="menu-label">
         <Heading as="h2" id="menu-label">

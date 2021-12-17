@@ -7,8 +7,12 @@ import {buttonLabel} from 'src/utils/uiCopies';
 
 export const SavePlaceButton = () => {
   return (
-    <Button data-position="bottom-right" type="button">
-      <SvgCloud icon="add" title={buttonLabel.save} />
+    <Button
+      aria-label={buttonLabel.save}
+      data-position="bottom-right"
+      type="button"
+    >
+      <SvgCloud icon="add" />
     </Button>
   );
 };

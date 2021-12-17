@@ -89,7 +89,7 @@ describe('Once place detail is shown', () => {
       );
     });
     it('Shows Save button, the pressing of which closes the editor and focuses the Close button', () => {
-      cy.findByRole('button', {name: /save/i}).click();
+      cy.findByRole('button', {name: buttonLabel.saveEdit}).click();
       cy.findByRole('link', {name: /asahi\.com.*/i}).should('be.visible');
       cy.focused().should(
         'have.attr',
@@ -114,12 +114,12 @@ describe('Once place info editor is shown', () => {
       cy.findByText('abc').should('not.exist');
     });
     it('Pressing Save button changes place name', () => {
-      cy.findByRole('button', {name: /save/i}).click();
+      cy.findByRole('button', {name: buttonLabel.saveEdit}).click();
       cy.findByText('abc ' + placeName).should('be.visible');
       cy.findByRole('button', {name: 'abc ' + placeName}).should('be.visible');
     });
     it('Changes persist after refreshing the page', () => {
-      cy.findByRole('button', {name: /save/i}).click();
+      cy.findByRole('button', {name: buttonLabel.saveEdit}).click();
       cy.reload();
       cy.findByRole('button', {name: 'abc ' + placeName}).should('be.visible');
     });
@@ -136,7 +136,7 @@ describe('Once place info editor is shown', () => {
       cy.findByText('abc').should('not.exist');
     });
     it('Pressing Save button changes place note', () => {
-      cy.findByRole('button', {name: /save/i}).click();
+      cy.findByRole('button', {name: buttonLabel.saveEdit}).click();
       cy.findByText(/abc */).should('be.visible');
     });
   });
@@ -152,7 +152,7 @@ describe('Once place info editor is shown', () => {
       cy.findByRole('link', {name: /google\.com.*/i}).should('not.exist');
     });
     it('Pressing Save button changes place note', () => {
-      cy.findByRole('button', {name: /save/i}).click();
+      cy.findByRole('button', {name: buttonLabel.saveEdit}).click();
       cy.findByRole('link', {name: /google\.com.*/i}).should('be.visible');
     });
   });
