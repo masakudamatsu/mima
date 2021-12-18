@@ -1,23 +1,23 @@
-// import PropTypes from 'prop-types';
+import PropTypes from 'prop-types';
 
 import {Button} from 'src/elements/Button';
 import {SvgCloud} from 'src/elements/SvgCloud';
 
 import {buttonLabel} from 'src/utils/uiCopies';
 
-export const SearchButton = () => {
+export const SearchButton = ({setSearchBoxOpen}) => {
   return (
-    <form role="search">
-      <Button
-        aria-label={buttonLabel.search}
-        data-position="top-right"
-        type="button"
-      >
-        <SvgCloud icon="search" />
-      </Button>
-    </form>
+    <Button
+      aria-label={buttonLabel.search}
+      data-position="top-right"
+      onClick={() => setSearchBoxOpen(true)}
+      type="button"
+    >
+      <SvgCloud icon="search" />
+    </Button>
   );
 };
 
-// SearchButton.propTypes = {
-// };
+SearchButton.propTypes = {
+  setSearchBoxOpen: PropTypes.func,
+};
