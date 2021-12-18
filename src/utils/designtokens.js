@@ -126,6 +126,10 @@ export const duration = {
     },
     exit: '400ms',
   },
+  modal: {
+    enter: 300,
+    exit: 250,
+  },
 };
 
 export const easing = {

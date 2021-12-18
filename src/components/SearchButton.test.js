@@ -8,7 +8,7 @@ import {buttonLabel} from 'src/utils/uiCopies';
 
 const accessibleName = buttonLabel.search;
 const mockProps = {
-  setSearchBoxOpen: jest.fn().mockName('setSearchBoxOpen'),
+  handleClick: jest.fn().mockName('handleClick'),
 };
 
 describe('HTML checks', () => {
@@ -28,8 +28,8 @@ describe('Clicking the button', () => {
     render(<SearchButton {...mockProps} />);
     userEvent.click(screen.getByRole('button', {name: buttonLabel.search}));
   });
-  test(`calls a function specified with setSearchBoxOpen prop`, () => {
-    expect(mockProps.setSearchBoxOpen).toHaveBeenCalledTimes(1);
+  test(`calls a function specified with handleClick prop`, () => {
+    expect(mockProps.handleClick).toHaveBeenCalledTimes(1);
   });
 });
 

@@ -13,6 +13,23 @@ describe('DivCloudBackground component', () => {
   background-color: var(--popup-background-color-fallback);
   height: 100%;
   width: 100%;
+  -webkit-animation-duration: 300ms;
+  animation-duration: 300ms;
+  -webkit-animation-fill-mode: backwards;
+  animation-fill-mode: backwards;
+  -webkit-animation-name: jBcSpD;
+  animation-name: jBcSpD;
+  -webkit-animation-timing-fiunction: linear;
+  animation-timing-fiunction: linear;
+}
+
+.c0[data-transition-out='true'] {
+  -webkit-animation-duration: 250ms;
+  animation-duration: 250ms;
+  -webkit-animation-name: jiroXv;
+  animation-name: jiroXv;
+  -webkit-animation-fill-mode: forwards;
+  animation-fill-mode: forwards;
 }
 
 @supports (-webkit-backdrop-filter:blur(var(--blur-radius))) or (backdrop-filter:blur(var(--blur-radius))) {
