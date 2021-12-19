@@ -14,6 +14,8 @@ export const SearchBox = ({handleClickCloseButton}) => {
       <DivSearchBoxWrapper>
         <InputSearchBox
           aria-label="Search for a place on the map"
+          autoFocus
+          data-testid="search-box" // to test whether it's focused after opened
           placeholder="Enter place name or address"
           type="search"
         />{' '}

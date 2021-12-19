@@ -13,4 +13,7 @@ describe('Clicking search button', () => {
     cy.findByRole('button', {name: buttonLabel.close}).click();
     cy.findByRole('button', {name: buttonLabel.search}).should('exist');
   });
+  it('focuses the search box', () => {
+    cy.focused().should('have.attr', 'data-testid', 'search-box');
+  });
 });
