@@ -1,7 +1,6 @@
 import {useEffect, useState} from 'react';
 // import PropTypes from 'prop-types';
 
-import {CloseButton} from './CloseButton';
 import {SearchButton} from './SearchButton';
 
 import {DivCloudBackground} from 'src/elements/DivCloudBackground';
@@ -46,8 +45,7 @@ export const Search = () => {
           data-testid="cloud-background"
           data-transition-out={searchBoxOpen === 'closing'}
         >
-          <SearchBox />
-          <CloseButton handleClick={handleClickCloseButton} />
+          <SearchBox handleClickCloseButton={handleClickCloseButton} />
         </DivCloudBackground>
       )}
     </form>

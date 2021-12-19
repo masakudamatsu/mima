@@ -1,12 +1,12 @@
 import React from 'react';
-// import PropTypes from 'prop-types';
+import PropTypes from 'prop-types';
 
-export const SearchBox = ({children}) => {
-  return (
-    <>
-      <div>Search Box</div>
-    </>
-  );
+import {CloseButton} from './CloseButton';
+
+export const SearchBox = ({handleClickCloseButton}) => {
+  return <CloseButton handleClick={handleClickCloseButton} />;
 };
 
-// SearchBox.propTypes = {};
+SearchBox.propTypes = {
+  handleClickCloseButton: PropTypes.func,
+};
