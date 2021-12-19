@@ -13,6 +13,7 @@ export const buttonLabel = {
   save: 'Save place',
   saveEdit: 'Save',
   search: 'Search place',
+  searchSubmit: 'Submit search query',
 };
 
 export const menuLabel = 'Menu';

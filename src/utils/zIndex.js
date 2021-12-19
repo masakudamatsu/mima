@@ -8,6 +8,8 @@ const button = above + base;
 const divCloudBackground = above + button;
 const paragraphLoading = above + divCloudBackground;
 const closeButton = above + paragraphLoading;
+const divSearch = above + divCloudBackground;
+
 const divScrim = above + button;
 const divPopup = above + divScrim;
 
@@ -16,6 +18,7 @@ export const zIndex = {
   closeButton,
   divCloudBackground,
   divScrim,
+  divSearch,
   divPopup,
   paragraphLoading,
 };
