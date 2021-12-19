@@ -19,6 +19,8 @@ export const buttonLabel = {
 export const menuLabel = 'Menu';
 export const editorLabel = 'Edit place info';
 
+export const searchBoxLabel = 'Search for a place on the map';
+
 export const geolocationNotSupported = {
   what: `Unable to get location data from your browser`,
   why: `Your browser cannot handle location data in your device.`,
