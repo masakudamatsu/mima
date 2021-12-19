@@ -120,7 +120,7 @@ const setButtonShadow = `
 
 const blinkButton = css`
   &[data-loading='true'] {
-    animation: ${animation.flashing} ${duration.flashingButton} ${easing.linear}
+    animation: ${animation.flashing} ${duration.flashing} ${easing.linear}
       infinite;
   }
 `;

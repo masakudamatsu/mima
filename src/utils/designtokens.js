@@ -148,7 +148,7 @@ export const animation = {
   `,
 };
 export const duration = {
-  flashingButton: '1500ms',
+  flashing: '1500ms',
   menu: {
     enter: {
       opacity: '100ms', // more than 100ms will suggest the lack of response
