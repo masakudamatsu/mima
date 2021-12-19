@@ -19,15 +19,17 @@ describe('HTML checks', () => {
 });
 
 describe('Background div', () => {
-  beforeEach(() => {
+  beforeEach(async () => {
     render(<Search {...mockProps} />);
-    userEvent.click(screen.getByRole('button', {name: buttonLabel.search}));
+    await waitFor(() => {
+      userEvent.click(screen.getByRole('button', {name: buttonLabel.search}));
+    });
     jest.useFakeTimers();
   });
   afterEach(() => {
     jest.useRealTimers();
   });
-  test(`sets 'data-transition-out' attribute to be false by default`, () => {
+  test(`sets 'data-transition-out' attribute to be false by default`, async () => {
     expect(screen.getByTestId('cloud-background')).toHaveAttribute(
       'data-transition-out',
       'false',

@@ -9,6 +9,13 @@ import {ParagraphLoading} from 'src/elements/ParagraphLoading';
 
 import {duration} from 'src/utils/designtokens';
 
+import dynamic from 'next/dynamic';
+const importSearchBox = () =>
+  import('src/components/SearchBox').then(module => module.SearchBox);
+const SearchBox = dynamic(importSearchBox, {
+  loading: () => <ParagraphLoading>Loading...</ParagraphLoading>,
+});
+
 export const Search = () => {
   const [searchBoxOpen, setSearchBoxOpen] = useState('false');
 
@@ -36,7 +43,7 @@ export const Search = () => {
           data-testid="cloud-background"
           data-transition-out={searchBoxOpen === 'closing'}
         >
-          <ParagraphLoading>Loading...</ParagraphLoading>
+          <SearchBox />
           <CloseButton handleClick={handleClickCloseButton} />
         </DivCloudBackground>
       )}
