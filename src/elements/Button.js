@@ -1,6 +1,12 @@
-import styled, {css, keyframes} from 'styled-components';
+import styled, {css} from 'styled-components';
 
-import {color, dimension, duration, easing} from 'src/utils/designtokens';
+import {
+  animation,
+  color,
+  dimension,
+  duration,
+  easing,
+} from 'src/utils/designtokens';
 import {zIndex} from 'src/utils/zIndex';
 
 const resetStyle = `
@@ -112,21 +118,10 @@ const setButtonShadow = `
   }
 `;
 
-const flashing = keyframes`
-  0% {
-    opacity: 1;
-  }
-  50% {
-    opacity: 0;
-  }
-  100% {
-    opacity: 1;
-  }
-`;
-
 const blinkButton = css`
   &[data-loading='true'] {
-    animation: ${flashing} ${duration.flashingButton} ${easing.linear} infinite;
+    animation: ${animation.flashing} ${duration.flashingButton} ${easing.linear}
+      infinite;
   }
 `;
 

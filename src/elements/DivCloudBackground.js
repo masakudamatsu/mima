@@ -1,5 +1,5 @@
-import styled, {css, keyframes} from 'styled-components';
-import {duration} from 'src/utils/designtokens';
+import styled, {css} from 'styled-components';
+import {animation, duration} from 'src/utils/designtokens';
 import {zIndex} from 'src/utils/zIndex';
 
 const placeOverButtons = `
@@ -48,32 +48,14 @@ const setSize = `
   width: 100%;
 `;
 
-const fadeIn = keyframes`
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
-`;
-
-const fadeOut = keyframes`
-  from {
-    opacity: 1;
-  }
-  to {
-    opacity: 0;
-  }
-`;
-
 const animateTransition = css`
   animation-duration: ${duration.modal.enter}ms;
   animation-fill-mode: backwards;
-  animation-name: ${fadeIn};
+  animation-name: ${animation.fadeIn};
   animation-timing-fiunction: linear;
   &[data-transition-out='true'] {
     animation-duration: ${duration.modal.exit}ms;
-    animation-name: ${fadeOut};
+    animation-name: ${animation.fadeOut};
     animation-fill-mode: forwards;
   }
 `;

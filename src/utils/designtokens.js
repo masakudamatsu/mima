@@ -1,3 +1,4 @@
+import {keyframes} from 'styled-components';
 import {round} from './round';
 
 export const color = {
@@ -117,6 +118,35 @@ export const dimension = {
   },
 };
 
+export const animation = {
+  fadeIn: keyframes`
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  `,
+  fadeOut: keyframes`
+    from {
+      opacity: 1;
+    }
+    to {
+      opacity: 0;
+    }
+  `,
+  flashing: keyframes`
+    0% {
+      opacity: 1;
+    }
+    50% {
+      opacity: 0;
+    }
+    100% {
+      opacity: 1;
+    }    
+  `,
+};
 export const duration = {
   flashingButton: '1500ms',
   menu: {
