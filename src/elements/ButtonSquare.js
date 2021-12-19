@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 
 import {buttonSquare, color} from 'src/utils/designtokens';
+import {zIndex} from 'src/utils/zIndex';
 
 const resetStyle = `
   background-color: ${color['white 0']};
@@ -22,6 +23,7 @@ const positionButton = `
   position: absolute;
   right: 0;
   top: 0;
+  z-index: ${zIndex.closeButton};
 `;
 
 const setButtonLabelColor = `

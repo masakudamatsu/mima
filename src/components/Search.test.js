@@ -49,6 +49,16 @@ describe('Background div', () => {
   });
 });
 
+describe('Loading message', () => {
+  beforeEach(() => {
+    render(<Search {...mockProps} />);
+  });
+  test('appears after clicking search button', () => {
+    userEvent.click(screen.getByRole('button', {name: buttonLabel.search}));
+    expect(screen.getByText(/loading/i)).toBeVisible();
+  });
+});
+
 test('Accessibility checks', async () => {
   const {container} = render(<Search {...mockProps} />);
   const results = await axe(container);

@@ -5,6 +5,7 @@ import {CloseButton} from './CloseButton';
 import {SearchButton} from './SearchButton';
 
 import {DivCloudBackground} from 'src/elements/DivCloudBackground';
+import {ParagraphLoading} from 'src/elements/ParagraphLoading';
 
 import {duration} from 'src/utils/designtokens';
 
@@ -35,6 +36,7 @@ export const Search = () => {
           data-testid="cloud-background"
           data-transition-out={searchBoxOpen === 'closing'}
         >
+          <ParagraphLoading>Loading...</ParagraphLoading>
           <CloseButton handleClick={handleClickCloseButton} />
         </DivCloudBackground>
       )}

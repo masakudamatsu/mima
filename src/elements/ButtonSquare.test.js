@@ -27,6 +27,7 @@ describe('ButtonSquare component', () => {
   position: absolute;
   right: 0;
   top: 0;
+  z-index: 4;
 }
 
 .c0 svg {
