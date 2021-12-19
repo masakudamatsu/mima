@@ -5,12 +5,14 @@ import {SvgCloud} from 'src/elements/SvgCloud';
 
 import {buttonLabel} from 'src/utils/uiCopies';
 
-export const SearchButton = ({handleClick}) => {
+export const SearchButton = ({handleClick, importSearchBox}) => {
   return (
     <Button
       aria-label={buttonLabel.search}
       data-position="top-right"
       onClick={handleClick}
+      onFocus={importSearchBox}
+      onMouseEnter={importSearchBox}
       type="button"
     >
       <SvgCloud icon="search" />
@@ -20,4 +22,5 @@ export const SearchButton = ({handleClick}) => {
 
 SearchButton.propTypes = {
   handleClick: PropTypes.func,
+  importSearchBox: PropTypes.func,
 };

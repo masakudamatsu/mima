@@ -36,7 +36,10 @@ export const Search = () => {
   return (
     <form role="search">
       {searchBoxOpen !== 'true' && (
-        <SearchButton handleClick={handleClickSearchButton} />
+        <SearchButton
+          handleClick={handleClickSearchButton}
+          importSearchBox={importSearchBox}
+        />
       )}
       {searchBoxOpen !== 'false' && (
         <DivCloudBackground
