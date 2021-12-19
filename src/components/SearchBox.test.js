@@ -27,6 +27,12 @@ test('Accessibility checks', async () => {
   window.getComputedStyle = elt => getComputedStyle(elt);
 
   const {container} = render(<SearchBox {...mockProps} />);
-  const results = await axe(container);
+  const results = await axe(container, {
+    rules: {
+      tabindex: {enabled: false},
+      // react-focus-lock uses tabindex=1, which violates "Elements should not have tabindex greater than zero (tabindex)"
+      // for detail on the rule, see https://dequeuniversity.com/rules/axe/4.1/tabindex?application=axeAPI
+    },
+  });
   expect(results).toHaveNoViolations();
 });

@@ -16,4 +16,7 @@ describe('Clicking search button', () => {
   it('focuses the search box', () => {
     cy.focused().should('have.attr', 'data-testid', 'search-box');
   });
+  it.skip('traps focus within the search window', () => {
+    // use cypress-real-events plugin https://github.com/dmtrKovalenko/cypress-real-events
+  });
 });

@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import FocusLock from 'react-focus-lock';
 
 import {CloseButton} from './CloseButton';
 
@@ -11,7 +12,7 @@ import {searchBoxLabel} from 'src/utils/uiCopies';
 
 export const SearchBox = ({handleClickCloseButton}) => {
   return (
-    <>
+    <FocusLock>
       <CloseButton handleClick={handleClickCloseButton} />
       <DivSearchBoxWrapper>
         <InputSearchBox
@@ -24,7 +25,7 @@ export const SearchBox = ({handleClickCloseButton}) => {
         />{' '}
         <SearchSubmitButton />
       </DivSearchBoxWrapper>
-    </>
+    </FocusLock>
   );
 };
 
