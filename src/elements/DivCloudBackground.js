@@ -1,5 +1,5 @@
 import styled, {css} from 'styled-components';
-import {animation, duration} from 'src/utils/designtokens';
+import {animation, duration, easing} from 'src/utils/designtokens';
 import {zIndex} from 'src/utils/zIndex';
 
 const placeOverButtons = `
@@ -52,7 +52,7 @@ const animateTransition = css`
   animation-duration: ${duration.modal.enter}ms;
   animation-fill-mode: backwards;
   animation-name: ${animation.fadeIn};
-  animation-timing-fiunction: linear;
+  animation-timing-fiunction: ${easing.linear};
   &[data-transition-out='true'] {
     animation-duration: ${duration.modal.exit}ms;
     animation-name: ${animation.fadeOut};
