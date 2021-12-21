@@ -36,3 +36,15 @@ describe('Clicking search button', () => {
     );
   });
 });
+
+describe(`Once the search box is shown`, () => {
+  beforeEach(() => {
+    cy.visitAtDaytime('/');
+    cy.waitForMapToLoad();
+    cy.findByRole('button', {name: buttonLabel.search}).click();
+  });
+  it('Pressing close button focuses the search button', () => {
+    cy.findByRole('button', {name: buttonLabel.close}).click();
+    cy.focused().should('have.attr', 'data-testid', 'search-button');
+  });
+});

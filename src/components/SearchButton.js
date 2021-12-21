@@ -10,6 +10,7 @@ export const SearchButton = ({handleClick, importSearchBox}) => {
     <Button
       aria-label={buttonLabel.search}
       data-position="top-right"
+      data-testid="search-button"
       onClick={handleClick}
       onFocus={importSearchBox}
       onMouseEnter={importSearchBox}
