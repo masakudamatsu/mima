@@ -13,7 +13,7 @@ import {H2PlaceName} from 'src/elements/H2PlaceName';
 import {HeaderEditor} from 'src/elements/HeaderEditor';
 import {Heading} from 'src/elements/Heading';
 
-import {buttonLabel} from 'src/utils/uiCopies';
+import {buttonLabel, editorLabel} from 'src/utils/uiCopies';
 
 const withLayout = editor => {
   const {normalizeNode} = editor;
@@ -118,7 +118,7 @@ export const PlaceInfoEditor = ({
         >
           <HeaderEditor>
             <Heading as="h1" data-editor>
-              Edit place info
+              {editorLabel}
             </Heading>
             <section>
               <button

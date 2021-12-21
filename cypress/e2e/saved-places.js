@@ -1,4 +1,4 @@
-import {buttonLabel} from '../../src/utils/uiCopies';
+import {buttonLabel, editorLabel} from '../../src/utils/uiCopies';
 
 const placeName = '出逢ひ茶屋おせん';
 
@@ -71,6 +71,10 @@ describe('Once place detail is shown', () => {
   describe('Pressing Edit button', () => {
     beforeEach(() => {
       cy.findByRole('button', {name: buttonLabel.edit}).click();
+      // wait for lazy-loading to be done
+      cy.findByRole('heading', {name: editorLabel, timeout: 20000}).should(
+        'be.visible',
+      );
     });
     it('Shows the text editor', () => {
       cy.findByRole('textbox').type('abc ');
@@ -104,6 +108,10 @@ describe('Once place info editor is shown', () => {
     cy.visit('/');
     cy.findByRole('button', {name: placeName}).click();
     cy.findByRole('button', {name: buttonLabel.edit}).click();
+    // wait for lazy-loading to be done
+    cy.findByRole('heading', {name: editorLabel, timeout: 20000}).should(
+      'be.visible',
+    );
   });
   describe('Editing place name and ...', () => {
     beforeEach(() => {
