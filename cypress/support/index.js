@@ -27,6 +27,3 @@ import './commands';
 
 // Alternatively you can use CommonJS syntax:
 // require('./commands')
-
-// cypress-plugin-tab https://github.com/Bkucera/cypress-plugin-tab
-require('cypress-plugin-tab');
