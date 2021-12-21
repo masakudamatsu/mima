@@ -20,7 +20,22 @@ describe('Clicking search button', () => {
       'searchbox-first-focusable-element',
     );
   });
-  it.skip('traps focus within the search window', () => {
-    // use cypress-real-events plugin https://github.com/dmtrKovalenko/cypress-real-events
+  it('traps focus within the search window with Tab key', () => {
+    cy.findByTestId('searchbox-last-focusable-element').focus();
+    cy.realPress('Tab');
+    cy.focused().should(
+      'have.attr',
+      'data-testid',
+      'searchbox-first-focusable-element',
+    );
+  });
+  it('traps focus within the search window with Shift + Tab key', () => {
+    cy.findByTestId('searchbox-first-focusable-element').focus();
+    cy.realPress(['Shift', 'Tab']);
+    cy.focused().should(
+      'have.attr',
+      'data-testid',
+      'searchbox-last-focusable-element',
+    );
   });
 });

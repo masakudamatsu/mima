@@ -13,7 +13,10 @@ import {searchBoxLabel} from 'src/utils/uiCopies';
 export const SearchBox = ({handleClickCloseButton}) => {
   return (
     <FocusLock>
-      <CloseButton handleClick={handleClickCloseButton} />
+      <CloseButton
+        handleClick={handleClickCloseButton}
+        testId="searchbox-last-focusable-element" // to test focus management
+      />
       <DivSearchBoxWrapper>
         <InputSearchBox
           aria-label={searchBoxLabel}

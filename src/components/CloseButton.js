@@ -6,12 +6,12 @@ import {SvgClose} from 'src/elements/SvgClose';
 
 import {buttonLabel} from 'src/utils/uiCopies';
 
-export const CloseButton = ({autofocus = false, handleClick}) => {
+export const CloseButton = ({autofocus = false, handleClick, testId}) => {
   return (
     <>
       <ButtonSquare
         data-autofocus={autofocus}
-        data-testid="close-button-menu"
+        data-testid={testId}
         onClick={handleClick}
         type="button"
       >
@@ -24,4 +24,5 @@ export const CloseButton = ({autofocus = false, handleClick}) => {
 CloseButton.propTypes = {
   autofocus: PropTypes.bool,
   handleClick: PropTypes.func,
+  testId: PropTypes.string,
 };
