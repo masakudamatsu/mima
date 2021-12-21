@@ -16,6 +16,7 @@ export const buttonLabel = {
 };
 
 export const menuLabel = 'Menu';
+export const editorLabel = 'Edit place info';
 
 export const geolocationNotSupported = {
   what: `Unable to get location data from your browser`,

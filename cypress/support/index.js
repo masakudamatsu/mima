@@ -25,8 +25,8 @@ import '@percy/cypress';
 // Import commands.js using ES2015 syntax:
 import './commands';
 
+// cypress-real-events https://github.com/dmtrKovalenko/cypress-real-events
+import 'cypress-real-events/support';
+
 // Alternatively you can use CommonJS syntax:
 // require('./commands')
-
-// cypress-plugin-tab https://github.com/Bkucera/cypress-plugin-tab
-require('cypress-plugin-tab');
