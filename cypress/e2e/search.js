@@ -6,12 +6,9 @@ describe('Clicking search button', () => {
     cy.waitForMapToLoad();
     cy.findByRole('button', {name: buttonLabel.search}).click();
   });
-  it(`disables the search button`, () => {
-    cy.findByRole('button', {name: buttonLabel.search}).should('not.exist');
-  });
   it(`shows close button to get back to map view`, () => {
     cy.findByRole('button', {name: buttonLabel.close}).click();
-    cy.findByRole('button', {name: buttonLabel.search}).should('exist');
+    cy.findByRole('button', {name: buttonLabel.close}).should('not.exist');
   });
   it('focuses the search box', () => {
     cy.focused().should(
