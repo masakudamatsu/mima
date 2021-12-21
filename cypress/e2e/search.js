@@ -14,7 +14,11 @@ describe('Clicking search button', () => {
     cy.findByRole('button', {name: buttonLabel.search}).should('exist');
   });
   it('focuses the search box', () => {
-    cy.focused().should('have.attr', 'data-testid', 'search-box');
+    cy.focused().should(
+      'have.attr',
+      'data-testid',
+      'searchbox-first-focusable-element',
+    );
   });
   it.skip('traps focus within the search window', () => {
     // use cypress-real-events plugin https://github.com/dmtrKovalenko/cypress-real-events

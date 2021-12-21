@@ -18,7 +18,7 @@ export const SearchBox = ({handleClickCloseButton}) => {
         <InputSearchBox
           aria-label={searchBoxLabel}
           autoFocus
-          data-testid="search-box" // to test whether it's focused after opened
+          data-testid="searchbox-first-focusable-element" // to test focus management
           inputMode="search"
           placeholder="Enter place name or address"
           type="search"
