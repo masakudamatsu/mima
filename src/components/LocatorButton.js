@@ -74,7 +74,11 @@ export const LocatorButton = ({
         </Heading>
         <p>{geolocationPositionUnavailable.why}</p>
         <p>{geolocationPositionUnavailable.how}</p>
-        <ButtonDialog onClick={trackUserLocation} type="button">
+        <ButtonDialog
+          data-testid="primary-button-unavailable"
+          onClick={trackUserLocation}
+          type="button"
+        >
           {geolocationPositionUnavailable.button.primary}
         </ButtonDialog>
         <ButtonDialog
