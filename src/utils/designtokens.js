@@ -176,6 +176,17 @@ export const buttonSquare = {
   clickableArea: dimension.button['minimum target size 100'],
 };
 
+export const svgPlace = {
+  heightInner: `20px`,
+  heightOuter: `24px`,
+  marginBottom: `2px`,
+  marginLeft: `4px`,
+  marginRight: `4px`,
+  marginTop: `2px`,
+  widthInner: `16px`,
+  widthOuter: `24px`,
+}; // see sketch/svg-place.sketch
+
 // Font styling
 
 const metrics = {
