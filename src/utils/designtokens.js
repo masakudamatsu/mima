@@ -116,6 +116,10 @@ export const dimension = {
     'margin 133': `32px`,
     'margin 200': `48px`,
   },
+  searchBox: {
+    'border width 100': '2px',
+    'side margin 100': '8px',
+  },
 };
 
 export const animation = {

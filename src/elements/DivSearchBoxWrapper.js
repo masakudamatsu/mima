@@ -2,19 +2,16 @@ import styled from 'styled-components';
 import {buttonSquare, dimension} from 'src/utils/designtokens';
 import {zIndex} from 'src/utils/zIndex';
 
-const minSideMargin = 8;
-const borderWidth = `2px`;
-
 const setSize = `
-  height: calc(2 * ${borderWidth} + ${dimension.button['minimum target size 100']});
+  height: calc(2 * ${dimension.searchBox['border width 100']} + ${dimension.button['minimum target size 100']});
   max-width: 584px; /* follow google.com */
 `;
 
 const centerAlignOverMap = `
-  left: ${minSideMargin}px;
+  left: ${dimension.searchBox['side margin 100']};
   margin: 0 auto; /* for center-alignment once width hits max-width */
   position: absolute;
-  right: ${minSideMargin}px;
+  right: ${dimension.searchBox['side margin 100']};
   z-index: ${zIndex.divSearch};
 `;
 
@@ -33,7 +30,7 @@ const alignContent = `
 `;
 
 const drawBorder = `
-  border: ${borderWidth} solid var(--button-label-color-default);
+  border: ${dimension.searchBox['border width 100']} solid var(--button-label-color-default);
   border-radius: calc(${dimension.button['minimum target size 100']} / 2);
   &:focus-within {
     border-color: var(--button-label-color-focus);
