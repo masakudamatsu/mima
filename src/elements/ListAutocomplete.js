@@ -18,25 +18,25 @@ const positionList = `
 `;
 
 const shapeListItems = `  
-  & div {
+  & li {
     height: ${dimension.button['minimum target size 100']};
   }
 `;
 
 const positionListItems = `
-  & div:not(:first-of-type) {
+  & li:not(:first-of-type) {
     margin-top: ${dimension.button['minimum target spacing 100']};
   }
 `;
 
 const colorListItems = `
-  & div {
+  & li {
     background-color: ${color['white 93']};
   }
 `;
 
 const positionListItemContent = `
-  & div {
+  & li dl {
     align-items: center;
     display: grid;
     grid-column-gap: ${dimension.button['minimum target spacing 100']};
@@ -44,15 +44,15 @@ const positionListItemContent = `
     grid-template-rows: 50% 50%;
     padding: 0 ${dimension.button['minimum target spacing 100']};
   }
-  & div dd[data-dd-type="icon"] {
+  & li dl dd[data-dd-type="icon"] {
     grid-column: 1 / span 1;
     grid-row: 1 / span 2;
   }
-  & div dt {
+  & li dl dt {
     grid-column: 2 / span 1;
     grid-row: 1 / span 1;
   }
-  & div dd[data-dd-type="address"] {
+  & li dl dd[data-dd-type="address"] {
     grid-column: 2 / span 1;
     grid-row: 2 / span 1;
   }
@@ -67,13 +67,13 @@ const truncateText = `
 const styleText = `
   font-family: ${bodyText.fontFamily};
   font-size: 1rem;
-  & div dt,
-  & div dd[data-dd-type="address"] {
+  & li dl dt,
+  & li dl dd[data-dd-type="address"] {
     ${truncateText}
   }
 `;
 
-export const DescListAutocomplete = styled.dl`
+export const ListAutocomplete = styled.ul`
   ${positionList}
   ${shapeListItems}
   ${positionListItems}

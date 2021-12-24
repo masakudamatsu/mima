@@ -6,7 +6,7 @@ import {CloseButton} from './CloseButton';
 
 import {DivSearchBoxWrapper} from 'src/elements/DivSearchBoxWrapper';
 import {InputSearchBox} from 'src/elements/InputSearchBox';
-import {DescListAutocomplete} from 'src/elements/DescListAutocomplete';
+import {ListAutocomplete} from 'src/elements/ListAutocomplete';
 import {SearchSubmitButton} from './SearchSubmitButton';
 import {SvgPlace} from 'src/elements/SvgPlace';
 import {VisuallyHidden} from 'src/elements/VisuallyHidden';
@@ -31,28 +31,32 @@ export const SearchBox = ({handleClickCloseButton}) => {
         />{' '}
         <SearchSubmitButton />
       </DivSearchBoxWrapper>
-      <DescListAutocomplete>
-        <div>
-          <dt>Fukuda Art Museum</dt>
-          <dd data-dd-type="address">
-            3-16 Sagatenryuji Susukinobabacho, Ukyo Ward, Kyoto
-          </dd>
-          <dd data-dd-type="icon">
-            <SvgPlace />
-            <VisuallyHidden as="span">Found in Google Maps</VisuallyHidden>
-          </dd>
-        </div>
-        <div>
-          <dt>bread, espresso & fukuda museum of art</dt>
-          <dd data-dd-type="address">
-            3-16 Sagatenryuji Susukinobabacho, Ukyo Ward, Kyoto
-          </dd>
-          <dd data-dd-type="icon">
-            <SvgPlace />
-            <VisuallyHidden as="span">Found in Google Maps</VisuallyHidden>
-          </dd>
-        </div>
-      </DescListAutocomplete>
+      <ListAutocomplete>
+        <li>
+          <dl>
+            <dt>Fukuda Art Museum</dt>
+            <dd data-dd-type="address">
+              3-16 Sagatenryuji Susukinobabacho, Ukyo Ward, Kyoto
+            </dd>
+            <dd data-dd-type="icon">
+              <SvgPlace />
+              <VisuallyHidden as="span">Found in Google Maps</VisuallyHidden>
+            </dd>
+          </dl>
+        </li>
+        <li>
+          <dl>
+            <dt>bread, espresso & fukuda museum of art</dt>
+            <dd data-dd-type="address">
+              3-16 Sagatenryuji Susukinobabacho, Ukyo Ward, Kyoto
+            </dd>
+            <dd data-dd-type="icon">
+              <SvgPlace />
+              <VisuallyHidden as="span">Found in Google Maps</VisuallyHidden>
+            </dd>
+          </dl>
+        </li>
+      </ListAutocomplete>
     </FocusLock>
   );
 };
