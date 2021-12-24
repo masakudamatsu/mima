@@ -1,6 +1,7 @@
-import React from 'react';
+import {useState} from 'react';
 import PropTypes from 'prop-types';
 import FocusLock from 'react-focus-lock';
+import {useCombobox} from 'downshift';
 
 import {CloseButton} from './CloseButton';
 
@@ -14,48 +15,77 @@ import {VisuallyHidden} from 'src/elements/VisuallyHidden';
 import {searchBoxLabel} from 'src/utils/uiCopies';
 
 export const SearchBox = ({handleClickCloseButton}) => {
+  const google = window.google;
+  const service = new google.maps.places.AutocompleteService();
+  const [inputItems, setInputItems] = useState([]);
+  const {
+    getComboboxProps,
+    getInputProps,
+    getItemProps,
+    getLabelProps,
+    getMenuProps,
+    isOpen,
+  } = useCombobox({
+    items: inputItems,
+    onInputValueChange: ({inputValue}) => {
+      service.getPlacePredictions(
+        // returns place predictions. Note: A 'place' can be an establishment, geographic location, or prominent point of interest, as defined by the Places API.
+        {input: inputValue},
+        (predictions, status) => {
+          if (status === 'OK') {
+            const autocompleteSuggestions = predictions.map(prediction => {
+              return {
+                id: prediction.place_id,
+                name: prediction.description,
+              };
+            });
+            setInputItems(autocompleteSuggestions);
+          }
+        },
+      );
+    },
+  });
+
   return (
     <FocusLock returnFocus>
       <CloseButton
         handleClick={handleClickCloseButton}
         testId="searchbox-last-focusable-element" // to test focus management
       />
-      <DivSearchBoxWrapper>
+      <DivSearchBoxWrapper {...getComboboxProps()}>
+        <VisuallyHidden {...getLabelProps()} as="label">
+          {searchBoxLabel.ariaLabel}
+        </VisuallyHidden>
         <InputSearchBox
-          aria-label={searchBoxLabel.ariaLabel}
-          autoFocus
-          data-testid="searchbox-first-focusable-element" // to test focus management
-          inputMode="search"
-          placeholder={searchBoxLabel.placeholder}
-          type="search"
+          {...getInputProps({
+            autoFocus: true,
+            'data-testid': 'searchbox-first-focusable-element', // to test focus management
+            inputMode: 'search',
+            placeholder: searchBoxLabel.placeholder,
+            type: 'search',
+          })}
         />{' '}
         <SearchSubmitButton />
       </DivSearchBoxWrapper>
-      <ListAutocomplete>
-        <li>
-          <dl>
-            <dt>Fukuda Art Museum</dt>
-            <dd data-dd-type="address">
-              3-16 Sagatenryuji Susukinobabacho, Ukyo Ward, Kyoto
-            </dd>
-            <dd data-dd-type="icon">
-              <SvgPlace />
-              <VisuallyHidden as="span">Found in Google Maps</VisuallyHidden>
-            </dd>
-          </dl>
-        </li>
-        <li>
-          <dl>
-            <dt>bread, espresso & fukuda museum of art</dt>
-            <dd data-dd-type="address">
-              3-16 Sagatenryuji Susukinobabacho, Ukyo Ward, Kyoto
-            </dd>
-            <dd data-dd-type="icon">
-              <SvgPlace />
-              <VisuallyHidden as="span">Found in Google Maps</VisuallyHidden>
-            </dd>
-          </dl>
-        </li>
+      <ListAutocomplete {...getMenuProps()}>
+        {isOpen
+          ? inputItems.map((item, index) => {
+              return (
+                <li key={item.id} {...getItemProps({item, index})}>
+                  <dl>
+                    <dt>{item.name}</dt>
+                    <dd data-dd-type="address">{item.address}</dd>
+                    <dd data-dd-type="icon">
+                      <SvgPlace />
+                      <VisuallyHidden as="span">
+                        Found in Google Maps
+                      </VisuallyHidden>
+                    </dd>
+                  </dl>
+                </li>
+              );
+            })
+          : null}
       </ListAutocomplete>
     </FocusLock>
   );

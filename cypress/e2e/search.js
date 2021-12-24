@@ -54,4 +54,8 @@ describe(`Once the search box is shown`, () => {
       'searchbox-last-focusable-element',
     );
   });
+  it('Entering text in search box shows selectable autocomplete suggestions', () => {
+    cy.findByLabelText(searchBoxLabel.ariaLabel).realType('fukuda a');
+    cy.findByRole('option', {name: /fukuda art museum./i}).should('be.visible');
+  });
 });
