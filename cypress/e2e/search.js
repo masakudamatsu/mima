@@ -32,13 +32,6 @@ describe(`Once the search box is shown`, () => {
     cy.waitForMapToLoad();
     cy.findByRole('button', {name: buttonLabel.search}).click();
   });
-  it('Focusing search box shows a return key labeled with "Go" in iOS or magnifying glass icon in Android', () => {
-    cy.findByLabelText(searchBoxLabel.ariaLabel).should(
-      'have.attr',
-      'inputmode',
-      'search',
-    );
-  });
   it('Pressing close button focuses the search button', () => {
     cy.findByRole('button', {name: buttonLabel.close}).click();
     cy.focused().should('have.attr', 'data-testid', 'search-button');
