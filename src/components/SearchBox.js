@@ -22,11 +22,11 @@ export const SearchBox = ({handleClickCloseButton}) => {
       />
       <DivSearchBoxWrapper>
         <InputSearchBox
-          aria-label={searchBoxLabel}
+          aria-label={searchBoxLabel.ariaLabel}
           autoFocus
           data-testid="searchbox-first-focusable-element" // to test focus management
           inputMode="search"
-          placeholder="Enter place name or address"
+          placeholder={searchBoxLabel.placeholder}
           type="search"
         />{' '}
         <SearchSubmitButton />

@@ -17,6 +17,13 @@ describe('Clicking search button', () => {
       'searchbox-first-focusable-element',
     );
   });
+  it(`shows "${searchBoxLabel.placeholder}" as search box's placeholder text`, () => {
+    cy.findByLabelText(searchBoxLabel.ariaLabel).should(
+      'have.attr',
+      'placeholder',
+      searchBoxLabel.placeholder,
+    );
+  });
 });
 
 describe(`Once the search box is shown`, () => {
@@ -26,7 +33,7 @@ describe(`Once the search box is shown`, () => {
     cy.findByRole('button', {name: buttonLabel.search}).click();
   });
   it('Focusing search box shows a return key labeled with "Go" in iOS or magnifying glass icon in Android', () => {
-    cy.findByLabelText(searchBoxLabel).should(
+    cy.findByLabelText(searchBoxLabel.ariaLabel).should(
       'have.attr',
       'inputmode',
       'search',

@@ -19,7 +19,10 @@ export const buttonLabel = {
 export const menuLabel = 'Menu';
 export const editorLabel = 'Edit place info';
 
-export const searchBoxLabel = 'Search for a place on the map';
+export const searchBoxLabel = {
+  ariaLabel: 'Search for a place on the map',
+  placeholder: 'Enter place name or address',
+};
 
 export const geolocationNotSupported = {
   what: `Unable to get location data from your browser`,
