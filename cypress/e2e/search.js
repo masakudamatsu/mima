@@ -17,6 +17,18 @@ describe('Clicking search button', () => {
       'searchbox-first-focusable-element',
     );
   });
+});
+
+describe(`Once the search box is shown`, () => {
+  beforeEach(() => {
+    cy.visitAtDaytime('/');
+    cy.waitForMapToLoad();
+    cy.findByRole('button', {name: buttonLabel.search}).click();
+  });
+  it('Pressing close button focuses the search button', () => {
+    cy.findByRole('button', {name: buttonLabel.close}).click();
+    cy.focused().should('have.attr', 'data-testid', 'search-button');
+  });
   it('traps focus within the search window with Tab key', () => {
     cy.findByTestId('searchbox-last-focusable-element').focus();
     cy.realPress('Tab');
@@ -34,17 +46,5 @@ describe('Clicking search button', () => {
       'data-testid',
       'searchbox-last-focusable-element',
     );
-  });
-});
-
-describe(`Once the search box is shown`, () => {
-  beforeEach(() => {
-    cy.visitAtDaytime('/');
-    cy.waitForMapToLoad();
-    cy.findByRole('button', {name: buttonLabel.search}).click();
-  });
-  it('Pressing close button focuses the search button', () => {
-    cy.findByRole('button', {name: buttonLabel.close}).click();
-    cy.focused().should('have.attr', 'data-testid', 'search-button');
   });
 });
