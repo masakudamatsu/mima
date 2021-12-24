@@ -1,4 +1,4 @@
-import {buttonLabel} from '../../src/utils/uiCopies';
+import {buttonLabel, searchBoxLabel} from '../../src/utils/uiCopies';
 
 describe('Clicking search button', () => {
   beforeEach(() => {
@@ -24,6 +24,13 @@ describe(`Once the search box is shown`, () => {
     cy.visitAtDaytime('/');
     cy.waitForMapToLoad();
     cy.findByRole('button', {name: buttonLabel.search}).click();
+  });
+  it('Focusing search box shows a return key labeled with "Go" in iOS or magnifying glass icon in Android', () => {
+    cy.findByLabelText(searchBoxLabel).should(
+      'have.attr',
+      'inputmode',
+      'search',
+    );
   });
   it('Pressing close button focuses the search button', () => {
     cy.findByRole('button', {name: buttonLabel.close}).click();
