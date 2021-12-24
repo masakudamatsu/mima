@@ -26,7 +26,11 @@ function HomePage() {
       </Head>
       <Noscript />
       <Controls mapObject={mapObject} />
-      <Wrapper apiKey={process.env.NEXT_PUBLIC_API_KEY} version="weekly">
+      <Wrapper
+        apiKey={process.env.NEXT_PUBLIC_API_KEY}
+        version="weekly"
+        libraries={['places']}
+      >
         <Map setMapObject={setMapObject} />
         <SavedPlaces mapObject={mapObject} />
       </Wrapper>
