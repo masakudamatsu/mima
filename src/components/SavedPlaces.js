@@ -112,6 +112,7 @@ export const SavedPlaces = ({mapObject}) => {
   // close with Esc key
   useOnEscKeyDown(selectedPlace, closePlaceInfo);
 
+  // for updating place info
   if (selectedPlace) {
     const selectedPlaceIndex = userData.features.findIndex(
       feature => feature.properties.id === selectedPlace.id,
