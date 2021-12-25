@@ -40,7 +40,8 @@ export const SearchBox = ({handleClickCloseButton}) => {
             const autocompleteSuggestions = predictions.map(prediction => {
               return {
                 id: prediction.place_id,
-                name: prediction.description,
+                name: prediction.structured_formatting.main_text,
+                address: prediction.structured_formatting.secondary_text,
               };
             });
             setInputItems(autocompleteSuggestions);
