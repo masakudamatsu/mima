@@ -9,6 +9,8 @@ const mockAutocompleteSessionToken = jest.fn(() => {
   return {Vl: crypto.randomBytes(16).toString('hex')}; // https://www.geeksforgeeks.org/node-js-crypto-randombytes-method/
 });
 
+export const mockGetDetails = jest.fn().mockName('getDetails');
+
 export function mockPlacesApi() {
   global.google = {
     maps: {
@@ -19,6 +21,11 @@ export function mockPlacesApi() {
           };
         }),
         AutocompleteSessionToken: mockAutocompleteSessionToken,
+        PlacesService: jest.fn(() => {
+          return {
+            getDetails: mockGetDetails,
+          };
+        }),
       },
     },
   };

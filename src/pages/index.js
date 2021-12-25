@@ -10,6 +10,7 @@ import {Controls} from 'src/components/Controls';
 import {Map} from 'src/components/Map';
 import {Noscript} from 'src/components/Noscript';
 import {SavedPlaces} from 'src/components/SavedPlaces';
+import {SearchedPlace} from 'src/components/SearchedPlace';
 
 function HomePage() {
   const nightMode = useContext(NightModeContext);
@@ -33,6 +34,7 @@ function HomePage() {
       >
         <Map setMapObject={setMapObject} />
         <SavedPlaces mapObject={mapObject} />
+        <SearchedPlace mapObject={mapObject} />
       </Wrapper>
     </>
   );
