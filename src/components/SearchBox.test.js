@@ -5,27 +5,14 @@ import {axe} from 'jest-axe';
 
 import {SearchBox} from './SearchBox';
 import {searchBoxLabel} from 'src/utils/uiCopies';
+import {mockGetPlacePredictions, mockPlacesApi} from 'src/utils/mockFunfctions';
+
+beforeEach(() => {
+  mockPlacesApi();
+});
 
 const mockProps = {};
 
-const mockGetPlacePredictions = jest.fn().mockName('getPlacePredictions');
-function initialize() {
-  global.google = {
-    maps: {
-      places: {
-        AutocompleteService: jest.fn(() => {
-          return {
-            getPlacePredictions: mockGetPlacePredictions,
-          };
-        }),
-      },
-    },
-  };
-}
-
-beforeEach(() => {
-  initialize();
-});
 test(`Input search element's inputmode attribute is set to be "search"`, () => {
   // To show mobile keyboards with the return key labelled "Go" in iOS or magnifying glass icon in Android;
   // See https://css-tricks.com/everything-you-ever-wanted-to-know-about-inputmode/
@@ -46,6 +33,25 @@ test('calls getPlacePredictions() each time typing a character in search box', (
     expect(mockGetPlacePredictions).toHaveBeenCalledTimes(searchTerm.length);
     mockGetPlacePredictions.mockClear();
   });
+});
+
+test('calls getPlacePredictions() with the same session token', () => {
+  render(<SearchBox {...mockProps} />);
+
+  // execute
+  userEvent.type(
+    screen.getByLabelText(searchBoxLabel.ariaLabel, {selector: 'input'}),
+    'o',
+  );
+  userEvent.type(
+    screen.getByLabelText(searchBoxLabel.ariaLabel, {selector: 'input'}),
+    'k',
+  );
+
+  // verify
+  const firstToken = mockGetPlacePredictions.mock.calls[0][0].sessionToken.Vl;
+  const secondToken = mockGetPlacePredictions.mock.calls[1][0].sessionToken.Vl;
+  expect(secondToken).toBe(firstToken);
 });
 
 test('Accessibility checks', async () => {

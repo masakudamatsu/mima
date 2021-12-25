@@ -7,21 +7,16 @@ import {Search} from './Search';
 import {buttonLabel} from 'src/utils/uiCopies';
 import {duration} from 'src/utils/designtokens';
 
-const mockProps = {};
+import {mockPlacesApi} from 'src/utils/mockFunfctions';
 
-function initialize() {
-  global.google = {
-    maps: {
-      places: {
-        AutocompleteService: jest.fn(),
-      },
-    },
-  };
-}
+beforeEach(() => {
+  mockPlacesApi();
+});
+
+const mockProps = {};
 
 describe('HTML checks', () => {
   beforeEach(() => {
-    initialize();
     render(<Search {...mockProps} />);
   });
   test(`assigns the "search" landmark role`, () => {
@@ -31,7 +26,6 @@ describe('HTML checks', () => {
 
 describe('Background div', () => {
   beforeEach(async () => {
-    initialize();
     render(<Search {...mockProps} />);
     await waitFor(() => {
       userEvent.click(screen.getByRole('button', {name: buttonLabel.search}));
@@ -65,7 +59,6 @@ describe('Background div', () => {
 
 describe.skip('Loading message', () => {
   beforeEach(() => {
-    initialize();
     render(<Search {...mockProps} />);
   });
   test('appears after clicking search button', () => {
@@ -75,7 +68,6 @@ describe.skip('Loading message', () => {
 });
 
 test('Accessibility checks', async () => {
-  initialize();
   const {container} = render(<Search {...mockProps} />);
   const results = await axe(container);
   expect(results).toHaveNoViolations();

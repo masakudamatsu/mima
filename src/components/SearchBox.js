@@ -1,4 +1,4 @@
-import {useState} from 'react';
+import {useMemo, useState} from 'react';
 import PropTypes from 'prop-types';
 import FocusLock from 'react-focus-lock';
 import {useCombobox} from 'downshift';
@@ -17,6 +17,10 @@ import {searchBoxLabel} from 'src/utils/uiCopies';
 export const SearchBox = ({handleClickCloseButton}) => {
   const google = window.google;
   const service = new google.maps.places.AutocompleteService();
+  const sessionToken = useMemo(
+    () => new google.maps.places.AutocompleteSessionToken(),
+    [google.maps.places.AutocompleteSessionToken],
+  );
   const [inputItems, setInputItems] = useState([]);
   const {
     getComboboxProps,
@@ -30,7 +34,7 @@ export const SearchBox = ({handleClickCloseButton}) => {
     onInputValueChange: ({inputValue}) => {
       service.getPlacePredictions(
         // returns place predictions. Note: A 'place' can be an establishment, geographic location, or prominent point of interest, as defined by the Places API.
-        {input: inputValue},
+        {input: inputValue, sessionToken: sessionToken},
         (predictions, status) => {
           if (status === 'OK') {
             const autocompleteSuggestions = predictions.map(prediction => {
