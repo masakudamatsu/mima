@@ -33,6 +33,11 @@ describe('Search feature', () => {
     cy.focused().realType(searchWords);
     cy.log('**...Shows autocomplete suggestions**');
     cy.findByRole('option', {name: placeName}).should('be.visible');
+
+    cy.log('**Selecting one of the autocomplete suggestions**');
+    cy.findByRole('option', {name: placeName}).click();
+    cy.log('**...Shows the place on the map**');
+    cy.findByRole('button', {name: placeName}).should('be.visible');
   });
   it(`allows user to close search box`, () => {
     cy.log('**Verify the absence of elements to be shown**');

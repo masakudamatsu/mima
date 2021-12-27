@@ -1,4 +1,4 @@
-import {useMemo, useState} from 'react';
+import {useContext, useMemo, useState} from 'react';
 import PropTypes from 'prop-types';
 import FocusLock from 'react-focus-lock';
 import {useCombobox} from 'downshift';
@@ -12,10 +12,13 @@ import {SearchSubmitButton} from './SearchSubmitButton';
 import {SvgPlace} from 'src/elements/SvgPlace';
 import {VisuallyHidden} from 'src/elements/VisuallyHidden';
 
+import {PlaceIdContext} from 'src/wrappers/PlaceIdContext';
 import {autocomplete} from 'src/utils/designtokens';
 import {searchBoxLabel} from 'src/utils/uiCopies';
 
 export const SearchBox = ({handleClickCloseButton}) => {
+  const [, setPlaceId] = useContext(PlaceIdContext);
+
   const google = window.google;
   const service = new google.maps.places.AutocompleteService();
   const sessionToken = useMemo(
@@ -82,6 +85,10 @@ export const SearchBox = ({handleClickCloseButton}) => {
                   key={item.id}
                   style={highlightedIndex === index ? autocomplete.focus : {}}
                   {...getItemProps({item, index})}
+                  onClick={() => {
+                    setPlaceId(item.id);
+                    handleClickCloseButton();
+                  }}
                 >
                   <dl>
                     <dt>{item.name}</dt>

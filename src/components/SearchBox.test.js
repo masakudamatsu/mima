@@ -1,11 +1,20 @@
 // eslint-disable-next-line no-unused-vars
-import {render, screen} from '@testing-library/react';
+import {render as rtlRender, screen} from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import {axe} from 'jest-axe';
 
 import {SearchBox} from './SearchBox';
 import {searchBoxLabel} from 'src/utils/uiCopies';
+
+import {PlaceIdProvider} from 'src/wrappers/PlaceIdContext';
 import {mockGetPlacePredictions, mockPlacesApi} from 'src/utils/mockFunfctions';
+
+function Wrapper({children}) {
+  return <PlaceIdProvider>{children}</PlaceIdProvider>;
+}
+function render(ui, options) {
+  return rtlRender(ui, {wrapper: Wrapper, ...options});
+}
 
 beforeEach(() => {
   mockPlacesApi();
