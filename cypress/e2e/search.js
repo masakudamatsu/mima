@@ -1,61 +1,64 @@
 import {buttonLabel, searchBoxLabel} from '../../src/utils/uiCopies';
 
-describe('Clicking search button', () => {
+const searchWords = 'hoxton hotel london';
+const placeName = /.*hoxton, shoreditch.*/i;
+
+describe('Search feature', () => {
   beforeEach(() => {
-    cy.visitAtDaytime('/');
+    cy.log('**Loading app**');
+    cy.visit('/');
     cy.waitForMapToLoad();
+  });
+  it('happy path for mobile/mouse users', () => {
+    cy.log('**Verify the absence of elements to be shown**');
+    cy.findByRole('searchbox').should('not.exist');
+    cy.findByRole('option', {name: placeName}).should('not.exist');
+    cy.findByRole('button', {name: placeName}).should('not.exist');
+
+    cy.log('**Clicking search icon button...**');
     cy.findByRole('button', {name: buttonLabel.search}).click();
-  });
-  it(`shows close button to get back to map view`, () => {
-    cy.findByRole('button', {name: buttonLabel.close}).click();
-    cy.findByRole('button', {name: buttonLabel.close}).should('not.exist');
-  });
-  it('focuses the search box', () => {
-    cy.focused().should(
-      'have.attr',
-      'data-testid',
-      'searchbox-first-focusable-element',
-    );
-  });
-  it(`shows "${searchBoxLabel.placeholder}" as search box's placeholder text`, () => {
-    cy.findByLabelText(searchBoxLabel.ariaLabel).should(
+    cy.log('**...Shows a search box**');
+    cy.findByRole('searchbox').should('be.visible');
+    cy.log(`**...Shows placeholder text "${searchBoxLabel.placeholder}"**`);
+    cy.findByRole('searchbox').should(
       'have.attr',
       'placeholder',
       searchBoxLabel.placeholder,
     );
-  });
-});
+    cy.log('**...Autofocuses the search box**');
+    cy.focused().should('have.attr', 'type', 'search');
 
-describe(`Once the search box is shown`, () => {
-  beforeEach(() => {
-    cy.visitAtDaytime('/');
-    cy.waitForMapToLoad();
+    cy.log('**Typing a place name...**');
+    cy.focused().realType(searchWords);
+    cy.log('**...Shows autocomplete suggestions**');
+    cy.findByRole('option', {name: placeName}).should('be.visible');
+  });
+  it(`allows user to close search box`, () => {
+    cy.log('**Verify the absence of elements to be shown**');
+    cy.findByRole('button', {name: buttonLabel.close}).should('not.exist');
+
+    cy.log('**Clicking search icon button...**');
     cy.findByRole('button', {name: buttonLabel.search}).click();
-  });
-  it('Pressing close button focuses the search button', () => {
+    cy.log('**...Shows a close button**');
+    cy.findByRole('button', {name: buttonLabel.close}).should('be.visible');
+
+    cy.log('**Clicking the close button...**');
     cy.findByRole('button', {name: buttonLabel.close}).click();
-    cy.focused().should('have.attr', 'data-testid', 'search-button');
+    cy.log('**...Hides the search box**');
+    cy.findByRole('searchbox').should('not.exist');
   });
-  it('traps focus within the search window with Tab key', () => {
+  it('traps the focus within the search box dialog popup', () => {
+    cy.log('**Setup: Open search box dialog popup**');
+    cy.findByRole('button', {name: buttonLabel.search}).click();
+    cy.log('**Focusing the last focusable element, and...');
     cy.findByTestId('searchbox-last-focusable-element').focus();
+    cy.log('**Pressing Tab key...');
     cy.realPress('Tab');
+    cy.log('**...focuses the first focusable element**');
     cy.focused().should(
       'have.attr',
       'data-testid',
       'searchbox-first-focusable-element',
     );
-  });
-  it('traps focus within the search window with Shift + Tab key', () => {
-    cy.findByTestId('searchbox-first-focusable-element').focus();
-    cy.realPress(['Shift', 'Tab']);
-    cy.focused().should(
-      'have.attr',
-      'data-testid',
-      'searchbox-last-focusable-element',
-    );
-  });
-  it('Entering text in search box shows selectable autocomplete suggestions', () => {
-    cy.findByLabelText(searchBoxLabel.ariaLabel).realType('fukuda a');
-    cy.findByRole('option', {name: /fukuda art museum./i}).should('be.visible');
   });
 });
