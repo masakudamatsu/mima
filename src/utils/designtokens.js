@@ -172,6 +172,11 @@ export const easing = {
   linear: 'linear',
 };
 
+export const autocomplete = {
+  focus: {
+    outline: `1px solid red`, // temporary; see issue #186
+  },
+};
 export const buttonSquare = {
   clickableArea: dimension.button['minimum target size 100'],
 };

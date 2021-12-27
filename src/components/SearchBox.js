@@ -12,6 +12,7 @@ import {SearchSubmitButton} from './SearchSubmitButton';
 import {SvgPlace} from 'src/elements/SvgPlace';
 import {VisuallyHidden} from 'src/elements/VisuallyHidden';
 
+import {autocomplete} from 'src/utils/designtokens';
 import {searchBoxLabel} from 'src/utils/uiCopies';
 
 export const SearchBox = ({handleClickCloseButton}) => {
@@ -28,6 +29,7 @@ export const SearchBox = ({handleClickCloseButton}) => {
     getItemProps,
     getLabelProps,
     getMenuProps,
+    highlightedIndex,
     isOpen,
   } = useCombobox({
     items: inputItems,
@@ -76,7 +78,11 @@ export const SearchBox = ({handleClickCloseButton}) => {
         {isOpen
           ? inputItems.map((item, index) => {
               return (
-                <li key={item.id} {...getItemProps({item, index})}>
+                <li
+                  key={item.id}
+                  style={highlightedIndex === index ? autocomplete.focus : {}}
+                  {...getItemProps({item, index})}
+                >
                   <dl>
                     <dt>{item.name}</dt>
                     <dd data-dd-type="address">{item.address}</dd>

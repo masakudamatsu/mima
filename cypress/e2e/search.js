@@ -1,4 +1,5 @@
 import {buttonLabel, searchBoxLabel} from '../../src/utils/uiCopies';
+import {autocomplete} from '../../src/utils/designtokens';
 
 const searchWords = 'hoxton hotel london';
 const placeName = /.*hoxton, shoreditch.*/i;
@@ -60,5 +61,21 @@ describe('Search feature', () => {
       'data-testid',
       'searchbox-first-focusable-element',
     );
+  });
+  // TODO #188: Make it work
+  it.skip('allows keyboard users to select an autocomplete suggestion with arrow keys', () => {
+    cy.log(`**Setup**`);
+    cy.findByRole('button', {name: buttonLabel.search}).click();
+    cy.focused().realType(searchWords);
+
+    cy.log(`**Pressing Down Arrow key...**`);
+    cy.focused().type('{downarrow}');
+    cy.log(`**...highlights the first autocomplete suggestion**`);
+    // below doesn't work;
+    Object.keys(autocomplete.focus).forEach(key => {
+      cy.findByRole('listbox')
+        .get('li:first')
+        .should('have.css', key, autocomplete.focus[key]);
+    }); // error message: expected <li> to have CSS property outline with the value 1px solid red, but the value was rgb(218, 218, 218) none 0px
   });
 });
