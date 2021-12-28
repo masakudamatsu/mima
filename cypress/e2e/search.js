@@ -1,8 +1,8 @@
 import {buttonLabel, searchBoxLabel} from '../../src/utils/uiCopies';
 import {autocomplete} from '../../src/utils/designtokens';
 
-const searchWords = 'hoxton hotel london';
-const placeName = /.*hoxton, shoreditch.*/i;
+const searchWords = 'Nijo K';
+const placeName = {regex: /.*nijo koya.*/i, japanese: '二条小屋'};
 
 describe('Search feature', () => {
   beforeEach(() => {
@@ -13,8 +13,8 @@ describe('Search feature', () => {
   it('happy path for mobile/mouse users', () => {
     cy.log('**Verify the absence of elements to be shown**');
     cy.findByRole('searchbox').should('not.exist');
-    cy.findByRole('option', {name: placeName}).should('not.exist');
-    cy.findByRole('button', {name: placeName}).should('not.exist');
+    cy.findByRole('option', {name: placeName.regex}).should('not.exist');
+    cy.findByRole('button', {name: placeName.japanese}).should('not.exist');
 
     cy.log('**Clicking search icon button...**');
     cy.findByRole('button', {name: buttonLabel.search}).click();
@@ -32,12 +32,12 @@ describe('Search feature', () => {
     cy.log('**Typing a place name...**');
     cy.focused().realType(searchWords);
     cy.log('**...Shows autocomplete suggestions**');
-    cy.findByRole('option', {name: placeName}).should('be.visible');
+    cy.findByRole('option', {name: placeName.regex}).should('be.visible');
 
     cy.log('**Selecting one of the autocomplete suggestions**');
-    cy.findByRole('option', {name: placeName}).click();
+    cy.findByRole('option', {name: placeName.regex}).click();
     cy.log('**...Shows the place on the map**');
-    cy.findByRole('button', {name: placeName}).should('be.visible');
+    cy.findByRole('button', {name: placeName.japanese}).should('be.visible');
   });
   it(`allows user to close search box`, () => {
     cy.log('**Verify the absence of elements to be shown**');
