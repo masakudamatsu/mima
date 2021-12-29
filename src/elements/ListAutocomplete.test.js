@@ -62,6 +62,11 @@ describe('ListAutocomplete component', () => {
   overflow: hidden;
 }
 
+.c0 b {
+  font-family: 'Noto Sans Display',Georgia,sans-serif;
+  font-weight: 700;
+}
+
 <div>
   <ul
     class="c0"

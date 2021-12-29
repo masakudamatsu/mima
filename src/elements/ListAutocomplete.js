@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 import {
   bodyText,
+  boldText,
   buttonSquare,
   color,
   dimension,
@@ -70,6 +71,10 @@ const styleText = `
   & li dl dt,
   & li dl dd[data-dd-type="address"] {
     ${truncateText}
+  }
+  & b {
+    font-family: ${boldText.fontFamily};
+    font-weight: ${boldText.fontWeight};
   }
 `;
 

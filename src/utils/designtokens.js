@@ -281,6 +281,10 @@ export const bodyText = {
   wordSpacing: 7, // measured by myself
 };
 
+export const boldText = {
+  fontFamily: metrics['Noto Sans Display Bold'].fontFamily,
+  fontWeight: metrics['Noto Sans Display Bold'].fontWeight,
+};
 export const heading = {
   fontFamily: metrics['Noto Sans Display Bold'].fontFamily,
   fontSize: {

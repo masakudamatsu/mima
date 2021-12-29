@@ -16,6 +16,8 @@ import {PlaceIdContext} from 'src/wrappers/PlaceIdContext';
 import {autocomplete} from 'src/utils/designtokens';
 import {searchBoxLabel} from 'src/utils/uiCopies';
 
+import {boldSubstring} from 'src/utils/boldSubstring';
+
 export const SearchBox = ({handleClickCloseButton}) => {
   const [, setPlaceId] = useContext(PlaceIdContext);
 
@@ -45,8 +47,32 @@ export const SearchBox = ({handleClickCloseButton}) => {
             const autocompleteSuggestions = predictions.map(prediction => {
               return {
                 id: prediction.place_id,
-                name: prediction.structured_formatting.main_text,
-                address: prediction.structured_formatting.secondary_text,
+                name: {
+                  length: prediction.structured_formatting
+                    .main_text_matched_substrings
+                    ? prediction.structured_formatting
+                        .main_text_matched_substrings[0]['length']
+                    : 0,
+                  offset: prediction.structured_formatting
+                    .main_text_matched_substrings
+                    ? prediction.structured_formatting
+                        .main_text_matched_substrings[0]['offset']
+                    : 0,
+                  string: prediction.structured_formatting.main_text,
+                },
+                address: prediction.structured_formatting.secondary_text && {
+                  length: prediction.structured_formatting
+                    .secondary_text_matched_substrings
+                    ? prediction.structured_formatting
+                        .secondary_text_matched_substrings[0]['length']
+                    : 0,
+                  offset: prediction.structured_formatting
+                    .secondary_text_matched_substrings
+                    ? prediction.structured_formatting
+                        .secondary_text_matched_substrings[0]['offset']
+                    : 0,
+                  string: prediction.structured_formatting.secondary_text,
+                },
               };
             });
             setInputItems(autocompleteSuggestions);
@@ -91,8 +117,19 @@ export const SearchBox = ({handleClickCloseButton}) => {
                   }}
                 >
                   <dl>
-                    <dt>{item.name}</dt>
-                    <dd data-dd-type="address">{item.address}</dd>
+                    <dt
+                      dangerouslySetInnerHTML={{
+                        __html: boldSubstring(item.name),
+                      }}
+                    />
+                    <dd
+                      data-dd-type="address"
+                      dangerouslySetInnerHTML={{
+                        __html: item.address
+                          ? boldSubstring(item.address)
+                          : null,
+                      }}
+                    />
                     <dd data-dd-type="icon">
                       <SvgPlace />
                       <VisuallyHidden as="span">

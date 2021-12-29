@@ -1,6 +1,6 @@
 import {buttonLabel, searchBoxLabel} from '../../src/utils/uiCopies';
 import {autocomplete} from '../../src/utils/designtokens';
-
+import {boldText} from '../../src/utils/designtokens';
 const searchWords = 'Nijo K';
 const placeName = {regex: /.*nijo koya.*/i, japanese: '二条小屋'};
 
@@ -33,6 +33,12 @@ describe('Search feature', () => {
     cy.focused().realType(searchWords);
     cy.log('**...Shows autocomplete suggestions**');
     cy.findByRole('option', {name: placeName.regex}).should('be.visible');
+    cy.log('**...highlights entered text in bold**');
+    cy.findAllByText(searchWords).should(
+      'have.css',
+      'font-weight',
+      boldText.fontWeight.toString(),
+    );
 
     cy.log('**Selecting one of the autocomplete suggestions**');
     cy.findByRole('option', {name: placeName.regex}).click();
