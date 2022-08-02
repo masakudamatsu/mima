@@ -1,9 +1,8 @@
 import {buttonLabel, searchBoxLabel} from '../../src/utils/uiCopies';
 import {autocomplete} from '../../src/utils/designtokens';
 import {boldText} from '../../src/utils/designtokens';
-const searchWords = 'Nijo K';
-const placeName = {regex: /.*nijo koya.*/i, japanese: '二条小屋'};
-
+const searchWords = [/nijo/i, /koya/i];
+const placeName = /.*nijo.*koya.*/i;
 describe('Search feature', () => {
   beforeEach(() => {
     cy.log('**Loading app**');
@@ -30,20 +29,24 @@ describe('Search feature', () => {
     cy.focused().should('have.attr', 'type', 'search');
 
     cy.log('**Typing a place name...**');
-    cy.focused().realType(searchWords);
-    cy.log('**...Shows autocomplete suggestions**');
-    cy.findByRole('option', {name: placeName.regex}).should('be.visible');
-    cy.log('**...highlights entered text in bold**');
-    cy.findAllByText(searchWords).should(
+    cy.focused().realType(searchWords[0].source);
+    cy.log(
+      '**...Highlights entered text in bold in autocomplete suggestions**',
+    );
+    cy.findAllByText(searchWords[0]).should(
       'have.css',
       'font-weight',
       boldText.fontWeight.toString(),
     );
+    cy.log('**...Does not highlights other text in autocomplete suggestions**');
+    cy.findByRole('listbox').get('b').contains(searchWords[0]);
 
+    cy.log('**Typing more...**');
+    cy.focused().realPress('Space').realType(searchWords[1].source);
     cy.log('**Selecting one of the autocomplete suggestions**');
-    cy.findByRole('option', {name: placeName.regex}).click();
+    cy.findByRole('option', {name: placeName}).click();
     cy.log('**...Shows the place on the map**');
-    cy.findByRole('button', {name: placeName.japanese}).should('be.visible');
+    cy.findByRole('button', {name: placeName}).should('be.visible');
   });
   it(`allows user to close search box`, () => {
     cy.log('**Verify the absence of elements to be shown**');
