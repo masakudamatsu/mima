@@ -29,7 +29,15 @@ beforeEach(() => {
 
 test('does not call getDetails() when no place ID is provided', () => {
   renderWithProviders(<SearchedPlace {...mockProps} />, {initialPlaceId: ''});
+  screen.debug();
   expect(mockGetDetails).toBeCalledTimes(0);
+});
+
+test.only('renders nothing when no place ID is provided', () => {
+  const {container} = renderWithProviders(<SearchedPlace {...mockProps} />, {
+    initialPlaceId: '',
+  });
+  expect(container).toBeEmptyDOMElement();
 });
 
 test('calls getDetails() with place ID and non-empty list of fields when a place ID is provided', () => {

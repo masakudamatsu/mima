@@ -3,6 +3,7 @@ import {autocomplete} from '../../src/utils/designtokens';
 import {boldText} from '../../src/utils/designtokens';
 const searchWords = [/nijo/i, /koya/i];
 const placeName = /.*nijo.*koya.*/i;
+const placeAddress = '382-3 Mogamichō, Nakagyo Ward, Kyoto, 604-8303, Japan';
 describe('Search feature', () => {
   beforeEach(() => {
     cy.log('**Loading app**');
@@ -47,7 +48,19 @@ describe('Search feature', () => {
     cy.findByRole('option', {name: placeName}).click();
     cy.log('**...Shows the place on the map**');
     cy.findByRole('button', {name: placeName}).should('be.visible');
+    cy.log('**...Shows the place info**');
+    cy.findByRole('heading', {name: placeName}).should('be.visible');
+    cy.findByText(placeAddress).should('be.visible');
+
+    cy.log('**Clicking the close button closes the place info**');
+    cy.findByRole('button', {name: buttonLabel.close}).click();
+    cy.findByRole('heading', {name: placeName}).should('not.exist');
+
+    cy.log('**Clicking the place on the map reopens the place info**');
+    cy.findByRole('button', {name: placeName}).click();
+    cy.findByRole('heading', {name: placeName}).should('be.visible');
   });
+
   it(`allows user to close search box`, () => {
     cy.log('**Verify the absence of elements to be shown**');
     cy.findByRole('button', {name: buttonLabel.close}).should('not.exist');
