@@ -17,12 +17,16 @@ describe('DivSearchBoxWrapper component', () => {
   top: 48px;
   border: 2px solid var(--button-label-color-default);
   border-radius: calc(48px / 2);
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
   display: flex;
-  padding-right: 48px;
-  padding-left: calc(48px / 2);
+  padding-left: calc(48px / 4);
+  padding-right: calc(48px / 2);
 }
 
 .c0:focus-within {
@@ -31,6 +35,7 @@ describe('DivSearchBoxWrapper component', () => {
 
 .c0 input[type='search'] {
   height: 100%;
+  margin-left: calc(48px / 4);
   width: 100%;
 }
 

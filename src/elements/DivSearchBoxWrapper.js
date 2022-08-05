@@ -20,11 +20,13 @@ const leaveSpaceForCloseButton = `
 `;
 
 const alignContent = `
+  align-items: center;
   display: flex;
-  padding-right: ${dimension.button['minimum target size 100']};
-  padding-left: calc(${dimension.button['minimum target size 100']} / 2);
+  padding-left: calc(${dimension.button['minimum target size 100']} / 4);
+  padding-right: calc(${dimension.button['minimum target size 100']} / 2);
   & input[type='search'] {
     height: 100%; /* ensuring the cursor vertically center-aligned */
+    margin-left: calc(${dimension.button['minimum target size 100']} / 4);
     width: 100%; /* otherwise the magnifying glass will be located around the center */
   }
 `;
