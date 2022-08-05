@@ -4,7 +4,13 @@ import PropTypes from 'prop-types';
 import {NightModeContext} from 'src/wrappers/NightModeContext';
 import {PlaceIdContext} from 'src/wrappers/PlaceIdContext';
 
-import {PlaceInfo} from 'src/components/PlaceInfo';
+import {ButtonSquare} from 'src/elements/ButtonSquare';
+import {DivParagraphHolder} from 'src/elements/DivParagraphHolder';
+import {H2PlaceName} from 'src/elements/H2PlaceName';
+import {PlaceDataPopup} from 'src/components/PlaceDataPopup';
+import {SvgClose} from 'src/elements/SvgClose';
+
+import {buttonLabel} from 'src/utils/uiCopies';
 
 export const SearchedPlace = ({mapObject}) => {
   const [placeData, setPlaceData] = useState(null);
@@ -111,11 +117,25 @@ export const SearchedPlace = ({mapObject}) => {
   };
 
   return placeData ? (
-    <PlaceInfo
-      closePlaceInfo={closePlaceInfo}
-      placeName={placeData.name}
-      placeNoteHtml={placeData.address}
-    />
+    <PlaceDataPopup
+      handleClickOutside={closePlaceInfo}
+      hidden={false}
+      slideFrom="bottom"
+      titleId="place-name"
+    >
+      <ButtonSquare
+        data-autofocus
+        data-testid="close-button-saved-place"
+        onClick={closePlaceInfo}
+        type="button"
+      >
+        <SvgClose title={buttonLabel.close} />
+      </ButtonSquare>
+      <H2PlaceName id="place-name">{placeData.name}</H2PlaceName>
+      <DivParagraphHolder>
+        <p>{placeData.address}</p>
+      </DivParagraphHolder>
+    </PlaceDataPopup>
   ) : null;
 };
 SearchedPlace.propTypes = {
