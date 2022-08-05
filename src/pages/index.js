@@ -28,15 +28,17 @@ function HomePage() {
       <Noscript />
       <PlaceIdProvider>
         <Controls mapObject={mapObject} />
-        <Wrapper
-          apiKey={process.env.NEXT_PUBLIC_API_KEY}
-          version="weekly"
-          libraries={['places']}
-        >
-          <Map setMapObject={setMapObject} />
-          <SavedPlaces mapObject={mapObject} />
-          <SearchedPlace mapObject={mapObject} />
-        </Wrapper>
+        <main>
+          <Wrapper
+            apiKey={process.env.NEXT_PUBLIC_API_KEY}
+            version="weekly"
+            libraries={['places']}
+          >
+            <Map setMapObject={setMapObject} />
+            <SavedPlaces mapObject={mapObject} />
+            <SearchedPlace mapObject={mapObject} />
+          </Wrapper>
+        </main>
       </PlaceIdProvider>
     </>
   );

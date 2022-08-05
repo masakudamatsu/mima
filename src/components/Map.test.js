@@ -28,3 +28,21 @@ test('is accessible', async () => {
   const results = await axe(container);
   expect(results).toHaveNoViolations();
 });
+
+test('renders UI correctly', () => {
+  //
+  const {container} = render(<Map {...mockProps} />);
+  expect(container).toMatchInlineSnapshot(`
+.c0 {
+  height: 100%;
+  isolation: isolate;
+}
+
+<div>
+  <div
+    class="c0"
+    id="map"
+  />
+</div>
+`);
+});

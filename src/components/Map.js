@@ -1,11 +1,23 @@
 import {useContext, useEffect, useRef} from 'react';
 import PropTypes from 'prop-types';
 
-import {Main} from 'src/elements/Main';
-
 import {NightModeContext} from 'src/wrappers/NightModeContext';
 import {map as mapColor} from 'src/utils/designtokens';
 
+import styled from 'styled-components';
+const drawMapFullscreen = `
+  height: 100%;
+`;
+const createStackingContext = `
+  isolation: isolate;
+`; // Without stacking context, full-screen scrim won't be able to disable the clicking of Google Logo (z-index: 1000000) and buttons at the bottom-right corners (z-index: 1000001)
+
+const Div = styled.div.attrs({
+  id: 'map', // for Firefox's -moz-element() function
+})`
+  ${drawMapFullscreen}
+  ${createStackingContext}
+`;
 const mapIdDaytime = '83a67631594fbfff';
 const mapIdNighttime = '2c8123c7734d3fb';
 
@@ -47,7 +59,7 @@ export const Map = ({setMapObject}) => {
     setMapObject(mapInstance.current);
   }, [nightMode, setMapObject]);
 
-  return <Main ref={mapEmbedder} />;
+  return <Div ref={mapEmbedder} />;
 };
 
 Map.propTypes = {

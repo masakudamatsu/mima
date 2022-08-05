@@ -8,7 +8,8 @@ import {resetRangeInput} from 'src/utils/cssResetRangeInput';
 const makeMapFullscreen = `
   :root,
   body,
-  #__next {
+  #__next,
+  main {
     height: 100%;
   }
 `;
