@@ -39,6 +39,28 @@ describe('DivSearchBoxWrapper component', () => {
   width: 100%;
 }
 
+.c0 input[type="search"] {
+  color: var(--popup-text-color);
+  font-family: 'Noto Sans',Verdana,sans-serif;
+  font-size: 1rem;
+}
+
+.c0 input[type="search"]::-webkit-input-placeholder {
+  color: var(--popup-text-color);
+}
+
+.c0 input[type="search"]::-moz-placeholder {
+  color: var(--popup-text-color);
+}
+
+.c0 input[type="search"]:-ms-input-placeholder {
+  color: var(--popup-text-color);
+}
+
+.c0 input[type="search"]::placeholder {
+  color: var(--popup-text-color);
+}
+
 <div>
   <div
     class="c0"

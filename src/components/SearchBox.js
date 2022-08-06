@@ -6,7 +6,6 @@ import {useCombobox} from 'downshift';
 import {CloseButton} from './CloseButton';
 
 import {DivSearchBoxWrapper} from 'src/elements/DivSearchBoxWrapper';
-import {InputSearchBox} from 'src/elements/InputSearchBox';
 import {ListAutocomplete} from 'src/elements/ListAutocomplete';
 import {SvgPlace} from 'src/elements/SvgPlace';
 
@@ -119,7 +118,7 @@ export const SearchBox = ({handleClickCloseButton}) => {
       source: https://fonts.google.com/icons?selected=Material%20Icons%20Outlined%3Asearch%3A
        */}
         </svg>
-        <InputSearchBox
+        <input
           {...getInputProps({
             autoFocus: true,
             'data-testid': 'searchbox-first-focusable-element', // to test focus management

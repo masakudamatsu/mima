@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import {buttonSquare, dimension} from 'src/utils/designtokens';
+import {bodyText, buttonSquare, dimension} from 'src/utils/designtokens';
 import {zIndex} from 'src/utils/zIndex';
 
 const setSize = `
@@ -39,10 +39,22 @@ const drawBorder = `
   }
 `;
 
+const styleSearchboxText = `
+  & input[type="search"] {
+    color: var(--popup-text-color);
+    font-family: ${bodyText.fontFamily};
+    font-size: 1rem;
+  }
+  & input[type="search"]::placeholder {
+    color: var(--popup-text-color);
+  }  
+`;
+
 export const DivSearchBoxWrapper = styled.div`
   ${setSize}
   ${centerAlignOverMap}
   ${leaveSpaceForCloseButton}
   ${drawBorder}
   ${alignContent}
+  ${styleSearchboxText}
 `;

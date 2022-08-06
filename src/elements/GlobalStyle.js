@@ -4,6 +4,7 @@ import {color, dimension, map} from 'src/utils/designtokens';
 import {fontface} from 'src/utils/cssFontface';
 import {ress} from 'src/utils/cssRess';
 import {resetRangeInput} from 'src/utils/cssResetRangeInput';
+import {resetSearchInput} from 'src/utils/cssResetSearchInput';
 
 const makeMapFullscreen = `
   :root,
@@ -68,6 +69,7 @@ export const GlobalStyle = createGlobalStyle`
   ${fontface}
   ${ress}
   ${resetRangeInput}
+  ${resetSearchInput}
 
   input {
     color: inherit; /* Prevent Chrome from applying "internal-light-dark" to override the body element's color property */
