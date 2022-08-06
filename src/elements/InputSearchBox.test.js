@@ -12,7 +12,7 @@ describe('InputSearchBox component', () => {
   -webkit-box-sizing: content-box;
   outline: none;
   -webkit-tap-highlight-color: transparent;
-  color: rgba(0,0,0,0.87);
+  color: var(--popup-text-color);
   font-family: 'Noto Sans',Verdana,sans-serif;
   font-size: 1rem;
 }
@@ -22,6 +22,22 @@ describe('InputSearchBox component', () => {
 .c0::-webkit-search-results-button,
 .c0::-webkit-search-results-decoration {
   display: none;
+}
+
+.c0::-webkit-input-placeholder {
+  color: var(--popup-text-color);
+}
+
+.c0::-moz-placeholder {
+  color: var(--popup-text-color);
+}
+
+.c0:-ms-input-placeholder {
+  color: var(--popup-text-color);
+}
+
+.c0::placeholder {
+  color: var(--popup-text-color);
 }
 
 <div>

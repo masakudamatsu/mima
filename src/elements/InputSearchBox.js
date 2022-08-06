@@ -15,12 +15,15 @@ const resetWebkitStyle = `
 `;
 
 const styleFont = `
+  color: var(--popup-text-color);
   font-family: ${bodyText.fontFamily};
   font-size: 1rem;
+  &::placeholder {
+    color: var(--popup-text-color);
+  }
 `;
 
 export const InputSearchBox = styled.input`
   ${resetWebkitStyle}
-  color: rgba(0, 0, 0, 0.87);
   ${styleFont}
 `;
