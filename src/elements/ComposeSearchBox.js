@@ -50,6 +50,12 @@ const styleSearchboxText = `
   }  
 `;
 
+const styleSearchIcon = `
+  & svg {
+    fill: var(--button-label-color-default);
+  }
+`;
+
 export const ComposeSearchBox = styled.div`
   ${setSize}
   ${centerAlignOverMap}
@@ -57,4 +63,5 @@ export const ComposeSearchBox = styled.div`
   ${drawBorder}
   ${alignContent}
   ${styleSearchboxText}
+  ${styleSearchIcon}
 `;

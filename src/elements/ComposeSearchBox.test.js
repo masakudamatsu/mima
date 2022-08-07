@@ -61,6 +61,10 @@ describe('ComposeSearchBox component', () => {
   color: var(--popup-text-color);
 }
 
+.c0 svg {
+  fill: var(--button-label-color-default);
+}
+
 <div>
   <div
     class="c0"
