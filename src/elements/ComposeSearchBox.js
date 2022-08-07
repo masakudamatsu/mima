@@ -50,7 +50,7 @@ const styleSearchboxText = `
   }  
 `;
 
-export const DivSearchBoxWrapper = styled.div`
+export const ComposeSearchBox = styled.div`
   ${setSize}
   ${centerAlignOverMap}
   ${leaveSpaceForCloseButton}

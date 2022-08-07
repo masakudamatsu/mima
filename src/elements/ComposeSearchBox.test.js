@@ -1,10 +1,10 @@
 import {render} from '@testing-library/react';
 
-import {DivSearchBoxWrapper} from './DivSearchBoxWrapper';
+import {ComposeSearchBox} from './ComposeSearchBox';
 
-describe('DivSearchBoxWrapper component', () => {
+describe('ComposeSearchBox component', () => {
   test('renders the UI correctly', () => {
-    const {container} = render(<DivSearchBoxWrapper />);
+    const {container} = render(<ComposeSearchBox />);
     expect(container).toMatchInlineSnapshot(`
 .c0 {
   height: calc(2 * 2px + 48px);

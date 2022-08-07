@@ -5,7 +5,7 @@ import {useCombobox} from 'downshift';
 
 import {CloseButton} from './CloseButton';
 
-import {DivSearchBoxWrapper} from 'src/elements/DivSearchBoxWrapper';
+import {ComposeSearchBox} from 'src/elements/ComposeSearchBox';
 import {ListAutocomplete} from 'src/elements/ListAutocomplete';
 import {SvgPlace} from 'src/elements/SvgPlace';
 
@@ -103,7 +103,7 @@ export const SearchBox = ({handleClickCloseButton}) => {
         handleClick={handleClickCloseButton}
         testId="searchbox-last-focusable-element" // to test focus management
       />
-      <DivSearchBoxWrapper {...getComboboxProps()}>
+      <ComposeSearchBox {...getComboboxProps()}>
         <VisuallyHidden {...getLabelProps()} as="label">
           {searchBoxLabel.ariaLabel}
         </VisuallyHidden>
@@ -127,7 +127,7 @@ export const SearchBox = ({handleClickCloseButton}) => {
             type: 'search',
           })}
         />{' '}
-      </DivSearchBoxWrapper>
+      </ComposeSearchBox>
       <ListAutocomplete {...getMenuProps()}>
         {isOpen
           ? inputItems.map((item, index) => {
