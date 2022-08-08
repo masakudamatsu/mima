@@ -134,6 +134,7 @@ export const ress = `
     height: auto; /* Correct the cursor style of increment and decrement buttons in Chrome */
   }
 
+  /* Remove these; cssResetSearchInput does the job.
   [type='search'] {
     -webkit-appearance: textfield; /* Correct the odd appearance in Chrome and Safari */
     outline-offset: -2px; /* Correct the outline style in Safari */
@@ -142,6 +143,7 @@ export const ress = `
   [type='search']::-webkit-search-decoration {
     -webkit-appearance: none; /* Remove the inner padding in Chrome and Safari on macOS */
   }
+  */
 
   textarea {
     overflow: auto; /* Internet Explorer 11+ */
