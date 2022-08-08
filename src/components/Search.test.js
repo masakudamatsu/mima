@@ -32,7 +32,7 @@ describe('HTML checks', () => {
   });
 });
 
-describe('Background div', () => {
+describe('Once the search button is pressed...', () => {
   beforeEach(async () => {
     render(<Search {...mockProps} />);
     await waitFor(() => {
@@ -43,17 +43,17 @@ describe('Background div', () => {
   afterEach(() => {
     jest.useRealTimers();
   });
-  test(`sets 'data-transition-out' attribute to be false by default`, async () => {
-    expect(screen.getByTestId('cloud-background')).toHaveAttribute(
-      'data-transition-out',
-      'false',
+  test(`sets 'data-searchbox' attribute to be true`, async () => {
+    expect(screen.getByRole('search')).toHaveAttribute(
+      'data-searchbox',
+      'true',
     );
   });
-  test(`sets 'data-transition-out' attribute to be true after close button is clicked`, () => {
+  test(`sets 'data-searchbox' attribute to be closing after close button is clicked`, () => {
     userEvent.click(screen.getByRole('button', {name: buttonLabel.close}));
-    expect(screen.getByTestId('cloud-background')).toHaveAttribute(
-      'data-transition-out',
-      'true',
+    expect(screen.getByRole('search')).toHaveAttribute(
+      'data-searchbox',
+      'closing',
     );
   });
   test(`gets dismounted ${duration.modal.exit}ms after clicking close button`, async () => {

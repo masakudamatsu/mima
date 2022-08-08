@@ -1,11 +1,15 @@
-import {useEffect, useState} from 'react';
+import {useEffect, useRef, useState} from 'react';
 // import PropTypes from 'prop-types';
+import FocusLock from 'react-focus-lock';
 
-import {SearchButton} from './SearchButton';
+import {CloseButton} from './CloseButton';
+import {Button} from 'src/elements/Button';
+import {SvgCloud} from 'src/elements/SvgCloud';
 
-import {DivCloudBackground} from 'src/elements/DivCloudBackground';
+import {SearchForm} from 'src/elements/SearchForm';
 import {ParagraphLoading} from 'src/elements/ParagraphLoading';
 
+import {buttonLabel} from 'src/utils/uiCopies';
 import {duration} from 'src/utils/designtokens';
 
 import dynamic from 'next/dynamic';
@@ -18,6 +22,7 @@ const SearchBox = dynamic(importSearchBox, {
 export const Search = () => {
   const [searchBoxOpen, setSearchBoxOpen] = useState('false');
 
+  const buttonElement = useRef();
   const handleClickSearchButton = () => {
     setSearchBoxOpen('true');
   };
@@ -32,21 +37,38 @@ export const Search = () => {
     }
   }, [searchBoxOpen]);
 
+  // Focus the search button after closing the searchbox
+  useEffect(() => {
+    if (searchBoxOpen === 'false') {
+      buttonElement.current.focus();
+    }
+  });
+
   return (
-    <form role="search">
-      <SearchButton
-        handleClick={handleClickSearchButton}
-        importSearchBox={importSearchBox}
-      />
-      {searchBoxOpen !== 'false' && (
-        <DivCloudBackground
-          data-testid="cloud-background"
-          data-transition-out={searchBoxOpen === 'closing'}
+    <SearchForm data-searchbox={searchBoxOpen}>
+      {searchBoxOpen === 'false' ? (
+        <Button
+          aria-label={buttonLabel.search}
+          data-position="top-right"
+          data-testid="search-button"
+          onClick={handleClickSearchButton}
+          onFocus={importSearchBox}
+          onMouseEnter={importSearchBox}
+          ref={buttonElement}
+          type="button"
         >
+          <SvgCloud icon="search" />
+        </Button>
+      ) : (
+        <FocusLock>
+          <CloseButton
+            handleClick={handleClickCloseButton}
+            testId="searchbox-last-focusable-element" // to test focus management
+          />
           <SearchBox handleClickCloseButton={handleClickCloseButton} />
-        </DivCloudBackground>
+        </FocusLock>
       )}
-    </form>
+    </SearchForm>
   );
 };
 

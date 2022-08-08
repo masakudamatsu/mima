@@ -1,12 +1,13 @@
 import {render} from '@testing-library/react';
 
-import {DivCloudBackground} from './DivCloudBackground';
+import {SearchForm} from './SearchForm';
 
-describe('DivCloudBackground component', () => {
+describe('SearchForm component', () => {
   test('renders the UI correctly', () => {
-    const {container} = render(<DivCloudBackground />);
+    const {container} = render(<SearchForm />);
     expect(container).toMatchInlineSnapshot(`
-.c0 {
+.c0[data-searchbox='true'],
+.c0[data-searchbox='closing'] {
   position: absolute;
   z-index: 2;
   --blur-radius: 8px;
@@ -23,7 +24,7 @@ describe('DivCloudBackground component', () => {
   animation-timing-fiunction: linear;
 }
 
-.c0[data-transition-out='true'] {
+.c0[data-searchbox='closing'] {
   -webkit-animation-duration: 250ms;
   animation-duration: 250ms;
   -webkit-animation-name: jiroXv;
@@ -33,7 +34,8 @@ describe('DivCloudBackground component', () => {
 }
 
 @supports (-webkit-backdrop-filter:blur(var(--blur-radius))) or (backdrop-filter:blur(var(--blur-radius))) {
-  .c0 {
+  .c0[data-searchbox='true'],
+  .c0[data-searchbox='closing'] {
     background-color: var(--popup-background-color);
     -webkit-backdrop-filter: blur(var(--blur-radius));
     backdrop-filter: blur(var(--blur-radius));
@@ -41,11 +43,13 @@ describe('DivCloudBackground component', () => {
 }
 
 @supports (background-image:-moz-element(#map)) and (not (backdrop-filter:blur(var(--blur-radius)))) {
-  .c0 {
+  .c0[data-searchbox='true'],
+  .c0[data-searchbox='closing'] {
     background-color: transparent;
   }
 
-  .c0::before {
+  .c0[data-searchbox='true']::before,
+  .c0[data-searchbox='closing']::before {
     background-attachment: fixed;
     background-image: -moz-element(#map);
     content: "";
@@ -59,7 +63,8 @@ describe('DivCloudBackground component', () => {
     z-index: -2;
   }
 
-  .c0::after {
+  .c0[data-searchbox='true']::after,
+  .c0[data-searchbox='closing']::after {
     background-color: var(--popup-background-color);
     content: "";
     position: absolute;
@@ -72,8 +77,9 @@ describe('DivCloudBackground component', () => {
 }
 
 <div>
-  <div
+  <form
     class="c0"
+    role="search"
   />
 </div>
 `);

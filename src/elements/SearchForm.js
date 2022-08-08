@@ -2,9 +2,9 @@ import styled, {css} from 'styled-components';
 import {animation, duration, easing} from 'src/utils/designtokens';
 import {zIndex} from 'src/utils/zIndex';
 
-const placeOverButtons = `
+const placeOverMap = `
   position: absolute;
-  z-index: ${zIndex.divCloudBackground};  
+  z-index: ${zIndex.SearchForm};
 `;
 
 const setBackground = `
@@ -48,21 +48,30 @@ const setSize = `
   width: 100%;
 `;
 
-const animateTransition = css`
+const animateTransitionIn = css`
   animation-duration: ${duration.modal.enter}ms;
   animation-fill-mode: backwards;
   animation-name: ${animation.fadeIn};
   animation-timing-fiunction: ${easing.linear};
-  &[data-transition-out='true'] {
-    animation-duration: ${duration.modal.exit}ms;
-    animation-name: ${animation.fadeOut};
-    animation-fill-mode: forwards;
-  }
 `;
 
-export const DivCloudBackground = styled.div`
-  ${placeOverButtons}
-  ${setBackground}
-  ${setSize}
-  ${animateTransition}
+const animateTransitionOut = css`
+  animation-duration: ${duration.modal.exit}ms;
+  animation-name: ${animation.fadeOut};
+  animation-fill-mode: forwards;
+`;
+
+export const SearchForm = styled.form.attrs({
+  role: 'search',
+})`
+  &[data-searchbox='true'],
+  &[data-searchbox='closing'] {
+    ${placeOverMap}
+    ${setBackground}
+    ${setSize}
+    ${animateTransitionIn}
+  }
+  &[data-searchbox='closing'] {
+    ${animateTransitionOut}
+  }
 `;

@@ -1,9 +1,6 @@
 import {useContext, useMemo, useState} from 'react';
 import PropTypes from 'prop-types';
-import FocusLock from 'react-focus-lock';
 import {useCombobox} from 'downshift';
-
-import {CloseButton} from './CloseButton';
 
 import {ComposeSearchBox} from 'src/elements/ComposeSearchBox';
 import {ListAutocomplete} from 'src/elements/ListAutocomplete';
@@ -98,11 +95,7 @@ export const SearchBox = ({handleClickCloseButton}) => {
   });
 
   return (
-    <FocusLock returnFocus>
-      <CloseButton
-        handleClick={handleClickCloseButton}
-        testId="searchbox-last-focusable-element" // to test focus management
-      />
+    <>
       <ComposeSearchBox {...getComboboxProps()}>
         <VisuallyHidden {...getLabelProps()} as="label">
           {searchBoxLabel.ariaLabel}
@@ -167,7 +160,7 @@ export const SearchBox = ({handleClickCloseButton}) => {
             })
           : null}
       </ListAutocomplete>
-    </FocusLock>
+    </>
   );
 };
 
