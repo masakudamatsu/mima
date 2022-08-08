@@ -30,7 +30,8 @@ describe('ComposeSearchBox component', () => {
 }
 
 .c0:focus-within {
-  border-color: var(--button-label-color-focus);
+  border-color: var(--button-shadow-color-focus);
+  box-shadow: 0px 0px var(--button-shadow-blur-radius-focus) var(--button-shadow-color-focus);
 }
 
 .c0 input[type='search'] {

@@ -25,8 +25,8 @@ describe('ButtonSquare component', () => {
   -ms-flex-pack: center;
   justify-content: center;
   position: absolute;
-  right: 0;
-  top: 0;
+  right: 5px;
+  top: 5px;
   z-index: 4;
 }
 
@@ -45,6 +45,11 @@ describe('ButtonSquare component', () => {
 
 .c0:active svg {
   fill: var(--button-label-color-default);
+}
+
+.c0:focus {
+  border: 1px solid var(--button-shadow-color-focus);
+  box-shadow: 0px 0px var(--button-shadow-blur-radius-focus) var(--button-shadow-color-focus);
 }
 
 <div>

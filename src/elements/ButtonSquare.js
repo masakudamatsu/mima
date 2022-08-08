@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-import {buttonSquare, color} from 'src/utils/designtokens';
+import {buttonSquare, color, dimension} from 'src/utils/designtokens';
 import {zIndex} from 'src/utils/zIndex';
 
 const resetStyle = `
@@ -21,8 +21,8 @@ const alignButtonLabel = `
 
 const positionButton = `
   position: absolute;
-  right: 0;
-  top: 0;
+  right: 5px;
+  top: 5px;
   z-index: ${zIndex.closeButton};
 `;
 
@@ -42,6 +42,14 @@ const setButtonLabelColor = `
   }
 `;
 
+const styleFocusState = `
+  &:focus {
+    border: 1px solid var(--button-shadow-color-focus);
+    box-shadow: ${dimension.glow['offset']} var(--button-shadow-blur-radius-focus) var(--button-shadow-color-focus)
+  }
+;
+`;
+
 // Define Button components
 export const ButtonSquare = styled.button`
   ${resetStyle}
@@ -49,4 +57,5 @@ export const ButtonSquare = styled.button`
   ${alignButtonLabel}
   ${positionButton}
   ${setButtonLabelColor}
+  ${styleFocusState}
 `;

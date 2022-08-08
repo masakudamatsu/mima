@@ -35,7 +35,10 @@ const drawBorder = `
   border: ${dimension.searchBox['border width 100']} solid var(--button-label-color-default);
   border-radius: calc(${dimension.button['minimum target size 100']} / 2);
   &:focus-within {
-    border-color: var(--button-label-color-focus);
+    border-color: var(--button-shadow-color-focus);
+    box-shadow: ${dimension.glow['offset']} var(--button-shadow-blur-radius-focus)
+        var(--button-shadow-color-focus)
+    ;
   }
 `;
 
