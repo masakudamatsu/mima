@@ -2,44 +2,53 @@ import styled from 'styled-components';
 import {bodyText, buttonSquare, dimension} from 'src/utils/designtokens';
 import {zIndex} from 'src/utils/zIndex';
 
-const setSize = `
-  height: calc(2 * ${dimension.searchBox['border width 100']} + ${dimension.button['minimum target size 100']});
-  max-width: 584px; /* follow google.com */
+const setDimension = `
+  --box-height: ${dimension.button['minimum target size 100']};
+  --border-radius: calc(var(--box-height) / 2);
+  --border-width: ${dimension.searchBox['border width 100']};
+  --icon-size: ${dimension.button['minimum target size 75']};
+  --icon-left-margin: calc(var(--border-radius) / 2);
+  --icon-vertical-margin: calc( ( var(--box-height) - var(--icon-size) ) / 2 );
 `;
 
-const centerAlignOverMap = `
-  left: ${dimension.searchBox['side margin 100']};
-  margin: 0 auto; /* for center-alignment once width hits max-width */
-  position: absolute;
-  right: ${dimension.searchBox['side margin 100']};
-  z-index: ${zIndex.divSearch};
-`;
+const shapeBox = `
+  height: var(--box-height);
+  max-width: 561px; /* follow google.com */
 
-const leaveSpaceForCloseButton = `
-  top: ${buttonSquare.clickableArea};
-`;
-
-const alignContent = `
-  align-items: center;
-  display: flex;
-  padding-left: calc(${dimension.button['minimum target size 100']} / 4);
-  padding-right: calc(${dimension.button['minimum target size 100']} / 2);
-  & input[type='search'] {
-    height: 100%; /* ensuring the cursor vertically center-aligned */
-    margin-left: calc(${dimension.button['minimum target size 100']} / 4);
-    width: 100%; /* otherwise the magnifying glass will be located around the center */
+  & input[type="search"] {
+    border: var(--border-width) solid var(--button-label-color-default);
+    border-radius: var(--border-radius);
+    height: 100%;
+    width: 100%;
   }
 `;
 
-const drawBorder = `
-  border: ${dimension.searchBox['border width 100']} solid var(--button-label-color-default);
-  border-radius: calc(${dimension.button['minimum target size 100']} / 2);
-  &:focus-within {
-    border-color: var(--button-shadow-color-focus);
-    box-shadow: ${dimension.glow['offset']} var(--button-shadow-blur-radius-focus)
-        var(--button-shadow-color-focus)
-    ;
+const positionComponents = `
+  position: relative;
+
+  & svg {
+    height: var(--icon-size);
+    width: var(--icon-size);
+    position: absolute;
+    left: var(--icon-left-margin);
+    top: var(--icon-vertical-margin);
+    bottom: var(--icon-vertical-margin);  
   }
+
+  & input[type="search"] {
+    padding-left: calc( var(--icon-left-margin) + var(--icon-size) + 4px); /* 4px is chosen to make side margins OPTICALLY equal */
+    padding-right: var(--border-radius);
+  }
+`;
+
+const placeIconBelowSearchbox = `
+  /* Ensuring that tapping the icon focuses the search box */
+  & svg {
+    z-index: -1;
+  }
+  & input[type="search"] {
+    background: transparent;
+  }  
 `;
 
 const styleSearchboxText = `
@@ -50,6 +59,7 @@ const styleSearchboxText = `
   }
   & input[type="search"]::placeholder {
     color: var(--popup-text-color);
+    opacity: 1; /* to override the default of Firefox */
   }  
 `;
 
@@ -59,12 +69,29 @@ const styleSearchIcon = `
   }
 `;
 
+const styleFocusState = `
+  & input[type="search"]:focus {
+    border-color: var(--button-shadow-color-focus);
+    box-shadow: ${dimension.glow['offset']} var(--button-shadow-blur-radius-focus) var(--button-shadow-color-focus);
+  }
+`;
+
+// TODO: move the following to <SearchForm>
+const centerAlignOverMap = `
+  left: ${dimension.searchBox['side margin 100']};
+  margin: 0 auto; /* for center-alignment once width hits max-width */
+  right: ${dimension.searchBox['side margin 100']};
+  top: ${buttonSquare.clickableArea};
+  z-index: ${zIndex.divSearch};
+`;
+
 export const ComposeSearchBox = styled.div`
-  ${setSize}
-  ${centerAlignOverMap}
-  ${leaveSpaceForCloseButton}
-  ${drawBorder}
-  ${alignContent}
+  ${setDimension}
+  ${shapeBox}
+  ${positionComponents}
+  ${placeIconBelowSearchbox}
   ${styleSearchboxText}
   ${styleSearchIcon}
+  ${styleFocusState}
+  ${centerAlignOverMap}
 `;

@@ -1,14 +1,11 @@
-const removeRoundCorners = `
-  -webkit-appearance: none; /* https://css-tricks.com/webkit-html5-search-inputs/#comment-82402 */
-`;
 const removeLeftPaddingForSafari = `
   &::-webkit-search-decoration {
     -webkit-appearance: none; /* https://github.com/filipelinhares/ress/blob/master/ress.css */
   }
 `;
-const removeDeleteTextButtonForSafari = `
+const removeDeleteTextButton = `
   &::-webkit-search-cancel-button {
-    -webkit-appearance: none; /* https://css-tricks.com/webkit-html5-search-inputs/#aa-styling-search-graphical-widgets */
+    -webkit-appearance: none; /* For Chrome and Safari; https://css-tricks.com/webkit-html5-search-inputs/#aa-styling-search-graphical-widgets */
   }
 `;
 
@@ -17,8 +14,7 @@ const removeTapHighlightColorForSafari = `
 `;
 
 export const resetSearchInput = `
-  ${removeRoundCorners}
   ${removeLeftPaddingForSafari}
-  ${removeDeleteTextButtonForSafari}
+  ${removeDeleteTextButton}
   ${removeTapHighlightColorForSafari}
 `; // TODO #41: reset the gray focus ring
