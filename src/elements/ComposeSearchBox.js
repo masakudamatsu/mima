@@ -76,6 +76,18 @@ const styleFocusState = `
   }
 `;
 
+// TODO #203
+// const styleDeleteButton = `
+//   & input[type="search"]::-webkit-search-cancel-button {
+//   /* Remove default */
+//   -webkit-appearance: none;
+//   /* Now your own custom styles */
+//   background-image: var(--delete-button);
+//   height: calc( var(--box-height) / 2 );
+//   width: calc( var(--box-height) / 2 );
+// }
+// `;
+
 // TODO: move the following to <SearchForm>
 const centerAlignOverMap = `
   left: ${dimension.searchBox['side margin 100']};
