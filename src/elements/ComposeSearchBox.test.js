@@ -86,6 +86,7 @@ describe('ComposeSearchBox component', () => {
 .c0 input[type="search"]:focus {
   border-color: var(--button-shadow-color-focus);
   box-shadow: 0px 0px var(--button-shadow-blur-radius-focus) var(--button-shadow-color-focus);
+  outline: 1px solid transparent;
 }
 
 <div>
