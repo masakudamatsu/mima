@@ -53,6 +53,7 @@ const placeIconBelowSearchbox = `
 
 const styleSearchboxText = `
   & input[type="search"] {
+    -webkit-appearance: none; /* to prevent Safari from ignoring font-size; see https://css-tricks.com/what-do-you-get-for-using-a-search-input-type/*/
     color: var(--popup-text-color);
     font-family: ${bodyText.fontFamily};
     font-size: 1rem;

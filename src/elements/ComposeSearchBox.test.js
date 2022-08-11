@@ -53,6 +53,7 @@ describe('ComposeSearchBox component', () => {
 }
 
 .c0 input[type="search"] {
+  -webkit-appearance: none;
   color: var(--popup-text-color);
   font-family: 'Noto Sans',Verdana,sans-serif;
   font-size: 1rem;
