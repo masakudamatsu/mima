@@ -7,12 +7,17 @@ import {SvgClose} from 'src/elements/SvgClose';
 import {buttonLabel} from 'src/utils/uiCopies';
 
 // TODO #201:
-// 1. Label the button with aria-label
 // 2. Reuse this component in MenuButton and PlaceInfo
-export const CloseButton = ({autofocus = false, handleClick, testId}) => {
+export const CloseButton = ({
+  ariaControls,
+  autofocus = false,
+  handleClick,
+  testId,
+}) => {
   return (
     <>
       <ButtonSquare
+        aria-controls={ariaControls}
         aria-expanded="true"
         data-autofocus={autofocus}
         data-testid={testId}
@@ -26,6 +31,7 @@ export const CloseButton = ({autofocus = false, handleClick, testId}) => {
 };
 
 CloseButton.propTypes = {
+  ariaControls: PropTypes.string,
   autofocus: PropTypes.bool,
   handleClick: PropTypes.func,
   testId: PropTypes.string,

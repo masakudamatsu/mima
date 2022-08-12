@@ -15,7 +15,7 @@ import {searchBoxLabel} from 'src/utils/uiCopies';
 import {boldSubstring} from 'src/utils/boldSubstring';
 import {cleanAutocompleteData} from 'src/utils/cleanAutocompleteData';
 
-export const SearchBox = ({handleClickCloseButton}) => {
+export const SearchBox = ({handleClickCloseButton, id}) => {
   const [, setPlaceId] = useContext(PlaceIdContext);
 
   const google = window.google;
@@ -95,7 +95,7 @@ export const SearchBox = ({handleClickCloseButton}) => {
 
   return (
     <>
-      <ComposeSearchBox {...getComboboxProps()}>
+      <ComposeSearchBox {...getComboboxProps()} id={id}>
         <VisuallyHidden {...getLabelProps()} as="label">
           {searchBoxLabel.ariaLabel}
         </VisuallyHidden>
@@ -160,4 +160,5 @@ export const SearchBox = ({handleClickCloseButton}) => {
 
 SearchBox.propTypes = {
   handleClickCloseButton: PropTypes.func,
+  id: PropTypes.string,
 };
