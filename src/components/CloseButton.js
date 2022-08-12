@@ -13,6 +13,7 @@ export const CloseButton = ({autofocus = false, handleClick, testId}) => {
   return (
     <>
       <ButtonSquare
+        aria-expanded="true"
         data-autofocus={autofocus}
         data-testid={testId}
         onClick={handleClick}

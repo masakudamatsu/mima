@@ -48,6 +48,7 @@ export const Search = () => {
     <SearchForm data-searchbox={searchBoxOpen}>
       {searchBoxOpen === 'false' ? (
         <Button
+          aria-expanded="false"
           aria-label={buttonLabel.search}
           data-position="top-right"
           data-testid="search-button"
