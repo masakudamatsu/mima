@@ -51,8 +51,17 @@ const styleFocusState = `
   &:focus:not(:focus-visible) svg {
     fill: var(--button-label-color-default);
   }
+;
+`;
+
+/* TODO #108: replace the following with the ripple effect */
+const styleActiveState = `
+  &:active {
+    border-style: none;
+    box-shadow: none;
+  }
   &:active svg {
-    fill: var(--button-label-color-default);
+    fill: var(--button-outline-color);
   }
 `;
 
@@ -64,4 +73,5 @@ export const ButtonSquare = styled.button`
   ${positionButton}
   ${setButtonLabelColor}
   ${styleFocusState}
+  ${styleActiveState}
 `;

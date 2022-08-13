@@ -55,8 +55,13 @@ describe('ButtonSquare component', () => {
   fill: var(--button-label-color-default);
 }
 
+.c0:active {
+  border-style: none;
+  box-shadow: none;
+}
+
 .c0:active svg {
-  fill: var(--button-label-color-default);
+  fill: var(--button-outline-color);
 }
 
 <div>
