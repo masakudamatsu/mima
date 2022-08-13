@@ -14,6 +14,7 @@ describe('SearchForm component', () => {
   background-color: var(--popup-background-color-fallback);
   height: 100%;
   width: 100%;
+  --popup-margin: 8px;
   -webkit-animation-duration: 300ms;
   animation-duration: 300ms;
   -webkit-animation-fill-mode: backwards;
@@ -22,6 +23,22 @@ describe('SearchForm component', () => {
   animation-name: jBcSpD;
   -webkit-animation-timing-fiunction: linear;
   animation-timing-fiunction: linear;
+}
+
+.c0[data-searchbox='true'] button[aria-label="Close search box"],
+.c0[data-searchbox='closing'] button[aria-label="Close search box"] {
+  position: absolute;
+  right: var(--popup-margin);
+  top: var(--popup-margin);
+  z-index: 4;
+}
+
+.c0[data-searchbox='true'] div[id="searchbox"],
+.c0[data-searchbox='closing'] div[id="searchbox"] {
+  margin: 0 auto;
+  top: calc(48px + var(--popup-margin) * 2);
+  width: calc(100% - var(--popup-margin) * 2);
+  z-index: 3;
 }
 
 .c0[data-searchbox='closing'] {

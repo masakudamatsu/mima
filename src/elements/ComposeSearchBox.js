@@ -89,15 +89,6 @@ const styleFocusState = `
 // }
 // `;
 
-// TODO: move the following to <SearchForm>
-const centerAlignOverMap = `
-  left: ${dimension.searchBox['side margin 100']};
-  margin: 0 auto; /* for center-alignment once width hits max-width */
-  right: ${dimension.searchBox['side margin 100']};
-  top: ${buttonSquare.clickableArea};
-  z-index: ${zIndex.divSearch};
-`;
-
 export const ComposeSearchBox = styled.div`
   ${setDimension}
   ${shapeBox}
@@ -106,5 +97,4 @@ export const ComposeSearchBox = styled.div`
   ${styleSearchboxText}
   ${styleSearchIcon}
   ${styleFocusState}
-  ${centerAlignOverMap}
 `;

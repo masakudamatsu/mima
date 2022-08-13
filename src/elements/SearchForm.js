@@ -1,5 +1,12 @@
 import styled, {css} from 'styled-components';
-import {animation, duration, easing} from 'src/utils/designtokens';
+import {
+  animation,
+  buttonSquare,
+  dimension,
+  duration,
+  easing,
+} from 'src/utils/designtokens';
+import {buttonLabel} from 'src/utils/uiCopies';
 import {zIndex} from 'src/utils/zIndex';
 
 const placeOverMap = `
@@ -48,6 +55,23 @@ const setSize = `
   width: 100%;
 `;
 
+const positionComponents = `
+  --popup-margin: ${dimension.button['minimum target spacing 100']};
+
+  & button[aria-label="${buttonLabel.closeSearchbox}"] {
+    position: absolute;
+    right: var(--popup-margin);
+    top:  var(--popup-margin);
+    z-index: ${zIndex.closeButton};  
+  }
+  & div[id="searchbox"] {
+    margin: 0 auto; 
+    top: calc(${buttonSquare.clickableArea} + var(--popup-margin) * 2);
+    width: calc(100% - var(--popup-margin) * 2) ;
+    z-index: ${zIndex.divSearch};      
+  }
+`;
+
 const animateTransitionIn = css`
   animation-duration: ${duration.modal.enter}ms;
   animation-fill-mode: backwards;
@@ -69,6 +93,7 @@ export const SearchForm = styled.form.attrs({
     ${placeOverMap}
     ${setBackground}
     ${setSize}
+    ${positionComponents}
     ${animateTransitionIn}
   }
   &[data-searchbox='closing'] {

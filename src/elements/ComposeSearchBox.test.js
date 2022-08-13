@@ -16,11 +16,6 @@ describe('ComposeSearchBox component', () => {
   height: var(--box-height);
   max-width: 561px;
   position: relative;
-  left: 8px;
-  margin: 0 auto;
-  right: 8px;
-  top: 48px;
-  z-index: 3;
 }
 
 .c0 input[type="search"] {

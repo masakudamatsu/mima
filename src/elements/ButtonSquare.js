@@ -20,6 +20,7 @@ const alignButtonLabel = `
   justify-content: center;
 `;
 
+// TODO #201: remove this once CloseButton is reused in PlaceInfo, MenuButton, SearchedPlace
 const positionButton = `
   position: absolute;
   right: 5px;
