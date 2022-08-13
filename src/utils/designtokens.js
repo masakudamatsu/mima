@@ -150,6 +150,12 @@ export const animation = {
       opacity: 1;
     }    
   `,
+  'ripple 100': keyframes`
+    to {
+      transform: scale(100);
+      opacity: 0;
+    }  
+  `,
 };
 export const duration = {
   flashing: '1500ms',

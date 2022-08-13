@@ -1,6 +1,11 @@
-import styled from 'styled-components';
+import styled, {css} from 'styled-components';
 
-import {buttonSquare, color, dimension} from 'src/utils/designtokens';
+import {
+  animation,
+  buttonSquare,
+  color,
+  dimension,
+} from 'src/utils/designtokens';
 import {removeFocusRing, styleFocusRing} from 'src/utils/cssUtilities';
 import {zIndex} from 'src/utils/zIndex';
 
@@ -54,14 +59,16 @@ const styleFocusState = `
 ;
 `;
 
-/* TODO #108: replace the following with the ripple effect */
-const styleActiveState = `
-  &:active {
-    border-style: none;
-    box-shadow: none;
-  }
-  &:active svg {
-    fill: var(--button-outline-color);
+const styleActiveState = css`
+  /* position: relative; (unnecessary because the button is absolutely positioined by SearchForm.js */
+  /* overflow: hidden; (unnecessary for close button as we want the ripple to spread across the screen) */
+  & .ripple {
+    /* to be used in line 14 of createRipple.js */
+    animation: ${animation['ripple 100']} 300ms linear;
+    background-color: var(--ripple-color);
+    border-radius: 50%;
+    position: absolute;
+    transform: scale(0);
   }
 `;
 

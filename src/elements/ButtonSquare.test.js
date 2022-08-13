@@ -57,13 +57,15 @@ describe('ButtonSquare component', () => {
   fill: var(--button-label-color-default);
 }
 
-.c0:active {
-  border-style: none;
-  box-shadow: none;
-}
-
-.c0:active svg {
-  fill: var(--button-outline-color);
+.c0 .ripple {
+  -webkit-animation: iHfQSf 300ms linear;
+  animation: iHfQSf 300ms linear;
+  background-color: var(--ripple-color);
+  border-radius: 50%;
+  position: absolute;
+  -webkit-transform: scale(0);
+  -ms-transform: scale(0);
+  transform: scale(0);
 }
 
 <div>

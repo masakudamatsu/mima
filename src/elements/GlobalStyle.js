@@ -43,6 +43,7 @@ const setColorScheme = `
     --popup-background-color-fallback: ${color['white 93']};
     --popup-glow-color-fallback: ${color['white 93']};
     --popup-text-color: ${color['dark-grey 100']};
+    --ripple-color: ${color['black 33']};
   }
   body[data-darkmode='true'] {
     --button-label-color-default: ${color['off-white 100']};
@@ -62,6 +63,7 @@ const setColorScheme = `
     --popup-background-color-fallback: ${color['glass-grey 90']};
     --popup-glow-color-fallback: ${color['glass-grey 90']};
     --popup-text-color: ${color['off-white 100']};
+    --ripple-color: ${color['white 40']};
   }
 `;
 

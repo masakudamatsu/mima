@@ -2,6 +2,7 @@
 import PropTypes from 'prop-types';
 
 import {ButtonSquare} from 'src/elements/ButtonSquare';
+import {createRipple} from 'src/utils/createRipple';
 
 // TODO #201:
 // 2. Reuse this component in MenuButton, PlaceInfo, SearchedPlace
@@ -12,6 +13,10 @@ export const CloseButton = ({
   handleClick,
   testId,
 }) => {
+  const clickHandler = event => {
+    createRipple(event);
+    handleClick();
+  };
   return (
     <>
       <ButtonSquare
@@ -20,7 +25,7 @@ export const CloseButton = ({
         aria-label={ariaLabel}
         data-autofocus={autofocus}
         data-testid={testId}
-        onClick={handleClick}
+        onClick={clickHandler}
         type="button"
       >
         <svg aria-hidden="true" viewBox="0 0 24 24">
