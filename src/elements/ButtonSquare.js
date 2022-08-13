@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 
-import {buttonSquare, color, dimension} from 'src/utils/designtokens';
+import {buttonSquare, color} from 'src/utils/designtokens';
+import {removeFocusRing, styleFocusRing} from 'src/utils/cssUtilities';
 import {zIndex} from 'src/utils/zIndex';
 
 const resetStyle = `
@@ -36,18 +37,14 @@ const styleFocusState = `
   &:focus { 
     border-width: 1px;
     border-style: solid;
-    border-color: var(--button-shadow-color-focus);
-    box-shadow: ${dimension.glow['offset']} var(--button-shadow-blur-radius-focus) var(--button-shadow-color-focus);
-    /* remove the default focus ring & fallback for Forced Color Modes (https://www.sarasoueidan.com/blog/focus-indicators/#tips-for-styling-focus-indicators) */
-    outline: 1px solid transparent; 
-    }
+    ${styleFocusRing}
+  }
   &:focus svg {
     fill: var(--button-label-color-focus);
   }
   &:focus:not(:focus-visible) {
-    border-style: none;
-    box-shadow: none;
-    }
+    ${removeFocusRing}
+  }
   &:focus:not(:focus-visible) svg {
     fill: var(--button-label-color-default);
   }
