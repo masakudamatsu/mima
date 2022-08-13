@@ -3,12 +3,11 @@ import PropTypes from 'prop-types';
 
 import {ButtonSquare} from 'src/elements/ButtonSquare';
 
-import {buttonLabel} from 'src/utils/uiCopies';
-
 // TODO #201:
 // 2. Reuse this component in MenuButton, PlaceInfo, SearchedPlace
 export const CloseButton = ({
   ariaControls,
+  ariaLabel,
   autofocus = false,
   handleClick,
   testId,
@@ -18,7 +17,7 @@ export const CloseButton = ({
       <ButtonSquare
         aria-controls={ariaControls}
         aria-expanded="true"
-        aria-label={buttonLabel.close}
+        aria-label={ariaLabel}
         data-autofocus={autofocus}
         data-testid={testId}
         onClick={handleClick}
@@ -35,6 +34,7 @@ export const CloseButton = ({
 
 CloseButton.propTypes = {
   ariaControls: PropTypes.string,
+  ariaLabel: PropTypes.string,
   autofocus: PropTypes.bool,
   handleClick: PropTypes.func,
   testId: PropTypes.string,

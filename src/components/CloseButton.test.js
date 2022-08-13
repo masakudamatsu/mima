@@ -5,16 +5,15 @@ import {axe} from 'jest-axe';
 
 import {CloseButton} from './CloseButton';
 
-import {buttonLabel} from 'src/utils/uiCopies';
-
 const mockProps = {
+  ariaLabel: 'Close',
   handleClick: jest.fn().mockName('handleClick'),
 };
 
 describe(`Clicking the button`, () => {
   beforeEach(() => {
     render(<CloseButton {...mockProps} />);
-    userEvent.click(screen.getByRole('button', {name: buttonLabel.close}));
+    userEvent.click(screen.getByRole('button', {name: mockProps.ariaLabel}));
   });
   test(`calls a function specified with handleClick prop`, () => {
     expect(mockProps.handleClick).toHaveBeenCalledTimes(1);
