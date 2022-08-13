@@ -30,24 +30,30 @@ const setButtonLabelColor = `
   & svg {
     fill: var(--button-label-color-default);
   }
-  &:focus svg,
-  &:hover svg {
+`;
+
+const styleFocusState = `
+  &:focus { 
+    border-width: 1px;
+    border-style: solid;
+    border-color: var(--button-shadow-color-focus);
+    box-shadow: ${dimension.glow['offset']} var(--button-shadow-blur-radius-focus) var(--button-shadow-color-focus);
+    /* remove the default focus ring & fallback for Forced Color Modes (https://www.sarasoueidan.com/blog/focus-indicators/#tips-for-styling-focus-indicators) */
+    outline: 1px solid transparent; 
+    }
+  &:focus svg {
     fill: var(--button-label-color-focus);
   }
+  &:focus:not(:focus-visible) {
+    border-style: none;
+    box-shadow: none;
+    }
   &:focus:not(:focus-visible) svg {
     fill: var(--button-label-color-default);
   }
   &:active svg {
     fill: var(--button-label-color-default);
   }
-`;
-
-const styleFocusState = `
-  &:focus {
-    border: 1px solid var(--button-shadow-color-focus);
-    box-shadow: ${dimension.glow['offset']} var(--button-shadow-blur-radius-focus) var(--button-shadow-color-focus)
-  }
-;
 `;
 
 // Define Button components
