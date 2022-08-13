@@ -3,6 +3,7 @@ export const userLocationMarkerLabel = 'You are here!';
 export const buttonLabel = {
   cancel: 'Cancel',
   close: 'Close',
+  closeSearchbox: 'Close search box',
   edit: 'Edit',
   locator: {
     default: 'Track your location',

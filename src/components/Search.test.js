@@ -50,14 +50,18 @@ describe('Once the search button is pressed...', () => {
     );
   });
   test(`sets 'data-searchbox' attribute to be closing after close button is clicked`, () => {
-    userEvent.click(screen.getByRole('button', {name: buttonLabel.close}));
+    userEvent.click(
+      screen.getByRole('button', {name: buttonLabel.closeSearchbox}),
+    );
     expect(screen.getByRole('search')).toHaveAttribute(
       'data-searchbox',
       'closing',
     );
   });
   test(`gets dismounted ${duration.modal.exit}ms after clicking close button`, async () => {
-    userEvent.click(screen.getByRole('button', {name: buttonLabel.close}));
+    userEvent.click(
+      screen.getByRole('button', {name: buttonLabel.closeSearchbox}),
+    );
     await waitFor(() => {
       jest.advanceTimersByTime(duration.modal.exit);
     });

@@ -63,15 +63,19 @@ describe('Search feature', () => {
 
   it(`allows user to close search box`, () => {
     cy.log('**Verify the absence of elements to be shown**');
-    cy.findByRole('button', {name: buttonLabel.close}).should('not.exist');
+    cy.findByRole('button', {name: buttonLabel.closeSearchbox}).should(
+      'not.exist',
+    );
 
     cy.log('**Clicking search icon button...**');
     cy.findByRole('button', {name: buttonLabel.search}).click();
     cy.log('**...Shows a close button**');
-    cy.findByRole('button', {name: buttonLabel.close}).should('be.visible');
+    cy.findByRole('button', {name: buttonLabel.closeSearchbox}).should(
+      'be.visible',
+    );
 
     cy.log('**Clicking the close button...**');
-    cy.findByRole('button', {name: buttonLabel.close}).click();
+    cy.findByRole('button', {name: buttonLabel.closeSearchbox}).click();
     cy.log('**...Hides the search box**');
     cy.findByRole('searchbox').should('not.exist');
   });
