@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-import {buttonSquare, color} from 'src/utils/designtokens';
+import {buttonSquare, color, dimension} from 'src/utils/designtokens';
 import {removeFocusRing, styleFocusRing} from 'src/utils/cssUtilities';
 import {zIndex} from 'src/utils/zIndex';
 
@@ -27,9 +27,11 @@ const positionButton = `
   z-index: ${zIndex.closeButton};
 `;
 
-const setButtonLabelColor = `
+const styleButtonLabel = `
   & svg {
     fill: var(--button-label-color-default);
+    height: ${dimension.button['minimum target size 75']};
+    width: ${dimension.button['minimum target size 75']};
   }
 `;
 
@@ -68,7 +70,7 @@ export const ButtonSquare = styled.button`
   ${setClickableArea}
   ${alignButtonLabel}
   ${positionButton}
-  ${setButtonLabelColor}
+  ${styleButtonLabel}
   ${styleFocusState}
   ${styleActiveState}
 `;

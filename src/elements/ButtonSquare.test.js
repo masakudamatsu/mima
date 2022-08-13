@@ -32,6 +32,8 @@ describe('ButtonSquare component', () => {
 
 .c0 svg {
   fill: var(--button-label-color-default);
+  height: 36px;
+  width: 36px;
 }
 
 .c0:focus {
