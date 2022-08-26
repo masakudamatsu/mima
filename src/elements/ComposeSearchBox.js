@@ -1,7 +1,6 @@
 import styled from 'styled-components';
-import {bodyText, buttonSquare, dimension} from 'src/utils/designtokens';
+import {bodyText, dimension} from 'src/utils/designtokens';
 import {styleFocusRing} from 'src/utils/cssUtilities';
-import {zIndex} from 'src/utils/zIndex';
 
 const setDimension = `
   --box-height: ${dimension.button['minimum target size 100']};
@@ -14,7 +13,7 @@ const setDimension = `
 
 const shapeBox = `
   height: var(--box-height);
-  max-width: 561px; /* follow google.com */
+  max-width: ${dimension.searchBox['max-width']}; 
 
   & input[type="search"] {
     border: var(--border-width) solid var(--button-label-color-default);

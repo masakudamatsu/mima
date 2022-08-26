@@ -13,6 +13,7 @@ export const color = {
   'day-mid-grey 100': 'rgb(137, 137, 137)', // '#898989', // 6 = pale-cyan 100 / 1.5
   'day-dark-grey 100': '#767676', // 4.62 = white 100 / 4.5
   'dark-grey 100': `rgb(90,90,90)`, // 3.04 = 3 * black
+  'background for dark-grey text 100': `rgb(209, 209, 209)`, // 4.51 * dark-grey 100
   'pale-green 100': '#c0dac0', // 14.03 = white 100 / 1.5
   'pale-cyan 100': '#99b2b2', // 9.36 = pale-green 100 / 1.5
   'focus-blue 100': `rgb(69, 159, 189)`, // 6.95 = streets.day / 3
@@ -119,6 +120,7 @@ export const dimension = {
   searchBox: {
     'border width 100': '2px',
     'side margin 100': '8px',
+    'max-width': '561px' /* follow google.com */,
   },
 };
 
@@ -178,25 +180,9 @@ export const easing = {
   linear: 'linear',
 };
 
-export const autocomplete = {
-  focus: {
-    outline: `1px solid red`, // temporary; see issue #186
-  },
-};
 export const buttonSquare = {
   clickableArea: dimension.button['minimum target size 100'],
 };
-
-export const svgPlace = {
-  heightInner: `20px`,
-  heightOuter: `24px`,
-  marginBottom: `2px`,
-  marginLeft: `4px`,
-  marginRight: `4px`,
-  marginTop: `2px`,
-  widthInner: `16px`,
-  widthOuter: `24px`,
-}; // see sketch/svg-place.sketch
 
 // Font styling
 

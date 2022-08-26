@@ -1,26 +1,21 @@
-import styled from 'styled-components';
-import {
-  bodyText,
-  boldText,
-  buttonSquare,
-  color,
-  dimension,
-  svgPlace,
-} from 'src/utils/designtokens';
+import styled, {css} from 'styled-components';
+import {animation, bodyText, boldText, dimension} from 'src/utils/designtokens';
 
-const closeButtonHeight = buttonSquare.clickableArea;
-const searchBoxHeight = `2 * ${dimension.searchBox['border width 100']} + ${dimension.button['minimum target size 100']}`;
-const spaceAboveList = dimension.button['minimum target spacing 100'];
-const positionList = `
-  left: ${dimension.searchBox['side margin 100']};
-  position: absolute;
-  right: ${dimension.searchBox['side margin 100']};
-  top: calc(${closeButtonHeight} + ${searchBoxHeight} + ${spaceAboveList});
+const setDimension = `
+  --height: ${dimension.button['minimum target size 100']};
+  --border-radius: calc(var(--height) / 2);
+  --margin-left: calc(var(--border-radius) / 2);
+  --margin-right: calc(var(--border-radius));
+  --icon-size: ${dimension.button['minimum target size 75']};
+  --icon-vertical-margin: calc( ( var(--height) - var(--icon-size) ) / 2 );
 `;
 
 const shapeListItems = `  
+  max-width: ${dimension.searchBox['max-width']};
   & li {
-    height: ${dimension.button['minimum target size 100']};
+    border-radius: var(--border-radius);
+    height: var(--height);
+    list-style: none;
   }
 `;
 
@@ -32,30 +27,54 @@ const positionListItems = `
 
 const colorListItems = `
   & li {
-    background-color: ${color['white 93']};
+    color: var(--popup-text-color);
+
+    --blur-radius: 8px;
+    /* legacy browsers */
+    background-color: var(--popup-background-color-fallback);
+    /* Modern browsers */
+    @supports (backdrop-filter: blur(var(--blur-radius))) {
+      background-color: var(--popup-background-color);
+      backdrop-filter: blur(var(--blur-radius));  
+    } 
+  }
+  & li svg {
+    fill:  var(--popup-text-color);
+  }
+  & li[data-highlighted="true"] {
+    background-color: var(--popup-background-highlighted);
   }
 `;
 
 const positionListItemContent = `
+  & li {
+    padding-right: var(--margin-right);
+  }
   & li dl {
-    align-items: center;
-    display: grid;
-    grid-column-gap: ${dimension.button['minimum target spacing 100']};
-    grid-template-columns: ${svgPlace.widthInner} 1fr;
-    grid-template-rows: 50% 50%;
-    padding: 0 ${dimension.button['minimum target spacing 100']};
+    height: 100%;
+    position: relative;
   }
   & li dl dd[data-dd-type="icon"] {
-    grid-column: 1 / span 1;
-    grid-row: 1 / span 2;
+    height: 100%;
+    position: absolute;
+    left: var(--margin-left);
+    top: var(--icon-vertical-margin);
+    bottom: var(--icon-vertical-margin);  
+  } 
+  & li dl dd[data-dd-type="icon"] svg {
+    height: var(--icon-size);
+    width: var(--icon-size);
+  }
+  & li dl dt,
+  & li dl dd[data-dd-type="address"] {
+    position: absolute;
+    left: calc( var(--margin-left) + var(--icon-size) + 5px); /* 5px is chosen to left-align with search box text OPTICALLY */
   }
   & li dl dt {
-    grid-column: 2 / span 1;
-    grid-row: 1 / span 1;
+    top: 0;
   }
   & li dl dd[data-dd-type="address"] {
-    grid-column: 2 / span 1;
-    grid-row: 2 / span 1;
+    top: 50%;
   }
 `;
 
@@ -78,11 +97,27 @@ const styleText = `
   }
 `;
 
+const styleActiveState = css`
+  & li {
+    position: relative;
+    overflow: hidden;
+  }
+  & li .ripple {
+    /* to be used in line 14 of createRipple.js */
+    animation: ${animation['ripple 100']} 300ms linear;
+    background-color: var(--ripple-color);
+    border-radius: 50%;
+    position: absolute;
+    transform: scale(0);
+  }
+`;
+
 export const ListAutocomplete = styled.ul`
-  ${positionList}
+  ${setDimension}
   ${shapeListItems}
   ${positionListItems}
   ${colorListItems}
   ${positionListItemContent}
   ${styleText}
+  ${styleActiveState}
 `;

@@ -6,7 +6,7 @@ import {
   duration,
   easing,
 } from 'src/utils/designtokens';
-import {buttonLabel} from 'src/utils/uiCopies';
+import {buttonLabel, searchBoxLabel} from 'src/utils/uiCopies';
 import {zIndex} from 'src/utils/zIndex';
 
 const placeOverMap = `
@@ -64,11 +64,17 @@ const positionComponents = `
     top:  var(--popup-margin);
     z-index: ${zIndex.closeButton};  
   }
-  & div[id="searchbox"] {
+  & div[id="searchbox"],
+  & ul[aria-label="${searchBoxLabel.listbox}"] {
     margin: 0 auto; 
-    top: calc(${buttonSquare.clickableArea} + var(--popup-margin) * 2);
     width: calc(100% - var(--popup-margin) * 2) ;
     z-index: ${zIndex.divSearch};      
+  }
+  & div[id="searchbox"] {
+    margin-top: calc(${buttonSquare.clickableArea} + var(--popup-margin) * 2);
+  }
+  & ul[aria-label="${searchBoxLabel.listbox}"] {
+    margin-top: ${dimension.button['minimum target spacing 100']};
   }
 `;
 

@@ -34,11 +34,22 @@ describe('SearchForm component', () => {
 }
 
 .c0[data-searchbox='true'] div[id="searchbox"],
-.c0[data-searchbox='closing'] div[id="searchbox"] {
+.c0[data-searchbox='closing'] div[id="searchbox"],
+.c0[data-searchbox='true'] ul[aria-label="Autocomplete suggestions"],
+.c0[data-searchbox='closing'] ul[aria-label="Autocomplete suggestions"] {
   margin: 0 auto;
-  top: calc(48px + var(--popup-margin) * 2);
   width: calc(100% - var(--popup-margin) * 2);
   z-index: 3;
+}
+
+.c0[data-searchbox='true'] div[id="searchbox"],
+.c0[data-searchbox='closing'] div[id="searchbox"] {
+  margin-top: calc(48px + var(--popup-margin) * 2);
+}
+
+.c0[data-searchbox='true'] ul[aria-label="Autocomplete suggestions"],
+.c0[data-searchbox='closing'] ul[aria-label="Autocomplete suggestions"] {
+  margin-top: 8px;
 }
 
 .c0[data-searchbox='closing'] {
