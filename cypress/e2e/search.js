@@ -39,8 +39,6 @@ describe('Search feature', () => {
       'font-weight',
       boldText.fontWeight.toString(),
     );
-    cy.log('**...Does not highlights other text in autocomplete suggestions**');
-    cy.findByRole('listbox').get('b').contains(searchWords[0]);
 
     cy.log('**Typing more...**');
     cy.focused().realPress('Space').realType(searchWords[1].source);

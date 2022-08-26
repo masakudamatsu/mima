@@ -13,7 +13,6 @@ import {autocomplete} from 'src/utils/designtokens';
 import {searchBoxLabel} from 'src/utils/uiCopies';
 
 import {boldSubstring} from 'src/utils/boldSubstring';
-import {cleanAutocompleteData} from 'src/utils/cleanAutocompleteData';
 
 export const SearchBox = ({handleClickCloseButton, id}) => {
   const [, setPlaceId] = useContext(PlaceIdContext);
@@ -50,40 +49,34 @@ export const SearchBox = ({handleClickCloseButton, id}) => {
             );
           }
           const autocompleteSuggestions = predictions.map(prediction => {
-            const rawPlaceName = {
-              autocompleteText: prediction.structured_formatting.main_text,
-              length: prediction.structured_formatting
-                .main_text_matched_substrings
-                ? prediction.structured_formatting
-                    .main_text_matched_substrings[0]['length']
-                : 0,
-              offset: prediction.structured_formatting
-                .main_text_matched_substrings
-                ? prediction.structured_formatting
-                    .main_text_matched_substrings[0]['offset']
-                : 0,
-            };
-            const rawAddressName = prediction.structured_formatting
-              .secondary_text
-              ? {
-                  autocompleteText:
-                    prediction.structured_formatting.secondary_text,
-                  length: prediction.structured_formatting
-                    .secondary_text_matched_substrings
-                    ? prediction.structured_formatting
-                        .secondary_text_matched_substrings[0]['length']
-                    : 0,
-                  offset: prediction.structured_formatting
-                    .secondary_text_matched_substrings
-                    ? prediction.structured_formatting
-                        .secondary_text_matched_substrings[0]['offset']
-                    : 0,
-                }
-              : {autocompleteText: null, length: null, offset: null};
             return {
               id: prediction.place_id,
-              name: cleanAutocompleteData({inputValue, ...rawPlaceName}),
-              address: cleanAutocompleteData({inputValue, ...rawAddressName}),
+              name: {
+                length: prediction.structured_formatting
+                  .main_text_matched_substrings
+                  ? prediction.structured_formatting
+                      .main_text_matched_substrings[0]['length']
+                  : 0,
+                offset: prediction.structured_formatting
+                  .main_text_matched_substrings
+                  ? prediction.structured_formatting
+                      .main_text_matched_substrings[0]['offset']
+                  : 0,
+                string: prediction.structured_formatting.main_text,
+              },
+              address: prediction.structured_formatting.secondary_text && {
+                length: prediction.structured_formatting
+                  .secondary_text_matched_substrings
+                  ? prediction.structured_formatting
+                      .secondary_text_matched_substrings[0]['length']
+                  : 0,
+                offset: prediction.structured_formatting
+                  .secondary_text_matched_substrings
+                  ? prediction.structured_formatting
+                      .secondary_text_matched_substrings[0]['offset']
+                  : 0,
+                string: prediction.structured_formatting.secondary_text,
+              },
             };
           });
           setInputItems(autocompleteSuggestions);
