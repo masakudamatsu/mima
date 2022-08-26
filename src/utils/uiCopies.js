@@ -23,6 +23,7 @@ export const editorLabel = 'Edit place info';
 export const searchBoxLabel = {
   ariaLabel: 'Search for a place on the map',
   placeholder: 'Enter place name or address',
+  listbox: 'Autocomplete suggestions',
 };
 
 export const geolocationNotSupported = {

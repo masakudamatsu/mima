@@ -12,16 +12,16 @@ describe('Search feature', () => {
   });
   it('happy path for mobile/mouse users', () => {
     cy.log('**Verify the absence of elements to be shown**');
-    cy.findByRole('searchbox').should('not.exist');
+    cy.findByRole('combobox').should('not.exist');
     cy.findByRole('option', {name: placeName.regex}).should('not.exist');
     cy.findByRole('button', {name: placeName.japanese}).should('not.exist');
 
     cy.log('**Clicking search icon button...**');
     cy.findByRole('button', {name: buttonLabel.search}).click();
     cy.log('**...Shows a search box**');
-    cy.findByRole('searchbox').should('be.visible');
+    cy.findByRole('combobox').should('be.visible');
     cy.log(`**...Shows placeholder text "${searchBoxLabel.placeholder}"**`);
-    cy.findByRole('searchbox').should(
+    cy.findByRole('combobox').should(
       'have.attr',
       'placeholder',
       searchBoxLabel.placeholder,
@@ -77,7 +77,7 @@ describe('Search feature', () => {
     cy.log('**Clicking the close button...**');
     cy.findByRole('button', {name: buttonLabel.closeSearchbox}).click();
     cy.log('**...Hides the search box**');
-    cy.findByRole('searchbox').should('not.exist');
+    cy.findByRole('combobox').should('not.exist');
   });
   it('traps the focus within the search box dialog popup', () => {
     cy.log('**Setup: Open search box dialog popup**');

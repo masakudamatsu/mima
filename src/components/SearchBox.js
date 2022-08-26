@@ -95,7 +95,7 @@ export const SearchBox = ({handleClickCloseButton, id}) => {
 
   return (
     <>
-      <ComposeSearchBox {...getComboboxProps()} id={id}>
+      <ComposeSearchBox id={id}>
         <VisuallyHidden {...getLabelProps()} as="label">
           {searchBoxLabel.ariaLabel}
         </VisuallyHidden>
@@ -106,7 +106,15 @@ export const SearchBox = ({handleClickCloseButton, id}) => {
        */}
         </svg>
         <input
+          {...getComboboxProps(
+            {
+              'aria-haspopup': null,
+              'aria-owns': null,
+            },
+            {suppressRefError: true}, // otherwise, an error message appears even after Jest tests pass
+          )}
           {...getInputProps({
+            'aria-labelledby': null, // override the default
             autoFocus: true,
             'data-testid': 'searchbox-first-focusable-element', // to test focus management
             inputMode: 'search',
@@ -115,7 +123,12 @@ export const SearchBox = ({handleClickCloseButton, id}) => {
           })}
         />{' '}
       </ComposeSearchBox>
-      <ListAutocomplete {...getMenuProps()}>
+      <ListAutocomplete
+        {...getMenuProps({
+          'aria-label': searchBoxLabel.listbox,
+          'aria-labelledby': null,
+        })}
+      >
         {isOpen
           ? inputItems.map((item, index) => {
               return (

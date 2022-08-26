@@ -22,23 +22,46 @@ beforeEach(() => {
 
 const mockProps = {};
 
+test(`complies ARIA 1.2 guideline`, () => {
+  render(<SearchBox {...mockProps} />);
+  const searchbox = screen.getByLabelText(searchBoxLabel.ariaLabel);
+  const popuplist = screen.getByLabelText(searchBoxLabel.listbox);
+  const popuplistId = 'downshift-0-menu';
+  expect(popuplist).toHaveAttribute('id', popuplistId);
+
+  expect(searchbox).toHaveAttribute('role', 'combobox');
+  expect(searchbox).toHaveAttribute('aria-autocomplete', 'list');
+  expect(searchbox).toHaveAttribute('aria-controls', popuplistId);
+  expect(searchbox).toHaveAttribute('aria-expanded', 'false');
+  expect(popuplist).toHaveAttribute('role', 'listbox');
+
+  userEvent.type(searchbox, 'a');
+  expect(searchbox).toHaveAttribute('aria-expanded', 'true');
+  //   // TODO: mock google maps api so mock list items will be shown
+  //   const firstItem = screen.getByRole('option', {name: 'Suggestion 1'});
+  //   const firstItemId = 'downshift-0-item-0';
+  //   expect(firstItem).toHaveAttribute('id', firstItemId);
+  //   expect(firstItem).toHaveAttribute('aria-selected', 'false');
+
+  //   userEvent.type(searchbox, '{arrowdown}');
+  //   expect(searchbox).toHaveAttribute('aria-activedescendant', firstItemId);
+  //   expect(firstItem).toHaveAttribute('aria-selected', 'true');
+});
 test(`Input search element's inputmode attribute is set to be "search"`, () => {
   // To show mobile keyboards with the return key labelled "Go" in iOS or magnifying glass icon in Android;
   // See https://css-tricks.com/everything-you-ever-wanted-to-know-about-inputmode/
   render(<SearchBox {...mockProps} />);
-  expect(
-    screen.getByLabelText(searchBoxLabel.ariaLabel, {selector: 'input'}),
-  ).toHaveAttribute('inputmode', 'search');
+  expect(screen.getByLabelText(searchBoxLabel.ariaLabel)).toHaveAttribute(
+    'inputmode',
+    'search',
+  );
 });
 
 test('calls getPlacePredictions() each time typing a character in search box', () => {
   render(<SearchBox {...mockProps} />);
   const searchTerms = ['a', 'abc'];
   searchTerms.forEach(searchTerm => {
-    userEvent.type(
-      screen.getByLabelText(searchBoxLabel.ariaLabel, {selector: 'input'}),
-      searchTerm,
-    );
+    userEvent.type(screen.getByLabelText(searchBoxLabel.ariaLabel), searchTerm);
     expect(mockGetPlacePredictions).toHaveBeenCalledTimes(searchTerm.length);
     mockGetPlacePredictions.mockClear();
   });
@@ -48,14 +71,8 @@ test('calls getPlacePredictions() with the same session token', () => {
   render(<SearchBox {...mockProps} />);
 
   // execute
-  userEvent.type(
-    screen.getByLabelText(searchBoxLabel.ariaLabel, {selector: 'input'}),
-    'o',
-  );
-  userEvent.type(
-    screen.getByLabelText(searchBoxLabel.ariaLabel, {selector: 'input'}),
-    'k',
-  );
+  userEvent.type(screen.getByLabelText(searchBoxLabel.ariaLabel), 'o');
+  userEvent.type(screen.getByLabelText(searchBoxLabel.ariaLabel), 'k');
 
   // verify
   const firstToken = mockGetPlacePredictions.mock.calls[0][0].sessionToken.Vl;
