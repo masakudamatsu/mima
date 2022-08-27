@@ -34,55 +34,53 @@ export const SearchBox = ({handleClickCloseButton, id}) => {
     items: inputItems,
     onInputValueChange: ({inputValue}) => {
       service.getPlacePredictions(
-        // returns place predictions. Note: A 'place' can be an establishment, geographic location, or prominent point of interest, as defined by the Places API.
         {
           input: inputValue,
           sessionToken: sessionToken,
           // TODO: Add more options to location-bias search to a particular area (issue #195)
         },
-        (predictions, status) => {
-          if (status !== 'OK' || !predictions) {
-            // TODO: Handle error more properly (issue #196)
-            console.error(
-              'Google Maps Places Autocomplete API call has failed.',
-            );
-            setInputItems([]);
-            return;
-          }
-          const autocompleteSuggestions = predictions.map(prediction => {
-            return {
-              id: prediction.place_id,
-              name: {
-                length: prediction.structured_formatting
-                  .main_text_matched_substrings
-                  ? prediction.structured_formatting
-                      .main_text_matched_substrings[0]['length']
-                  : 0,
-                offset: prediction.structured_formatting
-                  .main_text_matched_substrings
-                  ? prediction.structured_formatting
-                      .main_text_matched_substrings[0]['offset']
-                  : 0,
-                string: prediction.structured_formatting.main_text,
-              },
-              address: prediction.structured_formatting.secondary_text && {
-                length: prediction.structured_formatting
-                  .secondary_text_matched_substrings
-                  ? prediction.structured_formatting
-                      .secondary_text_matched_substrings[0]['length']
-                  : 0,
-                offset: prediction.structured_formatting
-                  .secondary_text_matched_substrings
-                  ? prediction.structured_formatting
-                      .secondary_text_matched_substrings[0]['offset']
-                  : 0,
-                string: prediction.structured_formatting.secondary_text,
-              },
-            };
-          });
-          setInputItems(autocompleteSuggestions);
-        },
+        handlePredictions,
       );
+      function handlePredictions(predictions, status) {
+        if (status !== 'OK' || !predictions) {
+          // TODO: Handle error more properly (issue #196)
+          console.error('Google Maps Places Autocomplete API call has failed.');
+          setInputItems([]);
+          return;
+        }
+        const autocompleteSuggestions = predictions.map(prediction => {
+          return {
+            id: prediction.place_id,
+            name: {
+              length: prediction.structured_formatting
+                .main_text_matched_substrings
+                ? prediction.structured_formatting
+                    .main_text_matched_substrings[0]['length']
+                : 0,
+              offset: prediction.structured_formatting
+                .main_text_matched_substrings
+                ? prediction.structured_formatting
+                    .main_text_matched_substrings[0]['offset']
+                : 0,
+              string: prediction.structured_formatting.main_text,
+            },
+            address: prediction.structured_formatting.secondary_text && {
+              length: prediction.structured_formatting
+                .secondary_text_matched_substrings
+                ? prediction.structured_formatting
+                    .secondary_text_matched_substrings[0]['length']
+                : 0,
+              offset: prediction.structured_formatting
+                .secondary_text_matched_substrings
+                ? prediction.structured_formatting
+                    .secondary_text_matched_substrings[0]['offset']
+                : 0,
+              string: prediction.structured_formatting.secondary_text,
+            },
+          };
+        });
+        setInputItems(autocompleteSuggestions);
+      }
     },
   });
 
