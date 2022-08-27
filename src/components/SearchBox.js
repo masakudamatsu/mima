@@ -46,6 +46,8 @@ export const SearchBox = ({handleClickCloseButton, id}) => {
             console.error(
               'Google Maps Places Autocomplete API call has failed.',
             );
+            setInputItems([]);
+            return;
           }
           const autocompleteSuggestions = predictions.map(prediction => {
             return {
