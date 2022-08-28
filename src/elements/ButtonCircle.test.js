@@ -1,15 +1,16 @@
 // eslint-disable-next-line no-unused-vars
 import {render, screen} from '@testing-library/react';
 
-import {ButtonSquare} from './ButtonSquare';
+import {ButtonCircle} from './ButtonCircle';
 
-describe('ButtonSquare component', () => {
+describe('ButtonCircle component', () => {
   test('renders the UI correctly', () => {
-    const {container} = render(<ButtonSquare />);
+    const {container} = render(<ButtonCircle />);
     expect(container).toMatchInlineSnapshot(`
 .c0 {
   background-color: rgba(255,255,255,0);
   border: none;
+  border-radius: 50%;
   height: 48px;
   width: 48px;
   -webkit-align-items: center;

@@ -3,7 +3,7 @@ import Autolinker from 'autolinker';
 
 import {PlaceDataPopup} from 'src/components/PlaceDataPopup';
 import {ButtonDialog} from 'src/elements/ButtonDialog';
-import {ButtonSquare} from 'src/elements/ButtonSquare';
+import {ButtonCircle} from 'src/elements/ButtonCircle';
 import {DivParagraphHolder} from 'src/elements/DivParagraphHolder';
 import {H2PlaceName} from 'src/elements/H2PlaceName';
 import {SvgClose} from 'src/elements/SvgClose';
@@ -28,14 +28,14 @@ export const PlaceInfo = ({
       slideFrom="bottom"
       titleId="selected-place"
     >
-      <ButtonSquare
+      <ButtonCircle
         data-autofocus
         data-testid="close-button-saved-place"
         onClick={closePlaceInfo}
         type="button"
       >
         <SvgClose title={buttonLabel.close} />
-      </ButtonSquare>
+      </ButtonCircle>
       <H2PlaceName id="selected-place">{placeName}</H2PlaceName>
       <DivParagraphHolder
         dangerouslySetInnerHTML={{

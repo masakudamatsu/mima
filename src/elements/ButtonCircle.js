@@ -2,7 +2,7 @@ import styled, {css} from 'styled-components';
 
 import {
   animation,
-  buttonSquare,
+  buttonCircle,
   color,
   dimension,
 } from 'src/utils/designtokens';
@@ -15,8 +15,9 @@ const resetStyle = `
 `;
 
 const setClickableArea = `
-  height: ${buttonSquare.clickableArea};
-  width: ${buttonSquare.clickableArea};
+  border-radius: 50%;
+  height: ${buttonCircle.clickableArea};
+  width: ${buttonCircle.clickableArea};
 `;
 
 const alignButtonLabel = `
@@ -73,7 +74,7 @@ const styleActiveState = css`
 `;
 
 // Define Button components
-export const ButtonSquare = styled.button`
+export const ButtonCircle = styled.button`
   ${resetStyle}
   ${setClickableArea}
   ${alignButtonLabel}

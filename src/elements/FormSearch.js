@@ -1,7 +1,7 @@
 import styled, {css} from 'styled-components';
 import {
   animation,
-  buttonSquare,
+  buttonCircle,
   dimension,
   duration,
   easing,
@@ -71,7 +71,7 @@ const positionComponents = `
     z-index: ${zIndex.divSearch};      
   }
   & div[id="searchbox"] {
-    margin-top: calc(${buttonSquare.clickableArea} + var(--popup-margin) * 2);
+    margin-top: calc(${buttonCircle.clickableArea} + var(--popup-margin) * 2);
   }
   & ul[aria-label="${searchBoxLabel.listbox}"] {
     margin-top: ${dimension.button['minimum target spacing 100']};

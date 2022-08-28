@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import {NightModeContext} from 'src/wrappers/NightModeContext';
 import {PlaceIdContext} from 'src/wrappers/PlaceIdContext';
 
-import {ButtonSquare} from 'src/elements/ButtonSquare';
+import {ButtonCircle} from 'src/elements/ButtonCircle';
 import {DivParagraphHolder} from 'src/elements/DivParagraphHolder';
 import {H2PlaceName} from 'src/elements/H2PlaceName';
 import {PlaceDataPopup} from 'src/components/PlaceDataPopup';
@@ -123,14 +123,14 @@ export const SearchedPlace = ({mapObject}) => {
       slideFrom="bottom"
       titleId="place-name"
     >
-      <ButtonSquare
+      <ButtonCircle
         data-autofocus
         data-testid="close-button-saved-place"
         onClick={closePlaceInfo}
         type="button"
       >
         <SvgClose title={buttonLabel.close} />
-      </ButtonSquare>
+      </ButtonCircle>
       <H2PlaceName id="place-name">{placeData.name}</H2PlaceName>
       <DivParagraphHolder>
         <p>{placeData.address}</p>

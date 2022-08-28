@@ -180,7 +180,7 @@ export const easing = {
   linear: 'linear',
 };
 
-export const buttonSquare = {
+export const buttonCircle = {
   clickableArea: dimension.button['minimum target size 100'],
 };
 

@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import {
   bodyText,
-  buttonSquare,
+  buttonCircle,
   capHeight,
   dimension,
   duration,
@@ -122,7 +122,7 @@ const setBackground = `
 const setPadding = `
   padding: 0 10px 10px 10px;
   @media screen and (min-width: ${dimension.breakpoint.divPopup.padding}) {
-    padding: 0 ${buttonSquare.clickableArea} ${buttonSquare.clickableArea} ${buttonSquare.clickableArea};
+    padding: 0 ${buttonCircle.clickableArea} ${buttonCircle.clickableArea} ${buttonCircle.clickableArea};
   }
 `;
 

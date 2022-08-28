@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import {useOnEscKeyDown} from 'src/hooks/useOnEscKeyDown';
 import {ModalPopup} from 'src/components/ModalPopup';
 import {Button} from 'src/elements/Button';
-import {ButtonSquare} from 'src/elements/ButtonSquare';
+import {ButtonCircle} from 'src/elements/ButtonCircle';
 import {Heading} from 'src/elements/Heading';
 import {ListMenu} from 'src/elements/ListMenu';
 import {SvgAdd} from 'src/elements/SvgAdd';
@@ -63,14 +63,14 @@ export const MenuButton = ({
         <Heading as="h2" id="menu-label">
           {menuLabel}
         </Heading>
-        <ButtonSquare
+        <ButtonCircle
           data-autofocus
           data-testid="close-button-menu"
           onClick={handleClickCloseButton}
           type="button"
         >
           <SvgClose title={buttonLabel.close} />
-        </ButtonSquare>
+        </ButtonCircle>
         <ListMenu>
           <li>
             <button>
