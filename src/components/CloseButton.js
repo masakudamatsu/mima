@@ -7,12 +7,12 @@ import {createRipple} from 'src/utils/createRipple';
 // TODO #201:
 // 2. Reuse this component in MenuButton, PlaceInfo, SearchedPlace
 export const CloseButton = ({
-  ariaControls,
+  ariaControls = null,
   ariaExpanded = null,
   ariaLabel,
   autofocus = false,
   handleClick,
-  testId,
+  testId = null,
 }) => {
   const clickHandler = event => {
     createRipple(event);
@@ -41,7 +41,8 @@ export const CloseButton = ({
 CloseButton.propTypes = {
   ariaControls: PropTypes.string,
   ariaExpanded: PropTypes.string,
+  ariaLabel: PropTypes.string.isRequired,
   autofocus: PropTypes.bool,
-  handleClick: PropTypes.func,
+  handleClick: PropTypes.func.isRequired,
   testId: PropTypes.string,
 };
