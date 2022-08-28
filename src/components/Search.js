@@ -67,6 +67,7 @@ export const Search = () => {
         <FocusLock>
           <CloseButton
             ariaControls={searchboxId}
+            ariaExpanded="true"
             ariaLabel={buttonLabel.closeSearchbox}
             handleClick={handleClickCloseButton}
             testId="searchbox-last-focusable-element" // to test focus management

@@ -49,6 +49,11 @@ describe('Once the search button is pressed...', () => {
       'true',
     );
   });
+  test(`assigns aria-expanded="true" to the close button`, () => {
+    expect(
+      screen.getByRole('button', {name: buttonLabel.closeSearchbox}),
+    ).toHaveAttribute('aria-expanded', 'true');
+  });
   test(`sets 'data-searchbox' attribute to be closing after close button is clicked`, () => {
     userEvent.click(
       screen.getByRole('button', {name: buttonLabel.closeSearchbox}),
