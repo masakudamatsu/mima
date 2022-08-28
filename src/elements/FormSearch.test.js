@@ -1,10 +1,10 @@
 import {render} from '@testing-library/react';
 
-import {SearchForm} from './SearchForm';
+import {FormSearch} from './FormSearch';
 
-describe('SearchForm component', () => {
+describe('FormSearch component', () => {
   test('renders the UI correctly', () => {
-    const {container} = render(<SearchForm />);
+    const {container} = render(<FormSearch />);
     expect(container).toMatchInlineSnapshot(`
 .c0[data-searchbox='true'],
 .c0[data-searchbox='closing'] {

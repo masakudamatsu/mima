@@ -60,7 +60,7 @@ const styleFocusState = `
 `;
 
 const styleActiveState = css`
-  /* position: relative; (unnecessary because the button is absolutely positioined by SearchForm.js */
+  /* position: relative; (unnecessary because the button is absolutely positioined by FormSearch.js */
   /* overflow: hidden; (unnecessary for close button as we want the ripple to spread across the screen) */
   & .ripple {
     /* to be used in line 14 of createRipple.js */

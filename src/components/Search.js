@@ -6,7 +6,7 @@ import {CloseButton} from './CloseButton';
 import {Button} from 'src/elements/Button';
 import {SvgCloud} from 'src/elements/SvgCloud';
 
-import {SearchForm} from 'src/elements/SearchForm';
+import {FormSearch} from 'src/elements/FormSearch';
 import {ParagraphLoading} from 'src/elements/ParagraphLoading';
 
 import {buttonLabel} from 'src/utils/uiCopies';
@@ -47,7 +47,7 @@ export const Search = () => {
   const searchboxId = 'searchbox';
 
   return (
-    <SearchForm data-searchbox={searchBoxOpen}>
+    <FormSearch data-searchbox={searchBoxOpen}>
       {searchBoxOpen === 'false' ? (
         <Button
           aria-controls={searchboxId}
@@ -77,7 +77,7 @@ export const Search = () => {
           />
         </FocusLock>
       )}
-    </SearchForm>
+    </FormSearch>
   );
 };
 

@@ -11,7 +11,7 @@ import {zIndex} from 'src/utils/zIndex';
 
 const placeOverMap = `
   position: absolute;
-  z-index: ${zIndex.SearchForm};
+  z-index: ${zIndex.formSearch};
 `;
 
 const setBackground = `
@@ -91,7 +91,7 @@ const animateTransitionOut = css`
   animation-fill-mode: forwards;
 `;
 
-export const SearchForm = styled.form.attrs({
+export const FormSearch = styled.form.attrs({
   role: 'search',
 })`
   &[data-searchbox='true'],
