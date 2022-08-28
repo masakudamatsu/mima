@@ -51,7 +51,7 @@ describe('Search feature', () => {
     cy.findByText(placeAddress).should('be.visible');
 
     cy.log('**Clicking the close button closes the place info**');
-    cy.findByRole('button', {name: buttonLabel.close}).click();
+    cy.findByRole('button', {name: buttonLabel.closePlaceDetail}).click();
     cy.findByRole('heading', {name: placeName}).should('not.exist');
 
     cy.log('**Clicking the place on the map reopens the place info**');

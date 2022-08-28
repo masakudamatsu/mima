@@ -4,11 +4,10 @@ import PropTypes from 'prop-types';
 import {NightModeContext} from 'src/wrappers/NightModeContext';
 import {PlaceIdContext} from 'src/wrappers/PlaceIdContext';
 
-import {ButtonCircle} from 'src/elements/ButtonCircle';
+import {CloseButton} from './CloseButton';
 import {DivParagraphHolder} from 'src/elements/DivParagraphHolder';
 import {H2PlaceName} from 'src/elements/H2PlaceName';
 import {PlaceDataPopup} from 'src/components/PlaceDataPopup';
-import {SvgClose} from 'src/elements/SvgClose';
 
 import {buttonLabel} from 'src/utils/uiCopies';
 
@@ -123,14 +122,12 @@ export const SearchedPlace = ({mapObject}) => {
       slideFrom="bottom"
       titleId="place-name"
     >
-      <ButtonCircle
-        data-autofocus
-        data-testid="close-button-saved-place"
-        onClick={closePlaceInfo}
-        type="button"
-      >
-        <SvgClose title={buttonLabel.close} />
-      </ButtonCircle>
+      <CloseButton
+        ariaLabel={buttonLabel.closePlaceDetail}
+        autofocus
+        handleClick={closePlaceInfo}
+        testId="close-button-saved-place"
+      />
       <H2PlaceName id="place-name">{placeData.name}</H2PlaceName>
       <DivParagraphHolder>
         <p>{placeData.address}</p>
