@@ -111,6 +111,14 @@ export const SearchedPlace = ({mapObject}) => {
     }
   }, [mapObject, nightMode, placeId]);
 
+  // For autofocusing the close button when opened
+  const closeButton = useRef();
+  useEffect(() => {
+    if (placeData) {
+      closeButton.current.focusButton();
+    }
+  }, [placeData]);
+
   // handle clicking the close button
   const [closing, setClosing] = useState(false);
   const closePlaceInfo = () => {
@@ -132,6 +140,7 @@ export const SearchedPlace = ({mapObject}) => {
 
   const placeNameId = 'place-name';
   const placeDetailId = 'place-detail';
+
   return placeData ? (
     <ComposeDialog // role="dialog" included
       aria-describedby={placeDetailId}
@@ -141,8 +150,8 @@ export const SearchedPlace = ({mapObject}) => {
     >
       <CloseButton
         ariaLabel={buttonLabel.closePlaceDetail}
-        autofocus
         handleClick={closePlaceInfo}
+        ref={closeButton}
         testId="close-button-saved-place"
       />
       <h2 id={placeNameId}>{placeData.name}</h2>

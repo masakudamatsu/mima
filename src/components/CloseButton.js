@@ -1,4 +1,4 @@
-// import React from 'react';
+import {forwardRef, useImperativeHandle, useRef} from 'react';
 import PropTypes from 'prop-types';
 
 import {ButtonCircle} from 'src/elements/ButtonCircle';
@@ -6,27 +6,33 @@ import {createRipple} from 'src/utils/createRipple';
 
 // TODO #201:
 // 2. Reuse this component in MenuButton, PlaceInfo
-export const CloseButton = ({
-  ariaControls = null,
-  ariaExpanded = null,
-  ariaLabel,
-  autofocus = false,
-  handleClick,
-  testId = null,
-}) => {
+export const CloseButton = forwardRef(function CloseButton(
+  {
+    ariaControls = null,
+    ariaExpanded = null,
+    ariaLabel,
+    handleClick,
+    testId = null,
+  },
+  ref,
+) {
+  const buttonElement = useRef();
+  const focusButton = () => buttonElement.current.focus();
+  useImperativeHandle(ref, () => ({focusButton}));
   const clickHandler = event => {
     createRipple(event);
     handleClick();
   };
+
   return (
     <>
       <ButtonCircle
         aria-controls={ariaControls}
         aria-expanded={ariaExpanded}
         aria-label={ariaLabel}
-        data-autofocus={autofocus}
         data-testid={testId}
         onClick={clickHandler}
+        ref={buttonElement}
         type="button"
       >
         <svg aria-hidden="true" viewBox="0 0 24 24">
@@ -36,13 +42,12 @@ export const CloseButton = ({
       </ButtonCircle>
     </>
   );
-};
+});
 
 CloseButton.propTypes = {
   ariaControls: PropTypes.string,
   ariaExpanded: PropTypes.string,
   ariaLabel: PropTypes.string.isRequired,
-  autofocus: PropTypes.bool,
   handleClick: PropTypes.func.isRequired,
   testId: PropTypes.string,
 };

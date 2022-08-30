@@ -49,14 +49,28 @@ describe('Search feature', () => {
     cy.log('**...Shows the place info**');
     cy.findByRole('heading', {name: placeName}).should('be.visible');
     cy.findByText(placeAddress).should('be.visible');
+    // TODO #207: Make the following test pass
+    // cy.log('**...Focuses the close button**');
+    // cy.focused().should(
+    //   'have.attr',
+    //   'aria-label',
+    //   buttonLabel.closePlaceDetail,
+    // );
 
     cy.log('**Clicking the close button closes the place info**');
     cy.findByRole('button', {name: buttonLabel.closePlaceDetail}).click();
     cy.findByRole('heading', {name: placeName}).should('not.exist');
 
-    cy.log('**Clicking the place on the map reopens the place info**');
+    cy.log('**Clicking the place on the map...**');
     cy.findByRole('button', {name: placeName}).click();
+    cy.log('**...reopens the place info**');
     cy.findByRole('heading', {name: placeName}).should('be.visible');
+    cy.log('**...focuses the close button**');
+    cy.focused().should(
+      'have.attr',
+      'aria-label',
+      buttonLabel.closePlaceDetail,
+    );
   });
 
   it(`allows user to close search box`, () => {
