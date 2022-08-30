@@ -22,10 +22,10 @@ const SearchBox = dynamic(importSearchBox, {
 export const Search = () => {
   const [searchBoxOpen, setSearchBoxOpen] = useState('false');
 
-  const buttonElement = useRef();
   const handleClickSearchButton = () => {
     setSearchBoxOpen('true');
   };
+
   const handleClickCloseButton = () => {
     setSearchBoxOpen('closing');
   };
@@ -38,9 +38,13 @@ export const Search = () => {
   }, [searchBoxOpen]);
 
   // Focus the search button after closing the searchbox
+  const buttonElement = useRef();
+  const closeButtonPressed = useRef(false);
   useEffect(() => {
     if (searchBoxOpen === 'false') {
-      buttonElement.current.focus();
+      if (closeButtonPressed.current === true) {
+        buttonElement.current.focus();
+      }
     }
   });
 
@@ -69,11 +73,17 @@ export const Search = () => {
             ariaControls={searchboxId}
             ariaExpanded="true"
             ariaLabel={buttonLabel.closeSearchbox}
-            handleClick={handleClickCloseButton}
+            handleClick={() => {
+              closeButtonPressed.current = true;
+              handleClickCloseButton();
+            }}
             testId="searchbox-last-focusable-element" // to test focus management
           />
           <SearchBox
-            handleClickCloseButton={handleClickCloseButton}
+            handleClickCloseButton={() => {
+              closeButtonPressed.current = false;
+              handleClickCloseButton();
+            }}
             id={searchboxId}
           />
         </FocusLock>
