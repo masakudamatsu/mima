@@ -76,6 +76,8 @@ describe('Search feature', () => {
     cy.findByRole('button', {name: buttonLabel.closeSearchbox}).click();
     cy.log('**...Hides the search box**');
     cy.findByRole('combobox').should('not.exist');
+    cy.log('**...Focuses the search icon button');
+    cy.focused().should('have.attr', 'aria-label', buttonLabel.search);
   });
   it('traps the focus within the search box dialog popup', () => {
     cy.log('**Setup: Open search box dialog popup**');
