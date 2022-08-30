@@ -5,11 +5,12 @@ import {NightModeContext} from 'src/wrappers/NightModeContext';
 import {PlaceIdContext} from 'src/wrappers/PlaceIdContext';
 
 import {CloseButton} from './CloseButton';
-import {DivParagraphHolder} from 'src/elements/DivParagraphHolder';
-import {H2PlaceName} from 'src/elements/H2PlaceName';
-import {PlaceDataPopup} from 'src/components/PlaceDataPopup';
+import {ComposeDialog} from 'src/elements/ComposeDialog';
+
+import {useOnClickOutside} from 'src/hooks/useOnClickOutside';
 
 import {buttonLabel} from 'src/utils/uiCopies';
+import {duration} from 'src/utils/designtokens';
 
 export const SearchedPlace = ({mapObject}) => {
   const [placeData, setPlaceData] = useState(null);
@@ -110,17 +111,33 @@ export const SearchedPlace = ({mapObject}) => {
     }
   }, [mapObject, nightMode, placeId]);
 
+  // handle clicking the close button
+  const [closing, setClosing] = useState(false);
   const closePlaceInfo = () => {
     mapObject.panTo(placeData.coordinates);
-    setPlaceData(null);
+    setClosing(true);
   };
+  useEffect(() => {
+    if (closing === true) {
+      setTimeout(() => {
+        setPlaceData(null);
+        setClosing(false);
+      }, duration.modal.exit);
+    }
+  }, [closing]);
 
+  // close by clicking outside
+  const dialogDiv = useRef(null);
+  useOnClickOutside(dialogDiv, closePlaceInfo);
+
+  const placeNameId = 'place-name';
+  const placeDetailId = 'place-detail';
   return placeData ? (
-    <PlaceDataPopup
-      handleClickOutside={closePlaceInfo}
-      hidden={false}
-      slideFrom="bottom"
-      titleId="place-name"
+    <ComposeDialog // role="dialog" included
+      aria-describedby={placeDetailId}
+      aria-labelledby={placeNameId}
+      data-closing={closing}
+      ref={dialogDiv}
     >
       <CloseButton
         ariaLabel={buttonLabel.closePlaceDetail}
@@ -128,11 +145,11 @@ export const SearchedPlace = ({mapObject}) => {
         handleClick={closePlaceInfo}
         testId="close-button-saved-place"
       />
-      <H2PlaceName id="place-name">{placeData.name}</H2PlaceName>
-      <DivParagraphHolder>
+      <h2 id={placeNameId}>{placeData.name}</h2>
+      <div id={placeDetailId}>
         <p>{placeData.address}</p>
-      </DivParagraphHolder>
-    </PlaceDataPopup>
+      </div>
+    </ComposeDialog>
   ) : null;
 };
 SearchedPlace.propTypes = {
