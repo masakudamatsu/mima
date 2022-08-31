@@ -1,5 +1,9 @@
 export const userLocationMarkerLabel = 'You are here!';
 
+export const linkText = {
+  searchedPlace: 'See more detail on Google Maps',
+};
+
 export const buttonLabel = {
   cancel: 'Cancel',
   close: 'Close',

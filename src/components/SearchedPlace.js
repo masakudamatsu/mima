@@ -9,7 +9,7 @@ import {ComposeDialog} from 'src/elements/ComposeDialog';
 
 import {useOnClickOutside} from 'src/hooks/useOnClickOutside';
 
-import {buttonLabel} from 'src/utils/uiCopies';
+import {buttonLabel, linkText} from 'src/utils/uiCopies';
 import {duration} from 'src/utils/designtokens';
 
 export const SearchedPlace = ({mapObject}) => {
@@ -53,7 +53,7 @@ export const SearchedPlace = ({mapObject}) => {
           place.geometry.location.lng(),
         ),
         name: place.name,
-        // TODO #198 url: place.url,
+        url: place.url,
       };
 
       // style marker
@@ -163,6 +163,11 @@ export const SearchedPlace = ({mapObject}) => {
       <h2 id={placeNameId}>{placeData.name}</h2>
       <div id={placeDetailId}>
         <p>{placeData.address}</p>
+        <p>
+          <a href={placeData.url} rel="noreferrer" target="_blank">
+            {linkText.searchedPlace}
+          </a>
+        </p>
       </div>
     </ComposeDialog>
   ) : null;

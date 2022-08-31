@@ -1,4 +1,4 @@
-import {buttonLabel, searchBoxLabel} from '../../src/utils/uiCopies';
+import {buttonLabel, linkText, searchBoxLabel} from '../../src/utils/uiCopies';
 import {autocomplete} from '../../src/utils/designtokens';
 import {boldText} from '../../src/utils/designtokens';
 const searchWords = [/nijo/i, /koya/i];
@@ -49,6 +49,15 @@ describe('Search feature', () => {
     cy.log('**...Shows the place info**');
     cy.findByRole('heading', {name: placeName}).should('be.visible');
     cy.findByText(placeAddress).should('be.visible');
+    cy.log(
+      '**...Shows the working link to open Google Maps in a new tab for more detailed information**',
+    );
+    cy.findByText(linkText.searchedPlace)
+      .should('have.attr', 'target', '_blank')
+      .should('have.attr', 'rel', 'noreferrer')
+      .then(link => {
+        cy.request(link.prop('href')).its('status').should('eq', 200);
+      });
     // TODO #207: Make the following test pass
     // cy.log('**...Focuses the close button**');
     // cy.focused().should(
