@@ -30,9 +30,13 @@ export const SearchedPlace = ({mapObject}) => {
     viewportSize.current.width = window.visualViewport.width;
   });
 
+  const marker = useRef();
   useEffect(() => {
     if (!placeId) return;
     setState({status: 'loading'});
+    if (marker.current) {
+      marker.current.setMap(null); // remove the previous current location marker from the map
+    }
     const google = window.google;
     const service = new google.maps.places.PlacesService(mapObject);
     const request = {
@@ -98,7 +102,7 @@ export const SearchedPlace = ({mapObject}) => {
       const scaled = {
         scale: 2,
       };
-      const marker = new google.maps.Marker({
+      marker.current = new google.maps.Marker({
         icon: {
           ...shapedAsPlusSign,
           ...pinnedAtCenter,
@@ -110,14 +114,14 @@ export const SearchedPlace = ({mapObject}) => {
         title: searchedPlace.name,
       });
       // eslint-disable-next-line no-loop-func
-      marker.addListener('click', () => {
+      marker.current.addListener('click', () => {
         mapObject.panTo(searchedPlace.coordinates);
         mapObject.panBy(0, viewportSize.current.height / 6);
         setState({status: 'open'});
       });
 
       // render marker
-      marker.setMap(mapObject);
+      marker.current.setMap(mapObject);
       // snap the map to the marker
       mapObject.panTo(searchedPlace.coordinates);
       mapObject.panBy(0, viewportSize.current.height / 6);

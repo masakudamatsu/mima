@@ -80,6 +80,13 @@ describe('Search feature', () => {
       'aria-label',
       buttonLabel.closePlaceDetail,
     );
+
+    cy.log('**Searching another place...**');
+    cy.findByRole('button', {name: buttonLabel.search}).click();
+    cy.focused().realType('fukuda art museum');
+    cy.findByRole('option', {name: /fukuda art museum/i}).click();
+    cy.log('**...removes the place mark for the previous search**');
+    cy.findByRole('button', {name: placeName}).should('not.exist');
   });
 
   it(`allows user to close search box`, () => {
