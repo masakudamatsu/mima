@@ -1,4 +1,4 @@
-import {useContext, useEffect, useRef, useState} from 'react';
+import {useContext, useEffect, useRef} from 'react';
 import PropTypes from 'prop-types';
 
 import {NightModeContext} from 'src/wrappers/NightModeContext';
@@ -8,14 +8,21 @@ import {CloseButton} from './CloseButton';
 import {ComposeDialog} from 'src/elements/ComposeDialog';
 
 import {useOnClickOutside} from 'src/hooks/useOnClickOutside';
+import {useStateObject} from 'src/hooks/useStateObject';
 
 import {buttonLabel, linkText} from 'src/utils/uiCopies';
 import {duration} from 'src/utils/designtokens';
 
 export const SearchedPlace = ({mapObject}) => {
-  const [placeData, setPlaceData] = useState(null);
   const [placeId] = useContext(PlaceIdContext);
   const nightMode = useContext(NightModeContext);
+
+  const [state, setState] = useStateObject({
+    status: 'initial',
+    placeData: null,
+    error: null,
+  });
+  const {status, placeData, error} = state;
 
   const viewportSize = useRef({height: null, width: null});
   useEffect(() => {
@@ -23,9 +30,9 @@ export const SearchedPlace = ({mapObject}) => {
     viewportSize.current.width = window.visualViewport.width;
   });
 
-  const searchedPlace = useRef();
   useEffect(() => {
     if (!placeId) return;
+    setState({status: 'loading'});
     const google = window.google;
     const service = new google.maps.places.PlacesService(mapObject);
     const request = {
@@ -38,14 +45,15 @@ export const SearchedPlace = ({mapObject}) => {
         'business_status',
       ],
     };
-    service.getDetails(request, callback);
-    function callback(place, status) {
+    service.getDetails(request, handleResponse);
+    function handleResponse(place, status) {
       if (status !== 'OK' || !place) {
         // TODO #199: Handle error more properly
         console.error('Google Maps Place Details API call has failed.');
+        setState({status: 'error', error: status});
       }
       // Retrieve data to be used
-      searchedPlace.current = {
+      const searchedPlace = {
         address: place.formatted_address,
         // TODO #197 businessStatus: place.business_status,
         coordinates: new google.maps.LatLng(
@@ -98,47 +106,45 @@ export const SearchedPlace = ({mapObject}) => {
           ...scaled,
         },
         optimized: false,
-        position: searchedPlace.current.coordinates,
-        title: searchedPlace.current.name,
+        position: searchedPlace.coordinates,
+        title: searchedPlace.name,
       });
       // eslint-disable-next-line no-loop-func
       marker.addListener('click', () => {
-        mapObject.panTo(searchedPlace.current.coordinates);
+        mapObject.panTo(searchedPlace.coordinates);
         mapObject.panBy(0, viewportSize.current.height / 6);
-        setPlaceData(searchedPlace.current);
+        setState({status: 'open'});
       });
 
       // render marker
       marker.setMap(mapObject);
       // snap the map to the marker
-      mapObject.panTo(searchedPlace.current.coordinates);
+      mapObject.panTo(searchedPlace.coordinates);
       mapObject.panBy(0, viewportSize.current.height / 6);
-      setPlaceData(searchedPlace.current);
+      setState({status: 'open', placeData: searchedPlace});
     }
-  }, [mapObject, nightMode, placeId]);
+  }, [mapObject, nightMode, placeId, setState]);
 
   // For autofocusing the close button when opened
   const closeButton = useRef();
   useEffect(() => {
-    if (placeData) {
+    if (status === 'open') {
       closeButton.current.focusButton();
     }
-  }, [placeData]);
+  }, [status]);
 
   // handle clicking the close button
-  const [closing, setClosing] = useState(false);
   const closePlaceInfo = () => {
     mapObject.panTo(placeData.coordinates);
-    setClosing(true);
+    setState({status: 'closing'});
   };
   useEffect(() => {
-    if (closing === true) {
+    if (status === 'closing') {
       setTimeout(() => {
-        setPlaceData(null);
-        setClosing(false);
+        setState({status: 'closed'});
       }, duration.modal.exit);
     }
-  }, [closing]);
+  }, [status, setState]);
 
   // close by clicking outside
   const dialogDiv = useRef(null);
@@ -147,31 +153,42 @@ export const SearchedPlace = ({mapObject}) => {
   const placeNameId = 'place-name';
   const placeDetailId = 'place-detail';
 
-  return placeData ? (
-    <ComposeDialog // role="dialog" included
-      aria-describedby={placeDetailId}
-      aria-labelledby={placeNameId}
-      data-closing={closing}
-      ref={dialogDiv}
-    >
-      <CloseButton
-        ariaLabel={buttonLabel.closePlaceDetail}
-        handleClick={closePlaceInfo}
-        ref={closeButton}
-        testId="close-button-saved-place"
-      />
-      <h2 id={placeNameId}>{placeData.name}</h2>
-      <div id={placeDetailId}>
-        <p>{placeData.address}</p>
-        <p>
-          <a href={placeData.url} rel="noreferrer" target="_blank">
-            {linkText.searchedPlace}
-          </a>
-        </p>
-      </div>
-    </ComposeDialog>
-  ) : null;
+  if (status === 'initial') {
+    return null;
+  } else if (status === 'loading') {
+    return null; // TODO #208: render loading spinner or its equivalent
+  } else if (status === 'error') {
+    return null; // TODO #199: Handle error properly
+  } else if (status === 'open' || status === 'closing') {
+    return (
+      <ComposeDialog // role="dialog" included
+        aria-describedby={placeDetailId}
+        aria-labelledby={placeNameId}
+        data-closing={status === 'closing'}
+        ref={dialogDiv}
+      >
+        <CloseButton
+          ariaLabel={buttonLabel.closePlaceDetail}
+          handleClick={closePlaceInfo}
+          ref={closeButton}
+          testId="close-button-saved-place"
+        />
+        <h2 id={placeNameId}>{placeData.name}</h2>
+        <div id={placeDetailId}>
+          <p>{placeData.address}</p>
+          <p>
+            <a href={placeData.url} rel="noreferrer" target="_blank">
+              {linkText.searchedPlace}
+            </a>
+          </p>
+        </div>
+      </ComposeDialog>
+    );
+  } else if (status === 'closed') {
+    return null;
+  }
 };
+
 SearchedPlace.propTypes = {
   mapObject: PropTypes.object,
 };
