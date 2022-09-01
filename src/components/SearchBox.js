@@ -135,12 +135,15 @@ export const SearchBox = ({handleClickCloseButton, id}) => {
                 <li
                   key={item.id}
                   data-highlighted={highlightedIndex === index}
-                  {...getItemProps({item, index})}
-                  onClick={event => {
-                    createRipple(event);
-                    setPlaceId(item.id);
-                    handleClickCloseButton();
-                  }}
+                  {...getItemProps({
+                    item,
+                    index,
+                    onClick: event => {
+                      createRipple(event);
+                      setPlaceId(item.id);
+                      handleClickCloseButton();
+                    },
+                  })}
                 >
                   <dl>
                     <dt
