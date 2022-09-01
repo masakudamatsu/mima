@@ -1,5 +1,4 @@
 import {buttonLabel, linkText, searchBoxLabel} from '../../src/utils/uiCopies';
-import {autocomplete} from '../../src/utils/designtokens';
 import {boldText} from '../../src/utils/designtokens';
 const searchWords = [/nijo/i, /koya/i];
 const placeName = /.*nijo.*koya.*/i;
@@ -123,20 +122,20 @@ describe('Search feature', () => {
       'searchbox-first-focusable-element',
     );
   });
-  // TODO #188: Make it work
-  it.skip('allows keyboard users to select an autocomplete suggestion with arrow keys', () => {
+  it('allows keyboard users to select an autocomplete suggestion with arrow keys', () => {
     cy.log(`**Setup**`);
     cy.findByRole('button', {name: buttonLabel.search}).click();
-    cy.focused().realType(searchWords);
+    cy.focused().realType(searchWords[0].source);
 
     cy.log(`**Pressing Down Arrow key...**`);
-    cy.focused().type('{downarrow}');
+    cy.get('body').realPress('{downarrow}');
     cy.log(`**...highlights the first autocomplete suggestion**`);
-    // below doesn't work;
-    Object.keys(autocomplete.focus).forEach(key => {
-      cy.findByRole('listbox')
-        .get('li:first')
-        .should('have.css', key, autocomplete.focus[key]);
-    }); // error message: expected <li> to have CSS property outline with the value 1px solid red, but the value was rgb(218, 218, 218) none 0px
+    cy.findAllByRole('option').each((item, index) => {
+      if (index === 0) {
+        cy.wrap(item).should('have.attr', 'data-highlighted', 'true');
+      } else {
+        cy.wrap(item).should('have.attr', 'data-highlighted', 'false');
+      }
+    });
   });
 });
