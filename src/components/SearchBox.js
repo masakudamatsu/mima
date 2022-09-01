@@ -107,6 +107,17 @@ export const SearchBox = ({handleClickCloseButton, id}) => {
             autoFocus: true,
             'data-testid': 'searchbox-first-focusable-element', // to test focus management
             inputMode: 'search',
+            onKeyDown: event => {
+              if (event.key === 'Enter') {
+                event.preventDefault(); // prevent page refresh
+                if (highlightedIndex === -1) {
+                  return;
+                }
+                createRipple(event);
+                setPlaceId(inputItems[highlightedIndex].id);
+                handleClickCloseButton();
+              }
+            },
             placeholder: searchBoxLabel.placeholder,
             type: 'search',
           })}

@@ -137,5 +137,9 @@ describe('Search feature', () => {
         cy.wrap(item).should('have.attr', 'data-highlighted', 'false');
       }
     });
+    cy.log(`**Pressing Enter key...**`);
+    cy.get('body').realPress('{enter}');
+    cy.log(`**...shows the place detail**`);
+    cy.findByText(linkText.searchedPlace).should('be.visible'); // agnostic about place name
   });
 });
