@@ -79,7 +79,7 @@ describe('Once place detail is shown', () => {
       );
     });
     it('Shows the text editor', () => {
-      cy.findByRole('textbox').type('abc ');
+      cy.findByRole('textbox').enter('abc ');
       cy.contains('abc');
     });
     it('Focuses the note field', () => {
@@ -119,14 +119,14 @@ describe('Once place info editor is shown', () => {
   describe('Editing place name and ...', () => {
     it('Pressing Cancel button discards any change', () => {
       // execute
-      cy.findByRole('textbox').type('abc ');
+      cy.findByRole('textbox').enter('abc ');
       cy.findByRole('button', {name: /cancel/i}).click();
       // verify
       cy.findByText('abc').should('not.exist');
     });
     it('Pressing Save button changes place name', () => {
       // execute
-      cy.findByRole('textbox').type('abc ');
+      cy.findByRole('textbox').enter('abc ');
       cy.findByRole('button', {name: buttonLabel.saveEdit}).click();
       // verify
       cy.findByText('abc ' + placeName).should('be.visible');
@@ -143,7 +143,7 @@ describe('Once place info editor is shown', () => {
     it('Pressing Cancel button discards any change', () => {
       // setup
       cy.findByRole('textbox').type('{downarrow}');
-      cy.focused().type('abc');
+      cy.focused().enter('abc');
       cy.findByRole('textbox').get('p').contains('abc');
       // execute
       cy.findByRole('button', {name: /cancel/i}).click();
@@ -153,7 +153,7 @@ describe('Once place info editor is shown', () => {
     it('Pressing Save button changes place note', () => {
       // setup
       cy.findByRole('textbox').type('{downarrow}');
-      cy.focused().type('abc');
+      cy.focused().enter('abc');
       cy.findByRole('textbox').get('p').contains('abc');
       // execute
       cy.findByRole('button', {name: buttonLabel.saveEdit}).click();
@@ -164,7 +164,7 @@ describe('Once place info editor is shown', () => {
   describe('Adding URL to place note and ...', () => {
     beforeEach(() => {
       cy.findByRole('textbox').type('{downarrow}');
-      cy.focused().type('https://google.com ');
+      cy.focused().enter('https://google.com ');
       // verify
       cy.findByRole('textbox').get('p').contains('https://google.com');
     });

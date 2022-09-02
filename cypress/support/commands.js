@@ -1,5 +1,35 @@
 import {userLocationMarkerLabel} from '../../src/utils/uiCopies';
 
+// Avoid skipping first character to type
+// (inspired by https://github.com/cypress-io/cypress/issues/1548#issuecomment-379410612)
+Cypress.Commands.add('enter', {prevSubject: true}, (subject, arg) => {
+  const firstLetter = arg[0];
+  cy.wrap(subject, {log: false})
+    .type(firstLetter, {log: false})
+    .should(
+      $el => {
+        expect($el).to.contain(firstLetter);
+      },
+      {log: false},
+    )
+    .type(arg.slice(1), {log: false});
+  // customize command log
+  const log = Cypress.log({
+    name: 'enter',
+    // shorter name for the Command Log
+    displayName: 'enter',
+    message: `${arg}`,
+    consoleProps: () => {
+      // return an object which will
+      // print to dev tools console on click
+      return {
+        Typed: arg,
+        'Applied to': subject,
+      };
+    },
+  });
+});
+
 // Swipe from right to left
 Cypress.Commands.add('swipeScreenRightToLeft', () => {
   const screenWidth = Cypress.config('viewportWidth');
