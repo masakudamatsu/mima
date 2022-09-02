@@ -33,7 +33,7 @@ describe('Search feature', () => {
     cy.log(
       '**...Highlights entered text in bold in autocomplete suggestions**',
     );
-    cy.findAllByText(searchWords[0]).should(
+    cy.findAllByText(searchWords[0], {timeout: 20000}).should(
       'have.css',
       'font-weight',
       boldText.fontWeight.toString(),
@@ -42,7 +42,7 @@ describe('Search feature', () => {
     cy.log('**Typing more...**');
     cy.focused().realPress('Space').realType(searchWords[1].source);
     cy.log('**Selecting one of the autocomplete suggestions**');
-    cy.findByRole('option', {name: placeName}).click();
+    cy.findByRole('option', {name: placeName, timeout: 20000}).click();
     cy.log('**...Shows the place on the map**');
     cy.findByRole('button', {name: placeName}).should('be.visible');
     cy.log('**...Shows the place info**');
@@ -83,7 +83,10 @@ describe('Search feature', () => {
     cy.log('**Searching another place...**');
     cy.findByRole('button', {name: buttonLabel.search}).click();
     cy.focused().realType('fukuda art museum');
-    cy.findByRole('option', {name: /fukuda art museum/i}).click();
+    cy.findByRole('option', {
+      name: /fukuda art museum/i,
+      timeout: 20000,
+    }).click();
     cy.log('**...removes the place mark for the previous search**');
     cy.findByRole('button', {name: placeName}).should('not.exist');
   });
