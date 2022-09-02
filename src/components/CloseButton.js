@@ -23,6 +23,13 @@ export const CloseButton = forwardRef(function CloseButton(
     createRipple(event);
     handleClick();
   };
+  const keydownHandler = event => {
+    if (event.key === 'Enter') {
+      event.preventDefault(); // otherwise click event will be fired as well
+      createRipple(event);
+      handleClick();
+    }
+  };
 
   return (
     <>
@@ -32,6 +39,7 @@ export const CloseButton = forwardRef(function CloseButton(
         aria-label={ariaLabel}
         data-testid={testId}
         onClick={clickHandler}
+        onKeyDown={keydownHandler}
         ref={buttonElement}
         type="button"
       >
