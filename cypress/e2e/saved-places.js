@@ -114,37 +114,47 @@ describe('Once place info editor is shown', () => {
     );
   });
   describe('Editing place name and ...', () => {
-    beforeEach(() => {
-      cy.findByRole('textbox').type('abc ');
-    });
     it('Pressing Cancel button discards any change', () => {
+      // execute
+      cy.findByRole('textbox').type('abc ');
       cy.findByRole('button', {name: /cancel/i}).click();
+      // verify
       cy.findByText('abc').should('not.exist');
     });
     it('Pressing Save button changes place name', () => {
+      // execute
+      cy.findByRole('textbox').type('abc ');
       cy.findByRole('button', {name: buttonLabel.saveEdit}).click();
+      // verify
       cy.findByText('abc ' + placeName).should('be.visible');
       cy.findByRole('button', {name: 'abc ' + placeName}).should('be.visible');
-    });
-    it('Changes persist after refreshing the page', () => {
-      cy.findByRole('button', {name: buttonLabel.saveEdit}).click();
+
+      cy.log(`**...and the changes persist after page reload**`);
+      // execute
       cy.reload();
+      // verify
       cy.findByRole('button', {name: 'abc ' + placeName}).should('be.visible');
     });
   });
   describe('Adding text to place note and ...', () => {
-    beforeEach(() => {
+    it('Pressing Cancel button discards any change', () => {
+      // setup
       cy.findByRole('textbox').type('{downarrow}');
       cy.focused().type('abc');
-      // verify
       cy.findByRole('textbox').get('p').contains('abc');
-    });
-    it('Pressing Cancel button discards any change', () => {
+      // execute
       cy.findByRole('button', {name: /cancel/i}).click();
+      // verify
       cy.findByText('abc').should('not.exist');
     });
     it('Pressing Save button changes place note', () => {
+      // setup
+      cy.findByRole('textbox').type('{downarrow}');
+      cy.focused().type('abc');
+      cy.findByRole('textbox').get('p').contains('abc');
+      // execute
       cy.findByRole('button', {name: buttonLabel.saveEdit}).click();
+      // verify
       cy.findByText(/abc */).should('be.visible');
     });
   });
