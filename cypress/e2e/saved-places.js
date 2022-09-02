@@ -5,6 +5,7 @@ const placeName = '出逢ひ茶屋おせん';
 describe('Clicking a saved place', () => {
   beforeEach(() => {
     cy.visit('/');
+    cy.waitForMapToLoad();
     cy.findByRole('button', {name: placeName}).click();
   });
   it('Shows the place name (as heading)', () => {
@@ -27,6 +28,7 @@ describe('Clicking a saved place', () => {
 describe('Once place detail is shown', () => {
   beforeEach(() => {
     cy.visit('/');
+    cy.waitForMapToLoad();
     cy.findByRole('button', {name: placeName}).click();
   });
   describe('Clicking the close button', () => {
@@ -106,6 +108,7 @@ describe('Once place detail is shown', () => {
 describe('Once place info editor is shown', () => {
   beforeEach(() => {
     cy.visit('/');
+    cy.waitForMapToLoad();
     cy.findByRole('button', {name: placeName}).click();
     cy.findByRole('button', {name: buttonLabel.edit}).click();
     // wait for lazy-loading to be done
