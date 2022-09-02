@@ -12,6 +12,9 @@ import {zIndex} from 'src/utils/zIndex';
 const resetStyle = `
   background-color: ${color['white 0']};
   border: none;
+  &:focus {
+    outline-style: none; /* remove the default gray box focus-ring for Safari and iOS browsers */
+  }
 `;
 
 const setClickableArea = `
