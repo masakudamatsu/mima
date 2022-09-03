@@ -29,6 +29,8 @@ describe('Search feature', () => {
     cy.focused().should('have.attr', 'type', 'search');
 
     cy.log('**Typing a place name...**');
+    // eslint-disable-next-line cypress/no-unnecessary-waiting
+    cy.wait(100); // otherwise, Cypress will type 'bc', not 'abc'. This is a known issue. See https://www.cypress.io/blog/2019/01/22/when-can-the-test-click/
     cy.focused().realType(searchWords[0].source);
     cy.log(
       '**...Highlights entered text in bold in autocomplete suggestions**',
@@ -82,6 +84,8 @@ describe('Search feature', () => {
 
     cy.log('**Searching another place...**');
     cy.findByRole('button', {name: buttonLabel.search}).click();
+    // eslint-disable-next-line cypress/no-unnecessary-waiting
+    cy.wait(100); // otherwise, Cypress will type 'bc', not 'abc'. This is a known issue. See https://www.cypress.io/blog/2019/01/22/when-can-the-test-click/
     cy.focused().realType('fukuda art museum');
     cy.findByRole('option', {
       name: /fukuda art museum/i,
@@ -128,6 +132,8 @@ describe('Search feature', () => {
   it('allows keyboard users to select an autocomplete suggestion with arrow keys', () => {
     cy.log(`**Setup**`);
     cy.findByRole('button', {name: buttonLabel.search}).click();
+    // eslint-disable-next-line cypress/no-unnecessary-waiting
+    cy.wait(100); // otherwise, Cypress will type 'bc', not 'abc'. This is a known issue. See https://www.cypress.io/blog/2019/01/22/when-can-the-test-click/
     cy.focused().realType(searchWords[0].source);
 
     cy.log(`**Pressing Down Arrow key...**`);
