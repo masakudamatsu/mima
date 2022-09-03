@@ -37,6 +37,8 @@ describe('Saved place detail feature', () => {
     cy.focused().should('have.attr', 'role', 'textbox');
 
     cy.log(`**Typing text...**`);
+    // eslint-disable-next-line cypress/no-unnecessary-waiting
+    cy.wait(100); // otherwise, Cypress will type 'bc', not 'abc'. This is a known issue. See https://www.cypress.io/blog/2019/01/22/when-can-the-test-click/
     cy.findByRole('textbox').type('abc ');
     cy.log(`**...updates the place name***`);
     cy.findByRole('textbox').get('h2').contains('abc', {timeout: 20000});
@@ -104,6 +106,8 @@ describe('Saved place detail feature', () => {
     cy.log(`**Setup**`);
     cy.findByRole('button', {name: placeName}).click();
     cy.findByRole('button', {name: buttonLabel.edit}).click();
+    // eslint-disable-next-line cypress/no-unnecessary-waiting
+    cy.wait(100); // otherwise, Cypress will type 'bc', not 'abc'. This is a known issue. See https://www.cypress.io/blog/2019/01/22/when-can-the-test-click/
     cy.findByRole('textbox').type('abc ');
     cy.findByRole('textbox').type('{downarrow}');
     cy.focused().type('https://google.com ');
