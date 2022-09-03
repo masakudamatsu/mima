@@ -2,179 +2,123 @@ import {buttonLabel, editorLabel} from '../../src/utils/uiCopies';
 
 const placeName = '出逢ひ茶屋おせん';
 
-describe('Clicking a saved place', () => {
+describe('Saved place detail feature', () => {
   beforeEach(() => {
     cy.visit('/');
     cy.waitForMapToLoad();
-    cy.findByRole('button', {name: placeName}).click();
   });
-  it('Shows the place name (as heading)', () => {
+  it('Clicking place mark shows correct UI', () => {
+    cy.log(`**Clicking place mark...**`);
+    cy.findByRole('button', {name: placeName}).click();
+
+    cy.log(`**...autofocuses the close button**`);
+    cy.focused().should('have.attr', 'data-testid', 'close-button-saved-place');
+    cy.log(`**...shows place name (as heading)**`);
     cy.findByRole('heading', {name: placeName}).should('be.visible');
-  });
-  it('Shows the note with URL text as a link on the place', () => {
+    cy.log(`**...shows note with URL text as a link on the place**`);
     cy.findByRole('link', {name: /asahi\.com.*/i}).should('be.visible');
-  });
-  it('Keeps the place marker to be shown', () => {
+    cy.log(`**...does not hide place marker on the map**`);
     // UI snapshot is also taken in snapshot-saved-places.js
-    cy.findByRole('button', {name: placeName}).click();
+    cy.findByRole('button', {name: placeName}).should('be.visible');
     // this fails if another element covers it up
     // while should('be.visible') won't fail in that case
+    // DO NOT ADD ANY MORE ASSERTIONS HERE; place detail is now hidden.
   });
-  it('Autofocuses the close button', () => {
-    cy.focused().should('have.attr', 'data-testid', 'close-button-saved-place');
-  });
-});
-
-describe('Once place detail is shown', () => {
-  beforeEach(() => {
-    cy.visit('/');
-    cy.waitForMapToLoad();
+  it('Happy path for editing place detail', () => {
+    cy.log(`**Clicking place mark...**`);
     cy.findByRole('button', {name: placeName}).click();
-  });
-  describe('Clicking the close button', () => {
-    beforeEach(() => {
-      cy.findByRole('button', {name: buttonLabel.close}).click();
-    });
-    it('Hides the place name (as heading)', () => {
-      cy.findByRole('heading', {name: placeName}).should('not.exist');
-    });
-    it('Keeps the place marker to be shown', () => {
-      cy.findByRole('button', {name: placeName}).click();
-      // This fails if another element covers it up
-      // while should('be.visible') won't fail in that case
-    });
-  });
-  describe('Pressing ESC key', () => {
-    beforeEach(() => {
-      cy.get('body').type('{esc}');
-    });
-    it('Hides the place name (as heading)', () => {
-      cy.findByRole('heading', {name: placeName}).should('not.exist');
-    });
-    it('Keeps the place marker to be shown', () => {
-      cy.findByRole('button', {name: placeName}).click();
-      // This fails if another element covers it up
-      // while should('be.visible') won't fail in that case
-    });
-  });
-  describe('Pressing outside the place detail window', () => {
-    beforeEach(() => {
-      cy.get('body').click('center', {force: true});
-    });
-    it('Hides the place name (as heading)', () => {
-      cy.findByRole('heading', {name: placeName}).should('not.exist');
-    });
-    it('Keeps the place marker to be shown', () => {
-      cy.findByRole('button', {name: placeName}).click();
-      // This fails if another element covers it up
-      // while should('be.visible') won't fail in that case
-    });
-  });
-  describe('Pressing Edit button', () => {
-    beforeEach(() => {
-      cy.findByRole('button', {name: buttonLabel.edit}).click();
-      // wait for lazy-loading to be done
-      cy.findByRole('heading', {name: editorLabel, timeout: 20000}).should(
-        'be.visible',
-      );
-    });
-    it('Shows the text editor', () => {
-      cy.findByRole('textbox').type('abc ');
-      cy.contains('abc');
-    });
-    it('Focuses the note field', () => {
-      cy.focused().should('have.attr', 'role', 'textbox');
-    });
-    it('Shows Cancel button, the pressing of which closes the editor and focuses the Close button', () => {
-      cy.findByRole('button', {name: /cancel/i}).click();
-      cy.findByRole('link', {name: /asahi\.com.*/i}).should('be.visible');
-      cy.focused().should(
-        'have.attr',
-        'data-testid',
-        'close-button-saved-place',
-      );
-    });
-    it('Shows Save button, the pressing of which closes the editor and focuses the Close button', () => {
-      cy.findByRole('button', {name: buttonLabel.saveEdit}).click();
-      cy.findByRole('link', {name: /asahi\.com.*/i}).should('be.visible');
-      cy.focused().should(
-        'have.attr',
-        'data-testid',
-        'close-button-saved-place',
-      );
-    });
-  });
-});
-describe('Once place info editor is shown', () => {
-  beforeEach(() => {
-    cy.visit('/');
-    cy.waitForMapToLoad();
-    cy.findByRole('button', {name: placeName}).click();
+    cy.log(`**Clicking Edit button...**`);
     cy.findByRole('button', {name: buttonLabel.edit}).click();
-    // wait for lazy-loading to be done
+    cy.log(`**...shows the editor title**`);
     cy.findByRole('heading', {name: editorLabel, timeout: 20000}).should(
       'be.visible',
     );
-  });
-  describe('Editing place name and ...', () => {
-    it('Pressing Cancel button discards any change', () => {
-      // execute
-      cy.findByRole('textbox').type('abc ');
-      cy.findByRole('button', {name: /cancel/i}).click();
-      // verify
-      cy.findByText('abc').should('not.exist');
-    });
-    it('Pressing Save button changes place name', () => {
-      // execute
-      cy.findByRole('textbox').type('abc ');
-      cy.findByRole('button', {name: buttonLabel.saveEdit}).click();
-      // verify
-      cy.findByText('abc ' + placeName).should('be.visible');
-      cy.findByRole('button', {name: 'abc ' + placeName}).should('be.visible');
+    cy.log(`**...autofocuses the note field**`);
+    cy.focused().should('have.attr', 'role', 'textbox');
 
-      cy.log(`**...and the changes persist after page reload**`);
-      // execute
-      cy.reload();
-      // verify
-      cy.findByRole('button', {name: 'abc ' + placeName}).should('be.visible');
-    });
+    cy.log(`**Typing text...**`);
+    cy.findByRole('textbox').type('abc ');
+    cy.log(`**...updates the place name***`);
+    cy.findByRole('textbox').get('h2').contains('abc', {timeout: 20000});
+
+    cy.log(`**Pressing Down Arrow key and typing URL text...**`);
+    cy.findByRole('textbox').type('{downarrow}');
+    cy.focused().type('https://google.com ');
+    cy.log(`**...updates the place note**`);
+    cy.findByRole('textbox').get('p').contains('https://google.com');
+
+    cy.log(`**Clicking Save button...**`);
+    cy.findByRole('button', {name: buttonLabel.saveEdit}).click();
+    cy.log(`**...saves the updated place name**`);
+    cy.findByRole('heading', {name: 'abc ' + placeName}).should('be.visible');
+    cy.log(`**...saves the updated place note with text link**`);
+    cy.findByRole('link', {name: /google\.com.*/i}).should('be.visible');
+    cy.findByRole('link', {name: /asahi\.com.*/i}).should('be.visible');
+    cy.log(`**...updates the place mark**`);
+    cy.findByRole('button', {name: 'abc ' + placeName}).should('be.visible');
+    cy.log(`**...autofocuses the close button**`);
+    cy.focused().should('have.attr', 'data-testid', 'close-button-saved-place');
+
+    cy.log(`**Reloading the page...**`);
+    cy.reload();
+    cy.log(`**...retains the changes**`);
+    cy.findByRole('button', {name: 'abc ' + placeName}).should('be.visible');
   });
-  describe('Adding text to place note and ...', () => {
-    it('Pressing Cancel button discards any change', () => {
-      // setup
-      cy.findByRole('textbox').type('{downarrow}');
-      cy.focused().type('abc');
-      cy.findByRole('textbox').get('p').contains('abc');
-      // execute
-      cy.findByRole('button', {name: /cancel/i}).click();
-      // verify
-      cy.findByText('abc').should('not.exist');
-    });
-    it('Pressing Save button changes place note', () => {
-      // setup
-      cy.findByRole('textbox').type('{downarrow}');
-      cy.focused().type('abc');
-      cy.findByRole('textbox').get('p').contains('abc');
-      // execute
-      cy.findByRole('button', {name: buttonLabel.saveEdit}).click();
-      // verify
-      cy.findByText(/abc */).should('be.visible');
-    });
+  it('Clicking close button closes place detail', () => {
+    cy.log(`**Setup**`);
+    cy.findByRole('button', {name: placeName}).click();
+    cy.log('**Clicking the close button...**');
+    cy.findByRole('button', {name: buttonLabel.close}).click();
+    cy.log(`**...Hides the place name (as heading)**`);
+    cy.findByRole('heading', {name: placeName}).should('not.exist');
+    cy.log(`**...Keeps the place marker to be shown**`);
+    cy.findByRole('button', {name: placeName}).click();
+    // This fails if another element covers it up
+    // while should('be.visible') won't fail in that case
   });
-  describe('Adding URL to place note and ...', () => {
-    beforeEach(() => {
-      cy.findByRole('textbox').type('{downarrow}');
-      cy.focused().type('https://google.com ');
-      // verify
-      cy.findByRole('textbox').get('p').contains('https://google.com');
-    });
-    it('Pressing Cancel button discards any change', () => {
-      cy.findByRole('button', {name: /cancel/i}).click();
-      cy.findByRole('link', {name: /google\.com.*/i}).should('not.exist');
-    });
-    it('Pressing Save button changes place note', () => {
-      cy.findByRole('button', {name: buttonLabel.saveEdit}).click();
-      cy.findByRole('link', {name: /google\.com.*/i}).should('be.visible');
-    });
+  it('Pressing ESC key closes place detail', () => {
+    cy.log(`**Setup**`);
+    cy.findByRole('button', {name: placeName}).click();
+    cy.log('**Pressing ESC key...**');
+    cy.get('body').type('{esc}');
+    cy.log(`**...Hides the place name (as heading)**`);
+    cy.findByRole('heading', {name: placeName}).should('not.exist');
+    cy.log(`**...Keeps the place marker to be shown**`);
+    cy.findByRole('button', {name: placeName}).click();
+    // This fails if another element covers it up
+    // while should('be.visible') won't fail in that case
+  });
+  it('Pressing outside the popup closes place detail', () => {
+    cy.log(`**Setup**`);
+    cy.findByRole('button', {name: placeName}).click();
+    cy.log('**Pressing outside the popup...**');
+    cy.get('body').click('center', {force: true});
+    cy.log(`**...Hides the place name (as heading)**`);
+    cy.findByRole('heading', {name: placeName}).should('not.exist');
+    cy.log(`**...Keeps the place marker to be shown**`);
+    cy.findByRole('button', {name: placeName}).click();
+    // This fails if another element covers it up
+    // while should('be.visible') won't fail in that case
+  });
+  it('Clicking Cancel button closes editor without saving any changes', () => {
+    cy.log(`**Setup**`);
+    cy.findByRole('button', {name: placeName}).click();
+    cy.findByRole('button', {name: buttonLabel.edit}).click();
+    cy.findByRole('textbox').type('abc ');
+    cy.findByRole('textbox').type('{downarrow}');
+    cy.focused().type('https://google.com ');
+
+    cy.log(`**Clicking Cancel button...**`);
+    cy.findByRole('button', {name: /cancel/i}).click();
+    cy.log(`**...does not save any change**`);
+    cy.findByRole('heading', {name: 'abc ' + placeName}).should('not.exist');
+    cy.findByRole('link', {name: /google\.com.*/i}).should('not.exist');
+    cy.findByRole('button', {name: 'abc ' + placeName}).should('not.exist');
+    cy.log(`**...shows the original place detail**`);
+    cy.findByRole('heading', {name: placeName}).should('be.visible');
+    cy.findByRole('link', {name: /asahi\.com.*/i}).should('be.visible');
+    cy.findByRole('button', {name: placeName}).should('be.visible');
+    cy.log(`**...autofocuses the close button**`);
+    cy.focused().should('have.attr', 'data-testid', 'close-button-saved-place');
   });
 });
