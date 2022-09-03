@@ -133,7 +133,7 @@ describe('Search feature', () => {
     cy.log(`**Pressing Down Arrow key...**`);
     cy.get('body').realPress('{downarrow}');
     cy.log(`**...highlights the first autocomplete suggestion**`);
-    cy.findAllByRole('option').each((item, index) => {
+    cy.findAllByRole('option', {timeout: 20000}).each((item, index) => {
       if (index === 0) {
         cy.wrap(item).should('have.attr', 'data-highlighted', 'true');
       } else {
