@@ -1,7 +1,8 @@
 import styled from 'styled-components';
+import {stylePopupBackground} from 'src/utils/cssUtilities';
 import {
   bodyText,
-  buttonSquare,
+  buttonCircle,
   capHeight,
   dimension,
   duration,
@@ -72,59 +73,14 @@ const setSize = `
   }
 `;
 
-const setBackground = `
-  /* legacy browsers */
-  background-color: var(--popup-background-color-fallback);
-  box-shadow: 
-    ${dimension.glow.offset} 
-    8px 8px
-    var(--popup-glow-color-fallback); 
-
-  /* Modern browsers */
-  @supports (backdrop-filter: blur(8px)) {
-    background-color: var(--popup-background-color);
-    backdrop-filter: blur(8px);  
-    box-shadow: 
-      ${dimension.glow.offset} 
-      8px 8px
-      var(--popup-glow-color);
-  } 
-
-  /* Firefox and Kai OS */
-  @supports (background-image: -moz-element(#map)) and (not (backdrop-filter: blur(8px))) {
-    background-color: transparent;
-    box-shadow: none;
-    /* Blurring the map beneath */
-    &::before {
-      background-attachment: fixed;
-      background-image: -moz-element(#map);
-      content: "";
-      filter: blur(8px);
-      position: absolute;
-      left: 0; right: 0; top: 0; bottom: 0;
-      z-index: -2;
-    }
-    /* Applying translucent white on top */
-    &::after {
-      background-color: var(--popup-background-color);
-      box-shadow: 
-        ${dimension.glow.offset} 
-        8px 8px
-        var(--popup-glow-color);
-      content: "";
-      position: absolute;
-      left: 0; right: 0; top: 0; bottom: 0;
-      z-index: -1;
-    }
-  }
-`;
-
 const setPadding = `
   padding: 0 10px 10px 10px;
   @media screen and (min-width: ${dimension.breakpoint.divPopup.padding}) {
-    padding: 0 ${buttonSquare.clickableArea} ${buttonSquare.clickableArea} ${buttonSquare.clickableArea};
+    padding: 0 ${buttonCircle.clickableArea} ${buttonCircle.clickableArea} ${buttonCircle.clickableArea};
   }
 `;
+
+const setBackground = stylePopupBackground({withEdges: true});
 
 const animateTransition = `
   &[data-slide-from="left"] {

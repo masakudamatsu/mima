@@ -19,8 +19,9 @@ test('renders UI correctly', () => {
   height: calc(100% - 24px);
   top: 24px;
   padding: 0 10px 10px 10px;
+  --blur-radius: 8px;
   background-color: var(--popup-background-color-fallback);
-  box-shadow: 0px 0px  8px 8px var(--popup-glow-color-fallback);
+  box-shadow: 0px 0px var(--blur-radius) var(--blur-radius) var(--popup-glow-color-fallback);
 }
 
 .c0 a {
@@ -112,16 +113,16 @@ test('renders UI correctly', () => {
   }
 }
 
-@supports (-webkit-backdrop-filter:blur(8px)) or (backdrop-filter:blur(8px)) {
+@supports (-webkit-backdrop-filter:blur(var(--blur-radius))) or (backdrop-filter:blur(var(--blur-radius))) {
   .c0 {
     background-color: var(--popup-background-color);
-    -webkit-backdrop-filter: blur(8px);
-    backdrop-filter: blur(8px);
-    box-shadow: 0px 0px  8px 8px var(--popup-glow-color);
+    -webkit-backdrop-filter: blur(var(--blur-radius));
+    backdrop-filter: blur(var(--blur-radius));
+    box-shadow: 0px 0px var(--blur-radius) var(--blur-radius) var(--popup-glow-color);
   }
 }
 
-@supports (background-image:-moz-element(#map)) and (not (backdrop-filter:blur(8px))) {
+@supports (background-image:-moz-element(#map)) and (not (backdrop-filter:blur(var(--blur-radius)))) {
   .c0 {
     background-color: transparent;
     box-shadow: none;
@@ -131,8 +132,8 @@ test('renders UI correctly', () => {
     background-attachment: fixed;
     background-image: -moz-element(#map);
     content: "";
-    -webkit-filter: blur(8px);
-    filter: blur(8px);
+    -webkit-filter: blur(var(--blur-radius));
+    filter: blur(var(--blur-radius));
     position: absolute;
     left: 0;
     right: 0;
@@ -143,7 +144,7 @@ test('renders UI correctly', () => {
 
   .c0::after {
     background-color: var(--popup-background-color);
-    box-shadow: 0px 0px  8px 8px var(--popup-glow-color);
+    box-shadow: 0px 0px var(--blur-radius) var(--blur-radius) var(--popup-glow-color);
     content: "";
     position: absolute;
     left: 0;

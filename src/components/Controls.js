@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import {LocatorButton} from 'src/components/LocatorButton';
 import {MenuButton} from 'src/components/MenuButton';
 import {SavePlaceButton} from 'src/components/SavePlaceButton';
-import {SearchButton} from 'src/components/SearchButton';
+import {Search} from 'src/components/Search';
 
 import {color} from 'src/utils/designtokens';
 import {userLocationMarkerLabel} from 'src/utils/uiCopies';
@@ -217,7 +217,7 @@ export const Controls = ({mapObject}) => {
           watchID={watchID}
         />
       )}
-      {clientSideRendering && <SearchButton />}
+      {clientSideRendering && <Search />}
       <section aria-label="controls">
         {clientSideRendering && (
           <LocatorButton

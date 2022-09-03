@@ -22,5 +22,3 @@ test('Accessibility checks', async () => {
   const results = await axe(container);
   expect(results).toHaveNoViolations();
 });
-
-

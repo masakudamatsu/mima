@@ -1,3 +1,4 @@
+import {keyframes} from 'styled-components';
 import {round} from './round';
 
 export const color = {
@@ -12,6 +13,7 @@ export const color = {
   'day-mid-grey 100': 'rgb(137, 137, 137)', // '#898989', // 6 = pale-cyan 100 / 1.5
   'day-dark-grey 100': '#767676', // 4.62 = white 100 / 4.5
   'dark-grey 100': `rgb(90,90,90)`, // 3.04 = 3 * black
+  'background for dark-grey text 100': `rgb(209, 209, 209)`, // 4.51 * dark-grey 100
   'pale-green 100': '#c0dac0', // 14.03 = white 100 / 1.5
   'pale-cyan 100': '#99b2b2', // 9.36 = pale-green 100 / 1.5
   'focus-blue 100': `rgb(69, 159, 189)`, // 6.95 = streets.day / 3
@@ -115,16 +117,60 @@ export const dimension = {
     'margin 133': `32px`,
     'margin 200': `48px`,
   },
+  searchBox: {
+    'border width 100': '2px',
+    'side margin 100': '8px',
+    'max-width': '561px' /* follow google.com */,
+  },
 };
 
+export const animation = {
+  fadeIn: keyframes`
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  `,
+  fadeOut: keyframes`
+    from {
+      opacity: 1;
+    }
+    to {
+      opacity: 0;
+    }
+  `,
+  flashing: keyframes`
+    0% {
+      opacity: 1;
+    }
+    50% {
+      opacity: 0;
+    }
+    100% {
+      opacity: 1;
+    }    
+  `,
+  'ripple 100': keyframes`
+    to {
+      transform: scale(100);
+      opacity: 0;
+    }  
+  `,
+};
 export const duration = {
-  flashingButton: '1500ms',
+  flashing: '1500ms',
   menu: {
     enter: {
       opacity: '100ms', // more than 100ms will suggest the lack of response
       transform: '450ms',
     },
     exit: '400ms',
+  },
+  modal: {
+    enter: 300,
+    exit: 250,
   },
 };
 
@@ -134,7 +180,7 @@ export const easing = {
   linear: 'linear',
 };
 
-export const buttonSquare = {
+export const buttonCircle = {
   clickableArea: dimension.button['minimum target size 100'],
 };
 
@@ -227,6 +273,10 @@ export const bodyText = {
   wordSpacing: 7, // measured by myself
 };
 
+export const boldText = {
+  fontFamily: metrics['Noto Sans Display Bold'].fontFamily,
+  fontWeight: metrics['Noto Sans Display Bold'].fontWeight,
+};
 export const heading = {
   fontFamily: metrics['Noto Sans Display Bold'].fontFamily,
   fontSize: {

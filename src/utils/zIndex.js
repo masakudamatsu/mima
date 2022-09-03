@@ -4,11 +4,21 @@ const above = 1;
 // const below = -1;
 
 const button = above + base;
+
+const formSearch = above + button;
+const paragraphLoading = above + formSearch;
+const closeButton = above + paragraphLoading;
+const divSearch = above + formSearch;
+
 const divScrim = above + button;
 const divPopup = above + divScrim;
 
 export const zIndex = {
   button,
+  closeButton,
+  formSearch,
   divScrim,
+  divSearch,
   divPopup,
+  paragraphLoading,
 };

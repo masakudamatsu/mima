@@ -28,6 +28,10 @@ describe('Button component', () => {
   z-index: 1;
 }
 
+.c0:focus {
+  outline-style: none;
+}
+
 .c0[data-position='top-left'] {
   top: 12px;
   left: 14px;

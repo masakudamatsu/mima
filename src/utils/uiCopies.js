@@ -1,8 +1,14 @@
 export const userLocationMarkerLabel = 'You are here!';
 
+export const linkText = {
+  searchedPlace: 'See more detail on Google Maps',
+};
+
 export const buttonLabel = {
   cancel: 'Cancel',
   close: 'Close',
+  closePlaceDetail: 'Close place detail',
+  closeSearchbox: 'Close search box',
   edit: 'Edit',
   locator: {
     default: 'Track your location',
@@ -13,10 +19,17 @@ export const buttonLabel = {
   save: 'Save place',
   saveEdit: 'Save',
   search: 'Search place',
+  searchSubmit: 'Submit search query',
 };
 
 export const menuLabel = 'Menu';
 export const editorLabel = 'Edit place info';
+
+export const searchBoxLabel = {
+  ariaLabel: 'Search for a place on the map',
+  placeholder: 'Enter place name or address',
+  listbox: 'Autocomplete suggestions',
+};
 
 export const geolocationNotSupported = {
   what: `Unable to get location data from your browser`,
