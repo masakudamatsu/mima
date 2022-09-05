@@ -28,7 +28,7 @@ export const MenuButton = ({
     setOpen(false);
   };
 
-  useOnEscKeyDown(open, closeMenu);
+  useOnEscKeyDown({state: open, handler: closeMenu});
 
   const handleClick = () => {
     setOpen(true);

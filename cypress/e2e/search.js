@@ -82,6 +82,10 @@ describe('Search feature', () => {
       buttonLabel.closePlaceDetail,
     );
 
+    cy.log('**Pressing Esc key closes the place info**');
+    cy.get('body').type('{esc}');
+    cy.findByRole('heading', {name: placeName}).should('not.exist');
+
     cy.log('**Searching another place...**');
     cy.findByRole('button', {name: buttonLabel.search}).click();
     // eslint-disable-next-line cypress/no-unnecessary-waiting
@@ -110,6 +114,17 @@ describe('Search feature', () => {
 
     cy.log('**Clicking the close button...**');
     cy.findByRole('button', {name: buttonLabel.closeSearchbox}).click();
+    cy.log('**...Hides the search box**');
+    cy.findByRole('combobox').should('not.exist');
+    cy.log('**...Focuses the search icon button');
+    cy.focused().should('have.attr', 'aria-label', buttonLabel.search);
+  });
+  it(`Pressing Esc key closes search box`, () => {
+    cy.log('**Setting up**');
+    cy.findByRole('button', {name: buttonLabel.search}).click();
+
+    cy.log('**Pressing Esc key...**');
+    cy.get('body').type('{esc}');
     cy.log('**...Hides the search box**');
     cy.findByRole('combobox').should('not.exist');
     cy.log('**...Focuses the search icon button');

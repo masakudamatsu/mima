@@ -110,7 +110,7 @@ export const SavedPlaces = ({mapObject}) => {
   };
 
   // close with Esc key
-  useOnEscKeyDown(selectedPlace, closePlaceInfo);
+  useOnEscKeyDown({state: selectedPlace, handler: closePlaceInfo});
 
   // for updating place info
   if (selectedPlace) {

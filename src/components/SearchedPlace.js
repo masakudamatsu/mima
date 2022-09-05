@@ -8,6 +8,7 @@ import {CloseButton} from './CloseButton';
 import {ComposeDialog} from 'src/elements/ComposeDialog';
 
 import {useOnClickOutside} from 'src/hooks/useOnClickOutside';
+import {useOnEscKeyDown} from 'src/hooks/useOnEscKeyDown';
 import {useStateObject} from 'src/hooks/useStateObject';
 
 import {buttonLabel, linkText} from 'src/utils/uiCopies';
@@ -153,6 +154,12 @@ export const SearchedPlace = ({mapObject}) => {
   // close by clicking outside
   const dialogDiv = useRef(null);
   useOnClickOutside(dialogDiv, closePlaceInfo);
+
+  // close by ESC key
+  useOnEscKeyDown({
+    state: status === 'open',
+    handler: closePlaceInfo,
+  });
 
   const placeNameId = 'place-name';
   const placeDetailId = 'place-detail';

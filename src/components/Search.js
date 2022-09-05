@@ -9,6 +9,8 @@ import {SvgCloud} from 'src/elements/SvgCloud';
 import {FormSearch} from 'src/elements/FormSearch';
 import {ParagraphLoading} from 'src/elements/ParagraphLoading';
 
+import {useOnEscKeyDown} from 'src/hooks/useOnEscKeyDown';
+
 import {buttonLabel} from 'src/utils/uiCopies';
 import {duration} from 'src/utils/designtokens';
 
@@ -22,13 +24,22 @@ const SearchBox = dynamic(importSearchBox, {
 export const Search = () => {
   const [searchBoxOpen, setSearchBoxOpen] = useState('false');
 
+  // Open search box
   const handleClickSearchButton = () => {
     setSearchBoxOpen('true');
   };
 
+  // Close search box by pressing close button
   const handleClickCloseButton = () => {
+    closeButtonPressed.current = true;
     setSearchBoxOpen('closing');
   };
+  // Close search box by selecting an autocomplete suggestion
+  const closeSearchBox = () => {
+    closeButtonPressed.current = false;
+    setSearchBoxOpen('closing');
+  };
+  // with animation
   useEffect(() => {
     if (searchBoxOpen === 'closing') {
       setTimeout(() => {
@@ -36,6 +47,12 @@ export const Search = () => {
       }, duration.modal.exit);
     }
   }, [searchBoxOpen]);
+
+  // close with Esc key
+  useOnEscKeyDown({
+    state: searchBoxOpen === 'true',
+    handler: handleClickCloseButton,
+  });
 
   // Focus the search button after closing the searchbox
   const buttonElement = useRef();
@@ -73,19 +90,10 @@ export const Search = () => {
             ariaControls={searchboxId}
             ariaExpanded="true"
             ariaLabel={buttonLabel.closeSearchbox}
-            handleClick={() => {
-              closeButtonPressed.current = true;
-              handleClickCloseButton();
-            }}
+            handleClick={handleClickCloseButton}
             testId="searchbox-last-focusable-element" // to test focus management
           />
-          <SearchBox
-            handleClickCloseButton={() => {
-              closeButtonPressed.current = false;
-              handleClickCloseButton();
-            }}
-            id={searchboxId}
-          />
+          <SearchBox closeSearchBox={closeSearchBox} id={searchboxId} />
         </FocusLock>
       )}
     </FormSearch>

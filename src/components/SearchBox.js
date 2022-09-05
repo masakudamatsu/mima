@@ -13,7 +13,7 @@ import {searchBoxLabel} from 'src/utils/uiCopies';
 import {boldSubstring} from 'src/utils/boldSubstring';
 import {createRipple} from 'src/utils/createRipple';
 
-export const SearchBox = ({handleClickCloseButton, id}) => {
+export const SearchBox = ({closeSearchBox, id}) => {
   const [, setPlaceId] = useContext(PlaceIdContext);
 
   const google = window.google;
@@ -115,7 +115,7 @@ export const SearchBox = ({handleClickCloseButton, id}) => {
                 }
                 createRipple(event);
                 setPlaceId(inputItems[highlightedIndex].id);
-                handleClickCloseButton();
+                closeSearchBox();
               }
             },
             placeholder: searchBoxLabel.placeholder,
@@ -141,7 +141,7 @@ export const SearchBox = ({handleClickCloseButton, id}) => {
                     onClick: event => {
                       createRipple(event);
                       setPlaceId(item.id);
-                      handleClickCloseButton();
+                      closeSearchBox();
                     },
                   })}
                 >
@@ -179,6 +179,6 @@ export const SearchBox = ({handleClickCloseButton, id}) => {
 };
 
 SearchBox.propTypes = {
-  handleClickCloseButton: PropTypes.func,
+  closeSearchBox: PropTypes.func,
   id: PropTypes.string,
 };
