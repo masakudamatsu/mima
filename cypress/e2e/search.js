@@ -82,6 +82,10 @@ describe('Search feature', () => {
       buttonLabel.closePlaceDetail,
     );
 
+    cy.log('**Pressing Esc key closes the place info**');
+    cy.get('body').type('{esc}');
+    cy.findByRole('heading', {name: placeName}).should('not.exist');
+
     cy.log('**Searching another place...**');
     cy.findByRole('button', {name: buttonLabel.search}).click();
     // eslint-disable-next-line cypress/no-unnecessary-waiting
