@@ -1,5 +1,5 @@
 import {useEffect} from 'react';
-export const useOnEscKeyDown = (state, handler) => {
+export const useOnEscKeyDown = ({state, handler}) => {
   useEffect(() => {
     const closeByEsc = event => {
       if (event.key === 'Escape') {
@@ -14,5 +14,5 @@ export const useOnEscKeyDown = (state, handler) => {
     return () => {
       document.removeEventListener('keydown', closeByEsc);
     }; // otherwise Jest/Testing-Library issues a warning
-  }, [state]);
+  }, [handler, state]);
 };
