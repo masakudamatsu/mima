@@ -22,13 +22,22 @@ const SearchBox = dynamic(importSearchBox, {
 export const Search = () => {
   const [searchBoxOpen, setSearchBoxOpen] = useState('false');
 
+  // Open search box
   const handleClickSearchButton = () => {
     setSearchBoxOpen('true');
   };
 
+  // Close search box by pressing close button
   const handleClickCloseButton = () => {
+    closeButtonPressed.current = true;
     setSearchBoxOpen('closing');
   };
+  // Close search box by selecting an autocomplete suggestion
+  const closeSearchBox = () => {
+    closeButtonPressed.current = false;
+    setSearchBoxOpen('closing');
+  };
+  // with animation
   useEffect(() => {
     if (searchBoxOpen === 'closing') {
       setTimeout(() => {
@@ -73,19 +82,10 @@ export const Search = () => {
             ariaControls={searchboxId}
             ariaExpanded="true"
             ariaLabel={buttonLabel.closeSearchbox}
-            handleClick={() => {
-              closeButtonPressed.current = true;
-              handleClickCloseButton();
-            }}
+            handleClick={handleClickCloseButton}
             testId="searchbox-last-focusable-element" // to test focus management
           />
-          <SearchBox
-            handleClickCloseButton={() => {
-              closeButtonPressed.current = false;
-              handleClickCloseButton();
-            }}
-            id={searchboxId}
-          />
+          <SearchBox closeSearchBox={closeSearchBox} id={searchboxId} />
         </FocusLock>
       )}
     </FormSearch>
