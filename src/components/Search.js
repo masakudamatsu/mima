@@ -9,6 +9,8 @@ import {SvgCloud} from 'src/elements/SvgCloud';
 import {FormSearch} from 'src/elements/FormSearch';
 import {ParagraphLoading} from 'src/elements/ParagraphLoading';
 
+import {useOnEscKeyDown} from 'src/hooks/useOnEscKeyDown';
+
 import {buttonLabel} from 'src/utils/uiCopies';
 import {duration} from 'src/utils/designtokens';
 
@@ -45,6 +47,12 @@ export const Search = () => {
       }, duration.modal.exit);
     }
   }, [searchBoxOpen]);
+
+  // close with Esc key
+  useOnEscKeyDown({
+    state: searchBoxOpen === 'true',
+    handler: handleClickCloseButton,
+  });
 
   // Focus the search button after closing the searchbox
   const buttonElement = useRef();
