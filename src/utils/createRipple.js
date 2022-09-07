@@ -19,11 +19,9 @@ export function createRipple(event) {
   }
 
   circle.classList.add('ripple');
-  const ripple = button.getElementsByClassName('ripple')[0];
 
-  if (ripple) {
-    ripple.remove();
-  }
+  // remove `circle` once animation is over (see https://css-tricks.com/how-to-recreate-the-ripple-effect-of-material-design-buttons/#comment-1764053)
+  circle.addEventListener('animationend', () => button.removeChild(circle));
 
   button.appendChild(circle);
 }
