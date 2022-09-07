@@ -104,7 +104,7 @@ const styleActiveState = css`
   }
   & li .ripple {
     /* to be used in line 14 of createRipple.js */
-    animation: ${animation['ripple 100']} 300ms linear;
+    animation: ${animation['ripple 100']} 600ms linear;
     background-color: var(--ripple-color);
     border-radius: 50%;
     position: absolute;

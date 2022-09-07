@@ -97,8 +97,8 @@ describe('ListAutocomplete component', () => {
 }
 
 .c0 li .ripple {
-  -webkit-animation: iHfQSf 300ms linear;
-  animation: iHfQSf 300ms linear;
+  -webkit-animation: ePEfzm 600ms linear;
+  animation: ePEfzm 600ms linear;
   background-color: var(--ripple-color);
   border-radius: 50%;
   position: absolute;
