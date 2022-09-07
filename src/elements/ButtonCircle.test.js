@@ -29,6 +29,7 @@ describe('ButtonCircle component', () => {
   right: 5px;
   top: 5px;
   z-index: 4;
+  overflow: hidden;
 }
 
 .c0 svg {
