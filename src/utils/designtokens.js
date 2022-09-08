@@ -154,7 +154,7 @@ export const animation = {
   `,
   'ripple 100': keyframes`
     to {
-      transform: scale(100);
+      transform: scale(4);
       opacity: 0;
     }  
   `,

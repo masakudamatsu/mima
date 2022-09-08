@@ -29,6 +29,7 @@ describe('ButtonCircle component', () => {
   right: 5px;
   top: 5px;
   z-index: 4;
+  overflow: hidden;
 }
 
 .c0 svg {
@@ -59,8 +60,8 @@ describe('ButtonCircle component', () => {
 }
 
 .c0 .ripple {
-  -webkit-animation: iHfQSf 300ms linear;
-  animation: iHfQSf 300ms linear;
+  -webkit-animation: ePEfzm 600ms linear;
+  animation: ePEfzm 600ms linear;
   background-color: var(--ripple-color);
   border-radius: 50%;
   position: absolute;
