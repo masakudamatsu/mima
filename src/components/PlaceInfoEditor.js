@@ -1,6 +1,6 @@
 // Adapted from https://github.com/ianstormtaylor/slate/blob/main/site/examples/forced-layout.tsx
 
-import {useState, useCallback} from 'react';
+import {useRef, useState, useCallback} from 'react';
 import PropTypes from 'prop-types';
 
 import {Slate, Editable, withReact} from 'slate-react';
@@ -96,13 +96,13 @@ export const PlaceInfoEditor = ({
       },
     ],
   };
-  const content = [titleNode].concat(placeNoteArray);
-  const [value, setValue] = useState(content);
+  const initialContent = [titleNode].concat(placeNoteArray);
+  const content = useRef(initialContent);
   const renderElement = useCallback(props => <Element {...props} />, []);
 
   const handleClickSave = event => {
     event.preventDefault();
-    const [title, ...noteArray] = value;
+    const [title, ...noteArray] = content.current;
     updateData([title, noteArray]);
     setEditMode(false);
   };
@@ -112,8 +112,8 @@ export const PlaceInfoEditor = ({
       <form>
         <Slate
           editor={editor}
-          value={value}
-          onChange={value => setValue(value)}
+          value={initialContent}
+          onChange={value => (content.current = value)}
         >
           <HeaderEditor>
             <Heading as="h1" data-editor>
