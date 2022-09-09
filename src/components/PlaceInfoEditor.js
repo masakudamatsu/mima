@@ -1,6 +1,6 @@
 // Adapted from https://github.com/ianstormtaylor/slate/blob/main/site/examples/forced-layout.tsx
 
-import {useState, useCallback, useMemo} from 'react';
+import {useState, useCallback} from 'react';
 import PropTypes from 'prop-types';
 
 import {Slate, Editable, withReact} from 'slate-react';
@@ -85,9 +85,8 @@ export const PlaceInfoEditor = ({
   setEditMode,
   updateData,
 }) => {
-  const editor = useMemo(
-    () => withLayout(withHistory(withReact(createEditor()))),
-    [],
+  const [editor] = useState(() =>
+    withLayout(withHistory(withReact(createEditor()))),
   );
   const titleNode = {
     type: 'title',
