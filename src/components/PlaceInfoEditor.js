@@ -86,7 +86,7 @@ export const PlaceInfoEditor = ({
   updateData,
 }) => {
   const [editor] = useState(() =>
-    withLayout(withHistory(withReact(createEditor()))),
+    withLayout(withReact(withHistory(createEditor()))),
   );
   const titleNode = {
     type: 'title',
