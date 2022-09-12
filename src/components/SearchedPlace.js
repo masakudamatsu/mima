@@ -4,8 +4,10 @@ import PropTypes from 'prop-types';
 import {NightModeContext} from 'src/wrappers/NightModeContext';
 import {PlaceIdContext} from 'src/wrappers/PlaceIdContext';
 
+import {ButtonDialog} from 'src/elements/ButtonDialog';
 import {CloseButton} from './CloseButton';
 import {ComposeDialog} from 'src/elements/ComposeDialog';
+import {PlaceInfoEditor} from './PlaceInfoEditor';
 
 import {useOnClickOutside} from 'src/hooks/useOnClickOutside';
 import {useOnEscKeyDown} from 'src/hooks/useOnEscKeyDown';
@@ -161,8 +163,24 @@ export const SearchedPlace = ({mapObject}) => {
     handler: closePlaceInfo,
   });
 
+  const openEditor = () => {
+    setState({status: 'saving'});
+  };
+
   const placeNameId = 'place-name';
   const placeDetailId = 'place-detail';
+  const placeNoteArray = placeData
+    ? [
+        {
+          type: 'paragraph',
+          children: [
+            {
+              text: placeData.address,
+            },
+          ],
+        },
+      ]
+    : null;
 
   if (status === 'initial') {
     return null;
@@ -193,10 +211,25 @@ export const SearchedPlace = ({mapObject}) => {
             </a>
           </p>
         </div>
+        <ButtonDialog
+          onClick={openEditor}
+          // onFocus={importPlaceInfoEditor}
+          // onMouseEnter={importPlaceInfoEditor}
+          type="button"
+        >
+          {buttonLabel.saveSearchedPlace}
+        </ButtonDialog>
       </ComposeDialog>
     );
   } else if (status === 'closed') {
     return null;
+  } else if (status === 'saving') {
+    return (
+      <PlaceInfoEditor
+        placeName={placeData.name}
+        placeNoteArray={placeNoteArray}
+      />
+    );
   }
 };
 

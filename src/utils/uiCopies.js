@@ -18,6 +18,7 @@ export const buttonLabel = {
   menu: 'Show menu',
   save: 'Save place',
   saveEdit: 'Save',
+  saveSearchedPlace: 'Save',
   search: 'Search place',
   searchSubmit: 'Submit search query',
 };
