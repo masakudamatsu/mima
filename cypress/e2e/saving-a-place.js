@@ -33,4 +33,14 @@ describe('Saving feature', () => {
       searchedPlace.url,
     );
   });
+  it('cancel button', () => {
+    cy.log('**Setting up**');
+    cy.findByRole('button', {name: buttonLabel.saveSearchedPlace}).click();
+    cy.log('**Clicking the cancel button...**');
+    cy.findByRole('button', {name: /cancel/i}).click();
+    cy.log('**...closes the text editor**');
+    cy.findByRole('textbox').should('not.exist');
+    cy.log('**...shows the searched place detail**');
+    cy.findByRole('heading', {name: searchedPlace.name}).should('be.visible');
+  });
 });

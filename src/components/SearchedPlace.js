@@ -166,6 +166,9 @@ export const SearchedPlace = ({mapObject}) => {
   const openEditor = () => {
     setState({status: 'saving'});
   };
+  const closeEditor = () => {
+    setState({status: 'open'});
+  };
 
   const placeNameId = 'place-name';
   const placeDetailId = 'place-detail';
@@ -246,6 +249,7 @@ export const SearchedPlace = ({mapObject}) => {
   } else if (status === 'saving') {
     return (
       <PlaceInfoEditor
+        closeEditor={closeEditor}
         placeName={placeData.name}
         placeNoteArray={placeNoteArray}
       />
