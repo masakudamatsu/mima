@@ -135,7 +135,6 @@ export const PlaceInfoEditor = ({
             data-autofocus // autoFocus won't work due to the use of react-focus-lock package
             placeholder="Enter a place name"
             renderElement={renderElement}
-            spellCheck
           />
         </Slate>
       </form>
