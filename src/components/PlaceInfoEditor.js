@@ -8,7 +8,7 @@ import {Transforms, createEditor, Node, Element} from 'slate';
 import {withHistory} from 'slate-history';
 
 import {ModalPopup} from 'src/components/ModalPopup';
-
+import {InlineChromiumBugfix} from './InlineChromiumBugfix';
 import {H2PlaceName} from 'src/elements/H2PlaceName';
 import {HeaderEditor} from 'src/elements/HeaderEditor';
 import {Heading} from 'src/elements/Heading';
@@ -93,6 +93,14 @@ export const PlaceInfoEditor = ({
         return <H2PlaceName {...attributes}>{children}</H2PlaceName>;
       case 'paragraph':
         return <p {...attributes}>{children}</p>;
+      case 'link':
+        return (
+          <a {...attributes} href={element.url}>
+            <InlineChromiumBugfix />
+            {children}
+            <InlineChromiumBugfix />
+          </a>
+        );
       default:
         return null;
     }

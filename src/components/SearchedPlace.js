@@ -179,6 +179,26 @@ export const SearchedPlace = ({mapObject}) => {
             },
           ],
         },
+        {
+          type: 'paragraph',
+          children: [
+            {
+              text: '',
+            },
+            {
+              type: 'link',
+              url: placeData.url,
+              children: [
+                {
+                  text: linkText.searchedPlace,
+                },
+              ],
+            },
+            {
+              text: '',
+            },
+          ],
+        },
       ]
     : null;
 

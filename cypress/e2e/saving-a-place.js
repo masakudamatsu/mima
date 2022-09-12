@@ -1,4 +1,4 @@
-import {buttonLabel, editorLabel} from '../../src/utils/uiCopies';
+import {buttonLabel, editorLabel, linkText} from '../../src/utils/uiCopies';
 
 const searchedPlace = {
   name: /fukuda art museum/i,
@@ -27,5 +27,10 @@ describe('Saving feature', () => {
     cy.findByRole('heading', {name: editorLabel}).should('be.visible');
     cy.findByRole('textbox').contains(searchedPlace.name);
     cy.findByRole('textbox').contains(searchedPlace.address);
+    cy.findByRole('link', {name: linkText.searchedPlace}).should(
+      'have.attr',
+      'href',
+      searchedPlace.url,
+    );
   });
 });
