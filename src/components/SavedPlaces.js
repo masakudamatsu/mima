@@ -145,7 +145,7 @@ export const SavedPlaces = ({mapObject}) => {
       <PlaceInfoEditor
         placeName={selectedPlaceName}
         placeNoteArray={selectedPlaceNoteArray}
-        setEditMode={setEditMode}
+        closeEditor={() => setEditMode(false)}
         updateData={updateData}
       />
     ) : (

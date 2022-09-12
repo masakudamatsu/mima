@@ -69,9 +69,9 @@ const withLayout = editor => {
 };
 
 export const PlaceInfoEditor = ({
+  closeEditor,
   placeName,
   placeNoteArray,
-  setEditMode,
   updateData,
 }) => {
   const [editor] = useState(() =>
@@ -110,7 +110,7 @@ export const PlaceInfoEditor = ({
     event.preventDefault();
     const [title, ...noteArray] = content.current;
     updateData([title, noteArray]);
-    setEditMode(false);
+    closeEditor();
   };
 
   return (
@@ -128,7 +128,7 @@ export const PlaceInfoEditor = ({
             <section>
               <button
                 onClick={() => {
-                  setEditMode(false);
+                  closeEditor();
                 }}
                 type="button"
               >
@@ -151,8 +151,8 @@ export const PlaceInfoEditor = ({
 };
 
 PlaceInfoEditor.propTypes = {
+  closeEditor: PropTypes.func,
   placeName: PropTypes.string,
   placeNoteArray: PropTypes.arrayOf(Object),
-  setEditMode: PropTypes.func,
   updateData: PropTypes.func,
 };
