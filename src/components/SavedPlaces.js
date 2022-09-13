@@ -2,8 +2,6 @@ import {useContext, useEffect, useRef, useState} from 'react';
 import PropTypes from 'prop-types';
 import DOMPurify from 'dompurify';
 
-import savedPlaces from 'src/utils/savedPlaces.json';
-
 import {PlaceInfo} from 'src/components/PlaceInfo';
 
 import {useSessionStorageState} from 'src/hooks/useSessionStorageState';
@@ -18,11 +16,8 @@ const importPlaceInfoEditor = () =>
   );
 const PlaceInfoEditor = dynamic(importPlaceInfoEditor);
 
-export const SavedPlaces = ({mapObject}) => {
-  const [userData, setUserData] = useSessionStorageState(
-    'userData',
-    savedPlaces,
-  );
+export const SavedPlaces = ({mapObject, placeData}) => {
+  const [userData, setUserData] = useSessionStorageState('userData', placeData);
 
   const nightMode = useContext(NightModeContext);
 
@@ -35,7 +30,11 @@ export const SavedPlaces = ({mapObject}) => {
     viewportSize.current.width = window.visualViewport.width;
   });
 
+  const marker = useRef();
   useEffect(() => {
+    if (marker.current) {
+      marker.current.setMap(null); // remove the previous current location marker from the map
+    }
     const google = window.google;
     // Shape markers
     const cormorantBoldAsterisk = {
@@ -70,17 +69,17 @@ export const SavedPlaces = ({mapObject}) => {
     };
 
     // Drop a marker to each saved place
-    for (let i = 0; i < userData.features.length; i++) {
+    for (let i = 0; i < userData.length; i++) {
       // Retrieve data to be used
       const userPlace = {
-        id: userData.features[i].properties.id,
+        id: userData[i].id,
         coordinates: new google.maps.LatLng(
-          userData.features[i].geometry.coordinates[1],
-          userData.features[i].geometry.coordinates[0],
+          userData[i].geometry.coordinates[1],
+          userData[i].geometry.coordinates[0],
         ),
-        name: userData.features[i].properties.name,
+        name: userData[i].properties.name,
       };
-      const marker = new google.maps.Marker({
+      marker.current = new google.maps.Marker({
         icon: {
           ...shapedAsAsterisk,
           ...pinnedAtCenter,
@@ -91,7 +90,7 @@ export const SavedPlaces = ({mapObject}) => {
         title: userPlace.name,
       });
       // eslint-disable-next-line no-loop-func
-      marker.addListener('click', () => {
+      marker.current.addListener('click', () => {
         mapObject.panTo(userPlace.coordinates);
         mapObject.panBy(0, viewportSize.current.height / 6);
         setSelectedPlace({
@@ -100,9 +99,9 @@ export const SavedPlaces = ({mapObject}) => {
           marker: marker,
         });
       });
-      marker.setMap(mapObject);
+      marker.current.setMap(mapObject);
     }
-  }, [mapObject, nightMode, userData.features]);
+  }, [mapObject, nightMode, userData]);
 
   const closePlaceInfo = () => {
     mapObject.panTo(selectedPlace.coordinates);
@@ -114,13 +113,11 @@ export const SavedPlaces = ({mapObject}) => {
 
   // for updating place info
   if (selectedPlace) {
-    const selectedPlaceIndex = userData.features.findIndex(
-      feature => feature.properties.id === selectedPlace.id,
+    const selectedPlaceIndex = userData.findIndex(
+      feature => feature.id === selectedPlace.id,
     );
-    const selectedPlaceName =
-      userData.features[selectedPlaceIndex].properties.name;
-    const selectedPlaceNoteArray =
-      userData.features[selectedPlaceIndex].properties.note;
+    const selectedPlaceName = userData[selectedPlaceIndex].properties.name;
+    const selectedPlaceNoteArray = userData[selectedPlaceIndex].properties.note;
     const selectedPlaceNoteHtml = DOMPurify.sanitize(
       getHtmlFromSlate({children: selectedPlaceNoteArray}),
     );
@@ -130,12 +127,10 @@ export const SavedPlaces = ({mapObject}) => {
         name: newTitle.children[0].text,
         note: newNoteArray,
       };
-      // update place marker's accessible name
-      selectedPlace.marker.setTitle(newData.name);
       // // update user data
-      const newUserData = {...userData};
-      newUserData.features[selectedPlaceIndex].properties = {
-        ...userData.features[selectedPlaceIndex].properties,
+      const newUserData = [...userData];
+      newUserData[selectedPlaceIndex].properties = {
+        ...userData[selectedPlaceIndex].properties,
         ...newData,
       };
       setUserData(newUserData);
@@ -164,4 +159,5 @@ export const SavedPlaces = ({mapObject}) => {
 
 SavedPlaces.propTypes = {
   mapObject: PropTypes.object,
+  placeData: PropTypes.array,
 };
