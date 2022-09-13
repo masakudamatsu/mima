@@ -70,6 +70,7 @@
   "dependencies": {
     "@googlemaps/js-api-loader": "1.12.1",
     "@googlemaps/react-wrapper": "1.1.15",
+    "@prisma/client": "4.3.1",
     "autolinker": "3.14.3",
     "dompurify": "2.3.3",
     "downshift": "6.1.7",
@@ -133,6 +134,7 @@
     "lint-staged": "10.5.4",
     "npm-run-all": "^4.1.5",
     "prettier": "^2.2.0",
+    "prisma": "4.3.1",
     "semantic-release": "^17.4.4",
     "start-server-and-test": "1.12.0",
     "storybook-addon-pseudo-states": "1.0.0"
@@ -150,5 +152,8 @@
     "commitizen": {
       "path": "cz-conventional-changelog"
     }
+  },
+  "prisma": {
+    "seed": "node prisma/seed.js"
   }
 }
