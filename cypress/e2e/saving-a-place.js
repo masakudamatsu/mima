@@ -11,6 +11,9 @@ describe('Saving feature', () => {
     cy.log('**Loading app**');
     cy.visit('/');
     cy.waitForMapToLoad();
+    cy.log('**Verify a place to be saved is not marked on the map yet**');
+    cy.findByRole('button', {name: searchedPlace.name}).should('not.exist');
+    cy.log('**Search the place to be saved**');
     cy.findByRole('button', {name: buttonLabel.search}).click();
     // eslint-disable-next-line cypress/no-unnecessary-waiting
     cy.wait(100); // otherwise, Cypress will type 'bc', not 'abc'. This is a known issue. See https://www.cypress.io/blog/2019/01/22/when-can-the-test-click/

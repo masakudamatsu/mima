@@ -109,32 +109,6 @@ async function main() {
   const place5 = await prisma.place.create({
     data: {
       geometry: {
-        coordinates: [135.6762773, 35.013867],
-        type: 'Point',
-      },
-      properties: {
-        address:
-          '3-16 Sagatenryuji Susukinobabacho, Ukyo Ward, Kyoto, 616-8385, Japan',
-        'country code': 'JP',
-        'Google Maps URL': 'http://maps.google.com/?cid=540503174389752899',
-        name: 'Fukuda Art Museum',
-        note: [
-          {
-            type: 'paragraph',
-            children: [
-              {
-                text: 'https://bunshun.jp/articles/-/14067',
-              },
-            ],
-          },
-        ],
-      },
-      type: 'Feature',
-    },
-  });
-  const place6 = await prisma.place.create({
-    data: {
-      geometry: {
         coordinates: [135.7700156, 35.006263],
         type: 'Point',
       },
@@ -157,7 +131,7 @@ async function main() {
       type: 'Feature',
     },
   });
-  const place7 = await prisma.place.create({
+  const place6 = await prisma.place.create({
     data: {
       geometry: {
         coordinates: [135.7749319, 35.0018511],
@@ -183,7 +157,7 @@ async function main() {
       type: 'Feature',
     },
   });
-  const place8 = await prisma.place.create({
+  const place7 = await prisma.place.create({
     data: {
       geometry: {
         coordinates: [135.7631616, 34.9933458],
@@ -208,7 +182,7 @@ async function main() {
       type: 'Feature',
     },
   });
-  console.log([place1, place2, place3, place4, place5, place6, place7, place8]);
+  console.log([place1, place2, place3, place4, place5, place6, place7]);
 }
 
 main()
