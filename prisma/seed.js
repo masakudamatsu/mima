@@ -2,10 +2,8 @@ const {PrismaClient} = require('@prisma/client');
 const prisma = new PrismaClient();
 
 async function main() {
-  const place1 = await prisma.place.upsert({
-    where: {id: 1},
-    update: {},
-    create: {
+  const place1 = await prisma.place.create({
+    data: {
       geometry: {
         coordinates: [135.7621503, 35.0023024],
         type: 'Point',
@@ -30,10 +28,8 @@ async function main() {
     },
   });
 
-  const place2 = await prisma.place.upsert({
-    where: {id: 2},
-    update: {},
-    create: {
+  const place2 = await prisma.place.create({
+    data: {
       geometry: {
         coordinates: [135.6749029, 35.0148675],
         type: 'Point',
@@ -59,10 +55,8 @@ async function main() {
       type: 'Feature',
     },
   });
-  const place3 = await prisma.place.upsert({
-    where: {id: 3},
-    update: {},
-    create: {
+  const place3 = await prisma.place.create({
+    data: {
       geometry: {
         coordinates: [135.7628048, 35.0004696],
         type: 'Point',
@@ -87,10 +81,8 @@ async function main() {
       type: 'Feature',
     },
   });
-  const place4 = await prisma.place.upsert({
-    where: {id: 4},
-    update: {},
-    create: {
+  const place4 = await prisma.place.create({
+    data: {
       geometry: {
         coordinates: [135.7609794, 34.9936571],
         type: 'Point',
@@ -114,10 +106,8 @@ async function main() {
       type: 'Feature',
     },
   });
-  const place5 = await prisma.place.upsert({
-    where: {id: 5},
-    update: {},
-    create: {
+  const place5 = await prisma.place.create({
+    data: {
       geometry: {
         coordinates: [135.6762773, 35.013867],
         type: 'Point',
@@ -142,10 +132,8 @@ async function main() {
       type: 'Feature',
     },
   });
-  const place6 = await prisma.place.upsert({
-    where: {id: 6},
-    update: {},
-    create: {
+  const place6 = await prisma.place.create({
+    data: {
       geometry: {
         coordinates: [135.7700156, 35.006263],
         type: 'Point',
@@ -169,10 +157,8 @@ async function main() {
       type: 'Feature',
     },
   });
-  const place7 = await prisma.place.upsert({
-    where: {id: 7},
-    update: {},
-    create: {
+  const place7 = await prisma.place.create({
+    data: {
       geometry: {
         coordinates: [135.7749319, 35.0018511],
         type: 'Point',
@@ -197,10 +183,8 @@ async function main() {
       type: 'Feature',
     },
   });
-  const place8 = await prisma.place.upsert({
-    where: {id: 8},
-    update: {},
-    create: {
+  const place8 = await prisma.place.create({
+    data: {
       geometry: {
         coordinates: [135.7631616, 34.9933458],
         type: 'Point',
