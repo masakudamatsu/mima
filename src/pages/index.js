@@ -1,7 +1,7 @@
 import {useContext, useState, useEffect} from 'react';
 import Head from 'next/head';
 import {Wrapper} from '@googlemaps/react-wrapper';
-import {PrismaClient} from '@prisma/client';
+import prisma from 'src/utils/prisma';
 
 import {index} from 'src/utils/metadata';
 
@@ -48,7 +48,6 @@ function HomePage({savedPlaces}) {
 export default HomePage;
 
 export async function getServerSideProps() {
-  const prisma = new PrismaClient();
   const savedPlaces = await prisma.place.findMany();
   return {props: {savedPlaces}};
 }
