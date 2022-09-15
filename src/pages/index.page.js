@@ -1,7 +1,6 @@
 import {useContext, useState, useEffect} from 'react';
 import Head from 'next/head';
 import {Wrapper} from '@googlemaps/react-wrapper';
-import prisma from 'src/utils/prisma';
 
 import {index} from 'src/utils/metadata';
 
@@ -12,6 +11,8 @@ import {Map} from 'src/components/Map';
 import {Noscript} from 'src/components/Noscript';
 import {SavedPlaces} from 'src/components/SavedPlaces';
 import {SearchedPlace} from 'src/components/SearchedPlace';
+
+const prisma = require('src/utils/prisma');
 
 function HomePage({savedPlaces}) {
   const nightMode = useContext(NightModeContext);

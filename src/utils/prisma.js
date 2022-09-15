@@ -17,4 +17,4 @@ else {
   prisma = global.prisma;
 }
 
-export default prisma;
+module.exports = prisma;
