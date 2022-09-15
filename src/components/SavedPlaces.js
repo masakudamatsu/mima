@@ -73,10 +73,10 @@ export const SavedPlaces = ({mapObject, placeData}) => {
       // Retrieve data to be used
       const userPlace = {
         id: userData[i].id,
-        coordinates: new google.maps.LatLng(
-          userData[i].geometry.coordinates[1],
-          userData[i].geometry.coordinates[0],
-        ),
+        coordinates: {
+          lat: userData[i].geometry.coordinates[1],
+          lng: userData[i].geometry.coordinates[0],
+        },
         name: userData[i].properties.name,
       };
       marker.current = new google.maps.Marker({

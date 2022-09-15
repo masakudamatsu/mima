@@ -63,10 +63,10 @@ export const SearchedPlace = ({mapObject}) => {
       const searchedPlace = {
         address: place.formatted_address,
         // TODO #197 businessStatus: place.business_status,
-        coordinates: new google.maps.LatLng(
-          place.geometry.location.lat(),
-          place.geometry.location.lng(),
-        ),
+        coordinates: {
+          lat: place.geometry.location.lat(),
+          lng: place.geometry.location.lng(),
+        },
         name: place.name,
         url: place.url,
       };
