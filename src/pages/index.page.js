@@ -9,6 +9,7 @@ import {PlaceIdProvider} from 'src/wrappers/PlaceIdContext';
 import {Controls} from 'src/components/Controls';
 import {Map} from 'src/components/Map';
 import {Noscript} from 'src/components/Noscript';
+import {Places} from 'src/components/Places';
 import {SavedPlaces} from 'src/components/SavedPlaces';
 import {SearchedPlace} from 'src/components/SearchedPlace';
 
@@ -37,8 +38,10 @@ function HomePage({savedPlaces}) {
             libraries={['places']}
           >
             <Map setMapObject={setMapObject} />
-            <SavedPlaces mapObject={mapObject} placeData={savedPlaces} />
-            <SearchedPlace mapObject={mapObject} />
+            <Places placeData={savedPlaces}>
+              <SavedPlaces mapObject={mapObject} />
+              <SearchedPlace mapObject={mapObject} />
+            </Places>
           </Wrapper>
         </main>
       </PlaceIdProvider>

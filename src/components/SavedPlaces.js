@@ -4,7 +4,7 @@ import DOMPurify from 'dompurify';
 
 import {PlaceInfo} from 'src/components/PlaceInfo';
 
-import {useStateObject} from 'src/hooks/useStateObject';
+import {usePlaces} from './Places';
 import {useOnEscKeyDown} from 'src/hooks/useOnEscKeyDown';
 import {getHtmlFromSlate} from 'src/utils/getHtmlFromSlate';
 import {NightModeContext} from 'src/wrappers/NightModeContext';
@@ -16,12 +16,9 @@ const importPlaceInfoEditor = () =>
   );
 const PlaceInfoEditor = dynamic(importPlaceInfoEditor);
 
-export const SavedPlaces = ({mapObject, placeData}) => {
-  const [state, setState] = useStateObject({
-    userData: placeData,
-    selectedPlace: null,
-  });
-  const {userData, selectedPlace} = state;
+export const SavedPlaces = ({mapObject}) => {
+  const {places, setPlaces} = usePlaces();
+  const {userData, selectedPlace} = places;
 
   const nightMode = useContext(NightModeContext);
 
@@ -96,7 +93,7 @@ export const SavedPlaces = ({mapObject, placeData}) => {
       marker.current.addListener('click', () => {
         mapObject.panTo(userPlace.coordinates);
         mapObject.panBy(0, viewportSize.current.height / 6);
-        setState({
+        setPlaces({
           selectedPlace: {
             id: userPlace.id,
             coordinates: userPlace.coordinates,
@@ -106,11 +103,11 @@ export const SavedPlaces = ({mapObject, placeData}) => {
       });
       marker.current.setMap(mapObject);
     }
-  }, [mapObject, nightMode, userData]);
+  }, [mapObject, nightMode, setPlaces, userData]);
 
   const closePlaceInfo = () => {
     mapObject.panTo(selectedPlace.coordinates);
-    setState({selectedPlace: null});
+    setPlaces({selectedPlace: null});
   };
 
   // close with Esc key
@@ -138,7 +135,7 @@ export const SavedPlaces = ({mapObject, placeData}) => {
         ...userData[selectedPlaceIndex].properties,
         ...newData,
       };
-      setState({userData: newUserData});
+      setPlaces({userData: newUserData});
     };
 
     return editMode ? (
@@ -164,5 +161,4 @@ export const SavedPlaces = ({mapObject, placeData}) => {
 
 SavedPlaces.propTypes = {
   mapObject: PropTypes.object,
-  placeData: PropTypes.array,
 };
