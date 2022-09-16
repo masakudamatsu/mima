@@ -4,7 +4,7 @@ import DOMPurify from 'dompurify';
 
 import {PlaceInfo} from 'src/components/PlaceInfo';
 
-import {useSessionStorageState} from 'src/hooks/useSessionStorageState';
+import {useStateObject} from 'src/hooks/useStateObject';
 import {useOnEscKeyDown} from 'src/hooks/useOnEscKeyDown';
 import {getHtmlFromSlate} from 'src/utils/getHtmlFromSlate';
 import {NightModeContext} from 'src/wrappers/NightModeContext';
@@ -17,11 +17,14 @@ const importPlaceInfoEditor = () =>
 const PlaceInfoEditor = dynamic(importPlaceInfoEditor);
 
 export const SavedPlaces = ({mapObject, placeData}) => {
-  const [userData, setUserData] = useSessionStorageState('userData', placeData);
+  const [state, setState] = useStateObject({
+    userData: placeData,
+    selectedPlace: null,
+  });
+  const {userData, selectedPlace} = state;
 
   const nightMode = useContext(NightModeContext);
 
-  const [selectedPlace, setSelectedPlace] = useState(null);
   const [editMode, setEditMode] = useState(false);
 
   const viewportSize = useRef({height: null, width: null});
@@ -93,10 +96,12 @@ export const SavedPlaces = ({mapObject, placeData}) => {
       marker.current.addListener('click', () => {
         mapObject.panTo(userPlace.coordinates);
         mapObject.panBy(0, viewportSize.current.height / 6);
-        setSelectedPlace({
-          id: userPlace.id,
-          coordinates: userPlace.coordinates,
-          marker: marker,
+        setState({
+          selectedPlace: {
+            id: userPlace.id,
+            coordinates: userPlace.coordinates,
+            marker: marker,
+          },
         });
       });
       marker.current.setMap(mapObject);
@@ -105,7 +110,7 @@ export const SavedPlaces = ({mapObject, placeData}) => {
 
   const closePlaceInfo = () => {
     mapObject.panTo(selectedPlace.coordinates);
-    setSelectedPlace(null);
+    setState({selectedPlace: null});
   };
 
   // close with Esc key
@@ -133,7 +138,7 @@ export const SavedPlaces = ({mapObject, placeData}) => {
         ...userData[selectedPlaceIndex].properties,
         ...newData,
       };
-      setUserData(newUserData);
+      setState({userData: newUserData});
     };
 
     return editMode ? (
