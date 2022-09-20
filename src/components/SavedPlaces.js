@@ -122,20 +122,39 @@ export const SavedPlaces = ({mapObject}) => {
     const selectedPlaceNoteArray = userData[selectedPlaceIndex].properties.note;
     const selectedPlaceNoteHtml = DOMPurify.sanitize(
       getHtmlFromSlate({children: selectedPlaceNoteArray}),
+      {ADD_ATTR: ['target']}, // see https://github.com/cure53/DOMPurify/issues/317#issuecomment-470429778
     );
 
-    const updateData = ([newTitle, newNoteArray]) => {
-      const newData = {
-        name: newTitle.children[0].text,
-        note: newNoteArray,
-      };
-      // // update user data
-      const newUserData = [...userData];
-      newUserData[selectedPlaceIndex].properties = {
-        ...userData[selectedPlaceIndex].properties,
-        ...newData,
-      };
-      setPlaces({userData: newUserData});
+    const updateData = async ([newTitle, newNoteArray]) => {
+      try {
+        const response = await fetch('/api/places', {
+          method: 'PUT',
+          headers: {'Content-Type': 'application/json'},
+          body: JSON.stringify({
+            id: selectedPlace.id,
+            properties: {
+              name: newTitle.children[0].text, // edited by user, not the one returned from Google Maps API server
+              note: newNoteArray,
+            },
+          }),
+        });
+        if (response.ok) {
+          const jsonResponse = await response.json();
+          // // update user data
+          const newUserData = [...userData];
+          newUserData[selectedPlaceIndex].properties = {
+            ...userData[selectedPlaceIndex].properties,
+            ...jsonResponse.properties,
+          };
+          setPlaces({
+            userData: newUserData,
+          });
+        } else {
+          throw new Error('PUT request to /api/places has failed.');
+        }
+      } catch (error) {
+        console.log(error);
+      }
     };
 
     return editMode ? (

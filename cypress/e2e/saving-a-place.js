@@ -8,6 +8,8 @@ const searchedPlace = {
 };
 describe('Saving feature', () => {
   beforeEach(() => {
+    cy.log('**Resetting the database**');
+    cy.exec('npx prisma migrate reset --force'); // https://docs.cypress.io/guides/end-to-end-testing/testing-your-app#Seeding-data
     cy.log('**Loading app**');
     cy.visit('/');
     cy.waitForMapToLoad();
@@ -35,6 +37,22 @@ describe('Saving feature', () => {
       'href',
       searchedPlace.url,
     );
+    cy.log('**Clicking the save button in the text editor**');
+    cy.findByRole('button', {name: buttonLabel.saveEdit}).click();
+    cy.log('**...closes the text editor**');
+    cy.findByRole('textbox').should('not.exist');
+    cy.log('**...renders the marker at the saved place location**');
+    cy.findByRole('button', {name: searchedPlace.name}).should('be.visible');
+    cy.log('**...shows the place detail popup**');
+    cy.findByRole('heading', {name: searchedPlace.name}).should('be.visible');
+    cy.findByRole('button', {name: buttonLabel.edit}).should('be.visible');
+    cy.log('**...shows link text**');
+    cy.findByRole('link', {name: linkText.searchedPlace})
+      .should('have.attr', 'target', '_blank')
+      .should('have.attr', 'rel', 'noreferrer')
+      .then(link => {
+        cy.request(link.prop('href')).its('status').should('eq', 200);
+      });
   });
   it('cancel button', () => {
     cy.log('**Setting up**');

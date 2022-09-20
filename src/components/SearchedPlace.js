@@ -11,6 +11,7 @@ import {PlaceInfoEditor} from './PlaceInfoEditor';
 
 import {useOnClickOutside} from 'src/hooks/useOnClickOutside';
 import {useOnEscKeyDown} from 'src/hooks/useOnEscKeyDown';
+import {usePlaces} from './Places';
 import {useStateObject} from 'src/hooks/useStateObject';
 
 import {buttonLabel, linkText} from 'src/utils/uiCopies';
@@ -19,6 +20,9 @@ import {duration} from 'src/utils/designtokens';
 export const SearchedPlace = ({mapObject}) => {
   const [placeId] = useContext(PlaceIdContext);
   const nightMode = useContext(NightModeContext);
+
+  const {places, setPlaces} = usePlaces();
+  const {userData} = places;
 
   const [state, setState] = useStateObject({
     status: 'initial',
@@ -170,6 +174,44 @@ export const SearchedPlace = ({mapObject}) => {
     setState({status: 'open'});
   };
 
+  const updateData = async ([title, noteArray]) => {
+    try {
+      const response = await fetch('/api/places', {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({
+          geometry: {
+            coordinates: [placeData.coordinates.lng, placeData.coordinates.lat],
+            type: 'Point',
+          },
+          properties: {
+            address: placeData.address,
+            'Google Maps URL': placeData.url,
+            name: title.children[0].text, // edited by user, not the one returned from Google Maps API server
+            note: noteArray,
+          },
+          type: 'Feature',
+        }),
+      });
+      if (response.ok) {
+        const jsonResponse = await response.json();
+        marker.current.setMap(null); // remove the searched place marker
+        setState({status: 'saved'});
+        setPlaces({
+          userData: [...userData, jsonResponse],
+          selectedPlace: {
+            id: jsonResponse.id,
+            coordinates: jsonResponse.coordinates,
+          },
+        });
+      } else {
+        throw new Error('POST request to /api/places has failed.');
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   const placeNameId = 'place-name';
   const placeDetailId = 'place-detail';
   const placeNoteArray = placeData
@@ -252,8 +294,11 @@ export const SearchedPlace = ({mapObject}) => {
         closeEditor={closeEditor}
         placeName={placeData.name}
         placeNoteArray={placeNoteArray}
+        updateData={updateData}
       />
     );
+  } else if (status === 'saved') {
+    return null;
   }
 };
 
