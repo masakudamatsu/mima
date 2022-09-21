@@ -5,8 +5,8 @@
   "main": "pages/index.js",
   "scripts": {
     "build": "is-ci \"build:ci\" \"build:local\"",
-    "build:ci": "next build && next export",
-    "build:local": "next build && next export && open http://localhost:3000 && next start",
+    "build:ci": "next build",
+    "build:local": "next build && open http://localhost:3000 && next start",
     "ci": "start-server-and-test start http://localhost:3000 ci:tests",
     "ci:tests": "npm-run-all --parallel lint test:coverage:unit test:coverage:e2e",
     "postci:tests": "npm run report:combined",
