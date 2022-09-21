@@ -17,6 +17,8 @@ jobs:
         run: npm run build
       - name: 'Start the server and run tests'
         run: npm run ci
+        env:
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}
   lighthouse-ci:
     runs-on: ubuntu-latest
     steps:
