@@ -97,7 +97,6 @@ export const SavedPlaces = ({mapObject}) => {
           selectedPlace: {
             id: userPlace.id,
             coordinates: userPlace.coordinates,
-            marker: marker,
           },
         });
       });
