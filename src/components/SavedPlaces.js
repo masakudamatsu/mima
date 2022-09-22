@@ -22,7 +22,7 @@ export const SavedPlaces = ({mapObject}) => {
 
   const nightMode = useContext(NightModeContext);
 
-  const [editMode, setEditMode] = useState(false);
+  const [ui, setUi] = useState(null);
 
   const viewportSize = useRef({height: null, width: null});
   useEffect(() => {
@@ -99,6 +99,7 @@ export const SavedPlaces = ({mapObject}) => {
             coordinates: userPlace.coordinates,
           },
         });
+        setUi('open');
       });
       marker.current.setMap(mapObject);
     }
@@ -107,6 +108,7 @@ export const SavedPlaces = ({mapObject}) => {
   const closePlaceInfo = () => {
     mapObject.panTo(selectedPlace.coordinates);
     setPlaces({selectedPlace: null});
+    setUi(null);
   };
 
   // close with Esc key
@@ -155,23 +157,26 @@ export const SavedPlaces = ({mapObject}) => {
         console.log(error);
       }
     };
-
-    return editMode ? (
-      <PlaceInfoEditor
-        placeName={selectedPlaceName}
-        placeNoteArray={selectedPlaceNoteArray}
-        closeEditor={() => setEditMode(false)}
-        updateData={updateData}
-      />
-    ) : (
-      <PlaceInfo
-        closePlaceInfo={closePlaceInfo}
-        importPlaceInfoEditor={importPlaceInfoEditor}
-        placeName={selectedPlaceName}
-        placeNoteHtml={selectedPlaceNoteHtml}
-        setEditMode={setEditMode}
-      />
-    );
+    if (ui === 'open') {
+      return (
+        <PlaceInfo
+          closePlaceInfo={closePlaceInfo}
+          importPlaceInfoEditor={importPlaceInfoEditor}
+          placeName={selectedPlaceName}
+          placeNoteHtml={selectedPlaceNoteHtml}
+          editPlaceInfo={() => setUi('editing')}
+        />
+      );
+    } else if (ui === 'editing') {
+      return (
+        <PlaceInfoEditor
+          placeName={selectedPlaceName}
+          placeNoteArray={selectedPlaceNoteArray}
+          closeEditor={() => setUi('open')}
+          updateData={updateData}
+        />
+      );
+    }
   }
 
   return null;
