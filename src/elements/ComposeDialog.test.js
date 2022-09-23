@@ -9,6 +9,10 @@ describe('ComposeDialog component', () => {
 .c0 {
   --height: 34%;
   color: var(--popup-text-color);
+  font-family: 'Noto Sans',Verdana,sans-serif;
+  font-size: 1.0506rem;
+  font-weight: 400;
+  line-height: 1.25;
   height: var(--height);
   width: 100%;
   --blur-radius: 8px;
@@ -38,13 +42,6 @@ describe('ComposeDialog component', () => {
   font-size: 1.3986rem;
   font-weight: 700;
   line-height: 1.092;
-}
-
-.c0 p {
-  font-family: 'Noto Sans',Verdana,sans-serif;
-  font-size: 1.0506rem;
-  font-weight: 400;
-  line-height: 1.25;
 }
 
 .c0 button[aria-label="Close place detail"] {

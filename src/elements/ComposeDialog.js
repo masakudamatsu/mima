@@ -33,6 +33,10 @@ const placeOverMap = `
 
 const styleText = `
   color: var(--popup-text-color);
+  font-family: ${bodyText.fontFamily};
+  font-size: ${remify(bodyText.fontSize)};
+  font-weight: ${bodyText.fontWeight};
+  line-height: ${bodyText.lineHeight};  
   & a {
     color: var(--link-text-color);
   }
@@ -41,12 +45,6 @@ const styleText = `
     font-size: ${remify(h2PlaceName.fontSize)};
     font-weight: ${h2PlaceName.fontWeight};
     line-height: ${h2PlaceName.lineHeight};
-  }
-  & p {
-    font-family: ${bodyText.fontFamily};
-    font-size: ${remify(bodyText.fontSize)};
-    font-weight: ${bodyText.fontWeight};
-    line-height: ${bodyText.lineHeight};  
   }
 `;
 
