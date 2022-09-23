@@ -1,4 +1,4 @@
-import {useContext, useEffect, useRef, useState} from 'react';
+import {useContext, useEffect, useRef} from 'react';
 import PropTypes from 'prop-types';
 import DOMPurify from 'dompurify';
 
@@ -18,11 +18,9 @@ const PlaceInfoEditor = dynamic(importPlaceInfoEditor);
 
 export const SavedPlaces = ({mapObject}) => {
   const {places, setPlaces} = usePlaces();
-  const {userData, selectedPlace} = places;
+  const {ui, userData, selectedPlace} = places;
 
   const nightMode = useContext(NightModeContext);
-
-  const [ui, setUi] = useState(null);
 
   const viewportSize = useRef({height: null, width: null});
   useEffect(() => {
@@ -94,12 +92,12 @@ export const SavedPlaces = ({mapObject}) => {
         mapObject.panTo(userPlace.coordinates);
         mapObject.panBy(0, viewportSize.current.height / 6);
         setPlaces({
+          ui: 'open',
           selectedPlace: {
             id: userPlace.id,
             coordinates: userPlace.coordinates,
           },
         });
-        setUi('open');
       });
       marker.current.setMap(mapObject);
     }
@@ -107,8 +105,7 @@ export const SavedPlaces = ({mapObject}) => {
 
   const closePlaceInfo = () => {
     mapObject.panTo(selectedPlace.coordinates);
-    setPlaces({selectedPlace: null});
-    setUi(null);
+    setPlaces({ui: null, selectedPlace: null});
   };
 
   // close with Esc key
@@ -164,7 +161,7 @@ export const SavedPlaces = ({mapObject}) => {
           importPlaceInfoEditor={importPlaceInfoEditor}
           placeName={selectedPlaceName}
           placeNoteHtml={selectedPlaceNoteHtml}
-          editPlaceInfo={() => setUi('editing')}
+          editPlaceInfo={() => setPlaces({ui: 'editing'})}
         />
       );
     } else if (ui === 'editing') {
@@ -172,7 +169,7 @@ export const SavedPlaces = ({mapObject}) => {
         <PlaceInfoEditor
           placeName={selectedPlaceName}
           placeNoteArray={selectedPlaceNoteArray}
-          closeEditor={() => setUi('open')}
+          closeEditor={() => setPlaces({ui: 'open'})}
           updateData={updateData}
         />
       );

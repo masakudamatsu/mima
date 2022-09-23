@@ -8,6 +8,7 @@ PlacesContext.displayName = 'PlacesContext'; // for React DevTools to show
 
 export function Places({children, placeData}) {
   const [places, setPlaces] = useStateObject({
+    ui: null,
     userData: placeData,
     selectedPlace: null,
   });

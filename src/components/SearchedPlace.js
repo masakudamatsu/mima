@@ -198,6 +198,7 @@ export const SearchedPlace = ({mapObject}) => {
         marker.current.setMap(null); // remove the searched place marker
         setState({status: 'saved'});
         setPlaces({
+          ui: 'open',
           userData: [...userData, jsonResponse],
           selectedPlace: {
             id: jsonResponse.id,
