@@ -1,3 +1,4 @@
+import {interceptIndefinitely} from '../../test/utils/cypress';
 import {buttonLabel, editorLabel, linkText} from '../../src/utils/uiCopies';
 
 const searchedPlace = {
@@ -26,6 +27,8 @@ describe('Saving feature', () => {
     }).click();
   });
   it('happy path for mobile/mouse users', () => {
+    cy.log(`**Preparing for testing loading messages**`);
+    const interception = interceptIndefinitely('/api/places');
     cy.log('**Clicking the save button on the searched place detail popup**');
     cy.findByRole('button', {name: buttonLabel.saveSearchedPlace}).click();
     cy.log('**...shows the text editor**');
@@ -39,19 +42,30 @@ describe('Saving feature', () => {
     );
     cy.log('**Clicking the save button in the text editor**');
     cy.findByRole('button', {name: buttonLabel.saveEdit}).click();
-    cy.log('**...closes the text editor**');
-    cy.findByRole('textbox').should('not.exist');
-    cy.log('**...renders the marker at the saved place location**');
-    cy.findByRole('button', {name: searchedPlace.name}).should('be.visible');
-    cy.log('**...shows the place detail popup**');
-    cy.findByRole('heading', {name: searchedPlace.name}).should('be.visible');
-    cy.findByRole('button', {name: buttonLabel.edit}).should('be.visible');
-    cy.log('**...shows link text**');
-    cy.findByRole('link', {name: linkText.searchedPlace})
-      .should('have.attr', 'target', '_blank')
-      .should('have.attr', 'rel', 'noreferrer')
-      .then(link => {
-        cy.request(link.prop('href')).its('status').should('eq', 200);
+    cy.log('**...initially shows a loading message**');
+    cy.findByText(/saving.*/i)
+      .should('be.visible')
+      .then(() => {
+        cy.log(`**And then...**`);
+        interception.sendResponse();
+        cy.log('**...closes the text editor**');
+        cy.findByRole('textbox').should('not.exist');
+        cy.log('**...renders the marker at the saved place location**');
+        cy.findByRole('button', {name: searchedPlace.name}).should(
+          'be.visible',
+        );
+        cy.log('**...shows the place detail popup**');
+        cy.findByRole('heading', {name: searchedPlace.name}).should(
+          'be.visible',
+        );
+        cy.findByRole('button', {name: buttonLabel.edit}).should('be.visible');
+        cy.log('**...shows link text**');
+        cy.findByRole('link', {name: linkText.searchedPlace})
+          .should('have.attr', 'target', '_blank')
+          .should('have.attr', 'rel', 'noreferrer')
+          .then(link => {
+            cy.request(link.prop('href')).its('status').should('eq', 200);
+          });
       });
   });
   it('cancel button', () => {

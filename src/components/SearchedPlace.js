@@ -7,6 +7,8 @@ import {PlaceIdContext} from 'src/wrappers/PlaceIdContext';
 import {ButtonDialog} from 'src/elements/ButtonDialog';
 import {CloseButton} from './CloseButton';
 import {ComposeDialog} from 'src/elements/ComposeDialog';
+import {DivCloud} from 'src/elements/DivCloud';
+import {ParagraphLoading} from 'src/elements/ParagraphLoading';
 import {PlaceInfoEditor} from './PlaceInfoEditor';
 
 import {useOnClickOutside} from 'src/hooks/useOnClickOutside';
@@ -168,7 +170,7 @@ export const SearchedPlace = ({mapObject}) => {
   });
 
   const openEditor = () => {
-    setState({status: 'saving'});
+    setState({status: 'editing'});
   };
   const handleCancel = () => {
     setState({status: 'open'});
@@ -176,6 +178,7 @@ export const SearchedPlace = ({mapObject}) => {
 
   const updateData = async ([title, noteArray]) => {
     try {
+      setState({status: 'saving'});
       const response = await fetch('/api/places', {
         method: 'POST',
         headers: {'Content-Type': 'application/json'},
@@ -289,7 +292,7 @@ export const SearchedPlace = ({mapObject}) => {
     );
   } else if (status === 'closed') {
     return null;
-  } else if (status === 'saving') {
+  } else if (status === 'editing') {
     return (
       <PlaceInfoEditor
         handleCancel={handleCancel}
@@ -297,6 +300,12 @@ export const SearchedPlace = ({mapObject}) => {
         placeNoteArray={placeNoteArray}
         updateData={updateData}
       />
+    );
+  } else if (status === 'saving') {
+    return (
+      <DivCloud>
+        <ParagraphLoading>Saving your place note...</ParagraphLoading>
+      </DivCloud>
     );
   } else if (status === 'saved') {
     return null;
