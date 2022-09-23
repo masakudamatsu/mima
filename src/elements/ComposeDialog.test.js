@@ -77,7 +77,7 @@ describe('ComposeDialog component', () => {
   margin-top: 0.4965rem;
 }
 
-.c0 p + button:not([aria-label="Close place detail"]) {
+.c0 div + button {
   margin-top: 0.7801rem;
 }
 

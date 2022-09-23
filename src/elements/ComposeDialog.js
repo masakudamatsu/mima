@@ -84,7 +84,7 @@ const positionComponents = `
   & p + p {
     margin-top: ${remify(bodyText.spaceBetweenParagraphs)};
   }
-  & p + button:not([aria-label="${buttonLabel.closePlaceDetail}"]) {
+  & div + button {
     margin-top: ${remify(capHeight[200] - bodyText.spaceBottom)};
   }
 `;
