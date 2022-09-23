@@ -57,17 +57,22 @@ const positionComponents = `
     top:  var(--popup-margin);
     z-index: ${zIndex.closeButton};  
   }
+
   /* horizontal spacing */
   & h2,
   & p,
   & button:not([aria-label="${buttonLabel.closePlaceDetail}"]) {
-    --button-width: calc(${dimension.button['minimum target size 100']} + ${
-  dimension.button['minimum target spacing 100']
-} * 2);
     margin-left: var(--popup-margin); 
-    max-width: ${dimension.searchBox['max-width']};
-    width: calc(100% - var(--button-width));
   }
+  & h2,
+  & p {
+    --close-button-width: calc(${
+      dimension.button['minimum target size 100']
+    } + ${dimension.button['minimum target spacing 100']} * 2);
+    max-width: ${dimension.searchBox['max-width']};
+    width: calc(100% - var(--close-button-width));    
+  }
+
   /* vertical spacing */
   & h2 {
     padding-bottom: ${remify(h2PlaceName.paddingBottom)};

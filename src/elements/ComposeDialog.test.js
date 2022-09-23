@@ -54,10 +54,14 @@ describe('ComposeDialog component', () => {
 .c0 h2,
 .c0 p,
 .c0 button:not([aria-label="Close place detail"]) {
-  --button-width: calc(48px + 8px * 2);
   margin-left: var(--popup-margin);
+}
+
+.c0 h2,
+.c0 p {
+  --close-button-width: calc(48px + 8px * 2);
   max-width: 561px;
-  width: calc(100% - var(--button-width));
+  width: calc(100% - var(--close-button-width));
 }
 
 .c0 h2 {
