@@ -2,6 +2,8 @@ import {useContext, useEffect, useRef} from 'react';
 import PropTypes from 'prop-types';
 import DOMPurify from 'dompurify';
 
+import {DivCloud} from 'src/elements/DivCloud';
+import {ParagraphLoading} from 'src/elements/ParagraphLoading';
 import {PlaceInfo} from 'src/components/PlaceInfo';
 
 import {usePlaces} from './Places';
@@ -125,6 +127,7 @@ export const SavedPlaces = ({mapObject}) => {
 
     const updateData = async ([newTitle, newNoteArray]) => {
       try {
+        setPlaces({ui: 'saving'});
         const response = await fetch('/api/places', {
           method: 'PUT',
           headers: {'Content-Type': 'application/json'},
@@ -145,6 +148,7 @@ export const SavedPlaces = ({mapObject}) => {
             ...jsonResponse.properties,
           };
           setPlaces({
+            ui: 'open',
             userData: newUserData,
           });
         } else {
@@ -154,6 +158,7 @@ export const SavedPlaces = ({mapObject}) => {
         console.log(error);
       }
     };
+
     if (ui === 'open') {
       return (
         <PlaceInfo
@@ -169,9 +174,15 @@ export const SavedPlaces = ({mapObject}) => {
         <PlaceInfoEditor
           placeName={selectedPlaceName}
           placeNoteArray={selectedPlaceNoteArray}
-          closeEditor={() => setPlaces({ui: 'open'})}
+          handleCancel={() => setPlaces({ui: 'open'})}
           updateData={updateData}
         />
+      );
+    } else if (ui === 'saving') {
+      return (
+        <DivCloud>
+          <ParagraphLoading>Saving changes...</ParagraphLoading>
+        </DivCloud>
       );
     }
   }

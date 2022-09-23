@@ -69,7 +69,7 @@ const withLayout = editor => {
 };
 
 export const PlaceInfoEditor = ({
-  closeEditor,
+  handleCancel,
   placeName,
   placeNoteArray,
   updateData,
@@ -110,7 +110,6 @@ export const PlaceInfoEditor = ({
     event.preventDefault();
     const [title, ...noteArray] = content.current;
     updateData([title, noteArray]);
-    closeEditor();
   };
 
   return (
@@ -128,7 +127,7 @@ export const PlaceInfoEditor = ({
             <section>
               <button
                 onClick={() => {
-                  closeEditor();
+                  handleCancel();
                 }}
                 type="button"
               >
@@ -151,7 +150,7 @@ export const PlaceInfoEditor = ({
 };
 
 PlaceInfoEditor.propTypes = {
-  closeEditor: PropTypes.func,
+  handleCancel: PropTypes.func,
   placeName: PropTypes.string,
   placeNoteArray: PropTypes.arrayOf(Object),
   updateData: PropTypes.func,

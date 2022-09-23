@@ -170,7 +170,7 @@ export const SearchedPlace = ({mapObject}) => {
   const openEditor = () => {
     setState({status: 'saving'});
   };
-  const closeEditor = () => {
+  const handleCancel = () => {
     setState({status: 'open'});
   };
 
@@ -292,7 +292,7 @@ export const SearchedPlace = ({mapObject}) => {
   } else if (status === 'saving') {
     return (
       <PlaceInfoEditor
-        closeEditor={closeEditor}
+        handleCancel={handleCancel}
         placeName={placeData.name}
         placeNoteArray={placeNoteArray}
         updateData={updateData}
