@@ -1,5 +1,10 @@
 import {interceptIndefinitely} from '../../test/utils/cypress';
-import {buttonLabel, editorLabel, linkText} from '../../src/utils/uiCopies';
+import {
+  buttonLabel,
+  editorLabel,
+  linkText,
+  loadingMessage,
+} from '../../src/utils/uiCopies';
 
 const searchedPlace = {
   name: /fukuda art museum/i,
@@ -43,7 +48,7 @@ describe('Saving feature', () => {
     cy.log('**Clicking the save button in the text editor**');
     cy.findByRole('button', {name: buttonLabel.saveEdit}).click();
     cy.log('**...initially shows a loading message**');
-    cy.findByText(/saving.*/i)
+    cy.findByText(loadingMessage.create)
       .should('be.visible')
       .then(() => {
         cy.log(`**And then...**`);

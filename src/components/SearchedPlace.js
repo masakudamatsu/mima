@@ -16,7 +16,7 @@ import {useOnEscKeyDown} from 'src/hooks/useOnEscKeyDown';
 import {usePlaces} from './Places';
 import {useStateObject} from 'src/hooks/useStateObject';
 
-import {buttonLabel, linkText} from 'src/utils/uiCopies';
+import {buttonLabel, linkText, loadingMessage} from 'src/utils/uiCopies';
 import {duration} from 'src/utils/designtokens';
 
 export const SearchedPlace = ({mapObject}) => {
@@ -304,7 +304,7 @@ export const SearchedPlace = ({mapObject}) => {
   } else if (status === 'saving') {
     return (
       <DivCloud>
-        <ParagraphLoading>Saving your place note...</ParagraphLoading>
+        <ParagraphLoading>{loadingMessage.create}</ParagraphLoading>
       </DivCloud>
     );
   } else if (status === 'saved') {

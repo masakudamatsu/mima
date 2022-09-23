@@ -1,5 +1,9 @@
 import {interceptIndefinitely} from '../../test/utils/cypress';
-import {buttonLabel, editorLabel} from '../../src/utils/uiCopies';
+import {
+  buttonLabel,
+  editorLabel,
+  loadingMessage,
+} from '../../src/utils/uiCopies';
 
 const placeName = '出逢ひ茶屋おせん';
 
@@ -57,7 +61,7 @@ describe('Saved place detail feature', () => {
     cy.log(`**Clicking Save button...**`);
     cy.findByRole('button', {name: buttonLabel.saveEdit}).click();
     cy.log('**...initially shows a loading message**');
-    cy.findByText(/saving.*/i)
+    cy.findByText(loadingMessage.update)
       .should('be.visible')
       .then(() => {
         cy.log(`**And then...**`);

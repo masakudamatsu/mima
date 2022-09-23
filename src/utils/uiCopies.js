@@ -1,3 +1,8 @@
+export const loadingMessage = {
+  create: 'Saving your place note...',
+  update: 'Saving changes...',
+};
+
 export const userLocationMarkerLabel = 'You are here!';
 
 export const linkText = {

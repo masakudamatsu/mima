@@ -11,6 +11,8 @@ import {useOnEscKeyDown} from 'src/hooks/useOnEscKeyDown';
 import {getHtmlFromSlate} from 'src/utils/getHtmlFromSlate';
 import {NightModeContext} from 'src/wrappers/NightModeContext';
 
+import {loadingMessage} from 'src/utils/uiCopies';
+
 import dynamic from 'next/dynamic';
 const importPlaceInfoEditor = () =>
   import('src/components/PlaceInfoEditor').then(
@@ -181,7 +183,7 @@ export const SavedPlaces = ({mapObject}) => {
     } else if (ui === 'saving') {
       return (
         <DivCloud>
-          <ParagraphLoading>Saving changes...</ParagraphLoading>
+          <ParagraphLoading>{loadingMessage.update}</ParagraphLoading>
         </DivCloud>
       );
     }
