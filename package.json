@@ -14,7 +14,7 @@
     "cy:open": "cypress open --env coverage=false",
     "cy:run": "cypress run",
     "precy:run": "npm run remove:report",
-    "dev": "open http://localhost:3000 && next dev",
+    "dev": "open -a \"Google Chrome\" http://localhost:3000 && next dev",
     "format": "prettier --ignore-path .gitignore --write \"**/*.+(js|json)\"",
     "lint": "eslint --ignore-path .gitignore .",
     "snapshot": "percy exec -- cypress run --spec \"cypress/e2e/snapshot*.js\"",
