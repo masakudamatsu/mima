@@ -1,3 +1,7 @@
+// Cypress 10 doesn't need this file.
+// Currently, this file is imported in cypress.config.js
+// For detail, see https://docs.cypress.io/guides/references/migration-guide#Plugins-File-Removed
+
 /// <reference types="cypress" />
 // ***********************************************************
 // This example plugins/index.js can be used to load plugins

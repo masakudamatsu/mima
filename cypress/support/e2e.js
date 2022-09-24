@@ -1,3 +1,6 @@
+// Cypress 10 requires this file to be called `e2e.js`.
+// For detail, see https://docs.cypress.io/guides/references/migration-guide#supportFile
+
 // ***********************************************************
 // This example support/index.js is processed and
 // loaded automatically before your test files.
