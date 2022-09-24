@@ -20,9 +20,10 @@ export const getHtmlFromSlate = node => {
     //   return `<blockquote><p>${children}</p></blockquote>`;
     case 'paragraph':
       return `<p>${children}</p>`;
-    // Uncomment if we use <a>
-    // case 'link':
-    //   return `<a href="${escapeHtml(node.url)}">${children}</a>`;
+    case 'link':
+      return `<a href="${escapeHtml(
+        node.url,
+      )}" rel="noreferrer" target="_blank">${children}</a>`;
     default:
       return children;
   }

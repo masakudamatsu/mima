@@ -5,8 +5,8 @@
   "main": "pages/index.js",
   "scripts": {
     "build": "is-ci \"build:ci\" \"build:local\"",
-    "build:ci": "next build && next export",
-    "build:local": "next build && next export && open http://localhost:3000 && next start",
+    "build:ci": "prisma generate && prisma migrate deploy && next build",
+    "build:local": "next build && open http://localhost:3000 && next start",
     "ci": "start-server-and-test start http://localhost:3000 ci:tests",
     "ci:tests": "npm-run-all --parallel lint test:coverage:unit test:coverage:e2e",
     "postci:tests": "npm run report:combined",
@@ -70,11 +70,13 @@
   "dependencies": {
     "@googlemaps/js-api-loader": "1.12.1",
     "@googlemaps/react-wrapper": "1.1.15",
+    "@prisma/client": "4.3.1",
     "autolinker": "3.14.3",
     "dompurify": "2.3.3",
     "downshift": "6.1.7",
     "escape-html": "1.0.3",
     "next": "12.2.5",
+    "prisma": "4.3.1",
     "prop-types": "^15.7.2",
     "react": "17.0.2",
     "react-dom": "17.0.2",
@@ -87,6 +89,7 @@
   "devDependencies": {
     "@babel/core": "7.15.0",
     "@cypress/code-coverage": "3.9.12",
+    "@faker-js/faker": "7.5.0",
     "@next/bundle-analyzer": "11.1.2",
     "@percy/cli": "1.0.0-beta.57",
     "@percy/cypress": "3.1.0",
@@ -129,6 +132,7 @@
     "jest": "27.0.6",
     "jest-axe": "^4.1.0",
     "jest-in-case": "^1.0.2",
+    "jest-mock-extended": "3.0.1",
     "jest-styled-components": "^7.0.3",
     "lint-staged": "10.5.4",
     "npm-run-all": "^4.1.5",
@@ -150,5 +154,8 @@
     "commitizen": {
       "path": "cz-conventional-changelog"
     }
+  },
+  "prisma": {
+    "seed": "node prisma/seed.js"
   }
 }

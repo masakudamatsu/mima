@@ -4,19 +4,27 @@ import PropTypes from 'prop-types';
 import {NightModeContext} from 'src/wrappers/NightModeContext';
 import {PlaceIdContext} from 'src/wrappers/PlaceIdContext';
 
+import {ButtonDialog} from 'src/elements/ButtonDialog';
 import {CloseButton} from './CloseButton';
 import {ComposeDialog} from 'src/elements/ComposeDialog';
+import {DivCloud} from 'src/elements/DivCloud';
+import {ParagraphLoading} from 'src/elements/ParagraphLoading';
+import {PlaceInfoEditor} from './PlaceInfoEditor';
 
 import {useOnClickOutside} from 'src/hooks/useOnClickOutside';
 import {useOnEscKeyDown} from 'src/hooks/useOnEscKeyDown';
+import {usePlaces} from './Places';
 import {useStateObject} from 'src/hooks/useStateObject';
 
-import {buttonLabel, linkText} from 'src/utils/uiCopies';
+import {buttonLabel, linkText, loadingMessage} from 'src/utils/uiCopies';
 import {duration} from 'src/utils/designtokens';
 
 export const SearchedPlace = ({mapObject}) => {
   const [placeId] = useContext(PlaceIdContext);
   const nightMode = useContext(NightModeContext);
+
+  const {places, setPlaces} = usePlaces();
+  const {userData} = places;
 
   const [state, setState] = useStateObject({
     status: 'initial',
@@ -61,10 +69,10 @@ export const SearchedPlace = ({mapObject}) => {
       const searchedPlace = {
         address: place.formatted_address,
         // TODO #197 businessStatus: place.business_status,
-        coordinates: new google.maps.LatLng(
-          place.geometry.location.lat(),
-          place.geometry.location.lng(),
-        ),
+        coordinates: {
+          lat: place.geometry.location.lat(),
+          lng: place.geometry.location.lng(),
+        },
         name: place.name,
         url: place.url,
       };
@@ -161,8 +169,87 @@ export const SearchedPlace = ({mapObject}) => {
     handler: closePlaceInfo,
   });
 
+  const openEditor = () => {
+    setState({status: 'editing'});
+  };
+  const handleCancel = () => {
+    setState({status: 'open'});
+  };
+
+  const updateData = async ([title, noteArray]) => {
+    try {
+      setState({status: 'saving'});
+      const response = await fetch('/api/places', {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({
+          geometry: {
+            coordinates: [placeData.coordinates.lng, placeData.coordinates.lat],
+            type: 'Point',
+          },
+          properties: {
+            address: placeData.address,
+            'Google Maps URL': placeData.url,
+            name: title.children[0].text, // edited by user, not the one returned from Google Maps API server
+            note: noteArray,
+          },
+          type: 'Feature',
+        }),
+      });
+      if (response.ok) {
+        const jsonResponse = await response.json();
+        marker.current.setMap(null); // remove the searched place marker
+        setState({status: 'saved'});
+        setPlaces({
+          ui: 'open',
+          userData: [...userData, jsonResponse],
+          selectedPlace: {
+            id: jsonResponse.id,
+            coordinates: jsonResponse.coordinates,
+          },
+        });
+      } else {
+        throw new Error('POST request to /api/places has failed.');
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   const placeNameId = 'place-name';
   const placeDetailId = 'place-detail';
+  const placeNoteArray = placeData
+    ? [
+        {
+          type: 'paragraph',
+          children: [
+            {
+              text: placeData.address,
+            },
+          ],
+        },
+        {
+          type: 'paragraph',
+          children: [
+            {
+              text: '',
+            },
+            {
+              type: 'link',
+              url: placeData.url,
+              children: [
+                {
+                  text: linkText.searchedPlace,
+                },
+              ],
+            },
+            {
+              text: '',
+            },
+          ],
+        },
+      ]
+    : null;
 
   if (status === 'initial') {
     return null;
@@ -193,9 +280,34 @@ export const SearchedPlace = ({mapObject}) => {
             </a>
           </p>
         </div>
+        <ButtonDialog
+          onClick={openEditor}
+          // onFocus={importPlaceInfoEditor}
+          // onMouseEnter={importPlaceInfoEditor}
+          type="button"
+        >
+          {buttonLabel.saveSearchedPlace}
+        </ButtonDialog>
       </ComposeDialog>
     );
   } else if (status === 'closed') {
+    return null;
+  } else if (status === 'editing') {
+    return (
+      <PlaceInfoEditor
+        handleCancel={handleCancel}
+        placeName={placeData.name}
+        placeNoteArray={placeNoteArray}
+        updateData={updateData}
+      />
+    );
+  } else if (status === 'saving') {
+    return (
+      <DivCloud>
+        <ParagraphLoading>{loadingMessage.create}</ParagraphLoading>
+      </DivCloud>
+    );
+  } else if (status === 'saved') {
     return null;
   }
 };

@@ -9,10 +9,13 @@ import {PlaceIdProvider} from 'src/wrappers/PlaceIdContext';
 import {Controls} from 'src/components/Controls';
 import {Map} from 'src/components/Map';
 import {Noscript} from 'src/components/Noscript';
+import {Places} from 'src/components/Places';
 import {SavedPlaces} from 'src/components/SavedPlaces';
 import {SearchedPlace} from 'src/components/SearchedPlace';
 
-function HomePage() {
+const prisma = require('src/utils/prisma');
+
+function HomePage({savedPlaces}) {
   const nightMode = useContext(NightModeContext);
   useEffect(() => {
     document.body.dataset.darkmode = nightMode;
@@ -35,8 +38,10 @@ function HomePage() {
             libraries={['places']}
           >
             <Map setMapObject={setMapObject} />
-            <SavedPlaces mapObject={mapObject} />
-            <SearchedPlace mapObject={mapObject} />
+            <Places placeData={savedPlaces}>
+              <SavedPlaces mapObject={mapObject} />
+              <SearchedPlace mapObject={mapObject} />
+            </Places>
           </Wrapper>
         </main>
       </PlaceIdProvider>
@@ -45,3 +50,8 @@ function HomePage() {
 }
 
 export default HomePage;
+
+export async function getServerSideProps() {
+  const savedPlaces = await prisma.place.findMany();
+  return {props: {savedPlaces}};
+}

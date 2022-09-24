@@ -1,9 +1,16 @@
-import {buttonLabel, editorLabel} from '../../src/utils/uiCopies';
+import {interceptIndefinitely} from '../../test/utils/cypress';
+import {
+  buttonLabel,
+  editorLabel,
+  loadingMessage,
+} from '../../src/utils/uiCopies';
 
 const placeName = '出逢ひ茶屋おせん';
 
 describe('Saved place detail feature', () => {
   beforeEach(() => {
+    cy.log('**Resetting the database**');
+    cy.exec('npx prisma migrate reset --force'); // https://docs.cypress.io/guides/end-to-end-testing/testing-your-app#Seeding-data
     cy.visit('/');
     cy.waitForMapToLoad();
   });
@@ -25,6 +32,8 @@ describe('Saved place detail feature', () => {
     // DO NOT ADD ANY MORE ASSERTIONS HERE; place detail is now hidden.
   });
   it('Happy path for editing place detail', () => {
+    cy.log(`**Preparing for testing loading messages**`);
+    const interception = interceptIndefinitely('/api/places');
     cy.log(`**Clicking place mark...**`);
     cy.findByRole('button', {name: placeName}).click();
     cy.log(`**Clicking Edit button...**`);
@@ -51,20 +60,37 @@ describe('Saved place detail feature', () => {
 
     cy.log(`**Clicking Save button...**`);
     cy.findByRole('button', {name: buttonLabel.saveEdit}).click();
-    cy.log(`**...saves the updated place name**`);
-    cy.findByRole('heading', {name: 'abc ' + placeName}).should('be.visible');
-    cy.log(`**...saves the updated place note with text link**`);
-    cy.findByRole('link', {name: /google\.com.*/i}).should('be.visible');
-    cy.findByRole('link', {name: /asahi\.com.*/i}).should('be.visible');
-    cy.log(`**...updates the place mark**`);
-    cy.findByRole('button', {name: 'abc ' + placeName}).should('be.visible');
-    cy.log(`**...autofocuses the close button**`);
-    cy.focused().should('have.attr', 'data-testid', 'close-button-saved-place');
+    cy.log('**...initially shows a loading message**');
+    cy.findByText(loadingMessage.update)
+      .should('be.visible')
+      .then(() => {
+        cy.log(`**And then...**`);
+        interception.sendResponse();
+        cy.log(`**...saves the updated place name**`);
+        cy.findByRole('heading', {name: 'abc ' + placeName}).should(
+          'be.visible',
+        );
+        cy.log(`**...saves the updated place note with text link**`);
+        cy.findByRole('link', {name: /google\.com.*/i}).should('be.visible');
+        cy.findByRole('link', {name: /asahi\.com.*/i}).should('be.visible');
+        cy.log(`**...updates the place mark**`);
+        cy.findByRole('button', {name: 'abc ' + placeName}).should(
+          'be.visible',
+        );
+        cy.log(`**...autofocuses the close button**`);
+        cy.focused().should(
+          'have.attr',
+          'data-testid',
+          'close-button-saved-place',
+        );
 
-    cy.log(`**Reloading the page...**`);
-    cy.reload();
-    cy.log(`**...retains the changes**`);
-    cy.findByRole('button', {name: 'abc ' + placeName}).should('be.visible');
+        cy.log(`**Reloading the page...**`);
+        cy.reload();
+        cy.log(`**...retains the changes**`);
+        cy.findByRole('button', {name: 'abc ' + placeName}).should(
+          'be.visible',
+        );
+      });
   });
   it('Clicking close button closes place detail', () => {
     cy.log(`**Setup**`);

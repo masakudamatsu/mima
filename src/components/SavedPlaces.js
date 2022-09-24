@@ -1,15 +1,17 @@
-import {useContext, useEffect, useRef, useState} from 'react';
+import {useContext, useEffect, useRef} from 'react';
 import PropTypes from 'prop-types';
 import DOMPurify from 'dompurify';
 
-import savedPlaces from 'src/utils/savedPlaces.json';
-
+import {DivCloud} from 'src/elements/DivCloud';
+import {ParagraphLoading} from 'src/elements/ParagraphLoading';
 import {PlaceInfo} from 'src/components/PlaceInfo';
 
-import {useSessionStorageState} from 'src/hooks/useSessionStorageState';
+import {usePlaces} from './Places';
 import {useOnEscKeyDown} from 'src/hooks/useOnEscKeyDown';
 import {getHtmlFromSlate} from 'src/utils/getHtmlFromSlate';
 import {NightModeContext} from 'src/wrappers/NightModeContext';
+
+import {loadingMessage} from 'src/utils/uiCopies';
 
 import dynamic from 'next/dynamic';
 const importPlaceInfoEditor = () =>
@@ -19,15 +21,10 @@ const importPlaceInfoEditor = () =>
 const PlaceInfoEditor = dynamic(importPlaceInfoEditor);
 
 export const SavedPlaces = ({mapObject}) => {
-  const [userData, setUserData] = useSessionStorageState(
-    'userData',
-    savedPlaces,
-  );
+  const {places, setPlaces} = usePlaces();
+  const {ui, userData, selectedPlace} = places;
 
   const nightMode = useContext(NightModeContext);
-
-  const [selectedPlace, setSelectedPlace] = useState(null);
-  const [editMode, setEditMode] = useState(false);
 
   const viewportSize = useRef({height: null, width: null});
   useEffect(() => {
@@ -35,7 +32,11 @@ export const SavedPlaces = ({mapObject}) => {
     viewportSize.current.width = window.visualViewport.width;
   });
 
+  const marker = useRef();
   useEffect(() => {
+    if (marker.current) {
+      marker.current.setMap(null); // remove the previous current location marker from the map
+    }
     const google = window.google;
     // Shape markers
     const cormorantBoldAsterisk = {
@@ -70,17 +71,17 @@ export const SavedPlaces = ({mapObject}) => {
     };
 
     // Drop a marker to each saved place
-    for (let i = 0; i < userData.features.length; i++) {
+    for (let i = 0; i < userData.length; i++) {
       // Retrieve data to be used
       const userPlace = {
-        id: userData.features[i].properties.id,
-        coordinates: new google.maps.LatLng(
-          userData.features[i].geometry.coordinates[1],
-          userData.features[i].geometry.coordinates[0],
-        ),
-        name: userData.features[i].properties.name,
+        id: userData[i].id,
+        coordinates: {
+          lat: userData[i].geometry.coordinates[1],
+          lng: userData[i].geometry.coordinates[0],
+        },
+        name: userData[i].properties.name,
       };
-      const marker = new google.maps.Marker({
+      marker.current = new google.maps.Marker({
         icon: {
           ...shapedAsAsterisk,
           ...pinnedAtCenter,
@@ -91,22 +92,24 @@ export const SavedPlaces = ({mapObject}) => {
         title: userPlace.name,
       });
       // eslint-disable-next-line no-loop-func
-      marker.addListener('click', () => {
+      marker.current.addListener('click', () => {
         mapObject.panTo(userPlace.coordinates);
         mapObject.panBy(0, viewportSize.current.height / 6);
-        setSelectedPlace({
-          id: userPlace.id,
-          coordinates: userPlace.coordinates,
-          marker: marker,
+        setPlaces({
+          ui: 'open',
+          selectedPlace: {
+            id: userPlace.id,
+            coordinates: userPlace.coordinates,
+          },
         });
       });
-      marker.setMap(mapObject);
+      marker.current.setMap(mapObject);
     }
-  }, [mapObject, nightMode, userData.features]);
+  }, [mapObject, nightMode, setPlaces, userData]);
 
   const closePlaceInfo = () => {
     mapObject.panTo(selectedPlace.coordinates);
-    setSelectedPlace(null);
+    setPlaces({ui: null, selectedPlace: null});
   };
 
   // close with Esc key
@@ -114,49 +117,76 @@ export const SavedPlaces = ({mapObject}) => {
 
   // for updating place info
   if (selectedPlace) {
-    const selectedPlaceIndex = userData.features.findIndex(
-      feature => feature.properties.id === selectedPlace.id,
+    const selectedPlaceIndex = userData.findIndex(
+      feature => feature.id === selectedPlace.id,
     );
-    const selectedPlaceName =
-      userData.features[selectedPlaceIndex].properties.name;
-    const selectedPlaceNoteArray =
-      userData.features[selectedPlaceIndex].properties.note;
+    const selectedPlaceName = userData[selectedPlaceIndex].properties.name;
+    const selectedPlaceNoteArray = userData[selectedPlaceIndex].properties.note;
     const selectedPlaceNoteHtml = DOMPurify.sanitize(
       getHtmlFromSlate({children: selectedPlaceNoteArray}),
+      {ADD_ATTR: ['target']}, // see https://github.com/cure53/DOMPurify/issues/317#issuecomment-470429778
     );
 
-    const updateData = ([newTitle, newNoteArray]) => {
-      const newData = {
-        name: newTitle.children[0].text,
-        note: newNoteArray,
-      };
-      // update place marker's accessible name
-      selectedPlace.marker.setTitle(newData.name);
-      // // update user data
-      const newUserData = {...userData};
-      newUserData.features[selectedPlaceIndex].properties = {
-        ...userData.features[selectedPlaceIndex].properties,
-        ...newData,
-      };
-      setUserData(newUserData);
+    const updateData = async ([newTitle, newNoteArray]) => {
+      try {
+        setPlaces({ui: 'saving'});
+        const response = await fetch('/api/places', {
+          method: 'PUT',
+          headers: {'Content-Type': 'application/json'},
+          body: JSON.stringify({
+            id: selectedPlace.id,
+            properties: {
+              name: newTitle.children[0].text, // edited by user, not the one returned from Google Maps API server
+              note: newNoteArray,
+            },
+          }),
+        });
+        if (response.ok) {
+          const jsonResponse = await response.json();
+          // // update user data
+          const newUserData = [...userData];
+          newUserData[selectedPlaceIndex].properties = {
+            ...userData[selectedPlaceIndex].properties,
+            ...jsonResponse.properties,
+          };
+          setPlaces({
+            ui: 'open',
+            userData: newUserData,
+          });
+        } else {
+          throw new Error('PUT request to /api/places has failed.');
+        }
+      } catch (error) {
+        console.log(error);
+      }
     };
 
-    return editMode ? (
-      <PlaceInfoEditor
-        placeName={selectedPlaceName}
-        placeNoteArray={selectedPlaceNoteArray}
-        setEditMode={setEditMode}
-        updateData={updateData}
-      />
-    ) : (
-      <PlaceInfo
-        closePlaceInfo={closePlaceInfo}
-        importPlaceInfoEditor={importPlaceInfoEditor}
-        placeName={selectedPlaceName}
-        placeNoteHtml={selectedPlaceNoteHtml}
-        setEditMode={setEditMode}
-      />
-    );
+    if (ui === 'open') {
+      return (
+        <PlaceInfo
+          closePlaceInfo={closePlaceInfo}
+          importPlaceInfoEditor={importPlaceInfoEditor}
+          placeName={selectedPlaceName}
+          placeNoteHtml={selectedPlaceNoteHtml}
+          editPlaceInfo={() => setPlaces({ui: 'editing'})}
+        />
+      );
+    } else if (ui === 'editing') {
+      return (
+        <PlaceInfoEditor
+          placeName={selectedPlaceName}
+          placeNoteArray={selectedPlaceNoteArray}
+          handleCancel={() => setPlaces({ui: 'open'})}
+          updateData={updateData}
+        />
+      );
+    } else if (ui === 'saving') {
+      return (
+        <DivCloud>
+          <ParagraphLoading>{loadingMessage.update}</ParagraphLoading>
+        </DivCloud>
+      );
+    }
   }
 
   return null;

@@ -5,6 +5,7 @@ import {axe} from 'jest-axe';
 import {SearchedPlace} from './SearchedPlace';
 
 import {PlaceIdProvider} from 'src/wrappers/PlaceIdContext';
+import {Places} from 'src/components/Places';
 import {mockGetDetails, mockPlacesApi} from 'src/utils/mockFunfctions';
 
 const mockProps = {};
@@ -12,7 +13,7 @@ const mockProps = {};
 function renderWithProviders(ui, {initialPlaceId = '', ...options} = {}) {
   const Wrapper = ({children}) => (
     <PlaceIdProvider initialPlaceId={initialPlaceId}>
-      {children}
+      <Places>{children}</Places>
     </PlaceIdProvider>
   );
   return render(ui, {wrapper: Wrapper, ...options});

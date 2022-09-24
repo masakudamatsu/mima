@@ -33,6 +33,10 @@ const placeOverMap = `
 
 const styleText = `
   color: var(--popup-text-color);
+  font-family: ${bodyText.fontFamily};
+  font-size: ${remify(bodyText.fontSize)};
+  font-weight: ${bodyText.fontWeight};
+  line-height: ${bodyText.lineHeight};  
   & a {
     color: var(--link-text-color);
   }
@@ -41,12 +45,6 @@ const styleText = `
     font-size: ${remify(h2PlaceName.fontSize)};
     font-weight: ${h2PlaceName.fontWeight};
     line-height: ${h2PlaceName.lineHeight};
-  }
-  & p {
-    font-family: ${bodyText.fontFamily};
-    font-size: ${remify(bodyText.fontSize)};
-    font-weight: ${bodyText.fontWeight};
-    line-height: ${bodyText.lineHeight};  
   }
 `;
 
@@ -59,17 +57,22 @@ const positionComponents = `
     top:  var(--popup-margin);
     z-index: ${zIndex.closeButton};  
   }
+
   /* horizontal spacing */
   & h2,
   & p,
   & button:not([aria-label="${buttonLabel.closePlaceDetail}"]) {
-    --button-width: calc(${dimension.button['minimum target size 100']} + ${
-  dimension.button['minimum target spacing 100']
-} * 2);
     margin-left: var(--popup-margin); 
-    max-width: ${dimension.searchBox['max-width']};
-    width: calc(100% - var(--button-width));
   }
+  & h2,
+  & p {
+    --close-button-width: calc(${
+      dimension.button['minimum target size 100']
+    } + ${dimension.button['minimum target spacing 100']} * 2);
+    max-width: ${dimension.searchBox['max-width']};
+    width: calc(100% - var(--close-button-width));    
+  }
+
   /* vertical spacing */
   & h2 {
     padding-bottom: ${remify(h2PlaceName.paddingBottom)};
@@ -81,7 +84,7 @@ const positionComponents = `
   & p + p {
     margin-top: ${remify(bodyText.spaceBetweenParagraphs)};
   }
-  & p + button:not([aria-label="${buttonLabel.closePlaceDetail}"]) {
+  & div + button {
     margin-top: ${remify(capHeight[200] - bodyText.spaceBottom)};
   }
 `;

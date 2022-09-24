@@ -8,7 +8,7 @@ import {Transforms, createEditor, Node, Element} from 'slate';
 import {withHistory} from 'slate-history';
 
 import {ModalPopup} from 'src/components/ModalPopup';
-
+import {InlineChromiumBugfix} from './InlineChromiumBugfix';
 import {H2PlaceName} from 'src/elements/H2PlaceName';
 import {HeaderEditor} from 'src/elements/HeaderEditor';
 import {Heading} from 'src/elements/Heading';
@@ -69,9 +69,9 @@ const withLayout = editor => {
 };
 
 export const PlaceInfoEditor = ({
+  handleCancel,
   placeName,
   placeNoteArray,
-  setEditMode,
   updateData,
 }) => {
   const [editor] = useState(() =>
@@ -93,6 +93,14 @@ export const PlaceInfoEditor = ({
         return <H2PlaceName {...attributes}>{children}</H2PlaceName>;
       case 'paragraph':
         return <p {...attributes}>{children}</p>;
+      case 'link':
+        return (
+          <a {...attributes} href={element.url}>
+            <InlineChromiumBugfix />
+            {children}
+            <InlineChromiumBugfix />
+          </a>
+        );
       default:
         return null;
     }
@@ -102,7 +110,6 @@ export const PlaceInfoEditor = ({
     event.preventDefault();
     const [title, ...noteArray] = content.current;
     updateData([title, noteArray]);
-    setEditMode(false);
   };
 
   return (
@@ -120,7 +127,7 @@ export const PlaceInfoEditor = ({
             <section>
               <button
                 onClick={() => {
-                  setEditMode(false);
+                  handleCancel();
                 }}
                 type="button"
               >
@@ -143,8 +150,8 @@ export const PlaceInfoEditor = ({
 };
 
 PlaceInfoEditor.propTypes = {
+  handleCancel: PropTypes.func,
   placeName: PropTypes.string,
   placeNoteArray: PropTypes.arrayOf(Object),
-  setEditMode: PropTypes.func,
   updateData: PropTypes.func,
 };
