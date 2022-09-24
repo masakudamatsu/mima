@@ -21,25 +21,3 @@ jobs:
         run: npm run ci
         env:
           DATABASE_URL: ${{ secrets.DATABASE_URL }} 
-  lighthouse-ci:
-    runs-on: ubuntu-latest
-    steps:
-      - name: 'Checkout the repo with Git history'
-        uses: actions/checkout@v2
-        with:
-          ref: ${{ github.event.pull_request.head.sha }}
-      - name: 'Install Node'
-        uses: actions/setup-node@v2
-        with:
-          node-version: '14'
-          cache: 'npm'
-      - name: 'Install Lighthouse CI'
-        run: npm install -g @lhci/cli@0.8.x
-      - name: 'Install repo'
-        run: npm install
-      - name: 'Build the site'
-        run: npm run build
-      - name: 'Run Lighthouse audit'
-        run: lhci autorun
-        env:
-          LHCI_GITHUB_TOKEN: ${{ secrets.LHCI_GITHUB_TOKEN }}
