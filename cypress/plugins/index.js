@@ -21,13 +21,6 @@
  */
 
 module.exports = (on, config) => {
-  // Cypress code-coverage plugin
-  require('@cypress/code-coverage/task')(on, config);
-  on(
-    'file:preprocessor',
-    require('@cypress/code-coverage/use-browserify-istanbul'),
-  );
-
   // IMPORTANT to return the config object
   // with the any changed environment variables
   return config;

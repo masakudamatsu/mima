@@ -19,9 +19,6 @@
 // Cypress Testing Library
 import '@testing-library/cypress/add-commands';
 
-// Cypress code-coverage plugin
-import '@cypress/code-coverage/support';
-
 // Percy for Cypress
 import '@percy/cypress';
 
