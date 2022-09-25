@@ -35,7 +35,7 @@ describe('Search feature', () => {
     cy.log(
       '**...Highlights entered text in bold in autocomplete suggestions**',
     );
-    cy.findAllByText(searchWords[0], {timeout: 20000}).should(
+    cy.findAllByText(searchWords[0], {timeout: 50000}).should(
       'have.css',
       'font-weight',
       boldText.fontWeight.toString(),
@@ -154,7 +154,7 @@ describe('Search feature', () => {
     cy.log(`**Pressing Down Arrow key...**`);
     cy.get('body').realPress('{downarrow}');
     cy.log(`**...highlights the first autocomplete suggestion**`);
-    cy.findAllByRole('option', {timeout: 20000}).each((item, index) => {
+    cy.findAllByRole('option', {timeout: 50000}).each((item, index) => {
       if (index === 0) {
         cy.wrap(item).should('have.attr', 'data-highlighted', 'true');
       } else {

@@ -28,7 +28,7 @@ describe('Saving feature', () => {
     cy.focused().realType(searchedPlace.name.source);
     cy.findByRole('option', {
       name: searchedPlace.name,
-      timeout: 20000,
+      timeout: 50000,
     }).click();
   });
   it('happy path for mobile/mouse users', () => {
