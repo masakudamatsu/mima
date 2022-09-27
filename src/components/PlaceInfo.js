@@ -50,6 +50,7 @@ export const PlaceInfo = ({
       >
         {buttonLabel.edit}
       </ButtonDialog>
+      <ButtonDialog type="button">{buttonLabel.delete}</ButtonDialog>
     </PlaceDataPopup>
   );
 };

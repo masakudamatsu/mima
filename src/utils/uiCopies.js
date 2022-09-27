@@ -14,6 +14,7 @@ export const buttonLabel = {
   close: 'Close',
   closePlaceDetail: 'Close place detail',
   closeSearchbox: 'Close search box',
+  delete: 'Delete',
   edit: 'Edit',
   locator: {
     default: 'Track your location',

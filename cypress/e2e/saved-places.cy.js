@@ -151,4 +151,10 @@ describe('Saved place detail feature', () => {
     cy.log(`**...autofocuses the close button**`);
     cy.focused().should('have.attr', 'data-testid', 'close-button-saved-place');
   });
+  it.only('Clicking Delete button removes the saved place', () => {
+    cy.log(`**Setup**`);
+    cy.findByRole('button', {name: placeName}).click();
+    cy.log(`**Clicking Delete button...**`);
+    cy.findByRole('button', {name: buttonLabel.delete}).click();
+  });
 });
