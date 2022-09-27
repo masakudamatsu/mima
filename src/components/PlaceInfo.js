@@ -16,8 +16,10 @@ const autolinker = new Autolinker({
 
 export const PlaceInfo = ({
   closePlaceInfo,
+  deletePlaceInfo,
   editPlaceInfo,
   importPlaceInfoEditor,
+  modalOpen,
   placeName,
   placeNoteHtml,
 }) => {
@@ -28,7 +30,7 @@ export const PlaceInfo = ({
   });
   // close by clicking outside
   const dialogDiv = useRef(null);
-  useOnClickOutside(dialogDiv, closePlaceInfo);
+  useOnClickOutside(dialogDiv, closePlaceInfo, {disable: modalOpen});
   return (
     <ComposeDialog // role="dialog" included
       aria-describedby="selected-place-detail"
@@ -57,15 +59,19 @@ export const PlaceInfo = ({
       >
         {buttonLabel.edit}
       </ButtonDialog>
-      <ButtonDialog type="button">{buttonLabel.delete}</ButtonDialog>
+      <ButtonDialog onClick={deletePlaceInfo} type="button">
+        {buttonLabel.delete}
+      </ButtonDialog>
     </ComposeDialog>
   );
 };
 
 PlaceInfo.propTypes = {
   closePlaceInfo: PropTypes.func,
+  deletePlaceInfo: PropTypes.func,
   editPlaceInfo: PropTypes.func,
   importPlaceInfoEditor: PropTypes.func,
+  modalOpen: PropTypes.bool,
   placeName: PropTypes.string,
   placeNoteHtml: PropTypes.string,
 };

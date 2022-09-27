@@ -156,5 +156,10 @@ describe('Saved place detail feature', () => {
     cy.findByRole('button', {name: placeName}).click();
     cy.log(`**Clicking Delete button...**`);
     cy.findByRole('button', {name: buttonLabel.delete}).click();
+    cy.log(
+      `**...overlays a scrim to prevent interactions outside the dialog**`,
+    );
+    cy.get('body').click('top', {force: true});
+    cy.findByRole('heading', {name: placeName}).should('be.visible');
   });
 });

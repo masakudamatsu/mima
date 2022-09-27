@@ -1,7 +1,10 @@
 import {useEffect} from 'react';
-export const useOnClickOutside = (ref, handler) => {
+export const useOnClickOutside = (ref, handler, {disable = false} = {}) => {
   useEffect(() => {
     const listener = event => {
+      if (disable) {
+        return;
+      }
       if (!ref.current || ref.current.contains(event.target)) {
         return;
       }
@@ -11,5 +14,5 @@ export const useOnClickOutside = (ref, handler) => {
     return () => {
       document.removeEventListener('pointerdown', listener);
     };
-  }, [ref, handler]);
+  }, [ref, handler, disable]);
 };

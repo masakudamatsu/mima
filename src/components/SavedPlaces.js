@@ -1,10 +1,13 @@
-import {useContext, useEffect, useRef} from 'react';
+import {useContext, useEffect, useRef, useState} from 'react';
 import PropTypes from 'prop-types';
 import DOMPurify from 'dompurify';
 
 import {DivCloud} from 'src/elements/DivCloud';
+import {DivModalBackdrop} from 'src/elements/DivModalBackdrop';
 import {ParagraphLoading} from 'src/elements/ParagraphLoading';
 import {PlaceInfo} from 'src/components/PlaceInfo';
+
+import {ClientOnlyPortal} from 'src/wrappers/ClientOnlyPortal';
 
 import {usePlaces} from './Places';
 import {useOnEscKeyDown} from 'src/hooks/useOnEscKeyDown';
@@ -25,6 +28,8 @@ export const SavedPlaces = ({mapObject}) => {
   const {ui, userData, selectedPlace} = places;
 
   const nightMode = useContext(NightModeContext);
+
+  const [confirm, setConfirm] = useState(false);
 
   const viewportSize = useRef({height: null, width: null});
   useEffect(() => {
@@ -160,16 +165,27 @@ export const SavedPlaces = ({mapObject}) => {
         console.log(error);
       }
     };
-
+    const handleClickDelete = () => {
+      setConfirm(true);
+    };
     if (ui === 'open') {
       return (
-        <PlaceInfo
-          closePlaceInfo={closePlaceInfo}
-          importPlaceInfoEditor={importPlaceInfoEditor}
-          placeName={selectedPlaceName}
-          placeNoteHtml={selectedPlaceNoteHtml}
-          editPlaceInfo={() => setPlaces({ui: 'editing'})}
-        />
+        <>
+          <PlaceInfo
+            closePlaceInfo={closePlaceInfo}
+            deletePlaceInfo={handleClickDelete}
+            importPlaceInfoEditor={importPlaceInfoEditor}
+            modalOpen={confirm === true}
+            placeName={selectedPlaceName}
+            placeNoteHtml={selectedPlaceNoteHtml}
+            editPlaceInfo={() => setPlaces({ui: 'editing'})}
+          />
+          {confirm ? (
+            <ClientOnlyPortal selector="#modal">
+              <DivModalBackdrop></DivModalBackdrop>
+            </ClientOnlyPortal>
+          ) : null}
+        </>
       );
     } else if (ui === 'editing') {
       return (
