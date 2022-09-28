@@ -188,7 +188,7 @@ export const SavedPlaces = ({mapObject}) => {
           {confirm ? (
             <ClientOnlyPortal selector="#modal">
               <DivModalBackdrop>
-                <FocusLock>
+                <FocusLock returnFocus>
                   <ComposeDialog
                     aria-describedby="confirm-delete-body"
                     aria-labelledby="confirm-delete-title"

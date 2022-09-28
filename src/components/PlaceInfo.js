@@ -27,7 +27,7 @@ export const PlaceInfo = ({
   const closeButton = useRef();
   useEffect(() => {
     closeButton.current.focusButton();
-  });
+  }, []);
   // close by clicking outside
   const dialogDiv = useRef(null);
   useOnClickOutside(dialogDiv, closePlaceInfo, {disable: modalOpen});

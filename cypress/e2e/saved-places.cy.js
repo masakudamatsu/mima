@@ -202,5 +202,9 @@ describe('Saved place detail feature', () => {
     cy.realPress(['Shift', 'Tab']);
     cy.log(`**...focuses the Cancel button**`);
     cy.focused().contains(buttonLabel.cancel);
+    cy.log(`**Pressing Cancel button...`);
+    cy.findByRole('button', {name: buttonLabel.cancel}).click();
+    cy.log(`**...autofocuses the Delete button**`);
+    cy.focused().contains(buttonLabel.delete);
   });
 });
