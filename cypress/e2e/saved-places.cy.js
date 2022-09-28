@@ -161,7 +161,7 @@ describe('Saved place detail feature', () => {
       `**...overlays a scrim to prevent interactions outside the dialog**`,
     );
     cy.get('body').click('top', {force: true});
-    cy.findByRole('heading', {name: placeName}).should('be.visible');
+    cy.findByRole('button', {name: buttonLabel.edit}).should('not.exist');
     cy.log(`**...pops up a dialog to confirm the deletion of the place**`);
     cy.findByRole('alertdialog').contains(modal.delete.title);
     cy.findByRole('alertdialog').contains(modal.delete.body);

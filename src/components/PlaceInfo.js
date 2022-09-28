@@ -34,6 +34,7 @@ export const PlaceInfo = ({
   return (
     <ComposeDialog
       aria-describedby="selected-place-detail"
+      aria-hidden={modalOpen}
       aria-labelledby="selected-place-name"
       // data-closing={status === 'closing'}
       ref={dialogDiv}
