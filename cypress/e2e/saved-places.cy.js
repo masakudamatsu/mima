@@ -3,6 +3,7 @@ import {
   buttonLabel,
   editorLabel,
   loadingMessage,
+  modal,
 } from '../../src/utils/uiCopies';
 
 const placeName = '出逢ひ茶屋おせん';
@@ -161,5 +162,8 @@ describe('Saved place detail feature', () => {
     );
     cy.get('body').click('top', {force: true});
     cy.findByRole('heading', {name: placeName}).should('be.visible');
+    cy.log(`**...pops up a dialog to confirm the deletion of the place**`);
+    cy.findByRole('alertdialog').contains(modal.delete.title);
+    cy.findByRole('alertdialog').contains(modal.delete.body);
   });
 });

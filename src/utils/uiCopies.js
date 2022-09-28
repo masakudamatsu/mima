@@ -3,6 +3,14 @@ export const loadingMessage = {
   update: 'Saving changes...',
 };
 
+export const modal = {
+  delete: {
+    title: 'Deleting your saved place',
+    body:
+      'Are you sure you want to delete this place? This action cannot be undone.',
+  },
+};
+
 export const userLocationMarkerLabel = 'You are here!';
 
 export const linkText = {

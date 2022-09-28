@@ -2,6 +2,7 @@ import {useContext, useEffect, useRef, useState} from 'react';
 import PropTypes from 'prop-types';
 import DOMPurify from 'dompurify';
 
+import {ComposeDialog} from 'src/elements/ComposeDialog';
 import {DivCloud} from 'src/elements/DivCloud';
 import {DivModalBackdrop} from 'src/elements/DivModalBackdrop';
 import {ParagraphLoading} from 'src/elements/ParagraphLoading';
@@ -14,7 +15,7 @@ import {useOnEscKeyDown} from 'src/hooks/useOnEscKeyDown';
 import {getHtmlFromSlate} from 'src/utils/getHtmlFromSlate';
 import {NightModeContext} from 'src/wrappers/NightModeContext';
 
-import {loadingMessage} from 'src/utils/uiCopies';
+import {loadingMessage, modal} from 'src/utils/uiCopies';
 
 import dynamic from 'next/dynamic';
 const importPlaceInfoEditor = () =>
@@ -182,7 +183,16 @@ export const SavedPlaces = ({mapObject}) => {
           />
           {confirm ? (
             <ClientOnlyPortal selector="#modal">
-              <DivModalBackdrop></DivModalBackdrop>
+              <DivModalBackdrop>
+                <ComposeDialog
+                  aria-describedby="confirm-delete-body"
+                  aria-labelledby="confirm-delete-title"
+                  role="alertdialog"
+                >
+                  <h2 id="confirm-delete-title">{modal.delete.title}</h2>
+                  <p id="confirm-delete-body">{modal.delete.body}</p>
+                </ComposeDialog>
+              </DivModalBackdrop>
             </ClientOnlyPortal>
           ) : null}
         </>
