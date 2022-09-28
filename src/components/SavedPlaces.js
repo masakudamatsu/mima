@@ -201,6 +201,7 @@ export const SavedPlaces = ({mapObject}) => {
                   <ComposeDialog
                     aria-describedby="confirm-delete-body"
                     aria-labelledby="confirm-delete-title"
+                    aria-modal="true"
                     role="alertdialog"
                   >
                     <h2 id="confirm-delete-title">{modal.delete.title}</h2>
