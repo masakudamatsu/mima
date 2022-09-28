@@ -166,4 +166,15 @@ describe('Saved place detail feature', () => {
     cy.findByRole('alertdialog').contains(modal.delete.title);
     cy.findByRole('alertdialog').contains(modal.delete.body);
   });
+  it('Allows users to avoid deleting a place by mistake', () => {
+    cy.log(`**Setup**`);
+    cy.findByRole('button', {name: placeName}).click();
+    cy.findByRole('button', {name: buttonLabel.delete}).click();
+    cy.log(`**Clicking Cancel button in the dialog...**`);
+    cy.findByRole('button', {name: buttonLabel.cancel}).click();
+    cy.log(`**...closes the dialog**`);
+    cy.findByRole('alertdialog').should('not.exist');
+    cy.log(`**...shows the place detail popup**`);
+    cy.findByRole('heading', {name: placeName}).should('be.visible');
+  });
 });

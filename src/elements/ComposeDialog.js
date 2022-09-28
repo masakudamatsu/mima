@@ -84,7 +84,8 @@ const positionComponents = `
   & p + p {
     margin-top: ${remify(bodyText.spaceBetweenParagraphs)};
   }
-  & div + button {
+  & div + button,
+    p + button {
     margin-top: ${remify(capHeight[200] - bodyText.spaceBottom)};
   }
 `;

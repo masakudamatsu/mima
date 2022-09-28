@@ -2,6 +2,7 @@ import {useContext, useEffect, useRef, useState} from 'react';
 import PropTypes from 'prop-types';
 import DOMPurify from 'dompurify';
 
+import {ButtonDialog} from 'src/elements/ButtonDialog';
 import {ComposeDialog} from 'src/elements/ComposeDialog';
 import {DivCloud} from 'src/elements/DivCloud';
 import {DivModalBackdrop} from 'src/elements/DivModalBackdrop';
@@ -15,7 +16,7 @@ import {useOnEscKeyDown} from 'src/hooks/useOnEscKeyDown';
 import {getHtmlFromSlate} from 'src/utils/getHtmlFromSlate';
 import {NightModeContext} from 'src/wrappers/NightModeContext';
 
-import {loadingMessage, modal} from 'src/utils/uiCopies';
+import {buttonLabel, loadingMessage, modal} from 'src/utils/uiCopies';
 
 import dynamic from 'next/dynamic';
 const importPlaceInfoEditor = () =>
@@ -169,6 +170,9 @@ export const SavedPlaces = ({mapObject}) => {
     const handleClickDelete = () => {
       setConfirm(true);
     };
+    const cancelDelete = () => {
+      setConfirm(false);
+    };
     if (ui === 'open') {
       return (
         <>
@@ -191,6 +195,9 @@ export const SavedPlaces = ({mapObject}) => {
                 >
                   <h2 id="confirm-delete-title">{modal.delete.title}</h2>
                   <p id="confirm-delete-body">{modal.delete.body}</p>
+                  <ButtonDialog onClick={cancelDelete} type="button">
+                    {buttonLabel.cancel}
+                  </ButtonDialog>{' '}
                 </ComposeDialog>
               </DivModalBackdrop>
             </ClientOnlyPortal>

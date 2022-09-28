@@ -77,7 +77,8 @@ describe('ComposeDialog component', () => {
   margin-top: 0.4965rem;
 }
 
-.c0 div + button {
+.c0 div + button,
+.c0 p + button {
   margin-top: 0.7801rem;
 }
 
