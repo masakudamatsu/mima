@@ -102,9 +102,7 @@ const animateTransitionOut = css`
   animation-fill-mode: forwards;
 `;
 
-export const ComposeDialog = styled.div.attrs({
-  role: 'dialog',
-})`
+export const ComposeDialog = styled.div`
   ${setDimension}
   ${styleText}
   ${setSize}

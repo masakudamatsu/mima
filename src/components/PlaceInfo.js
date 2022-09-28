@@ -32,11 +32,12 @@ export const PlaceInfo = ({
   const dialogDiv = useRef(null);
   useOnClickOutside(dialogDiv, closePlaceInfo, {disable: modalOpen});
   return (
-    <ComposeDialog // role="dialog" included
+    <ComposeDialog
       aria-describedby="selected-place-detail"
       aria-labelledby="selected-place-name"
       // data-closing={status === 'closing'}
       ref={dialogDiv}
+      role="dialog"
     >
       <CloseButton
         ariaLabel={buttonLabel.close}

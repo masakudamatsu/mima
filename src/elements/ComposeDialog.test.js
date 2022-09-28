@@ -135,7 +135,6 @@ describe('ComposeDialog component', () => {
 <div>
   <div
     class="c0"
-    role="dialog"
   />
 </div>
 `);
