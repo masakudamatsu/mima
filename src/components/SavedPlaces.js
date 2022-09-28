@@ -195,6 +195,9 @@ export const SavedPlaces = ({mapObject}) => {
                 >
                   <h2 id="confirm-delete-title">{modal.delete.title}</h2>
                   <p id="confirm-delete-body">{modal.delete.body}</p>
+                  <ButtonDialog type="button">
+                    {buttonLabel.delete}
+                  </ButtonDialog>{' '}
                   <ButtonDialog onClick={cancelDelete} type="button">
                     {buttonLabel.cancel}
                   </ButtonDialog>{' '}

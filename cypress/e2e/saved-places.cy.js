@@ -165,6 +165,8 @@ describe('Saved place detail feature', () => {
     cy.log(`**...pops up a dialog to confirm the deletion of the place**`);
     cy.findByRole('alertdialog').contains(modal.delete.title);
     cy.findByRole('alertdialog').contains(modal.delete.body);
+    cy.log(`**Clicking Delete button on the dialog...**`);
+    cy.findByRole('button', {name: buttonLabel.delete}).click();
   });
   it('Allows users to avoid deleting a place by mistake', () => {
     cy.log(`**Setup**`);
