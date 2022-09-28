@@ -49,7 +49,7 @@ const styleText = `
 `;
 
 const positionComponents = `
-  --popup-margin: ${dimension.button['minimum target spacing 100']};
+  --popup-margin: ${dimension.button['minimum target size 25']};
 
   & button[aria-label="${buttonLabel.closePlaceDetail}"] {
     position: absolute;

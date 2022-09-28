@@ -15,7 +15,6 @@ describe('ButtonDialog component', () => {
   min-width: 96px;
   border-color: var(--dialog-button-color);
   color: var(--dialog-button-color);
-  margin-right: 12px;
 }
 
 .c0:focus {

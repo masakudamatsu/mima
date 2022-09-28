@@ -22,7 +22,7 @@ describe('ComposeDialog component', () => {
   left: 0;
   top: calc(100% - var(--height));
   z-index: 3;
-  --popup-margin: 8px;
+  --popup-margin: 12px;
   -webkit-animation-duration: 300ms;
   animation-duration: 300ms;
   -webkit-animation-fill-mode: backwards;
