@@ -44,6 +44,21 @@ describe('ComposeDialog component', () => {
   line-height: 1.092;
 }
 
+.c0[role="alertdialog"] {
+  height: 50%;
+  min-height: 300px;
+  min-width: 300px;
+  width: 50%;
+}
+
+.c0[role="alertdialog"] {
+  left: 50%;
+  top: 50%;
+  -webkit-transform: translate(-50%,-50%);
+  -ms-transform: translate(-50%,-50%);
+  transform: translate(-50%,-50%);
+}
+
 .c0 button[aria-label="Close place detail"] {
   position: absolute;
   right: var(--popup-margin);

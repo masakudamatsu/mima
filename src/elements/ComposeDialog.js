@@ -20,6 +20,12 @@ const setDimension = `
 const setSize = `
   height: var(--height);
   width: 100%;
+  &[role="alertdialog"] {
+    height: 50%;
+    min-height: 300px;
+    min-width: 300px;
+    width: 50%;
+  }
 `;
 
 const setBackground = stylePopupBackground({withEdges: true});
@@ -29,6 +35,12 @@ const placeOverMap = `
   left: 0;
   top: calc(100% - var(--height));
   z-index: ${zIndex.divPopup};
+  &[role="alertdialog"] {
+    /* Center-alignment: https://moderncss.dev/complete-guide-to-centering-in-css/#xy-centering-for-block-elements */
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%); 
+  }
 `;
 
 const styleText = `
