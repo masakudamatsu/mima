@@ -169,11 +169,19 @@ describe('Saved place detail feature', () => {
     cy.findByRole('button', {name: buttonLabel.delete}).click();
   });
   it('Allows users to avoid deleting a place by mistake', () => {
-    cy.log(`**Setup**`);
+    cy.log(`**Setup for Cancel button**`);
     cy.findByRole('button', {name: placeName}).click();
     cy.findByRole('button', {name: buttonLabel.delete}).click();
     cy.log(`**Clicking Cancel button in the dialog...**`);
     cy.findByRole('button', {name: buttonLabel.cancel}).click();
+    cy.log(`**...closes the dialog**`);
+    cy.findByRole('alertdialog').should('not.exist');
+    cy.log(`**...shows the place detail popup**`);
+    cy.findByRole('heading', {name: placeName}).should('be.visible');
+    cy.log(`**Setup for ESC key**`);
+    cy.findByRole('button', {name: buttonLabel.delete}).click();
+    cy.log(`**Pressing ESC key...**`);
+    cy.get('body').type('{esc}');
     cy.log(`**...closes the dialog**`);
     cy.findByRole('alertdialog').should('not.exist');
     cy.log(`**...shows the place detail popup**`);

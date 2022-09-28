@@ -119,8 +119,23 @@ export const SavedPlaces = ({mapObject}) => {
     setPlaces({ui: null, selectedPlace: null});
   };
 
-  // close with Esc key
-  useOnEscKeyDown({state: selectedPlace, handler: closePlaceInfo});
+  // For deleting the saved place
+  const handleClickDelete = () => {
+    setConfirm(true);
+  };
+  const cancelDelete = () => {
+    setConfirm(false);
+  };
+
+  // close place detail (or alert dialog) with Esc key
+  const handleEsc = () => {
+    if (confirm) {
+      cancelDelete();
+    } else {
+      closePlaceInfo();
+    }
+  };
+  useOnEscKeyDown({state: selectedPlace, handler: handleEsc});
 
   // for updating place info
   if (selectedPlace) {
@@ -166,12 +181,6 @@ export const SavedPlaces = ({mapObject}) => {
       } catch (error) {
         console.log(error);
       }
-    };
-    const handleClickDelete = () => {
-      setConfirm(true);
-    };
-    const cancelDelete = () => {
-      setConfirm(false);
     };
     if (ui === 'open') {
       return (
