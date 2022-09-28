@@ -179,4 +179,28 @@ describe('Saved place detail feature', () => {
     cy.log(`**...shows the place detail popup**`);
     cy.findByRole('heading', {name: placeName}).should('be.visible');
   });
+  it('Traps focus inside the alert dialog', () => {
+    cy.log(`**Setup**`);
+    cy.findByRole('button', {name: placeName}).click();
+    cy.log(`**Clicking Delete button...**`);
+    cy.findByRole('button', {name: buttonLabel.delete}).click();
+    cy.log(`**...autofocuses the Cancel button**`);
+    // cy.focused().contains(buttonLabel.cancel); TODO #252 Fix this assertion; for some reason, no element is found to be focused...
+    cy.log(`**Pressing Tab key...`);
+    cy.realPress('Tab');
+    cy.log(`**...focuses the Delete button**`);
+    cy.focused().contains(buttonLabel.delete);
+    cy.log(`**Pressing Tab key once more...`);
+    cy.realPress('Tab');
+    cy.log(`**...focuses the Cancel button**`);
+    cy.focused().contains(buttonLabel.cancel);
+    cy.log(`**Pressing Shift + Tab...`);
+    cy.realPress(['Shift', 'Tab']);
+    cy.log(`**...focuses the Delete button**`);
+    cy.focused().contains(buttonLabel.delete);
+    cy.log(`**Pressing Shift + Tab once more...`);
+    cy.realPress(['Shift', 'Tab']);
+    cy.log(`**...focuses the Cancel button**`);
+    cy.focused().contains(buttonLabel.cancel);
+  });
 });

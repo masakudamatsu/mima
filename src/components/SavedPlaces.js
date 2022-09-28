@@ -1,7 +1,7 @@
 import {useContext, useEffect, useRef, useState} from 'react';
 import PropTypes from 'prop-types';
 import DOMPurify from 'dompurify';
-
+import FocusLock from 'react-focus-lock';
 import {ButtonDialog} from 'src/elements/ButtonDialog';
 import {ComposeDialog} from 'src/elements/ComposeDialog';
 import {DivCloud} from 'src/elements/DivCloud';
@@ -188,20 +188,26 @@ export const SavedPlaces = ({mapObject}) => {
           {confirm ? (
             <ClientOnlyPortal selector="#modal">
               <DivModalBackdrop>
-                <ComposeDialog
-                  aria-describedby="confirm-delete-body"
-                  aria-labelledby="confirm-delete-title"
-                  role="alertdialog"
-                >
-                  <h2 id="confirm-delete-title">{modal.delete.title}</h2>
-                  <p id="confirm-delete-body">{modal.delete.body}</p>
-                  <ButtonDialog type="button">
-                    {buttonLabel.delete}
-                  </ButtonDialog>{' '}
-                  <ButtonDialog onClick={cancelDelete} type="button">
-                    {buttonLabel.cancel}
-                  </ButtonDialog>{' '}
-                </ComposeDialog>
+                <FocusLock>
+                  <ComposeDialog
+                    aria-describedby="confirm-delete-body"
+                    aria-labelledby="confirm-delete-title"
+                    role="alertdialog"
+                  >
+                    <h2 id="confirm-delete-title">{modal.delete.title}</h2>
+                    <p id="confirm-delete-body">{modal.delete.body}</p>
+                    <ButtonDialog type="button">
+                      {buttonLabel.delete}
+                    </ButtonDialog>{' '}
+                    <ButtonDialog
+                      data-autofocus
+                      onClick={cancelDelete}
+                      type="button"
+                    >
+                      {buttonLabel.cancel}
+                    </ButtonDialog>{' '}
+                  </ComposeDialog>
+                </FocusLock>
               </DivModalBackdrop>
             </ClientOnlyPortal>
           ) : null}
