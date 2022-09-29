@@ -129,6 +129,14 @@ export const SavedPlaces = ({mapObject}) => {
   const cancelDelete = () => {
     setDeleteUi(null);
   };
+  useEffect(() => {
+    if (deleteUi === 'confirm') {
+      document.body.style.overflow = 'hidden';
+    }
+    if (deleteUi === null) {
+      document.body.style.overflow = 'auto';
+    }
+  }, [deleteUi]);
 
   // close place detail (or alert dialog) with Esc key
   const handleEsc = () => {

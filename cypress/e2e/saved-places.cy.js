@@ -167,6 +167,8 @@ describe('Saved place detail feature', () => {
     cy.log(`**...pops up a dialog to confirm the deletion of the place**`);
     cy.findByRole('alertdialog').contains(modal.delete.title(placeName));
     cy.findByRole('alertdialog').contains(modal.delete.body(placeName));
+    cy.log(`**...sets the body element to be non-scrollable**`);
+    cy.get('body').should('have.css', 'overflow', 'hidden');
     cy.log(`**Clicking Delete button on the dialog...**`);
     cy.findByRole('button', {name: buttonLabel.delete}).click();
     cy.log('**...initially shows a loading message**');
