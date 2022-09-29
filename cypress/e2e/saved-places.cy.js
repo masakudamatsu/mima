@@ -153,6 +153,8 @@ describe('Saved place detail feature', () => {
     cy.focused().should('have.attr', 'data-testid', 'close-button-saved-place');
   });
   it.only('Clicking Delete button removes the saved place', () => {
+    cy.log(`**Preparing for testing loading messages**`);
+    const interception = interceptIndefinitely('/api/places');
     cy.log(`**Setup**`);
     cy.findByRole('button', {name: placeName}).click();
     cy.log(`**Clicking Delete button...**`);
@@ -167,8 +169,15 @@ describe('Saved place detail feature', () => {
     cy.findByRole('alertdialog').contains(modal.delete.body(placeName));
     cy.log(`**Clicking Delete button on the dialog...**`);
     cy.findByRole('button', {name: buttonLabel.delete}).click();
-    cy.log(`**...deletes the saved place**`);
-    cy.findByRole('button', {name: placeName}).should('not.exist');
+    cy.log('**...initially shows a loading message**');
+    cy.findByText(loadingMessage.delete(placeName))
+      .should('be.visible')
+      .then(() => {
+        cy.log(`**And then...**`);
+        interception.sendResponse();
+        cy.log(`**...deletes the saved place**`);
+        cy.findByRole('button', {name: placeName}).should('not.exist');
+      });
   });
   it('Allows users to avoid deleting a place by mistake', () => {
     cy.log(`**Setup for Cancel button**`);

@@ -14,6 +14,7 @@ const divScrim = above + button;
 const divPopup = above + divScrim;
 
 const divModalBackdrop = above + divPopup;
+const paragraphDeleting = above + divPopup;
 
 export const zIndex = {
   button,
@@ -24,4 +25,5 @@ export const zIndex = {
   divSearch,
   divPopup,
   paragraphLoading,
+  paragraphDeleting,
 };

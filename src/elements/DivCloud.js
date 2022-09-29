@@ -26,6 +26,9 @@ const placeOverBackground = `
   top: 0; /* Without this, it won't be placed over the background */
   width: 100%;
   z-index: ${zIndex.formSearch};
+  &[data-delete="true"] {
+    z-index: ${zIndex.paragraphDeleting};
+  }
 `;
 
 export const DivCloud = styled.div`

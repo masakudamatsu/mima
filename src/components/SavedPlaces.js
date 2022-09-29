@@ -187,6 +187,7 @@ export const SavedPlaces = ({mapObject}) => {
     };
     const deletePlace = async () => {
       try {
+        setDeleteUi('deleting');
         const response = await fetch('/api/places', {
           method: 'DELETE',
           headers: {'Content-Type': 'application/json'},
@@ -254,6 +255,12 @@ export const SavedPlaces = ({mapObject}) => {
                 </FocusLock>
               </DivModalBackdrop>
             </ClientOnlyPortal>
+          ) : deleteUi === 'deleting' ? (
+            <DivCloud data-delete>
+              <ParagraphLoading>
+                {loadingMessage.delete(selectedPlaceName)}
+              </ParagraphLoading>
+            </DivCloud>
           ) : null}
         </>
       );

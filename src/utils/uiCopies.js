@@ -1,6 +1,7 @@
 export const loadingMessage = {
   create: 'Saving your place note...',
   update: 'Saving changes...',
+  delete: placeName => `Deleting ${placeName}...`,
 };
 
 export const modal = {
