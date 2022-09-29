@@ -234,8 +234,12 @@ export const SavedPlaces = ({mapObject}) => {
                     aria-modal="true"
                     role="alertdialog"
                   >
-                    <h2 id="confirm-delete-title">{modal.delete.title}</h2>
-                    <p id="confirm-delete-body">{modal.delete.body}</p>
+                    <h2 id="confirm-delete-title">
+                      {modal.delete.title(selectedPlaceName)}
+                    </h2>
+                    <p id="confirm-delete-body">
+                      {modal.delete.body(selectedPlaceName)}
+                    </p>
                     <ButtonDialog onClick={deletePlace} type="button">
                       {buttonLabel.delete}
                     </ButtonDialog>{' '}

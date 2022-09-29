@@ -5,9 +5,9 @@ export const loadingMessage = {
 
 export const modal = {
   delete: {
-    title: 'Deleting your saved place',
-    body:
-      'Are you sure you want to delete this place? This action cannot be undone.',
+    title: placeName => `Deleting ${placeName}`,
+    body: placeName =>
+      `Are you sure you want to delete ${placeName}? This action cannot be undone.`,
   },
 };
 

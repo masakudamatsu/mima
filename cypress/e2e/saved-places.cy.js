@@ -163,8 +163,8 @@ describe('Saved place detail feature', () => {
     cy.get('body').click('top', {force: true});
     cy.findByRole('button', {name: buttonLabel.edit}).should('not.exist');
     cy.log(`**...pops up a dialog to confirm the deletion of the place**`);
-    cy.findByRole('alertdialog').contains(modal.delete.title);
-    cy.findByRole('alertdialog').contains(modal.delete.body);
+    cy.findByRole('alertdialog').contains(modal.delete.title(placeName));
+    cy.findByRole('alertdialog').contains(modal.delete.body(placeName));
     cy.log(`**Clicking Delete button on the dialog...**`);
     cy.findByRole('button', {name: buttonLabel.delete}).click();
     cy.log(`**...deletes the saved place**`);
