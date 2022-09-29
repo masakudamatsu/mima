@@ -152,7 +152,7 @@ describe('Saved place detail feature', () => {
     cy.log(`**...autofocuses the close button**`);
     cy.focused().should('have.attr', 'data-testid', 'close-button-saved-place');
   });
-  it.only('Clicking Delete button removes the saved place', () => {
+  it('Clicking Delete button removes the saved place', () => {
     cy.log(`**Preparing for testing loading messages**`);
     const interception = interceptIndefinitely('/api/places');
     cy.log(`**Setup**`);
