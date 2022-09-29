@@ -5,7 +5,7 @@ import {ButtonCircle} from 'src/elements/ButtonCircle';
 import {createRipple} from 'src/utils/createRipple';
 
 // TODO #201:
-// 2. Reuse this component in MenuButton, PlaceInfo
+// 2. Reuse this component in MenuButton
 export const CloseButton = forwardRef(function CloseButton(
   {
     ariaControls = null,

@@ -13,12 +13,17 @@ const divSearch = above + formSearch;
 const divScrim = above + button;
 const divPopup = above + divScrim;
 
+const divModalBackdrop = above + divPopup;
+const paragraphDeleting = above + divPopup;
+
 export const zIndex = {
   button,
   closeButton,
   formSearch,
+  divModalBackdrop,
   divScrim,
   divSearch,
   divPopup,
   paragraphLoading,
+  paragraphDeleting,
 };

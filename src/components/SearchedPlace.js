@@ -259,11 +259,12 @@ export const SearchedPlace = ({mapObject}) => {
     return null; // TODO #199: Handle error properly
   } else if (status === 'open' || status === 'closing') {
     return (
-      <ComposeDialog // role="dialog" included
+      <ComposeDialog
         aria-describedby={placeDetailId}
         aria-labelledby={placeNameId}
         data-closing={status === 'closing'}
         ref={dialogDiv}
+        role="dialog"
       >
         <CloseButton
           ariaLabel={buttonLabel.closePlaceDetail}

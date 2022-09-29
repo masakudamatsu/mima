@@ -1,6 +1,15 @@
 export const loadingMessage = {
   create: 'Saving your place note...',
   update: 'Saving changes...',
+  delete: placeName => `Deleting ${placeName}...`,
+};
+
+export const modal = {
+  delete: {
+    title: placeName => `Deleting ${placeName}`,
+    body: placeName =>
+      `Are you sure you want to delete ${placeName}? This action cannot be undone.`,
+  },
 };
 
 export const userLocationMarkerLabel = 'You are here!';
@@ -14,6 +23,7 @@ export const buttonLabel = {
   close: 'Close',
   closePlaceDetail: 'Close place detail',
   closeSearchbox: 'Close search box',
+  delete: 'Delete',
   edit: 'Edit',
   locator: {
     default: 'Track your location',

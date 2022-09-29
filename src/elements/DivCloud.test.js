@@ -25,6 +25,10 @@ describe('DivCloud component', () => {
   color: var(--link-text-color);
 }
 
+.c0[data-delete="true"] {
+  z-index: 4;
+}
+
 @supports (-webkit-backdrop-filter:blur(var(--blur-radius))) or (backdrop-filter:blur(var(--blur-radius))) {
   .c0 {
     background-color: var(--popup-background-color);

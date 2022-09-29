@@ -15,10 +15,6 @@ const setColor = `
   color: var(--dialog-button-color);
 `;
 
-const setSpaceToNextButton = `
-  margin-right: ${dimension.button['minimum target size 25']};
-`;
-
 const setFocusStyle = `
   &:focus {
     outline: ${dimension.button['border width 200']} solid
@@ -35,6 +31,5 @@ const setFocusStyle = `
 export const ButtonDialog = styled.button`
   ${setShape}
   ${setColor}
-  ${setSpaceToNextButton}
   ${setFocusStyle}
 `;

@@ -1,17 +1,22 @@
-import {useContext, useEffect, useRef} from 'react';
+import {useContext, useEffect, useRef, useState} from 'react';
 import PropTypes from 'prop-types';
 import DOMPurify from 'dompurify';
-
+import FocusLock from 'react-focus-lock';
+import {ButtonDialog} from 'src/elements/ButtonDialog';
+import {ComposeDialog} from 'src/elements/ComposeDialog';
 import {DivCloud} from 'src/elements/DivCloud';
+import {DivModalBackdrop} from 'src/elements/DivModalBackdrop';
 import {ParagraphLoading} from 'src/elements/ParagraphLoading';
 import {PlaceInfo} from 'src/components/PlaceInfo';
+
+import {ClientOnlyPortal} from 'src/wrappers/ClientOnlyPortal';
 
 import {usePlaces} from './Places';
 import {useOnEscKeyDown} from 'src/hooks/useOnEscKeyDown';
 import {getHtmlFromSlate} from 'src/utils/getHtmlFromSlate';
 import {NightModeContext} from 'src/wrappers/NightModeContext';
 
-import {loadingMessage} from 'src/utils/uiCopies';
+import {buttonLabel, loadingMessage, modal} from 'src/utils/uiCopies';
 
 import dynamic from 'next/dynamic';
 const importPlaceInfoEditor = () =>
@@ -26,16 +31,20 @@ export const SavedPlaces = ({mapObject}) => {
 
   const nightMode = useContext(NightModeContext);
 
+  const [deleteUi, setDeleteUi] = useState(null);
+
   const viewportSize = useRef({height: null, width: null});
   useEffect(() => {
     viewportSize.current.height = window.visualViewport.height;
     viewportSize.current.width = window.visualViewport.width;
   });
 
-  const marker = useRef();
+  const markers = useRef([]);
   useEffect(() => {
-    if (marker.current) {
-      marker.current.setMap(null); // remove the previous current location marker from the map
+    if (markers.current) {
+      for (let i = 0; i < markers.current.length; i++) {
+        markers.current[i].setMap(null); // remove the previous current location marker from the map
+      }
     }
     const google = window.google;
     // Shape markers
@@ -70,7 +79,7 @@ export const SavedPlaces = ({mapObject}) => {
       ...yellow,
     };
 
-    // Drop a marker to each saved place
+    // Render a marker to each saved place
     for (let i = 0; i < userData.length; i++) {
       // Retrieve data to be used
       const userPlace = {
@@ -81,7 +90,7 @@ export const SavedPlaces = ({mapObject}) => {
         },
         name: userData[i].properties.name,
       };
-      marker.current = new google.maps.Marker({
+      const marker = new google.maps.Marker({
         icon: {
           ...shapedAsAsterisk,
           ...pinnedAtCenter,
@@ -92,7 +101,7 @@ export const SavedPlaces = ({mapObject}) => {
         title: userPlace.name,
       });
       // eslint-disable-next-line no-loop-func
-      marker.current.addListener('click', () => {
+      marker.addListener('click', () => {
         mapObject.panTo(userPlace.coordinates);
         mapObject.panBy(0, viewportSize.current.height / 6);
         setPlaces({
@@ -103,7 +112,8 @@ export const SavedPlaces = ({mapObject}) => {
           },
         });
       });
-      marker.current.setMap(mapObject);
+      marker.setMap(mapObject);
+      markers.current.push(marker);
     }
   }, [mapObject, nightMode, setPlaces, userData]);
 
@@ -112,8 +122,31 @@ export const SavedPlaces = ({mapObject}) => {
     setPlaces({ui: null, selectedPlace: null});
   };
 
-  // close with Esc key
-  useOnEscKeyDown({state: selectedPlace, handler: closePlaceInfo});
+  // For deleting the saved place
+  const handleClickDelete = () => {
+    setDeleteUi('confirm');
+  };
+  const cancelDelete = () => {
+    setDeleteUi(null);
+  };
+  useEffect(() => {
+    if (deleteUi === 'confirm') {
+      document.body.style.overflow = 'hidden';
+    }
+    if (deleteUi === null) {
+      document.body.style.overflow = 'auto';
+    }
+  }, [deleteUi]);
+
+  // close place detail (or alert dialog) with Esc key
+  const handleEsc = () => {
+    if (deleteUi === 'confirm') {
+      cancelDelete();
+    } else {
+      closePlaceInfo();
+    }
+  };
+  useOnEscKeyDown({state: selectedPlace, handler: handleEsc});
 
   // for updating place info
   if (selectedPlace) {
@@ -160,16 +193,84 @@ export const SavedPlaces = ({mapObject}) => {
         console.log(error);
       }
     };
-
+    const deletePlace = async () => {
+      try {
+        setDeleteUi('deleting');
+        const response = await fetch('/api/places', {
+          method: 'DELETE',
+          headers: {'Content-Type': 'application/json'},
+          body: JSON.stringify({
+            id: selectedPlace.id,
+          }),
+        });
+        if (response.ok) {
+          // // update user data
+          const newUserData = userData.filter(
+            place => place.id !== selectedPlace.id,
+          );
+          setDeleteUi(null);
+          setPlaces({
+            ui: null,
+            selectedPlace: null,
+            userData: newUserData,
+          });
+        } else {
+          throw new Error('DELETE request to /api/places has failed.');
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    };
     if (ui === 'open') {
       return (
-        <PlaceInfo
-          closePlaceInfo={closePlaceInfo}
-          importPlaceInfoEditor={importPlaceInfoEditor}
-          placeName={selectedPlaceName}
-          placeNoteHtml={selectedPlaceNoteHtml}
-          editPlaceInfo={() => setPlaces({ui: 'editing'})}
-        />
+        <>
+          <PlaceInfo
+            closePlaceInfo={closePlaceInfo}
+            deletePlaceInfo={handleClickDelete}
+            importPlaceInfoEditor={importPlaceInfoEditor}
+            modalOpen={deleteUi === 'confirm'}
+            placeName={selectedPlaceName}
+            placeNoteHtml={selectedPlaceNoteHtml}
+            editPlaceInfo={() => setPlaces({ui: 'editing'})}
+          />
+          {deleteUi === 'confirm' ? (
+            <ClientOnlyPortal selector="#modal">
+              <DivModalBackdrop>
+                <FocusLock returnFocus>
+                  <ComposeDialog
+                    aria-describedby="confirm-delete-body"
+                    aria-labelledby="confirm-delete-title"
+                    aria-modal="true"
+                    role="alertdialog"
+                  >
+                    <h2 id="confirm-delete-title">
+                      {modal.delete.title(selectedPlaceName)}
+                    </h2>
+                    <p id="confirm-delete-body">
+                      {modal.delete.body(selectedPlaceName)}
+                    </p>
+                    <ButtonDialog onClick={deletePlace} type="button">
+                      {buttonLabel.delete}
+                    </ButtonDialog>{' '}
+                    <ButtonDialog
+                      data-autofocus
+                      onClick={cancelDelete}
+                      type="button"
+                    >
+                      {buttonLabel.cancel}
+                    </ButtonDialog>{' '}
+                  </ComposeDialog>
+                </FocusLock>
+              </DivModalBackdrop>
+            </ClientOnlyPortal>
+          ) : deleteUi === 'deleting' ? (
+            <DivCloud data-delete>
+              <ParagraphLoading>
+                {loadingMessage.delete(selectedPlaceName)}
+              </ParagraphLoading>
+            </DivCloud>
+          ) : null}
+        </>
       );
     } else if (ui === 'editing') {
       return (

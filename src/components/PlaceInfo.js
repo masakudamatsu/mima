@@ -1,13 +1,13 @@
+import {useEffect, useRef} from 'react';
 import PropTypes from 'prop-types';
 import Autolinker from 'autolinker';
 
-import {PlaceDataPopup} from 'src/components/PlaceDataPopup';
 import {ButtonDialog} from 'src/elements/ButtonDialog';
-import {ButtonCircle} from 'src/elements/ButtonCircle';
-import {DivParagraphHolder} from 'src/elements/DivParagraphHolder';
-import {H2PlaceName} from 'src/elements/H2PlaceName';
-import {SvgClose} from 'src/elements/SvgClose';
+import {CloseButton} from './CloseButton';
+import {ComposeDialog} from 'src/elements/ComposeDialog';
+
 import {buttonLabel} from 'src/utils/uiCopies';
+import {useOnClickOutside} from 'src/hooks/useOnClickOutside';
 
 // Prepare for converting URL text into link
 const autolinker = new Autolinker({
@@ -16,31 +16,42 @@ const autolinker = new Autolinker({
 
 export const PlaceInfo = ({
   closePlaceInfo,
+  deletePlaceInfo,
   editPlaceInfo,
   importPlaceInfoEditor,
+  modalOpen,
   placeName,
   placeNoteHtml,
 }) => {
+  // For autofocusing the close button when opened
+  const closeButton = useRef();
+  useEffect(() => {
+    closeButton.current.focusButton();
+  }, []);
+  // close by clicking outside
+  const dialogDiv = useRef(null);
+  useOnClickOutside(dialogDiv, closePlaceInfo, {disable: modalOpen});
   return (
-    <PlaceDataPopup
-      handleClickOutside={closePlaceInfo}
-      hidden={false}
-      slideFrom="bottom"
-      titleId="selected-place"
+    <ComposeDialog
+      aria-describedby="selected-place-detail"
+      aria-hidden={modalOpen}
+      aria-labelledby="selected-place-name"
+      // data-closing={status === 'closing'}
+      ref={dialogDiv}
+      role="dialog"
     >
-      <ButtonCircle
-        data-autofocus
-        data-testid="close-button-saved-place"
-        onClick={closePlaceInfo}
-        type="button"
-      >
-        <SvgClose title={buttonLabel.close} />
-      </ButtonCircle>
-      <H2PlaceName id="selected-place">{placeName}</H2PlaceName>
-      <DivParagraphHolder
+      <CloseButton
+        ariaLabel={buttonLabel.close}
+        handleClick={closePlaceInfo}
+        ref={closeButton}
+        testId="close-button-saved-place"
+      />
+      <h2 id="selected-place-name">{placeName}</h2>
+      <div
         dangerouslySetInnerHTML={{
           __html: autolinker.link(placeNoteHtml),
         }}
+        id="selected-place-detail"
       />
       <ButtonDialog
         onClick={editPlaceInfo}
@@ -50,14 +61,19 @@ export const PlaceInfo = ({
       >
         {buttonLabel.edit}
       </ButtonDialog>
-    </PlaceDataPopup>
+      <ButtonDialog onClick={deletePlaceInfo} type="button">
+        {buttonLabel.delete}
+      </ButtonDialog>
+    </ComposeDialog>
   );
 };
 
 PlaceInfo.propTypes = {
   closePlaceInfo: PropTypes.func,
+  deletePlaceInfo: PropTypes.func,
   editPlaceInfo: PropTypes.func,
   importPlaceInfoEditor: PropTypes.func,
+  modalOpen: PropTypes.bool,
   placeName: PropTypes.string,
   placeNoteHtml: PropTypes.string,
 };

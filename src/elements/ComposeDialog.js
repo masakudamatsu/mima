@@ -20,6 +20,12 @@ const setDimension = `
 const setSize = `
   height: var(--height);
   width: 100%;
+  &[role="alertdialog"] {
+    height: 50%;
+    min-height: 300px;
+    min-width: 300px;
+    width: 50%;
+  }
 `;
 
 const setBackground = stylePopupBackground({withEdges: true});
@@ -29,6 +35,12 @@ const placeOverMap = `
   left: 0;
   top: calc(100% - var(--height));
   z-index: ${zIndex.divPopup};
+  &[role="alertdialog"] {
+    /* Center-alignment: https://moderncss.dev/complete-guide-to-centering-in-css/#xy-centering-for-block-elements */
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%); 
+  }
 `;
 
 const styleText = `
@@ -49,7 +61,7 @@ const styleText = `
 `;
 
 const positionComponents = `
-  --popup-margin: ${dimension.button['minimum target spacing 100']};
+  --popup-margin: ${dimension.button['minimum target size 25']};
 
   & button[aria-label="${buttonLabel.closePlaceDetail}"] {
     position: absolute;
@@ -84,7 +96,8 @@ const positionComponents = `
   & p + p {
     margin-top: ${remify(bodyText.spaceBetweenParagraphs)};
   }
-  & div + button {
+  & div + button,
+    p + button {
     margin-top: ${remify(capHeight[200] - bodyText.spaceBottom)};
   }
 `;
@@ -102,9 +115,7 @@ const animateTransitionOut = css`
   animation-fill-mode: forwards;
 `;
 
-export const ComposeDialog = styled.div.attrs({
-  role: 'dialog',
-})`
+export const ComposeDialog = styled.div`
   ${setDimension}
   ${styleText}
   ${setSize}

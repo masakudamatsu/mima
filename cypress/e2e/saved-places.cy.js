@@ -3,6 +3,7 @@ import {
   buttonLabel,
   editorLabel,
   loadingMessage,
+  modal,
 } from '../../src/utils/uiCopies';
 
 const placeName = '出逢ひ茶屋おせん';
@@ -150,5 +151,81 @@ describe('Saved place detail feature', () => {
     cy.findByRole('button', {name: placeName}).should('be.visible');
     cy.log(`**...autofocuses the close button**`);
     cy.focused().should('have.attr', 'data-testid', 'close-button-saved-place');
+  });
+  it('Clicking Delete button removes the saved place', () => {
+    cy.log(`**Preparing for testing loading messages**`);
+    const interception = interceptIndefinitely('/api/places');
+    cy.log(`**Setup**`);
+    cy.findByRole('button', {name: placeName}).click();
+    cy.log(`**Clicking Delete button...**`);
+    cy.findByRole('button', {name: buttonLabel.delete}).click();
+    cy.log(
+      `**...overlays a scrim to prevent interactions outside the dialog**`,
+    );
+    cy.get('body').click('top', {force: true});
+    cy.findByRole('button', {name: buttonLabel.edit}).should('not.exist');
+    cy.log(`**...pops up a dialog to confirm the deletion of the place**`);
+    cy.findByRole('alertdialog').contains(modal.delete.title(placeName));
+    cy.findByRole('alertdialog').contains(modal.delete.body(placeName));
+    cy.log(`**...sets the body element to be non-scrollable**`);
+    cy.get('body').should('have.css', 'overflow', 'hidden');
+    cy.log(`**Clicking Delete button on the dialog...**`);
+    cy.findByRole('button', {name: buttonLabel.delete}).click();
+    cy.log('**...initially shows a loading message**');
+    cy.findByText(loadingMessage.delete(placeName))
+      .should('be.visible')
+      .then(() => {
+        cy.log(`**And then...**`);
+        interception.sendResponse();
+        cy.log(`**...deletes the saved place**`);
+        cy.findByRole('button', {name: placeName}).should('not.exist');
+      });
+  });
+  it('Allows users to avoid deleting a place by mistake', () => {
+    cy.log(`**Setup for Cancel button**`);
+    cy.findByRole('button', {name: placeName}).click();
+    cy.findByRole('button', {name: buttonLabel.delete}).click();
+    cy.log(`**Clicking Cancel button in the dialog...**`);
+    cy.findByRole('button', {name: buttonLabel.cancel}).click();
+    cy.log(`**...closes the dialog**`);
+    cy.findByRole('alertdialog').should('not.exist');
+    cy.log(`**...shows the place detail popup**`);
+    cy.findByRole('heading', {name: placeName}).should('be.visible');
+    cy.log(`**Setup for ESC key**`);
+    cy.findByRole('button', {name: buttonLabel.delete}).click();
+    cy.log(`**Pressing ESC key...**`);
+    cy.get('body').type('{esc}');
+    cy.log(`**...closes the dialog**`);
+    cy.findByRole('alertdialog').should('not.exist');
+    cy.log(`**...shows the place detail popup**`);
+    cy.findByRole('heading', {name: placeName}).should('be.visible');
+  });
+  it('Traps focus inside the alert dialog', () => {
+    cy.log(`**Setup**`);
+    cy.findByRole('button', {name: placeName}).click();
+    cy.log(`**Clicking Delete button...**`);
+    cy.findByRole('button', {name: buttonLabel.delete}).click();
+    cy.log(`**...autofocuses the Cancel button**`);
+    // cy.focused().contains(buttonLabel.cancel); TODO #252 Fix this assertion; for some reason, no element is found to be focused...
+    cy.log(`**Pressing Tab key...`);
+    cy.realPress('Tab');
+    cy.log(`**...focuses the Delete button**`);
+    cy.focused().contains(buttonLabel.delete);
+    cy.log(`**Pressing Tab key once more...`);
+    cy.realPress('Tab');
+    cy.log(`**...focuses the Cancel button**`);
+    cy.focused().contains(buttonLabel.cancel);
+    cy.log(`**Pressing Shift + Tab...`);
+    cy.realPress(['Shift', 'Tab']);
+    cy.log(`**...focuses the Delete button**`);
+    cy.focused().contains(buttonLabel.delete);
+    cy.log(`**Pressing Shift + Tab once more...`);
+    cy.realPress(['Shift', 'Tab']);
+    cy.log(`**...focuses the Cancel button**`);
+    cy.focused().contains(buttonLabel.cancel);
+    cy.log(`**Pressing Cancel button...`);
+    cy.findByRole('button', {name: buttonLabel.cancel}).click();
+    cy.log(`**...autofocuses the Delete button**`);
+    cy.focused().contains(buttonLabel.delete);
   });
 });

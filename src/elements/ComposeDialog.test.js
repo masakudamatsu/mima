@@ -22,7 +22,7 @@ describe('ComposeDialog component', () => {
   left: 0;
   top: calc(100% - var(--height));
   z-index: 3;
-  --popup-margin: 8px;
+  --popup-margin: 12px;
   -webkit-animation-duration: 300ms;
   animation-duration: 300ms;
   -webkit-animation-fill-mode: backwards;
@@ -42,6 +42,21 @@ describe('ComposeDialog component', () => {
   font-size: 1.3986rem;
   font-weight: 700;
   line-height: 1.092;
+}
+
+.c0[role="alertdialog"] {
+  height: 50%;
+  min-height: 300px;
+  min-width: 300px;
+  width: 50%;
+}
+
+.c0[role="alertdialog"] {
+  left: 50%;
+  top: 50%;
+  -webkit-transform: translate(-50%,-50%);
+  -ms-transform: translate(-50%,-50%);
+  transform: translate(-50%,-50%);
 }
 
 .c0 button[aria-label="Close place detail"] {
@@ -77,7 +92,8 @@ describe('ComposeDialog component', () => {
   margin-top: 0.4965rem;
 }
 
-.c0 div + button {
+.c0 div + button,
+.c0 p + button {
   margin-top: 0.7801rem;
 }
 
@@ -135,7 +151,6 @@ describe('ComposeDialog component', () => {
 <div>
   <div
     class="c0"
-    role="dialog"
   />
 </div>
 `);
