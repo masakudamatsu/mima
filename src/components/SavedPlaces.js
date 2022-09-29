@@ -31,7 +31,7 @@ export const SavedPlaces = ({mapObject}) => {
 
   const nightMode = useContext(NightModeContext);
 
-  const [confirm, setConfirm] = useState(false);
+  const [deleteUi, setDeleteUi] = useState(null);
 
   const viewportSize = useRef({height: null, width: null});
   useEffect(() => {
@@ -124,15 +124,15 @@ export const SavedPlaces = ({mapObject}) => {
 
   // For deleting the saved place
   const handleClickDelete = () => {
-    setConfirm(true);
+    setDeleteUi('confirm');
   };
   const cancelDelete = () => {
-    setConfirm(false);
+    setDeleteUi(null);
   };
 
   // close place detail (or alert dialog) with Esc key
   const handleEsc = () => {
-    if (confirm) {
+    if (deleteUi === 'confirm') {
       cancelDelete();
     } else {
       closePlaceInfo();
@@ -199,7 +199,7 @@ export const SavedPlaces = ({mapObject}) => {
           const newUserData = userData.filter(
             place => place.id !== selectedPlace.id,
           );
-          setConfirm(false);
+          setDeleteUi(null);
           setPlaces({
             ui: null,
             selectedPlace: null,
@@ -219,12 +219,12 @@ export const SavedPlaces = ({mapObject}) => {
             closePlaceInfo={closePlaceInfo}
             deletePlaceInfo={handleClickDelete}
             importPlaceInfoEditor={importPlaceInfoEditor}
-            modalOpen={confirm === true}
+            modalOpen={deleteUi === 'confirm'}
             placeName={selectedPlaceName}
             placeNoteHtml={selectedPlaceNoteHtml}
             editPlaceInfo={() => setPlaces({ui: 'editing'})}
           />
-          {confirm ? (
+          {deleteUi === 'confirm' ? (
             <ClientOnlyPortal selector="#modal">
               <DivModalBackdrop>
                 <FocusLock returnFocus>
