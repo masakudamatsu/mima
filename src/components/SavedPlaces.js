@@ -185,6 +185,33 @@ export const SavedPlaces = ({mapObject}) => {
         console.log(error);
       }
     };
+    const deletePlace = async () => {
+      try {
+        const response = await fetch('/api/places', {
+          method: 'DELETE',
+          headers: {'Content-Type': 'application/json'},
+          body: JSON.stringify({
+            id: selectedPlace.id,
+          }),
+        });
+        if (response.ok) {
+          // // update user data
+          const newUserData = userData.filter(
+            place => place.id !== selectedPlace.id,
+          );
+          setConfirm(false);
+          setPlaces({
+            ui: null,
+            selectedPlace: null,
+            userData: newUserData,
+          });
+        } else {
+          throw new Error('DELETE request to /api/places has failed.');
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    };
     if (ui === 'open') {
       return (
         <>
@@ -209,7 +236,7 @@ export const SavedPlaces = ({mapObject}) => {
                   >
                     <h2 id="confirm-delete-title">{modal.delete.title}</h2>
                     <p id="confirm-delete-body">{modal.delete.body}</p>
-                    <ButtonDialog type="button">
+                    <ButtonDialog onClick={deletePlace} type="button">
                       {buttonLabel.delete}
                     </ButtonDialog>{' '}
                     <ButtonDialog

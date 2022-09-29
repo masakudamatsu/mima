@@ -7,6 +7,7 @@ import {
   getPlaceName,
 } from 'test/utils/generate';
 import handlePlaces from 'src/pages/api/places.api';
+import {prisma} from '@prisma/client';
 
 const {prismaMock} = require('test/utils/prismaMock');
 
@@ -68,6 +69,30 @@ describe('api/places', () => {
     expect(res.status).toHaveBeenCalledTimes(1);
 
     expect(res.json).toHaveBeenCalledWith(updatedPlace);
+    expect(res.json).toHaveBeenCalledTimes(1);
+  });
+
+  test('handles DELETE requests correctly', async () => {
+    const savedPlace = buildPlace({id: getId()});
+
+    const req = buildReq({
+      method: 'DELETE',
+      body: {
+        id: savedPlace.id,
+      },
+    });
+    const res = buildRes();
+
+    await handlePlaces(req, res);
+
+    expect(prismaMock.place.delete).toHaveBeenCalledWith({
+      where: {
+        id: savedPlace.id,
+      },
+    });
+    expect(prismaMock.place.delete).toHaveBeenCalledTimes(1);
+
+    expect(res.json).toHaveBeenCalledWith({success: true});
     expect(res.json).toHaveBeenCalledTimes(1);
   });
 });

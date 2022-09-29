@@ -24,4 +24,13 @@ export default async function handlePlaces(req, res) {
     });
     res.status(200).json(result);
   }
+  if (req.method === 'DELETE') {
+    const {id} = req.body;
+    await prisma.place.delete({
+      where: {
+        id,
+      },
+    });
+    res.json({success: true});
+  }
 }
