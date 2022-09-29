@@ -39,10 +39,12 @@ export const SavedPlaces = ({mapObject}) => {
     viewportSize.current.width = window.visualViewport.width;
   });
 
-  const marker = useRef();
+  const markers = useRef([]);
   useEffect(() => {
-    if (marker.current) {
-      marker.current.setMap(null); // remove the previous current location marker from the map
+    if (markers.current) {
+      for (let i = 0; i < markers.current.length; i++) {
+        markers.current[i].setMap(null); // remove the previous current location marker from the map
+      }
     }
     const google = window.google;
     // Shape markers
@@ -77,7 +79,7 @@ export const SavedPlaces = ({mapObject}) => {
       ...yellow,
     };
 
-    // Drop a marker to each saved place
+    // Render a marker to each saved place
     for (let i = 0; i < userData.length; i++) {
       // Retrieve data to be used
       const userPlace = {
@@ -88,7 +90,7 @@ export const SavedPlaces = ({mapObject}) => {
         },
         name: userData[i].properties.name,
       };
-      marker.current = new google.maps.Marker({
+      const marker = new google.maps.Marker({
         icon: {
           ...shapedAsAsterisk,
           ...pinnedAtCenter,
@@ -99,7 +101,7 @@ export const SavedPlaces = ({mapObject}) => {
         title: userPlace.name,
       });
       // eslint-disable-next-line no-loop-func
-      marker.current.addListener('click', () => {
+      marker.addListener('click', () => {
         mapObject.panTo(userPlace.coordinates);
         mapObject.panBy(0, viewportSize.current.height / 6);
         setPlaces({
@@ -110,7 +112,8 @@ export const SavedPlaces = ({mapObject}) => {
           },
         });
       });
-      marker.current.setMap(mapObject);
+      marker.setMap(mapObject);
+      markers.current.push(marker);
     }
   }, [mapObject, nightMode, setPlaces, userData]);
 
