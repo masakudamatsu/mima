@@ -38,6 +38,9 @@ export default async function handlePlaces(req, res) {
       break;
     }
     default: {
+      // Adapted from https://github.com/vercel/next.js/blob/canary/examples/api-routes-rest/pages/api/user/%5Bid%5D.ts
+      res.setHeader('Allow', ['POST', 'PUT', 'DELETE']);
+      res.status(405).end(`Method ${req.method} Not Allowed`);
       break;
     }
   }

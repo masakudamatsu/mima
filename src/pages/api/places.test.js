@@ -5,6 +5,7 @@ import {
   getId,
   getNote,
   getPlaceName,
+  getWord,
 } from 'test/utils/generate';
 import handlePlaces from 'src/pages/api/places.api';
 import {prisma} from '@prisma/client';
@@ -94,5 +95,26 @@ describe('api/places', () => {
 
     expect(res.json).toHaveBeenCalledWith({success: true});
     expect(res.json).toHaveBeenCalledTimes(1);
+  });
+
+  test('handles invalid request methods', async () => {
+    const req = buildReq({
+      method: getWord().toUpperCase(),
+    });
+    const res = buildRes({
+      end: jest.fn().mockName('res.end'),
+      setHeader: jest.fn().mockName('res.setHeader'),
+    });
+    await handlePlaces(req, res);
+    expect(res.status).toHaveBeenCalledWith(405);
+    expect(res.status).toHaveBeenCalledTimes(1);
+    expect(res.setHeader).toHaveBeenCalledWith('Allow', [
+      'POST',
+      'PUT',
+      'DELETE',
+    ]);
+    expect(res.setHeader).toHaveBeenCalledTimes(1);
+    expect(res.end).toHaveBeenCalledWith(`Method ${req.method} Not Allowed`);
+    expect(res.end).toHaveBeenCalledTimes(1);
   });
 });

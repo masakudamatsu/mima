@@ -20,6 +20,10 @@ function getPlaceName() {
   return faker.company.name();
 }
 
+function getWord() {
+  return faker.lorem.word();
+}
+
 function buildPlace(overrides) {
   return {
     geometry: {
@@ -57,4 +61,4 @@ function buildRes(overrides = {}) {
   return res;
 }
 
-export {buildPlace, buildReq, buildRes, getId, getNote, getPlaceName};
+export {buildPlace, buildReq, buildRes, getId, getNote, getPlaceName, getWord};
