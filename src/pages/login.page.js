@@ -1,5 +1,6 @@
 import Head from 'next/head';
 
+import {H1Logo} from 'src/elements/H1Logo';
 import {login} from 'src/utils/metadata';
 import {loginPage} from 'src/utils/uiCopies';
 export default function Login() {
@@ -10,9 +11,20 @@ export default function Login() {
     <>
       <Head>
         <title>{login.title}</title>
+        {/* TODO #111: remove below after locally hosting Google Fonts */}
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link
+          rel="preconnect"
+          href="https://fonts.gstatic.com"
+          crossOrigin="true"
+        />
+        <link
+          href="https://fonts.googleapis.com/css2?family=Josefin+Slab:wght@500&display=swap"
+          rel="stylesheet"
+        />
       </Head>
       <header>
-        <h1>{loginPage.titleText}</h1>
+        <H1Logo>My Ideal Map</H1Logo>
       </header>
       <form
         onSubmit={handleSubmit}
