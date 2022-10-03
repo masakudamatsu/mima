@@ -1,9 +1,14 @@
 import Head from 'next/head';
 
 import {H1Logo} from 'src/elements/H1Logo';
+
+import {NightModeContext} from 'src/wrappers/NightModeContext';
+import {useNightMode} from 'src/hooks/useNightMode';
+
 import {login} from 'src/utils/metadata';
 import {loginPage} from 'src/utils/uiCopies';
 export default function Login() {
+  useNightMode(NightModeContext);
   const handleSubmit = async event => {
     event.preventDefault();
   };

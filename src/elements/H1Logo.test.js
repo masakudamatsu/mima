@@ -13,6 +13,7 @@ describe('H1Logo component', () => {
   --current-viewport-width: clamp(320px,100vw,561px);
   --min-font-size: 36;
   font-size: calc(var(--min-font-size) * var(--current-viewport-width) / var(--min-viewport-width));
+  color: var(--popup-text-color);
   word-spacing: -0.25em;
 }
 

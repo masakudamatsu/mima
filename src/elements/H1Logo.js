@@ -14,6 +14,10 @@ const linearlyScaleTextSize = `
   font-size: calc(var(--min-font-size) * var(--current-viewport-width) / var(--min-viewport-width));
 `; // borrowed from https://css-tricks.com/how-to-get-a-pixel-perfect-linearly-scaled-ui/#aa-scaling-our-ui
 
+const setTextColor = `
+  color: var(--popup-text-color);
+`;
+
 const removeSpaceBetweenLetters = `
   word-spacing: -0.25em;
 `;
@@ -21,5 +25,6 @@ const removeSpaceBetweenLetters = `
 export const H1Logo = styled.h1`
   ${setTypeface}
   ${linearlyScaleTextSize}
+  ${setTextColor}
   ${removeSpaceBetweenLetters}
 `;
