@@ -45,6 +45,7 @@ export default function Login() {
         <input
           id="email"
           name="email"
+          placeholder={loginPage.fieldPlaceholder}
           type="email"
           style={{outline: '1px solid gray'}}
         />

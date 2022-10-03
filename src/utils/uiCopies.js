@@ -14,7 +14,8 @@ export const modal = {
 
 export const loginPage = {
   titleText: 'My Ideal Map',
-  fieldLabel: 'Email',
+  fieldLabel: 'Log in with your email address',
+  fieldPlaceholder: 'yourname@example.com',
   buttonLabel: 'Log in',
 };
 
