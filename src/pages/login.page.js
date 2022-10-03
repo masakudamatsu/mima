@@ -1,7 +1,9 @@
 import Head from 'next/head';
 
+import {ButtonDialog} from 'src/elements/ButtonDialog';
 import {ComposeLoginPage} from 'src/elements/ComposeLoginPage';
 import {DivLoginPageBackground} from 'src/elements/DivLoginPageBackground';
+import {FormLogin} from 'src/elements/FormLogin';
 import {H1Logo} from 'src/elements/H1Logo';
 
 import {NightModeContext} from 'src/wrappers/NightModeContext';
@@ -35,16 +37,7 @@ export default function Login() {
           <header>
             <H1Logo>My Ideal Map</H1Logo>
           </header>
-          <form
-            onSubmit={handleSubmit}
-            style={{
-              height: '100%',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              flexDirection: 'column',
-            }}
-          >
+          <FormLogin onSubmit={handleSubmit}>
             <label htmlFor="email">{loginPage.fieldLabel}</label>
             <input
               id="email"
@@ -52,13 +45,10 @@ export default function Login() {
               placeholder={loginPage.fieldPlaceholder}
               required
               type="email"
-              style={{outline: '1px solid gray'}}
             />
-            <button type="submit" style={{outline: '1px solid gray'}}>
-              {loginPage.buttonLabel}
-            </button>
-          </form>{' '}
-        </ComposeLoginPage>
+            <ButtonDialog type="submit">{loginPage.buttonLabel}</ButtonDialog>
+          </FormLogin>{' '}
+        </ComposeLoginPage>{' '}
       </DivLoginPageBackground>
     </>
   );
