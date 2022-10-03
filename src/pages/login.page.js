@@ -1,5 +1,7 @@
 import Head from 'next/head';
 
+import {ComposeLoginPage} from 'src/elements/ComposeLoginPage';
+import {DivLoginPageBackground} from 'src/elements/DivLoginPageBackground';
 import {H1Logo} from 'src/elements/H1Logo';
 
 import {NightModeContext} from 'src/wrappers/NightModeContext';
@@ -28,32 +30,36 @@ export default function Login() {
           rel="stylesheet"
         />
       </Head>
-      <header>
-        <H1Logo>My Ideal Map</H1Logo>
-      </header>
-      <form
-        onSubmit={handleSubmit}
-        style={{
-          height: '100%',
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
-          flexDirection: 'column',
-        }}
-      >
-        <label htmlFor="email">{loginPage.fieldLabel}</label>
-        <input
-          id="email"
-          name="email"
-          placeholder={loginPage.fieldPlaceholder}
-          required
-          type="email"
-          style={{outline: '1px solid gray'}}
-        />
-        <button type="submit" style={{outline: '1px solid gray'}}>
-          {loginPage.buttonLabel}
-        </button>
-      </form>
+      <DivLoginPageBackground>
+        <ComposeLoginPage>
+          <header>
+            <H1Logo>My Ideal Map</H1Logo>
+          </header>
+          <form
+            onSubmit={handleSubmit}
+            style={{
+              height: '100%',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              flexDirection: 'column',
+            }}
+          >
+            <label htmlFor="email">{loginPage.fieldLabel}</label>
+            <input
+              id="email"
+              name="email"
+              placeholder={loginPage.fieldPlaceholder}
+              required
+              type="email"
+              style={{outline: '1px solid gray'}}
+            />
+            <button type="submit" style={{outline: '1px solid gray'}}>
+              {loginPage.buttonLabel}
+            </button>
+          </form>{' '}
+        </ComposeLoginPage>
+      </DivLoginPageBackground>
     </>
   );
 }
