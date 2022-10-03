@@ -12,6 +12,12 @@ export const modal = {
   },
 };
 
+export const loginPage = {
+  titleText: 'My Ideal Map',
+  fieldLabel: 'Email',
+  buttonLabel: 'Log in',
+};
+
 export const userLocationMarkerLabel = 'You are here!';
 
 export const linkText = {
