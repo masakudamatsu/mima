@@ -19,4 +19,16 @@ describe('Login feature', () => {
       'submit',
     );
   });
+  it('hanles the lack of an email address', () => {
+    // TODO #259: Customize error handling
+    cy.findByLabelText(loginPage.fieldLabel).should('have.attr', 'required');
+  });
+  it('handles invalid email addresses', () => {
+    // TODO #259: Customize error handling
+    cy.findByLabelText(loginPage.fieldLabel).should(
+      'have.attr',
+      'type',
+      'email',
+    );
+  });
 });

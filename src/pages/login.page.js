@@ -46,6 +46,7 @@ export default function Login() {
           id="email"
           name="email"
           placeholder={loginPage.fieldPlaceholder}
+          required
           type="email"
           style={{outline: '1px solid gray'}}
         />
