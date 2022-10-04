@@ -26,10 +26,44 @@ describe('ComposeLoginPage component', () => {
   -webkit-justify-content: center;
   -ms-flex-pack: center;
   justify-content: center;
+  color: var(--popup-text-color);
+  font-family: 'Noto Sans',Verdana,sans-serif;
+  font-size: 1.0506rem;
+  font-weight: 400;
+  line-height: 1.25;
 }
 
-.c0 header + form {
+.c0 header + form,
+.c0 header + div[role="dialog"] {
   margin-top: 48px;
+}
+
+.c0 div[role="dialog"] h2 + div {
+  margin-top: 24px;
+}
+
+.c0 div[role="dialog"] p + p {
+  margin-top: 12px;
+}
+
+.c0 div[role="dialog"] div + button {
+  margin-top: 24px;
+}
+
+.c0 a {
+  color: var(--link-text-color);
+}
+
+.c0 h2 {
+  font-family: 'Noto Sans Display',Georgia,sans-serif;
+  font-size: 1.3986rem;
+  font-weight: 700;
+  line-height: 1.092;
+}
+
+.c0 div[role="dialog"] {
+  max-width: 561px;
+  width: 100%;
 }
 
 @supports (-webkit-backdrop-filter:blur(var(--blur-radius))) or (backdrop-filter:blur(var(--blur-radius))) {

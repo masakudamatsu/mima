@@ -17,6 +17,13 @@ export const loginPage = {
   fieldLabel: 'Log in with your email address',
   fieldPlaceholder: 'yourname@example.com',
   buttonLabel: 'Log in',
+  emailSentMessage: {
+    title: emailAddress => `Login link was sent to ${emailAddress}`,
+    paragraphOne: `In your inbox, look for a message entitled “Log in to My Ideal Map”.`,
+    paragraphTwo: `The message might end up in your spam folder.`,
+    paragraphThree: `Click the button below if you entered a wrong email address.`,
+  },
+  tryAgainButtonLabel: 'Try Again',
 };
 
 export const userLocationMarkerLabel = 'You are here!';
