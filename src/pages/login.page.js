@@ -10,7 +10,7 @@ import {NightModeContext} from 'src/wrappers/NightModeContext';
 import {useNightMode} from 'src/hooks/useNightMode';
 
 import {login} from 'src/utils/metadata';
-
+import {loginPage} from 'src/utils/uiCopies';
 export default function Login() {
   useNightMode(NightModeContext);
   return (
@@ -32,7 +32,7 @@ export default function Login() {
       <DivLoginPageBackground>
         <ComposeLoginPage>
           <header>
-            <H1Logo>My Ideal Map</H1Logo>
+            <H1Logo>{loginPage.titleText}</H1Logo>
           </header>
           <LoginForm />
         </ComposeLoginPage>{' '}
