@@ -20,6 +20,10 @@ function getPlaceName() {
   return faker.company.name();
 }
 
+function getToken() {
+  return faker.datatype.uuid(); // e.g., '4136cd0b-d90b-4af7-b485-5d1ded8db252'
+}
+
 function getWord() {
   return faker.lorem.word();
 }
@@ -61,4 +65,13 @@ function buildRes(overrides = {}) {
   return res;
 }
 
-export {buildPlace, buildReq, buildRes, getId, getNote, getPlaceName, getWord};
+export {
+  buildPlace,
+  buildReq,
+  buildRes,
+  getId,
+  getNote,
+  getPlaceName,
+  getToken,
+  getWord,
+};

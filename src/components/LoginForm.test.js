@@ -1,18 +1,24 @@
 // eslint-disable-next-line no-unused-vars
-import {render, screen} from '@testing-library/react';
+import {render, screen, waitFor} from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import {axe} from 'jest-axe';
 
 import {mockLoginWithMagicLink} from 'magic-sdk';
-
+import {getToken} from 'test/utils/generate';
 import {LoginForm} from './LoginForm';
 import {loginPage} from 'src/utils/uiCopies';
 
 const mockProps = {};
 const mockEmail = 'username@example.com';
+const mockDID = getToken();
+
+// mock fetch()
+global.fetch = jest.fn(() => Promise.resolve({})).mockName('fetch');
 
 describe(`LoginForm: happy path`, () => {
   beforeEach(() => {
+    // mock the receipt of DID
+    mockLoginWithMagicLink.mockResolvedValueOnce(mockDID);
     render(<LoginForm {...mockProps} />);
   });
   test(`Shows an example email address`, () => {
@@ -44,6 +50,22 @@ describe(`LoginForm: happy path`, () => {
     expect(mockLoginWithMagicLink).toHaveBeenCalledTimes(1);
     expect(mockLoginWithMagicLink.mock.calls[0][0]).toMatchObject({
       email: mockEmail,
+    });
+  });
+  test(`Sends a request with DID to login route after the user clicks Magic Link`, async () => {
+    // execute
+    userEvent.type(screen.getByLabelText(loginPage.fieldLabel), mockEmail);
+    userEvent.click(screen.getByRole('button', {name: loginPage.buttonLabel}));
+    // verify
+    await waitFor(() => {
+      expect(fetch).toHaveBeenCalledTimes(1);
+    });
+    expect(fetch).toHaveBeenCalledWith('/api/login', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${mockDID}`,
+      },
     });
   });
 });

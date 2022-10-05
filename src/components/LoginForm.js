@@ -19,11 +19,21 @@ export const LoginForm = () => {
     const emailSubmitted = event.target.elements.email.value;
     setUser({submitted: true, email: emailSubmitted});
     // send Magic link via email to user
-    await new Magic(
+    // and, once the user clicks the Magic link,
+    // receive `did` (decentralized identifier)
+    const did = await new Magic(
       process.env.NEXT_PUBLIC_MAGIC_PUBLISHABLE_KEY,
     ).auth.loginWithMagicLink({
       email: emailSubmitted,
       showUI: false, // disable the default UI after submission
+    });
+    // Once we have did, request for session token
+    await fetch('/api/login', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${did}`,
+      },
     });
   };
 
