@@ -70,6 +70,7 @@
   "dependencies": {
     "@googlemaps/js-api-loader": "1.12.1",
     "@googlemaps/react-wrapper": "1.1.15",
+    "@magic-sdk/admin": "1.4.1",
     "@prisma/client": "4.3.1",
     "autolinker": "3.14.3",
     "dompurify": "2.3.3",
