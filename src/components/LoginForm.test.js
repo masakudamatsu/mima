@@ -3,6 +3,8 @@ import {render, screen} from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import {axe} from 'jest-axe';
 
+import {mockLoginWithMagicLink} from 'magic-sdk';
+
 import {LoginForm} from './LoginForm';
 import {loginPage} from 'src/utils/uiCopies';
 
@@ -27,6 +29,22 @@ describe(`LoginForm: happy path`, () => {
         name: loginPage.emailSentMessage.title(mockEmail),
       }),
     ).toBeVisible();
+    const disableDefaultUI = {
+      showUI: false,
+    };
+    expect(mockLoginWithMagicLink.mock.calls[0][0]).toMatchObject(
+      disableDefaultUI,
+    );
+  });
+  test(`Sends Magic Link to the user after submitting an email address`, () => {
+    // execute
+    userEvent.type(screen.getByLabelText(loginPage.fieldLabel), mockEmail);
+    userEvent.click(screen.getByRole('button', {name: loginPage.buttonLabel}));
+    // verify
+    expect(mockLoginWithMagicLink).toHaveBeenCalledTimes(1);
+    expect(mockLoginWithMagicLink.mock.calls[0][0]).toMatchObject({
+      email: mockEmail,
+    });
   });
 });
 

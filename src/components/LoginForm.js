@@ -1,4 +1,6 @@
 // import PropTypes from 'prop-types';
+import {Magic} from 'magic-sdk';
+
 import {ButtonDialog} from 'src/elements/ButtonDialog';
 import {FormLogin} from 'src/elements/FormLogin';
 
@@ -14,7 +16,15 @@ export const LoginForm = () => {
   const {submitted, email} = user;
   const handleSubmit = async event => {
     event.preventDefault();
-    setUser({submitted: true, email: event.target.elements.email.value});
+    const emailSubmitted = event.target.elements.email.value;
+    setUser({submitted: true, email: emailSubmitted});
+    // send Magic link via email to user
+    await new Magic(
+      process.env.NEXT_PUBLIC_MAGIC_PUBLISHABLE_KEY,
+    ).auth.loginWithMagicLink({
+      email: emailSubmitted,
+      showUI: false, // disable the default UI after submission
+    });
   };
 
   return submitted === false ? (
