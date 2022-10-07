@@ -1,4 +1,4 @@
-import {buildReq, buildRes, getToken} from 'test/utils/generate';
+import {buildReq, buildRes, getToken, getWord} from 'test/utils/generate';
 import {mockValidate} from '@magic-sdk/admin';
 import handleLogin from './login.api';
 
@@ -39,5 +39,16 @@ describe('sad path', () => {
 
     expect(res.status).toHaveBeenCalledTimes(1);
     expect(res.status).toHaveBeenCalledWith(401);
+  });
+  it('handles a wrong request method', async () => {
+    const req = buildReq({
+      method: getWord().toUpperCase(),
+    });
+    const res = buildRes();
+
+    await handleLogin(req, res);
+
+    expect(res.status).toHaveBeenCalledTimes(1);
+    expect(res.status).toHaveBeenCalledWith(405);
   });
 });
