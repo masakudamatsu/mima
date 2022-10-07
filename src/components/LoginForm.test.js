@@ -132,6 +132,30 @@ describe('LoginForm: sad path', () => {
       }),
     ).toBeVisible();
   });
+  test('Shows login failure message with Try Again button when authentication fails', async () => {
+    // setup
+    fetch.mockImplementationOnce(() => Promise.resolve({ok: false}));
+    // execute
+    userEvent.type(screen.getByLabelText(loginPage.fieldLabel), mockEmail);
+    userEvent.click(screen.getByRole('button', {name: loginPage.buttonLabel}));
+    // verify
+    await waitFor(() => {
+      expect(
+        screen.getByRole('alertdialog', {
+          name: loginPage.loginFailureMessage.title,
+        }),
+      ).toBeVisible();
+    });
+    userEvent.click(
+      screen.getByRole('button', {name: loginPage.tryAgainButtonLabel}),
+    );
+    expect(screen.getByLabelText(loginPage.fieldLabel)).toBeVisible();
+    expect(
+      screen.getByRole('button', {
+        name: loginPage.buttonLabel,
+      }),
+    ).toBeVisible();
+  });
 });
 
 test('Accessibility checks', async () => {

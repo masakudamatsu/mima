@@ -43,7 +43,7 @@ export const LoginForm = () => {
     if (authRequest.ok) {
       router.push('/');
     } else {
-      console.error('Authentication fails');
+      setUser({status: 'error'});
     }
   };
 
@@ -80,6 +80,31 @@ export const LoginForm = () => {
         >
           {loginPage.tryAgainButtonLabel}
         </ButtonDialog>
+      </div>
+    );
+  } else if (status === 'error') {
+    return (
+      <div
+        aria-describedby="login-failure-body"
+        aria-labelledby="login-failure"
+        role="alertdialog"
+      >
+        <h2 id="login-failure">{loginPage.loginFailureMessage.title}</h2>
+        <div id="longin-failure-body">
+          <p>{loginPage.loginFailureMessage.paragraphOne}</p>
+          <p>{loginPage.loginFailureMessage.paragraphTwo}</p>
+        </div>
+        <div>
+          <ButtonDialog
+            onClick={() => setUser({status: 'initial', email: null})}
+            type="button"
+          >
+            {loginPage.tryAgainButtonLabel}
+          </ButtonDialog>
+          <ButtonDialog onClick={() => {}} type="button">
+            {loginPage.contactSupportButtonLabel}
+          </ButtonDialog>
+        </div>
       </div>
     );
   }

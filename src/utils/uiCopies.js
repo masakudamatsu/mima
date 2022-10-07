@@ -24,6 +24,12 @@ export const loginPage = {
     paragraphThree: `Click the button below if you entered a wrong email address.`,
   },
   tryAgainButtonLabel: 'Try Again',
+  loginFailureMessage: {
+    title: `Login fails`,
+    paragraphOne: `Something went wrong during the login process.`,
+    paragraphTwo: `Please try again. If the problem persists, contact us.`,
+  },
+  contactSupportButtonLabel: 'Contact Us',
 };
 
 export const userLocationMarkerLabel = 'You are here!';

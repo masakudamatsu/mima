@@ -20,17 +20,27 @@ const centerAlignComponents = `
 
 const positionComponentsVertically = `
   & header + form,
-  & header + div[role="dialog"] {
+  & header + div[role="dialog"],
+  & header + div[role="alertdialog"] {
     margin-top: ${dimension.button['minimum target size 100']}
   }
-  & div[role="dialog"] h2 + div {
+  & div[role="dialog"] h2 + div,
+  & div[role="alertdialog"] h2 + div {
     margin-top: ${dimension.button['minimum target size 50']}  
   }
-  & div[role="dialog"] p + p {
+  & div[role="dialog"] p + p,
+  & div[role="alertdialog"] p + p {
     margin-top: ${dimension.button['minimum target size 25']}  
   }
-  & div[role="dialog"] div + button {
+  & div[role="dialog"] div + button,
+  & div[role="alertdialog"] div + div {
     margin-top: ${dimension.button['minimum target size 50']}  
+  }
+`;
+
+const positionComponentsHorizontally = `
+  & button + button {
+    margin-left: ${dimension.button['minimum target spacing 100']}
   }
 `;
 
@@ -64,6 +74,7 @@ export const ComposeLoginPage = styled.div`
   ${setMargins}
   ${centerAlignComponents}
   ${positionComponentsVertically}
+  ${positionComponentsHorizontally}
   ${styleText}
   ${setDialogSize}
 `;

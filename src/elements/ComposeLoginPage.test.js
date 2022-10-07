@@ -34,20 +34,28 @@ describe('ComposeLoginPage component', () => {
 }
 
 .c0 header + form,
-.c0 header + div[role="dialog"] {
+.c0 header + div[role="dialog"],
+.c0 header + div[role="alertdialog"] {
   margin-top: 48px;
 }
 
-.c0 div[role="dialog"] h2 + div {
+.c0 div[role="dialog"] h2 + div,
+.c0 div[role="alertdialog"] h2 + div {
   margin-top: 24px;
 }
 
-.c0 div[role="dialog"] p + p {
+.c0 div[role="dialog"] p + p,
+.c0 div[role="alertdialog"] p + p {
   margin-top: 12px;
 }
 
-.c0 div[role="dialog"] div + button {
+.c0 div[role="dialog"] div + button,
+.c0 div[role="alertdialog"] div + div {
   margin-top: 24px;
+}
+
+.c0 button + button {
+  margin-left: 8px;
 }
 
 .c0 a {
