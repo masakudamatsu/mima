@@ -11,17 +11,18 @@ import {loginPage} from 'src/utils/uiCopies';
 
 export const LoginForm = () => {
   const [user, setUser] = useStateObject({
-    submitted: false,
+    status: 'initial',
     email: null,
+    error: null,
   });
-  const {submitted, email} = user;
+  const {status, email} = user;
 
   const router = useRouter();
 
   const handleSubmit = async event => {
     event.preventDefault();
     const emailSubmitted = event.target.elements.email.value;
-    setUser({submitted: true, email: emailSubmitted});
+    setUser({status: 'submitted', email: emailSubmitted});
     // send Magic link via email to user
     // and, once the user clicks the Magic link,
     // receive `did` (decentralized identifier)
@@ -46,38 +47,42 @@ export const LoginForm = () => {
     }
   };
 
-  return submitted === false ? (
-    <FormLogin onSubmit={handleSubmit}>
-      <label htmlFor="email">{loginPage.fieldLabel}</label>
-      <input
-        id="email"
-        name="email"
-        placeholder={loginPage.fieldPlaceholder}
-        required
-        type="email"
-      />
-      <ButtonDialog type="submit">{loginPage.buttonLabel}</ButtonDialog>
-    </FormLogin>
-  ) : (
-    <div
-      aria-describedby="email-sent-body"
-      aria-labelledby="email-sent"
-      role="dialog"
-    >
-      <h2 id="email-sent">{loginPage.emailSentMessage.title(email)}</h2>
-      <div id="email-sent-body">
-        <p>{loginPage.emailSentMessage.paragraphOne}</p>
-        <p>{loginPage.emailSentMessage.paragraphTwo}</p>
-        <p>{loginPage.emailSentMessage.paragraphThree}</p>
-      </div>
-      <ButtonDialog
-        onClick={() => setUser({submitted: false, email: null})}
-        type="button"
+  if (status === 'initial') {
+    return (
+      <FormLogin onSubmit={handleSubmit}>
+        <label htmlFor="email">{loginPage.fieldLabel}</label>
+        <input
+          id="email"
+          name="email"
+          placeholder={loginPage.fieldPlaceholder}
+          required
+          type="email"
+        />
+        <ButtonDialog type="submit">{loginPage.buttonLabel}</ButtonDialog>
+      </FormLogin>
+    );
+  } else if (status === 'submitted') {
+    return (
+      <div
+        aria-describedby="email-sent-body"
+        aria-labelledby="email-sent"
+        role="dialog"
       >
-        {loginPage.tryAgainButtonLabel}
-      </ButtonDialog>
-    </div>
-  );
+        <h2 id="email-sent">{loginPage.emailSentMessage.title(email)}</h2>
+        <div id="email-sent-body">
+          <p>{loginPage.emailSentMessage.paragraphOne}</p>
+          <p>{loginPage.emailSentMessage.paragraphTwo}</p>
+          <p>{loginPage.emailSentMessage.paragraphThree}</p>
+        </div>
+        <ButtonDialog
+          onClick={() => setUser({status: 'initial', email: null})}
+          type="button"
+        >
+          {loginPage.tryAgainButtonLabel}
+        </ButtonDialog>
+      </div>
+    );
+  }
 };
 
 // LoginForm.propTypes = {};
