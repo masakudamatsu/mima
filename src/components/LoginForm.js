@@ -1,4 +1,5 @@
 // import PropTypes from 'prop-types';
+import {useRouter} from 'next/router';
 import {Magic} from 'magic-sdk';
 
 import {ButtonDialog} from 'src/elements/ButtonDialog';
@@ -14,6 +15,9 @@ export const LoginForm = () => {
     email: null,
   });
   const {submitted, email} = user;
+
+  const router = useRouter();
+
   const handleSubmit = async event => {
     event.preventDefault();
     const emailSubmitted = event.target.elements.email.value;
@@ -28,13 +32,18 @@ export const LoginForm = () => {
       showUI: false, // disable the default UI after submission
     });
     // Once we have did, request for session token
-    await fetch('/api/login', {
+    const authRequest = await fetch('/api/login', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
         Authorization: `Bearer ${did}`,
       },
     });
+    if (authRequest.ok) {
+      router.push('/');
+    } else {
+      console.error('Authentication fails');
+    }
   };
 
   return submitted === false ? (

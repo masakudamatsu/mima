@@ -4,6 +4,8 @@ import userEvent from '@testing-library/user-event';
 import {axe} from 'jest-axe';
 
 import {mockLoginWithMagicLink} from 'magic-sdk';
+import {useRouter} from 'next/router';
+
 import {getToken} from 'test/utils/generate';
 import {LoginForm} from './LoginForm';
 import {loginPage} from 'src/utils/uiCopies';
@@ -13,12 +15,26 @@ const mockEmail = 'username@example.com';
 const mockDID = getToken();
 
 // mock fetch()
-global.fetch = jest.fn(() => Promise.resolve({})).mockName('fetch');
+global.fetch = jest.fn(() => Promise.resolve({ok: true})).mockName('fetch');
 
+// mock useRouter()
+// https://github.com/vercel/next.js/issues/7479#issuecomment-626297880
+jest.mock('next/router', () => ({
+  __esModule: true,
+  useRouter: jest.fn().mockName('useRouter'),
+}));
+
+let mockRouter;
 describe(`LoginForm: happy path`, () => {
   beforeEach(() => {
     // mock the receipt of DID
     mockLoginWithMagicLink.mockResolvedValueOnce(mockDID);
+    // mock router.push()
+    // https://github.com/vercel/next.js/issues/7479#issuecomment-626297880
+    mockRouter = {
+      push: jest.fn().mockName('router.push'),
+    };
+    useRouter.mockReturnValue(mockRouter);
     render(<LoginForm {...mockProps} />);
   });
   test(`Shows an example email address`, () => {
@@ -67,6 +83,16 @@ describe(`LoginForm: happy path`, () => {
         Authorization: `Bearer ${mockDID}`,
       },
     });
+  });
+  test('Redirect to the app if login is successful', async () => {
+    // execute
+    userEvent.type(screen.getByLabelText(loginPage.fieldLabel), mockEmail);
+    userEvent.click(screen.getByRole('button', {name: loginPage.buttonLabel}));
+    // verify
+    await waitFor(() => {
+      expect(mockRouter.push).toHaveBeenCalledTimes(1);
+    });
+    expect(mockRouter.push).toHaveBeenCalledWith('/');
   });
 });
 
