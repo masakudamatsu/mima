@@ -22,3 +22,22 @@ describe('happy path', () => {
     expect(res.status).toHaveBeenCalledWith(200);
   });
 });
+
+describe('sad path', () => {
+  it('handles an invalid DID', async () => {
+    mockValidate.mockRejectedValueOnce(new Error());
+    const did = getToken();
+    const req = buildReq({
+      method: 'POST',
+      headers: {
+        authorization: `Bearer ${did}`,
+      },
+    });
+    const res = buildRes();
+
+    await handleLogin(req, res);
+
+    expect(res.status).toHaveBeenCalledTimes(1);
+    expect(res.status).toHaveBeenCalledWith(401);
+  });
+});
