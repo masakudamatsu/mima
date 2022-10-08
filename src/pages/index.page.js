@@ -1,6 +1,7 @@
 import {useState} from 'react';
 import Head from 'next/head';
 import {Wrapper} from '@googlemaps/react-wrapper';
+import Iron from '@hapi/iron';
 
 import {index} from 'src/utils/metadata';
 
@@ -50,7 +51,22 @@ function HomePage({savedPlaces}) {
 
 export default HomePage;
 
-export async function getServerSideProps() {
+export async function getServerSideProps({req}) {
+  // API reference: https://nextjs.org/docs/api-reference/data-fetching/get-server-side-props#context-parameter
+  try {
+    await Iron.unseal(
+      req.cookies['api_token'],
+      process.env.ENCRYPTION_SECRET,
+      Iron.defaults,
+    ); // API reference: https://hapi.dev/module/iron/api/?v=7.0.0#await-unsealsealed-password-options
+  } catch (error) {
+    return {
+      redirect: {
+        destination: '/login',
+        permanent: false,
+      }, // API reference: https://nextjs.org/docs/api-reference/next.config.js/redirects
+    }; // Docs: https://nextjs.org/docs/api-reference/data-fetching/get-server-side-props#redirect
+  }
   const savedPlaces = await prisma.place.findMany();
   return {props: {savedPlaces}};
 }

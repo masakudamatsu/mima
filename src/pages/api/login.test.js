@@ -1,9 +1,9 @@
 import {buildReq, buildRes, getToken, getWord} from 'test/utils/generate';
-import {mockValidate} from '@magic-sdk/admin';
+import {mockGetMetadataByToken, mockValidate} from '@magic-sdk/admin';
 import handleLogin from './login.api';
 
 describe('happy path', () => {
-  it('Handles a valid DID', async () => {
+  it('Validates the DID sent by client', async () => {
     const did = getToken();
     const req = buildReq({
       method: 'POST',
@@ -17,10 +17,26 @@ describe('happy path', () => {
 
     expect(mockValidate).toHaveBeenCalledTimes(1);
     expect(mockValidate).toHaveBeenCalledWith(did);
-
-    expect(res.status).toHaveBeenCalledTimes(1);
-    expect(res.status).toHaveBeenCalledWith(200);
   });
+  it('Retrieves unique user ID from Magic server', async () => {
+    const did = getToken();
+    const req = buildReq({
+      method: 'POST',
+      headers: {
+        authorization: `Bearer ${did}`,
+      },
+    });
+    const res = buildRes();
+
+    await handleLogin(req, res);
+
+    expect(mockGetMetadataByToken).toHaveBeenCalledTimes(1);
+    expect(mockGetMetadataByToken).toHaveBeenCalledWith(did);
+  });
+  // TODO #268: fix mockGetMetadataByToken's throwing error so the following three tests can be run
+  it.skip('Encrypts user ID', async () => {});
+  it.skip('Creates a cookie from encrypted user ID', async () => {});
+  it.skip('Sends cookie to the client', async () => {});
 });
 
 describe('sad path', () => {
