@@ -3,6 +3,9 @@ describe('Auth feature', () => {
     cy.visit('/');
     cy.url().should('eq', `${Cypress.config().baseUrl}/login`);
   });
-  // TODO #268: figure out how to obtain/mock a session cookie with Cypress
-  it.skip('Allows auth-ed users to visit the app', () => {});
+  it('Allows auth-ed users to visit the app', () => {
+    cy.loginWithCookie('mockIssuer');
+    cy.visit('/');
+    cy.url().should('eq', `${Cypress.config().baseUrl}/`);
+  });
 });
