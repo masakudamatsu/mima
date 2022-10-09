@@ -9,8 +9,8 @@ import {H1Logo} from 'src/elements/H1Logo';
 import {NightModeContext} from 'src/wrappers/NightModeContext';
 import {useNightMode} from 'src/hooks/useNightMode';
 
-import {login} from 'src/utils/metadata';
-import {loginPage} from 'src/utils/uiCopies';
+import {signup} from 'src/utils/metadata';
+import {signupPage} from 'src/utils/uiCopies';
 
 const {decryptToken} = require('src/utils/iron');
 
@@ -19,7 +19,7 @@ export default function Login() {
   return (
     <>
       <Head>
-        <title>{login.title}</title>
+        <title>{signup.title}</title>
         {/* TODO #111: remove below after locally hosting Google Fonts */}
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link
@@ -35,9 +35,9 @@ export default function Login() {
       <DivLoginPageBackground>
         <ComposeLoginPage>
           <header>
-            <H1Logo>{loginPage.titleText}</H1Logo>
+            <H1Logo>{signupPage.titleText}</H1Logo>
           </header>
-          <LoginForm page={loginPage} />
+          <LoginForm page={signupPage} />
         </ComposeLoginPage>{' '}
       </DivLoginPageBackground>
     </>

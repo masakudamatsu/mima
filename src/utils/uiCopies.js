@@ -32,6 +32,26 @@ export const loginPage = {
   contactSupportButtonLabel: 'Contact Us',
 };
 
+export const signupPage = {
+  titleText: 'My Ideal Map',
+  fieldLabel: 'Sign up with your email address',
+  fieldPlaceholder: 'yourname@example.com',
+  buttonLabel: 'Sign up',
+  emailSentMessage: {
+    title: emailAddress => `Sign-up link was sent to ${emailAddress}`,
+    paragraphOne: `In your inbox, look for a message entitled “Log in to My Ideal Map”.`,
+    paragraphTwo: `The message might end up in your spam folder.`,
+    paragraphThree: `In case you've already signed up with us, don't worry. Simply click the link in the message.`,
+  },
+  tryAgainButtonLabel: 'Try Again',
+  loginFailureMessage: {
+    title: `Sign-up fails`,
+    paragraphOne: `Something went wrong during the sign-up process.`,
+    paragraphTwo: `Please try again. If the problem persists, contact us.`,
+  },
+  contactSupportButtonLabel: 'Contact Us',
+};
+
 export const userLocationMarkerLabel = 'You are here!';
 
 export const linkText = {

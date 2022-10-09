@@ -1,5 +1,6 @@
 import {Magic} from '@magic-sdk/admin';
 import {serialize} from 'cookie';
+const prisma = require('src/utils/prisma');
 const {encryptSession} = require('src/utils/iron');
 
 const magic = new Magic(process.env.MAGIC_SECRET_KEY);
@@ -11,11 +12,26 @@ export default async function handleLogin(req, res) {
     const did = magic.utils.parseAuthorizationHeader(req.headers.authorization);
     await magic.token.validate(did);
 
-    // Obtain the unique ID of the user
-    const {issuer} = await magic.users.getMetadataByToken(did);
+    // Obtain the unique ID and email address of the user
+    const {issuer, email} = await magic.users.getMetadataByToken(did);
     // https://magic.link/docs/auth/api-reference/server-side-sdks/node#getmetadatabytoken
     // issuer (String): The Decentralized ID of the user. We recommend this value to be used as the user ID in your own tables.
 
+    // Add the user to the database if s/he is signing up
+    let user;
+    user = await prisma.user.findUnique({
+      where: {
+        issuer,
+      },
+    }); // API reference: https://www.prisma.io/docs/reference/api-reference/prisma-client-reference#findunique
+    if (!user) {
+      user = await prisma.user.create({
+        data: {
+          issuer,
+          email,
+        },
+      });
+    }
     // encrypt the user ID
     const token = await encryptSession(issuer);
     // Author a cookie to persist a users session

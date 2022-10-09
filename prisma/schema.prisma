@@ -10,6 +10,11 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+model User {
+  issuer String @id
+  email String @unique
+}
+
 model Place {
   id          Int   @id @default(autoincrement())
   geometry  Json

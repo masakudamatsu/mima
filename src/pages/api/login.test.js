@@ -34,6 +34,7 @@ describe('happy path', () => {
     expect(mockGetMetadataByToken).toHaveBeenCalledWith(did);
   });
   // TODO #268: fix mockGetMetadataByToken's throwing error so the following three tests can be run
+  it.skip('Adds a new user to the database', async () => {});
   it.skip('Encrypts user ID', async () => {});
   it.skip('Creates a cookie from encrypted user ID', async () => {});
   it.skip('Sends cookie to the client', async () => {});

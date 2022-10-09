@@ -8,9 +8,11 @@ import {useRouter} from 'next/router';
 
 import {getToken} from 'test/utils/generate';
 import {LoginForm} from './LoginForm';
-import {loginPage} from 'src/utils/uiCopies';
+import {loginPage, signupPage} from 'src/utils/uiCopies';
 
-const mockProps = {};
+const mockProps = {
+  page: loginPage,
+};
 const mockEmail = 'username@example.com';
 const mockDID = getToken();
 
@@ -35,15 +37,16 @@ describe(`LoginForm: happy path`, () => {
       push: jest.fn().mockName('router.push'),
     };
     useRouter.mockReturnValue(mockRouter);
-    render(<LoginForm {...mockProps} />);
   });
   test(`Shows an example email address`, () => {
+    render(<LoginForm {...mockProps} />);
     expect(screen.getByLabelText(loginPage.fieldLabel)).toHaveAttribute(
       'placeholder',
       loginPage.fieldPlaceholder,
     );
   });
   test(`Shows "Email Sent" message after submitting an email address`, async () => {
+    render(<LoginForm {...mockProps} />);
     userEvent.type(screen.getByLabelText(loginPage.fieldLabel), mockEmail);
     userEvent.click(screen.getByRole('button', {name: loginPage.buttonLabel}));
     expect(
@@ -59,6 +62,7 @@ describe(`LoginForm: happy path`, () => {
     );
   });
   test(`Sends Magic Link to the user after submitting an email address`, () => {
+    render(<LoginForm {...mockProps} />);
     // execute
     userEvent.type(screen.getByLabelText(loginPage.fieldLabel), mockEmail);
     userEvent.click(screen.getByRole('button', {name: loginPage.buttonLabel}));
@@ -69,6 +73,7 @@ describe(`LoginForm: happy path`, () => {
     });
   });
   test(`Sends a request with DID to login route after the user clicks Magic Link`, async () => {
+    render(<LoginForm {...mockProps} />);
     // execute
     userEvent.type(screen.getByLabelText(loginPage.fieldLabel), mockEmail);
     userEvent.click(screen.getByRole('button', {name: loginPage.buttonLabel}));
@@ -85,6 +90,7 @@ describe(`LoginForm: happy path`, () => {
     });
   });
   test('Redirect to the app if login is successful', async () => {
+    render(<LoginForm {...mockProps} />);
     // execute
     userEvent.type(screen.getByLabelText(loginPage.fieldLabel), mockEmail);
     userEvent.click(screen.getByRole('button', {name: loginPage.buttonLabel}));
@@ -94,19 +100,31 @@ describe(`LoginForm: happy path`, () => {
     });
     expect(mockRouter.push).toHaveBeenCalledWith('/');
   });
+  test('Changes UI with page prop', async () => {
+    render(<LoginForm page={signupPage} />);
+    userEvent.type(screen.getByLabelText(signupPage.fieldLabel), mockEmail);
+    userEvent.click(screen.getByRole('button', {name: signupPage.buttonLabel}));
+    expect(
+      await screen.findByRole('dialog', {
+        name: signupPage.emailSentMessage.title(mockEmail),
+      }),
+    ).toBeVisible();
+    expect(
+      screen.queryByRole('button', {name: signupPage.tryAgainButtonLabel}),
+    ).not.toBeInTheDocument();
+  });
 });
 
 describe('LoginForm: sad path', () => {
-  beforeEach(() => {
-    render(<LoginForm {...mockProps} />);
-  });
   it('handles the lack of an email address upon submission', () => {
+    render(<LoginForm {...mockProps} />);
     // TODO #259: Customize error handling
     expect(screen.getByLabelText(loginPage.fieldLabel)).toHaveAttribute(
       'required',
     );
   });
   it('handles invalid email addresses', () => {
+    render(<LoginForm {...mockProps} />);
     // TODO #259: Customize error handling
     expect(screen.getByLabelText(loginPage.fieldLabel)).toHaveAttribute(
       'type',
@@ -114,6 +132,7 @@ describe('LoginForm: sad path', () => {
     );
   });
   test(`Shows the login form again after clicking the try again button in the "Email Sent" message`, async () => {
+    render(<LoginForm {...mockProps} />);
     const emailField = screen.getByLabelText(loginPage.fieldLabel);
     const submitButton = screen.getByRole('button', {
       name: loginPage.buttonLabel,
@@ -133,6 +152,7 @@ describe('LoginForm: sad path', () => {
     ).toBeVisible();
   });
   test('Shows login failure message with Try Again button when authentication fails', async () => {
+    render(<LoginForm {...mockProps} />);
     // setup
     fetch.mockImplementationOnce(() => Promise.resolve({ok: false}));
     // execute
@@ -153,6 +173,31 @@ describe('LoginForm: sad path', () => {
     expect(
       screen.getByRole('button', {
         name: loginPage.buttonLabel,
+      }),
+    ).toBeVisible();
+  });
+  test('Shows sign up failure message with Try Again button when sign-up fails', async () => {
+    render(<LoginForm page={signupPage} />);
+    // setup
+    fetch.mockImplementationOnce(() => Promise.resolve({ok: false}));
+    // execute
+    userEvent.type(screen.getByLabelText(signupPage.fieldLabel), mockEmail);
+    userEvent.click(screen.getByRole('button', {name: signupPage.buttonLabel}));
+    // verify
+    await waitFor(() => {
+      expect(
+        screen.getByRole('alertdialog', {
+          name: signupPage.loginFailureMessage.title,
+        }),
+      ).toBeVisible();
+    });
+    userEvent.click(
+      screen.getByRole('button', {name: signupPage.tryAgainButtonLabel}),
+    );
+    expect(screen.getByLabelText(signupPage.fieldLabel)).toBeVisible();
+    expect(
+      screen.getByRole('button', {
+        name: signupPage.buttonLabel,
       }),
     ).toBeVisible();
   });

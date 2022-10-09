@@ -7,3 +7,7 @@ export const index = {
 export const login = {
   title: 'My Ideal Map: Login',
 };
+
+export const signup = {
+  title: 'My Ideal Map: Sign up',
+};
