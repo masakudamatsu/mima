@@ -11,6 +11,9 @@ import {useNightMode} from 'src/hooks/useNightMode';
 
 import {login} from 'src/utils/metadata';
 import {loginPage} from 'src/utils/uiCopies';
+
+const {decryptToken} = require('src/utils/iron');
+
 export default function Login() {
   useNightMode(NightModeContext);
   return (
@@ -39,4 +42,21 @@ export default function Login() {
       </DivLoginPageBackground>
     </>
   );
+}
+
+export async function getServerSideProps({req}) {
+  // API reference: https://nextjs.org/docs/api-reference/data-fetching/get-server-side-props#context-parameter
+  try {
+    await decryptToken(req.cookies['api_token']);
+    return {
+      redirect: {
+        destination: '/',
+        permanent: false,
+      }, // API reference: https://nextjs.org/docs/api-reference/next.config.js/redirects
+    }; // Docs: https://nextjs.org/docs/api-reference/data-fetching/get-server-side-props#redirect
+  } catch (error) {
+    return {
+      props: {},
+    };
+  }
 }

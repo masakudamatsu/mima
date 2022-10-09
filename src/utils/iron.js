@@ -9,6 +9,16 @@ async function encryptSession(session) {
   return token;
 }
 
+async function decryptToken(token) {
+  const session = await Iron.unseal(
+    token,
+    process.env.ENCRYPTION_SECRET,
+    Iron.defaults,
+  ); // API reference: https://hapi.dev/module/iron/api/?v=7.0.0#await-unsealsealed-password-options
+  return session;
+}
+
 module.exports = {
+  decryptToken,
   encryptSession,
 };

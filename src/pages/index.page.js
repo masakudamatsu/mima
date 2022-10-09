@@ -1,7 +1,6 @@
 import {useState} from 'react';
 import Head from 'next/head';
 import {Wrapper} from '@googlemaps/react-wrapper';
-import Iron from '@hapi/iron';
 
 import {index} from 'src/utils/metadata';
 
@@ -17,6 +16,7 @@ import {SearchedPlace} from 'src/components/SearchedPlace';
 import {useNightMode} from 'src/hooks/useNightMode';
 
 const prisma = require('src/utils/prisma');
+const {decryptToken} = require('src/utils/iron');
 
 function HomePage({savedPlaces}) {
   useNightMode(NightModeContext);
@@ -54,11 +54,7 @@ export default HomePage;
 export async function getServerSideProps({req}) {
   // API reference: https://nextjs.org/docs/api-reference/data-fetching/get-server-side-props#context-parameter
   try {
-    await Iron.unseal(
-      req.cookies['api_token'],
-      process.env.ENCRYPTION_SECRET,
-      Iron.defaults,
-    ); // API reference: https://hapi.dev/module/iron/api/?v=7.0.0#await-unsealsealed-password-options
+    await decryptToken(req.cookies['api_token']);
   } catch (error) {
     return {
       redirect: {

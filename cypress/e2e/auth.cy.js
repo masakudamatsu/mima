@@ -8,4 +8,9 @@ describe('Auth feature', () => {
     cy.visit('/');
     cy.url().should('eq', `${Cypress.config().baseUrl}/`);
   });
+  it('Redirects auth-ed users from login page', () => {
+    cy.loginWithCookie('mockIssuer');
+    cy.visit('/login');
+    cy.url().should('eq', `${Cypress.config().baseUrl}/`);
+  });
 });
