@@ -42,7 +42,6 @@ describe('happy path', () => {
     });
     const res = buildRes({
       setHeader: jest.fn().mockName('res.setHeader'),
-      end: jest.fn().mockName('res.end'),
     });
 
     await handleLogout(req, res);
@@ -59,7 +58,6 @@ describe('happy path', () => {
     });
     const res = buildRes({
       setHeader: jest.fn().mockName('res.setHeader'),
-      end: jest.fn().mockName('res.end'),
     });
 
     await handleLogout(req, res);
@@ -76,7 +74,6 @@ describe('happy path', () => {
     });
     const res = buildRes({
       setHeader: jest.fn().mockName('res.setHeader'),
-      end: jest.fn().mockName('res.end'),
     });
 
     await handleLogout(req, res);

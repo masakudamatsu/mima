@@ -102,7 +102,6 @@ describe('api/places', () => {
       method: getWord().toUpperCase(),
     });
     const res = buildRes({
-      end: jest.fn().mockName('res.end'),
       setHeader: jest.fn().mockName('res.setHeader'),
     });
     await handlePlaces(req, res);
