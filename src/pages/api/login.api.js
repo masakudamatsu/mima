@@ -33,7 +33,7 @@ export default async function handleLogin(req, res) {
       });
     }
     // encrypt the user ID
-    const token = await encryptSession(issuer);
+    const token = await encryptSession({issuer});
     // Author a cookie to persist a users session
     const MAX_AGE = 60 * 60 * 24 * 7; // 7 days
     // https://magic.link/docs/auth/more/customization/session-management
