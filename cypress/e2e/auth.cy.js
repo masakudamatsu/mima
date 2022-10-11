@@ -1,3 +1,4 @@
+import {buttonLabel} from '../../src/utils/uiCopies';
 describe('Auth feature', () => {
   it('Redirects unauth-ed users to login page', () => {
     cy.visit('/');
@@ -17,5 +18,15 @@ describe('Auth feature', () => {
     cy.loginWithCookie({issuer: 'mockIssuer'});
     cy.visit('/signup');
     cy.url().should('eq', `${Cypress.config().baseUrl}/`);
+  });
+  it('Logs users out after they click logout button in the menu', () => {
+    cy.log(`**Setting up**`);
+    cy.loginWithCookie({issuer: 'mockIssuer'});
+    cy.visit('/');
+    cy.log(`**Clicking the logout button...`);
+    cy.findByRole('button', {name: buttonLabel.menu}).click();
+    cy.findByRole('button', {name: buttonLabel.logout}).click();
+    cy.log('**...redirects to login page**');
+    cy.url().should('eq', `${Cypress.config().baseUrl}/login`);
   });
 });
