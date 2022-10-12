@@ -21,8 +21,8 @@ function getPlaceName() {
 }
 
 function getToken() {
-  return faker.datatype.uuid(); // e.g., '4136cd0b-d90b-4af7-b485-5d1ded8db252'
-}
+  return faker.internet.password(64, false, /[A-Za-z0-9+/]/); // 64-character-long base64 string; see https://en.wikipedia.org/wiki/Base64#Base64_table_from_RFC_4648
+} // API reference: https://fakerjs.dev/api/internet.html#password
 
 function getWord() {
   return faker.lorem.word();
