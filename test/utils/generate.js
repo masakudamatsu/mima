@@ -1,6 +1,10 @@
 // adapted from: https://github.com/kentcdodds/testing-node-apps/blob/main/test/utils/generate.js
 import {faker} from '@faker-js/faker';
 
+function getEmail() {
+  return faker.internet.email();
+} // API reference: https://fakerjs.dev/api/internet.html#email
+
 function getId() {
   return faker.random.numeric();
 }
@@ -70,6 +74,7 @@ export {
   buildPlace,
   buildReq,
   buildRes,
+  getEmail,
   getId,
   getNote,
   getPlaceName,
