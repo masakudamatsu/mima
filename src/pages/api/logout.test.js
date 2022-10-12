@@ -5,20 +5,6 @@ import {mockLogoutByIssuer} from '@magic-sdk/admin';
 
 import handleLogout from './logout.api';
 
-// mock environment variable
-// adapted from: https://stackoverflow.com/a/48042799
-const ORIGINAL_ENV = process.env; // storing the original env vars
-beforeEach(() => {
-  jest.resetModules(); // Most important - it clears the cache
-  process.env = {...ORIGINAL_ENV}; // using the original for those not mocked
-  const mockSecret =
-    '4b51e643126aabadb28fc6c541cc1190276082beff3c422fa375ac10ea5fd02c'; // generated with `openssl rand -hex 32` in terminal; Iron.seal requires at least 32 characters for a secret
-  process.env.ENCRYPTION_SECRET = mockSecret;
-});
-afterEach(() => {
-  process.env = ORIGINAL_ENV;
-});
-
 // mock user ID
 const mockIssuer = getToken();
 
