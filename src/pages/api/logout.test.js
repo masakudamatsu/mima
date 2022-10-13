@@ -6,7 +6,7 @@ import {mockLogoutByIssuer} from '@magic-sdk/admin';
 import handleLogout from './logout.api';
 
 // mock user ID
-const mockIssuer = getToken();
+const mockUserId = getToken();
 
 // mock decryptToken, but not encryptSession
 jest.mock('src/utils/iron', () => ({
@@ -16,14 +16,14 @@ jest.mock('src/utils/iron', () => ({
 
 describe('happy path', () => {
   beforeEach(() => {
-    mockDecryptToken.mockResolvedValue({issuer: mockIssuer});
+    mockDecryptToken.mockResolvedValue({userId: mockUserId});
     mockLogoutByIssuer.mockResolvedValue(null);
   });
   it('Decrypts session token', async () => {
     const req = buildReq({
       method: 'POST',
       cookies: {
-        api_token: await encryptSession({issuer: mockIssuer}),
+        api_token: await encryptSession({userId: mockUserId}),
       },
     });
     const res = buildRes({
@@ -39,7 +39,7 @@ describe('happy path', () => {
     const req = buildReq({
       method: 'POST',
       cookies: {
-        api_token: await encryptSession({issuer: mockIssuer}),
+        api_token: await encryptSession({userId: mockUserId}),
       },
     });
     const res = buildRes({
@@ -49,13 +49,13 @@ describe('happy path', () => {
     await handleLogout(req, res);
 
     expect(mockLogoutByIssuer).toHaveBeenCalledTimes(1);
-    expect(mockLogoutByIssuer).toHaveBeenCalledWith(mockIssuer);
+    expect(mockLogoutByIssuer).toHaveBeenCalledWith(mockUserId);
   });
   it('Sends an expired empty cookie to remove a session token', async () => {
     const req = buildReq({
       method: 'POST',
       cookies: {
-        api_token: await encryptSession({issuer: mockIssuer}),
+        api_token: await encryptSession({userId: mockUserId}),
       },
     });
     const res = buildRes({
@@ -145,7 +145,7 @@ Array [
     const req = buildReq({
       method: 'POST',
       cookies: {
-        api_token: await Iron.seal({mockIssuer}, wrongSecret, Iron.defaults),
+        api_token: await Iron.seal({mockUserId}, wrongSecret, Iron.defaults),
       },
     });
     const res = buildRes();
@@ -168,7 +168,7 @@ Array [
     const req = buildReq({
       method: 'POST',
       cookies: {
-        api_token: await encryptSession({issuer: null}),
+        api_token: await encryptSession({userId: null}),
       },
     });
     const res = buildRes();

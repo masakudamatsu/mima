@@ -45,7 +45,7 @@ describe('happy path', () => {
     });
     prismaMock.user.findUnique.mockResolvedValue(null); // it's a new user
     prismaMock.user.create.mockResolvedValue({
-      issuer: userId,
+      userId: userId,
       email: userEmail,
     });
   });
@@ -81,7 +81,7 @@ describe('happy path', () => {
     expect(prismaMock.user.create).toHaveBeenCalledTimes(1);
     expect(prismaMock.user.create).toHaveBeenCalledWith({
       data: {
-        issuer: userId,
+        userId: userId,
         email: userEmail,
       },
     });
@@ -94,7 +94,7 @@ describe('happy path', () => {
     // user has signed up before
     prismaMock.user.findUnique.mockResolvedValueOnce({
       email: userEmail,
-      issuer: userId,
+      userId: userId,
     });
 
     await handleLogin(req, res);
@@ -115,8 +115,8 @@ describe('happy path', () => {
     // check if user ID can be retrieved from the session token sent as a cookie
     const cookie = res.setHeader.mock.calls[0][1];
     const sessionToken = parse(cookie).api_token; // API reference: https://github.com/jshttp/cookie#cookieparsestr-options
-    const {issuer} = await decryptToken(sessionToken);
-    expect(issuer).toBe(userId);
+    const {userId} = await decryptToken(sessionToken);
+    expect(userId).toBe(userId);
   });
 });
 

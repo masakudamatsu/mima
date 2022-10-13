@@ -11,7 +11,7 @@ datasource db {
 }
 
 model User {
-  issuer String @id
+  userId String @id
   email String @unique
 }
 

@@ -15,16 +15,16 @@ export default async function handleLogout(req, res) {
   }
   try {
     // retrieve user ID from session token; decryption failure throws an error
-    const {issuer} = await decryptToken(req.cookies['api_token']);
+    const {userId} = await decryptToken(req.cookies['api_token']);
 
     // check if the session token contains user ID
-    if (!issuer) {
-      console.error('No Magic user ID was found in the session token');
+    if (!userId) {
+      console.error('No user ID was found in the session token');
       return res.status(401).json({message: 'User is not logged in.'});
     }
     // log the user out from Magic; if it's already expired, move on
     try {
-      await magic.users.logoutByIssuer(issuer);
+      await magic.users.logoutByIssuer(userId);
     } catch (error) {
       console.error('User session with Magic has already expired');
     }

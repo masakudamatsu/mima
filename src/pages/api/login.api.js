@@ -25,13 +25,13 @@ export default async function handleLogin(req, res) {
     // Add the user to the database if s/he is signing up
     user = await prisma.user.findUnique({
       where: {
-        issuer,
+        userId: issuer,
       },
     }); // API reference: https://www.prisma.io/docs/reference/api-reference/prisma-client-reference#findunique
     if (!user) {
       user = await prisma.user.create({
         data: {
-          issuer,
+          userId: issuer,
           email,
         },
       });
@@ -42,10 +42,10 @@ export default async function handleLogin(req, res) {
     return;
   }
   // encrypt the user ID
-  const {issuer} = user;
+  const {userId} = user;
   let token;
   try {
-    token = await encryptSession({issuer});
+    token = await encryptSession({userId});
   } catch (error) {
     console.error('User data encryption fails');
     res.status(500).end(); // 500 for database error; see https://stackoverflow.com/a/36252591
