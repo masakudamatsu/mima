@@ -11,8 +11,8 @@ import handlePlaces from 'src/pages/api/places.api';
 
 const {prismaMock} = require('test/utils/prismaMock');
 
-describe('api/places', () => {
-  test('handles POST requests correctly', async () => {
+describe('api/places: happy path', () => {
+  it('handles POST requests correctly', async () => {
     const newPlace = buildPlace();
 
     const req = buildReq({method: 'POST', body: newPlace});
@@ -31,7 +31,7 @@ describe('api/places', () => {
     expect(res.json).toHaveBeenCalledWith(newPlace);
     expect(res.json).toHaveBeenCalledTimes(1);
   });
-  test('handles PUT requests correctly', async () => {
+  it('handles PUT requests correctly', async () => {
     const savedPlace = buildPlace({id: getId()});
     const updates = {
       properties: {
@@ -72,7 +72,7 @@ describe('api/places', () => {
     expect(res.json).toHaveBeenCalledTimes(1);
   });
 
-  test('handles DELETE requests correctly', async () => {
+  it('handles DELETE requests correctly', async () => {
     const savedPlace = buildPlace({id: getId()});
 
     const req = buildReq({
@@ -95,8 +95,10 @@ describe('api/places', () => {
     expect(res.json).toHaveBeenCalledWith({success: true});
     expect(res.json).toHaveBeenCalledTimes(1);
   });
+});
 
-  test('handles invalid request methods', async () => {
+describe('/api/place: sad path', () => {
+  it('handles invalid request methods', async () => {
     const req = buildReq({
       method: getWord().toUpperCase(),
     });
