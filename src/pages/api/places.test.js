@@ -8,7 +8,6 @@ import {
   getWord,
 } from 'test/utils/generate';
 import handlePlaces from 'src/pages/api/places.api';
-import {prisma} from '@prisma/client';
 
 const {prismaMock} = require('test/utils/prismaMock');
 
