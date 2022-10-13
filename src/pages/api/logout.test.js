@@ -1,18 +1,23 @@
+// mocking
 import {buildReq, buildRes, getToken, getWord} from 'test/utils/generate';
-import {decryptToken as mockDecryptToken, encryptSession} from 'src/utils/iron';
-import Iron from '@hapi/iron';
 import {mockLogoutByIssuer} from '@magic-sdk/admin';
 
+// function to test
 import handleLogout from './logout.api';
 
-// mock user ID
-const mockUserId = getToken();
+// test helper
+import Iron from '@hapi/iron';
 
+// mocking and test helper
+import {decryptToken as mockDecryptToken, encryptSession} from 'src/utils/iron';
 // mock decryptToken, but not encryptSession
 jest.mock('src/utils/iron', () => ({
   ...jest.requireActual('src/utils/iron'),
   decryptToken: jest.fn().mockName('decryptToken'),
 }));
+
+// test helpers
+const mockUserId = getToken();
 
 describe('happy path', () => {
   beforeEach(() => {
