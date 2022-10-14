@@ -6,6 +6,9 @@ import {
   userLocationMarkerLabel,
 } from '../../src/utils/uiCopies';
 
+const {mockUser2} = require('../../test/utils/mockUsers');
+const mockUserId = mockUser2.userId;
+
 describe('Geolocation API happy path', () => {
   const coords = {
     latitude: 35.011565,
@@ -13,6 +16,8 @@ describe('Geolocation API happy path', () => {
     accuracy: 15,
   };
   beforeEach(() => {
+    cy.log('**Setting mock user session token**');
+    cy.loginWithCookie({userId: mockUserId});
     cy.visit('/');
     cy.mockGetCurrentPosition(coords);
     cy.mockWatchPosition(coords);
@@ -126,6 +131,8 @@ describe('Geolocation API happy path', () => {
 
 describe('Geolocation API unsupported', () => {
   beforeEach(() => {
+    cy.log('**Setting mock user session token**');
+    cy.loginWithCookie({userId: mockUserId});
     cy.visit('/', {
       onBeforeLoad(window) {
         Object.defineProperty(window.navigator, 'geolocation', {
@@ -181,6 +188,8 @@ describe('Geolocation API unsupported', () => {
 
 describe('Geolocation API permission denied', () => {
   beforeEach(() => {
+    cy.log('**Setting mock user session token**');
+    cy.loginWithCookie({userId: mockUserId});
     cy.visit('/', {
       onBeforeLoad(window) {
         cy.stub(
@@ -239,6 +248,8 @@ describe('Geolocation API permission denied', () => {
 
 describe('Geolocation API fails to find user location', () => {
   beforeEach(() => {
+    cy.log('**Setting mock user session token**');
+    cy.loginWithCookie({userId: mockUserId});
     cy.visit('/', {
       onBeforeLoad(window) {
         cy.stub(

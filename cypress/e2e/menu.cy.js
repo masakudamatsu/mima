@@ -1,7 +1,12 @@
 import {buttonLabel, menuLabel} from '../../src/utils/uiCopies';
 
+const {mockUser2} = require('../../test/utils/mockUsers');
+const mockUserId = mockUser2.userId;
+
 describe('Clicking menu button', () => {
   beforeEach(() => {
+    cy.log('**Setting mock user session token**');
+    cy.loginWithCookie({userId: mockUserId});
     cy.visitAtDaytime('/');
     cy.waitForMapToLoad();
     cy.findByRole('button', {name: buttonLabel.menu}).click();
@@ -16,6 +21,8 @@ describe('Clicking menu button', () => {
 
 describe('Menu window, once opened...', () => {
   beforeEach(() => {
+    cy.log('**Setting mock user session token**');
+    cy.loginWithCookie({userId: mockUserId});
     cy.visitAtDaytime('/');
     cy.waitForMapToLoad();
     cy.findByRole('button', {name: buttonLabel.menu}).click();
@@ -42,6 +49,8 @@ describe('Menu window, once opened...', () => {
 
 describe('Menu window, once closed...', () => {
   beforeEach(() => {
+    cy.log('**Setting mock user session token**');
+    cy.loginWithCookie({userId: mockUserId});
     cy.visitAtDaytime('/');
     cy.waitForMapToLoad();
     cy.findByRole('button', {name: buttonLabel.menu}).click();

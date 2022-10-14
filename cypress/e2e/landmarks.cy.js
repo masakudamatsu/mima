@@ -1,5 +1,12 @@
 import {buttonLabel} from '../../src/utils/uiCopies';
 
+const {mockUser2} = require('../../test/utils/mockUsers');
+const mockUserId = mockUser2.userId;
+
+beforeEach(() => {
+  cy.log('**Setting mock user session token**');
+  cy.loginWithCookie({userId: mockUserId});
+});
 it('Landmark roles are given appropriately', () => {
   cy.visit('/');
   cy.waitForMapToLoad();

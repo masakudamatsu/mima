@@ -5,7 +5,13 @@ const menuUIbreakpoints = [
   Number(dimension.breakpoint.divPopup.padding.slice(0, -2)),
 ];
 
+const {mockUser2} = require('../../test/utils/mockUsers');
+const mockUserId = mockUser2.userId;
 describe('Menu window', () => {
+  beforeEach(() => {
+    cy.log('**Setting mock user session token**');
+    cy.loginWithCookie({userId: mockUserId});
+  });
   it('Rendered in Light Mode at Daytime', () => {
     cy.visitAtDaytime('/');
     cy.waitForMapToLoad();

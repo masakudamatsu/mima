@@ -1,7 +1,12 @@
 import {index} from '../../src/utils/metadata';
 
+const {mockUser2} = require('../../test/utils/mockUsers');
+const mockUserId = mockUser2.userId;
+
 describe('Index page', () => {
   beforeEach(() => {
+    cy.log('**Setting mock user session token**');
+    cy.loginWithCookie({userId: mockUserId});
     cy.visit('/');
   });
   it('shows the page title in the browser tab', () => {

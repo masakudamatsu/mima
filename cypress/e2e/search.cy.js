@@ -3,8 +3,14 @@ import {boldText} from '../../src/utils/designtokens';
 const searchWords = [/nijo/i, /koya/i];
 const placeName = /.*nijo.*koya.*/i;
 const placeAddress = '382-3 Mogamichō, Nakagyo Ward, Kyoto, 604-8303, Japan';
+
+const {mockUser2} = require('../../test/utils/mockUsers');
+const mockUserId = mockUser2.userId;
+
 describe('Search feature', () => {
   beforeEach(() => {
+    cy.log('**Setting mock user session token**');
+    cy.loginWithCookie({userId: mockUserId});
     cy.log('**Loading app**');
     cy.visit('/');
     cy.waitForMapToLoad();
