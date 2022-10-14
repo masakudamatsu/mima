@@ -45,6 +45,7 @@ function buildPlace(overrides) {
       note: [getNote()],
     },
     type: 'Feature',
+    userId: getToken(),
     ...overrides,
   };
 }

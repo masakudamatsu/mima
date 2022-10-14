@@ -53,8 +53,12 @@ export default HomePage;
 
 export async function getServerSideProps({req}) {
   // API reference: https://nextjs.org/docs/api-reference/data-fetching/get-server-side-props#context-parameter
+  let user;
   try {
-    await decryptToken(req.cookies['api_token']);
+    user = await decryptToken(req.cookies['api_token']);
+    if (!user) {
+      throw new Error();
+    }
   } catch (error) {
     return {
       redirect: {
@@ -63,6 +67,10 @@ export async function getServerSideProps({req}) {
       }, // API reference: https://nextjs.org/docs/api-reference/next.config.js/redirects
     }; // Docs: https://nextjs.org/docs/api-reference/data-fetching/get-server-side-props#redirect
   }
-  const savedPlaces = await prisma.place.findMany();
+  const savedPlaces = await prisma.place.findMany({
+    where: {
+      userId: user.userId,
+    },
+  });
   return {props: {savedPlaces}};
 }

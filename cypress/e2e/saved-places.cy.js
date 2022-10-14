@@ -6,12 +6,16 @@ import {
   modal,
 } from '../../src/utils/uiCopies';
 
-const placeName = '出逢ひ茶屋おせん';
+const {mockUser2, mockPlace5} = require('../../test/utils/mockUsers');
+const mockUserId = mockUser2.userId;
+const placeName = mockPlace5.properties.name;
 
 describe('Saved place detail feature', () => {
   beforeEach(() => {
     cy.log('**Resetting the database**');
     cy.exec('npx prisma migrate reset --force'); // https://docs.cypress.io/guides/end-to-end-testing/testing-your-app#Seeding-data
+    cy.log('**Setting mock user session token**');
+    cy.loginWithCookie({userId: mockUserId});
     cy.visit('/');
     cy.waitForMapToLoad();
   });
