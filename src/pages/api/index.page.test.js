@@ -66,4 +66,23 @@ describe('getServerSideProps', () => {
       },
     });
   });
+  it('sad path: returns an error as props if database access fails', async () => {
+    // mock request
+    const mockUserId = getToken();
+    const req = buildReq({
+      cookies: {
+        api_token: await encryptSession({userId: mockUserId}),
+      },
+    });
+    // mock database access failure
+    prismaMock.place.findMany.mockRejectedValueOnce(new Error());
+
+    // execute
+    const response = await getServerSideProps({req});
+
+    // verify
+    expect(response).toEqual({
+      props: {savedPlaces: null, error: true},
+    });
+  });
 });

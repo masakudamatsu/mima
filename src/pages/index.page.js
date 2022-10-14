@@ -18,7 +18,7 @@ import {useNightMode} from 'src/hooks/useNightMode';
 const prisma = require('src/utils/prisma');
 const {decryptToken} = require('src/utils/iron');
 
-function HomePage({savedPlaces}) {
+function HomePage({savedPlaces, error = false}) {
   useNightMode(NightModeContext);
 
   const [mapObject, setMapObject] = useState(null);
@@ -67,10 +67,14 @@ export async function getServerSideProps({req}) {
       }, // API reference: https://nextjs.org/docs/api-reference/next.config.js/redirects
     }; // Docs: https://nextjs.org/docs/api-reference/data-fetching/get-server-side-props#redirect
   }
-  const savedPlaces = await prisma.place.findMany({
-    where: {
-      userId: user.userId,
-    },
-  });
-  return {props: {savedPlaces}};
+  try {
+    const savedPlaces = await prisma.place.findMany({
+      where: {
+        userId: user.userId,
+      },
+    });
+    return {props: {savedPlaces}};
+  } catch (error) {
+    return {props: {savedPlaces: null, error: true}};
+  }
 }
