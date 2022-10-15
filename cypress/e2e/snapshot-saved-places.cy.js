@@ -1,7 +1,10 @@
 import {buttonLabel} from '../../src/utils/uiCopies';
 import {dimension} from '../../src/utils/designtokens';
 
-const placeName = '出逢ひ茶屋おせん';
+const {mockUser2, mockPlace5} = require('../../test/utils/mockUsers');
+const mockUserId = mockUser2.userId;
+const placeName = mockPlace5.properties.name;
+
 const infoUIbreakpoints = [
   Number(dimension.breakpoint.divPopup.padding.slice(0, -2)),
 ];
@@ -11,6 +14,10 @@ const editorUIbreakpoints = [
 ];
 describe('After clicking a saved place', () => {
   describe('UI changes as expected', () => {
+    beforeEach(() => {
+      cy.log('**Setting mock user session token**');
+      cy.loginWithCookie({userId: mockUserId});
+    });
     it('Daytime', () => {
       cy.visitAtDaytime('/');
       cy.waitForMapToLoad();
@@ -33,6 +40,10 @@ describe('After clicking a saved place', () => {
     });
   });
   describe('Clicking the close button', () => {
+    beforeEach(() => {
+      cy.log('**Setting mock user session token**');
+      cy.loginWithCookie({userId: mockUserId});
+    });
     it('UI changes as expected', () => {
       cy.visitAtDaytime('/');
       cy.waitForMapToLoad();
@@ -47,6 +58,10 @@ describe('After clicking a saved place', () => {
   });
   describe('Clicking Edit button', () => {
     describe('UI changes as expected', () => {
+      beforeEach(() => {
+        cy.log('**Setting mock user session token**');
+        cy.loginWithCookie({userId: mockUserId});
+      });
       it('Daytime', () => {
         cy.visitAtDaytime('/');
         cy.waitForMapToLoad();

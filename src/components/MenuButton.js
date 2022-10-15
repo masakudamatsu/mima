@@ -2,7 +2,10 @@ import {useState} from 'react';
 import PropTypes from 'prop-types';
 
 import {useOnEscKeyDown} from 'src/hooks/useOnEscKeyDown';
+
+import {LogoutButton} from './LogoutButton';
 import {ModalPopup} from 'src/components/ModalPopup';
+
 import {Button} from 'src/elements/Button';
 import {ButtonCircle} from 'src/elements/ButtonCircle';
 import {Heading} from 'src/elements/Heading';
@@ -72,6 +75,9 @@ export const MenuButton = ({
           <SvgClose title={buttonLabel.close} />
         </ButtonCircle>
         <ListMenu>
+          <li>
+            <LogoutButton closeMenu={closeMenu} />
+          </li>
           <li>
             <button>
               <SvgSearch aria-hidden="true" /> {buttonLabel.search}

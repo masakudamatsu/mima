@@ -7,7 +7,7 @@ const setShape = `
   border-style: solid;
   border-width: ${dimension.button['border width 100']};
   min-height: ${dimension.button['minimum target size 100']};
-  min-width: ${dimension.button['minimum target size 200']};
+  width: ${dimension.button['minimum target size 200']};
 `;
 
 const setColor = `

@@ -12,7 +12,7 @@ describe('ButtonDialog component', () => {
   border-style: solid;
   border-width: 1px;
   min-height: 48px;
-  min-width: 96px;
+  width: 96px;
   border-color: var(--dialog-button-color);
   color: var(--dialog-button-color);
 }

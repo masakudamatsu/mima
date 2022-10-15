@@ -1,4 +1,10 @@
+const {mockUser2} = require('../../test/utils/mockUsers');
+const mockUserId = mockUser2.userId;
 describe('Initial UI', () => {
+  beforeEach(() => {
+    cy.log('**Setting mock user session token**');
+    cy.loginWithCookie({userId: mockUserId});
+  });
   it('Rendered in Light Mode at Daytime', () => {
     cy.visitAtDaytime('/');
     cy.waitForMapToLoad();

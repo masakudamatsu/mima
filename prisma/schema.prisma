@@ -10,9 +10,17 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+model User {
+  userId String @id
+  email String @unique
+  places Place[]
+}
+
 model Place {
-  id          Int   @id @default(autoincrement())
-  geometry  Json
-  properties  Json
-  type        String
+  id         Int    @id @default(autoincrement())
+  geometry   Json
+  properties Json
+  type       String
+  user       User?   @relation(fields: [userId], references: [userId])
+  userId     String? 
 }

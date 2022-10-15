@@ -6,6 +6,9 @@ import {
   loadingMessage,
 } from '../../src/utils/uiCopies';
 
+const {mockUser1} = require('../../test/utils/mockUsers');
+const mockUserId = mockUser1.userId;
+
 const searchedPlace = {
   name: /fukuda art museum/i,
   address:
@@ -16,6 +19,8 @@ describe('Saving feature', () => {
   beforeEach(() => {
     cy.log('**Resetting the database**');
     cy.exec('npx prisma migrate reset --force'); // https://docs.cypress.io/guides/end-to-end-testing/testing-your-app#Seeding-data
+    cy.log('**Setting mock user session token**');
+    cy.loginWithCookie({userId: mockUserId});
     cy.log('**Loading app**');
     cy.visit('/');
     cy.waitForMapToLoad();

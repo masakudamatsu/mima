@@ -1,4 +1,4 @@
-import {useContext, useState, useEffect} from 'react';
+import {useState} from 'react';
 import Head from 'next/head';
 import {Wrapper} from '@googlemaps/react-wrapper';
 
@@ -13,13 +13,13 @@ import {Places} from 'src/components/Places';
 import {SavedPlaces} from 'src/components/SavedPlaces';
 import {SearchedPlace} from 'src/components/SearchedPlace';
 
-const prisma = require('src/utils/prisma');
+import {useNightMode} from 'src/hooks/useNightMode';
 
-function HomePage({savedPlaces}) {
-  const nightMode = useContext(NightModeContext);
-  useEffect(() => {
-    document.body.dataset.darkmode = nightMode;
-  }, [nightMode]);
+const prisma = require('src/utils/prisma');
+const {decryptToken} = require('src/utils/iron');
+
+function HomePage({savedPlaces, error = false}) {
+  useNightMode(NightModeContext);
 
   const [mapObject, setMapObject] = useState(null);
   return (
@@ -51,7 +51,30 @@ function HomePage({savedPlaces}) {
 
 export default HomePage;
 
-export async function getServerSideProps() {
-  const savedPlaces = await prisma.place.findMany();
-  return {props: {savedPlaces}};
+export async function getServerSideProps({req}) {
+  // API reference: https://nextjs.org/docs/api-reference/data-fetching/get-server-side-props#context-parameter
+  let user;
+  try {
+    user = await decryptToken(req.cookies['api_token']);
+    if (!user) {
+      throw new Error();
+    }
+  } catch (error) {
+    return {
+      redirect: {
+        destination: '/login',
+        permanent: false,
+      }, // API reference: https://nextjs.org/docs/api-reference/next.config.js/redirects
+    }; // Docs: https://nextjs.org/docs/api-reference/data-fetching/get-server-side-props#redirect
+  }
+  try {
+    const savedPlaces = await prisma.place.findMany({
+      where: {
+        userId: user.userId,
+      },
+    });
+    return {props: {savedPlaces}};
+  } catch (error) {
+    return {props: {savedPlaces: null, error: true}};
+  }
 }
