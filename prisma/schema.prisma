@@ -21,6 +21,6 @@ model Place {
   geometry   Json
   properties Json
   type       String
-  user       User?   @relation(fields: [userId], references: [userId])
-  userId     String? 
+  user       User   @relation(fields: [userId], references: [userId])
+  userId     String 
 }
