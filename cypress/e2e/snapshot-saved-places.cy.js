@@ -15,7 +15,7 @@ const editorUIbreakpoints = [
 describe('After clicking a saved place', () => {
   describe('UI changes as expected', () => {
     beforeEach(() => {
-      cy.log('**Setting mock user session token**');
+      cy.log('Setting mock user session token');
       cy.loginWithCookie({userId: mockUserId});
     });
     it('Daytime', () => {
@@ -41,7 +41,7 @@ describe('After clicking a saved place', () => {
   });
   describe('Clicking the close button', () => {
     beforeEach(() => {
-      cy.log('**Setting mock user session token**');
+      cy.log('Setting mock user session token');
       cy.loginWithCookie({userId: mockUserId});
     });
     it('UI changes as expected', () => {
@@ -59,7 +59,7 @@ describe('After clicking a saved place', () => {
   describe('Clicking Edit button', () => {
     describe('UI changes as expected', () => {
       beforeEach(() => {
-        cy.log('**Setting mock user session token**');
+        cy.log('Setting mock user session token');
         cy.loginWithCookie({userId: mockUserId});
       });
       it('Daytime', () => {

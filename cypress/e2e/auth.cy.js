@@ -35,20 +35,20 @@ describe('Auth feature', () => {
     cy.url().should('eq', `${Cypress.config().baseUrl}/`);
   });
   it('Logs users out after they click logout button in the menu', () => {
-    cy.log(`**Setting up**`);
+    cy.log(`Setting up`);
     cy.loginWithCookie({userId: mockUserId});
     cy.visit('/');
-    cy.log(`**Clicking the logout button...`);
+    cy.log(`Clicking the logout button...`);
     cy.findByRole('button', {name: buttonLabel.menu}).click();
     cy.findByRole('button', {name: buttonLabel.logout}).click();
-    cy.log('**...redirects to login page**');
+    cy.log('...redirects to login page');
     cy.url().should('eq', `${Cypress.config().baseUrl}/login`);
   });
-  it.only('Shows only those places saved by the logged-in user', () => {
-    cy.log('**Resetting the database**');
+  it('Shows only those places saved by the logged-in user', () => {
+    cy.log('Resetting the database');
     cy.exec('npx prisma migrate reset --force'); // https://docs.cypress.io/guides/end-to-end-testing/testing-your-app#Seeding-data
 
-    cy.log(`**Mock user #1**`);
+    cy.log(`Mock user #1`);
     cy.loginWithCookie({userId: mockUser1.userId});
     cy.visit('/');
     cy.waitForMapToLoad();
@@ -59,7 +59,7 @@ describe('Auth feature', () => {
       'not.exist',
     );
 
-    cy.log(`**Mock user #2**`);
+    cy.log(`Mock user #2`);
     cy.loginWithCookie({userId: mockUser2.userId});
     cy.visit('/');
     cy.waitForMapToLoad();

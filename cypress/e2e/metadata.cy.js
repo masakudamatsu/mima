@@ -5,7 +5,7 @@ const mockUserId = mockUser2.userId;
 
 describe('Metadata', () => {
   beforeEach(() => {
-    cy.log('**Setting mock user session token**');
+    cy.log('Setting mock user session token');
     cy.loginWithCookie({userId: mockUserId});
   });
   it('index page', () => {
