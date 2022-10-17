@@ -1,5 +1,26 @@
 import {userLocationMarkerLabel} from '../../src/utils/uiCopies';
 
+// Customize cy.log
+// adapted from https://filiphric.com/improve-your-error-screenshots-in-cypress
+beforeEach(function () {
+  window.logCalls = 1;
+});
+Cypress.Commands.overwrite('log', (...args) => {
+  const msg = args[1];
+  if (msg.slice(0, 3) === '...') {
+    Cypress.log({
+      displayName: `--- ${msg.toUpperCase()} ---`,
+      message: '\n',
+    });
+  } else {
+    Cypress.log({
+      displayName: `--- ${window.logCalls}. ${msg.toUpperCase()} ---`,
+      message: '\n',
+    });
+    window.logCalls++;
+  }
+});
+
 // Programatic login
 // https://resultfor.dev/709934-cypress-load-environment-variables-in-custom-commands
 Cypress.Commands.add('loginWithCookie', session => {

@@ -3,16 +3,17 @@ import {index} from '../../src/utils/metadata';
 const {mockUser2} = require('../../test/utils/mockUsers');
 const mockUserId = mockUser2.userId;
 
-describe('Index page', () => {
+describe('Metadata', () => {
   beforeEach(() => {
-    cy.log('**Setting mock user session token**');
+    cy.log('Setting mock user session token');
     cy.loginWithCookie({userId: mockUserId});
+  });
+  it('index page', () => {
+    cy.log(`Visiting the index page...`);
     cy.visit('/');
-  });
-  it('shows the page title in the browser tab', () => {
+    cy.log(`...sets the page title`);
     cy.title().should('eq', index.title);
-  });
-  it('lets search enginges see the description', () => {
+    cy.log(`...sets the page decription`);
     cy.get('head meta[name="description"]').should(
       'have.attr',
       'content',
