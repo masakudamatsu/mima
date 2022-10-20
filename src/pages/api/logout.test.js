@@ -89,6 +89,8 @@ describe('sad path', () => {
 
     expect(res.status).toHaveBeenCalledTimes(1);
     expect(res.status).toHaveBeenCalledWith(405);
+    expect(res.setHeader).toHaveBeenCalledTimes(1);
+    expect(res.setHeader).toHaveBeenCalledWith('Allow', 'POST');
   });
   it('handles the absence of any cookie in the request', async () => {
     const req = buildReq({

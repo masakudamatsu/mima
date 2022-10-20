@@ -6,7 +6,11 @@ const {encryptSession} = require('src/utils/iron');
 const magic = new Magic(process.env.MAGIC_SECRET_KEY);
 
 export default async function handleLogin(req, res) {
-  if (req.method !== 'POST') return res.status(405).end();
+  if (req.method !== 'POST') {
+    res.setHeader('Allow', 'POST');
+    res.status(405).end();
+    return;
+  }
   // Validate DID sent by HTTP request
   let did;
   try {

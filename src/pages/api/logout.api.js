@@ -7,7 +7,11 @@ import {decryptToken} from 'src/utils/iron';
 const magic = new Magic(process.env.MAGIC_SECRET_KEY);
 
 export default async function handleLogout(req, res) {
-  if (req.method !== 'POST') return res.status(405).end();
+  if (req.method !== 'POST') {
+    res.setHeader('Allow', 'POST');
+    res.status(405).end();
+    return;
+  }
   // check the presence of a session token in the request
   if (!req.cookies || !req.cookies['api_token']) {
     console.error('No cookie was provided to /api/logout.');

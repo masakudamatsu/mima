@@ -135,6 +135,8 @@ describe('sad path', () => {
 
     expect(res.status).toHaveBeenCalledTimes(1);
     expect(res.status).toHaveBeenCalledWith(405);
+    expect(res.setHeader).toHaveBeenCalledTimes(1);
+    expect(res.setHeader).toHaveBeenCalledWith('Allow', 'POST');
 
     expect(console.error).toHaveBeenCalledTimes(0);
   });
