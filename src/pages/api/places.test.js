@@ -229,9 +229,7 @@ Array [
         api_token: await encryptSession({userId: mockUserId}),
       },
     });
-    const res = buildRes({
-      setHeader: jest.fn().mockName('res.setHeader'),
-    });
+    const res = buildRes();
     await handlePlaces(req, res);
     expect(res.status).toHaveBeenCalledWith(405);
     expect(res.status).toHaveBeenCalledTimes(1);

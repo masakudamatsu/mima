@@ -1,7 +1,7 @@
 // mocking
 import {
   buildReq as buildReqOriginal,
-  buildRes as buildResOriginal,
+  buildRes,
   getEmail,
   getToken,
   getWord,
@@ -23,12 +23,6 @@ const buildReq = (did, override = {}) => {
       authorization: `Bearer ${did}`,
     },
     ...override,
-  });
-};
-
-const buildRes = (override = {}) => {
-  return buildResOriginal({
-    setHeader: jest.fn().mockName('res.setHeader'),
   });
 };
 

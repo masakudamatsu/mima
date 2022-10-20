@@ -65,6 +65,7 @@ function buildRes(overrides = {}) {
   const res = {
     end: jest.fn().mockName('res.end'),
     json: jest.fn(() => res).mockName('res.json'),
+    setHeader: jest.fn().mockName('res.setHeader'),
     status: jest.fn(() => res).mockName('res.status'),
     ...overrides,
   };

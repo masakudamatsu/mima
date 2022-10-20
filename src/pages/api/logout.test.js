@@ -27,9 +27,7 @@ describe('happy path', () => {
         api_token: await encryptSession({userId: mockUserId}),
       },
     });
-    const res = buildRes({
-      setHeader: jest.fn().mockName('res.setHeader'),
-    });
+    const res = buildRes();
 
     await handleLogout(req, res);
 
@@ -43,9 +41,7 @@ describe('happy path', () => {
         api_token: await encryptSession({userId: mockUserId}),
       },
     });
-    const res = buildRes({
-      setHeader: jest.fn().mockName('res.setHeader'),
-    });
+    const res = buildRes();
 
     await handleLogout(req, res);
 
@@ -59,9 +55,7 @@ describe('happy path', () => {
         api_token: await encryptSession({userId: mockUserId}),
       },
     });
-    const res = buildRes({
-      setHeader: jest.fn().mockName('res.setHeader'),
-    });
+    const res = buildRes();
 
     await handleLogout(req, res);
 
