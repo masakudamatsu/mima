@@ -9,19 +9,15 @@ import handleLogout from './logout.api';
 import Iron from '@hapi/iron';
 
 // mocking and test helper
-import {decryptToken as mockDecryptToken, encryptSession} from 'src/utils/iron';
-// mock decryptToken, but not encryptSession
-jest.mock('src/utils/iron', () => ({
-  ...jest.requireActual('src/utils/iron'),
-  decryptToken: jest.fn().mockName('decryptToken'),
-}));
+import iron, {encryptSession} from 'src/utils/iron';
+// track the calls of decryptToken
+const decryptToken = jest.spyOn(iron, 'decryptToken');
 
 // test helpers
 const mockUserId = getToken();
 
 describe('happy path', () => {
   beforeEach(() => {
-    mockDecryptToken.mockResolvedValue({userId: mockUserId});
     mockLogoutByIssuer.mockResolvedValue(null);
   });
   it('Decrypts session token', async () => {
@@ -37,8 +33,8 @@ describe('happy path', () => {
 
     await handleLogout(req, res);
 
-    expect(mockDecryptToken).toHaveBeenCalledTimes(1);
-    expect(mockDecryptToken).toHaveBeenCalledWith(req.cookies['api_token']);
+    expect(decryptToken).toHaveBeenCalledTimes(1);
+    expect(decryptToken).toHaveBeenCalledWith(req.cookies['api_token']);
   });
   it('Calls logoutByIssuer to log the user out from Magic', async () => {
     const req = buildReq({
