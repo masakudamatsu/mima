@@ -1,13 +1,12 @@
 import {index} from '../../src/utils/metadata';
 
-describe('Index page', () => {
-  beforeEach(() => {
+describe('Metadata', () => {
+  it('index page', () => {
+    cy.log(`Visiting the index page...`);
     cy.visit('/');
-  });
-  it('shows the page title in the browser tab', () => {
+    cy.log(`...sets the page title`);
     cy.title().should('eq', index.title);
-  });
-  it('lets search enginges see the description', () => {
+    cy.log(`...sets the page decription`);
     cy.get('head meta[name="description"]').should(
       'have.attr',
       'content',
