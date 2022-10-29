@@ -1,9 +1,11 @@
 import Head from 'next/head';
+import {UserProvider} from '@auth0/nextjs-auth0';
 
 import {GlobalStyle} from 'src/elements/GlobalStyle';
 import {NightModeProvider} from 'src/wrappers/NightModeContext';
 
 export default function App({Component, pageProps}) {
+  const {user} = pageProps;
   return (
     <>
       <Head>
@@ -12,7 +14,9 @@ export default function App({Component, pageProps}) {
       </Head>
       <GlobalStyle />
       <NightModeProvider>
-        <Component {...pageProps} />{' '}
+        <UserProvider user={user}>
+          <Component {...pageProps} />{' '}
+        </UserProvider>
       </NightModeProvider>
     </>
   );
