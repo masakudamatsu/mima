@@ -1,6 +1,7 @@
 import {useState} from 'react';
 import Head from 'next/head';
 import {Wrapper} from '@googlemaps/react-wrapper';
+import {withPageAuthRequired} from '@auth0/nextjs-auth0';
 
 import {index} from 'src/utils/metadata';
 
@@ -50,7 +51,9 @@ function HomePage({savedPlaces}) {
 
 export default HomePage;
 
-export async function getServerSideProps() {
-  const savedPlaces = await prisma.place.findMany();
-  return {props: {savedPlaces}};
-}
+export const getServerSideProps = withPageAuthRequired({
+  async getServerSideProps() {
+    const savedPlaces = await prisma.place.findMany();
+    return {props: {savedPlaces}};
+  },
+});
