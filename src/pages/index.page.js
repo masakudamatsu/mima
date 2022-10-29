@@ -18,7 +18,9 @@ import {useNightMode} from 'src/hooks/useNightMode';
 
 const prisma = require('src/utils/prisma');
 
-function HomePage({savedPlaces}) {
+// wrap with withPageAuthRequired so any fetch request to API routes will be attached with access token
+// https://github.com/auth0/nextjs-auth0/blob/main/EXAMPLES.md#protect-an-api-route
+export default withPageAuthRequired(function HomePage({savedPlaces}) {
   useNightMode(NightModeContext);
 
   const [mapObject, setMapObject] = useState(null);
@@ -47,9 +49,7 @@ function HomePage({savedPlaces}) {
       </PlaceIdProvider>
     </>
   );
-}
-
-export default HomePage;
+});
 
 export const getServerSideProps = withPageAuthRequired({
   async getServerSideProps() {

@@ -12,6 +12,14 @@ import {prisma} from '@prisma/client';
 
 const {prismaMock} = require('test/utils/prismaMock');
 
+jest.mock('@auth0/nextjs-auth0', () => {
+  const originalModule = jest.requireActual('@auth0/nextjs-auth0');
+  return {
+    ...originalModule,
+    withApiAuthRequired: handler => handler,
+  };
+});
+
 describe('api/places', () => {
   test('handles POST requests correctly', async () => {
     const newPlace = buildPlace();

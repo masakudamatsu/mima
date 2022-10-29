@@ -1,6 +1,7 @@
+import {withApiAuthRequired} from '@auth0/nextjs-auth0';
 const prisma = require('src/utils/prisma');
 
-export default async function handlePlaces(req, res) {
+export default withApiAuthRequired(async function handlePlaces(req, res) {
   switch (req.method) {
     case 'POST': {
       const {geometry, properties, type} = req.body;
@@ -44,4 +45,4 @@ export default async function handlePlaces(req, res) {
       break;
     }
   }
-}
+});
