@@ -35,6 +35,7 @@ export const buttonLabel = {
     activated: 'Snap to your location',
     deactivate: 'Stop tracking your location',
   },
+  logout: 'Log out',
   menu: 'Show menu',
   save: 'Save place',
   saveEdit: 'Save',

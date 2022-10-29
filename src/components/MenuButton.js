@@ -2,6 +2,7 @@ import {useState} from 'react';
 import PropTypes from 'prop-types';
 
 import {useOnEscKeyDown} from 'src/hooks/useOnEscKeyDown';
+
 import {ModalPopup} from 'src/components/ModalPopup';
 import {Button} from 'src/elements/Button';
 import {ButtonCircle} from 'src/elements/ButtonCircle';
@@ -13,6 +14,7 @@ import {SvgClose} from 'src/elements/SvgClose';
 import {SvgFlightLanding} from 'src/elements/SvgFlightLanding';
 import {SvgFlightFlying} from 'src/elements/SvgFlightFlying';
 import {SvgFlightTakeoff} from 'src/elements/SvgFlightTakeoff';
+import {SvgLogout} from 'src/elements/SvgLogout';
 import {SvgSearch} from 'src/elements/SvgSearch';
 
 import {buttonLabel, menuLabel} from 'src/utils/uiCopies';
@@ -72,6 +74,11 @@ export const MenuButton = ({
           <SvgClose title={buttonLabel.close} />
         </ButtonCircle>
         <ListMenu>
+          <li>
+            <a href="/api/auth/logout">
+              <SvgLogout aria-hidden="true" /> {buttonLabel.logout}
+            </a>
+          </li>
           <li>
             <button>
               <SvgSearch aria-hidden="true" /> {buttonLabel.search}

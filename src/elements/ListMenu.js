@@ -14,12 +14,14 @@ const setListItemSize = `
   & li {
     padding: ${dimension.button['minimum target spacing 50']} 0;
   }
+  & li a,
   & li button {
     height: ${dimension.button['minimum target size 100']};
   }
 `;
 
 const positionListItemContent = `
+  & a,
   & button {
     align-items: center;
     display: flex;
@@ -47,6 +49,13 @@ const styleDisabledState = `
   }
 `;
 
+const styleListItemLink = `
+  & a {
+    color: var(--menu-item-color);
+    text-decoration: none;
+  }
+`;
+
 export const ListMenu = styled.ul.attrs(props => ({
   role: 'list', // see https://www.scottohara.me/blog/2019/01/12/lists-and-safari.html
 }))`
@@ -57,4 +66,5 @@ export const ListMenu = styled.ul.attrs(props => ({
   ${styleListItemIcons}
   ${styleListItemText}
   ${styleDisabledState}
+  ${styleListItemLink}
 `;

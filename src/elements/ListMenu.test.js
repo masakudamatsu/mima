@@ -24,10 +24,12 @@ test('renders UI correctly', () => {
   padding: 4px 0;
 }
 
+.c0 li a,
 .c0 li button {
   height: 48px;
 }
 
+.c0 a,
 .c0 button {
   -webkit-align-items: center;
   -webkit-box-align: center;
@@ -50,6 +52,12 @@ test('renders UI correctly', () => {
 .c0 button[disabled] {
   opacity: 0.2;
   pointer-events: none;
+}
+
+.c0 a {
+  color: var(--menu-item-color);
+  -webkit-text-decoration: none;
+  text-decoration: none;
 }
 
 <div>
