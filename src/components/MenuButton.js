@@ -1,5 +1,6 @@
 import {useState} from 'react';
 import PropTypes from 'prop-types';
+import {useUser} from '@auth0/nextjs-auth0';
 
 import {useOnEscKeyDown} from 'src/hooks/useOnEscKeyDown';
 
@@ -8,6 +9,7 @@ import {Button} from 'src/elements/Button';
 import {ButtonCircle} from 'src/elements/ButtonCircle';
 import {Heading} from 'src/elements/Heading';
 import {ListMenu} from 'src/elements/ListMenu';
+import {ParagraphMenu} from 'src/elements/ParagraphMenu';
 import {SvgAdd} from 'src/elements/SvgAdd';
 import {SvgCloud} from 'src/elements/SvgCloud';
 import {SvgClose} from 'src/elements/SvgClose';
@@ -50,6 +52,10 @@ export const MenuButton = ({
     stopTracking(watchID);
     closeMenu();
   };
+
+  // show user info
+  const {user, error, isLoading} = useUser();
+
   return (
     <nav>
       <Button
@@ -73,6 +79,13 @@ export const MenuButton = ({
         >
           <SvgClose title={buttonLabel.close} />
         </ButtonCircle>
+        <ParagraphMenu>
+          {isLoading
+            ? 'Loading...'
+            : error || !user
+            ? 'Failed to fetch your user info'
+            : `Logged in with ${user.email}`}
+        </ParagraphMenu>
         <ListMenu>
           <li>
             <a href="/api/auth/logout">

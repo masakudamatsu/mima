@@ -1,8 +1,9 @@
 // eslint-disable-next-line no-unused-vars
-import {render, screen} from '@testing-library/react';
+import {render, screen, act} from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import {axe} from 'jest-axe';
 
+import {UserProvider} from '@auth0/nextjs-auth0';
 import {MenuButton} from './MenuButton';
 import {NightModeContext} from 'src/wrappers/NightModeContext';
 import {buttonLabel, menuLabel} from 'src/utils/uiCopies';
@@ -17,12 +18,12 @@ const mockProps = {
 const Wrapper = {
   lightMode: ({children}) => (
     <NightModeContext.Provider value={false}>
-      {children}
+      <UserProvider>{children}</UserProvider>
     </NightModeContext.Provider>
   ),
   darkMode: ({children}) => (
     <NightModeContext.Provider value={true}>
-      {children}
+      <UserProvider>{children}</UserProvider>
     </NightModeContext.Provider>
   ),
 };
