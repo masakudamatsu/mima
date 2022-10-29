@@ -45,6 +45,7 @@ const setColorScheme = `
     --popup-text-color: ${color['dark-grey 100']};
     --popup-background-highlighted: ${color['background for dark-grey text 100']};
     --ripple-color: ${color['black 33']};
+    --login-background-image-url: url(/login-background-light.png);
   }
   body[data-darkmode='true'] {
     --button-label-color-default: ${color['off-white 100']};
@@ -66,6 +67,7 @@ const setColorScheme = `
     --popup-text-color: ${color['off-white 100']};
     --popup-background-highlighted: ${color['off-black 100']};
     --ripple-color: ${color['white 40']};
+    --login-background-image-url: url(/login-background-dark.png);
   }
 `;
 

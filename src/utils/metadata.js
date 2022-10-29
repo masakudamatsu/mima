@@ -3,3 +3,7 @@ export const index = {
   description:
     'Progressive web app that allows you to customize Google Maps with placemarks of your own interest that can be linked to web pages of your choice',
 };
+
+export const login = {
+  title: 'Login to My Ideal Map',
+};
