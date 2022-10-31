@@ -19,7 +19,24 @@ export const loginPage = {
 
 export const subscribePage = {
   titleText: 'My Ideal Map',
-  buttonLabel: 'Subscribe',
+  offer: {
+    h2: 'Free trial period expires',
+    bodyText:
+      'Your 30-day free trial period is now over. Please start a monthly subscription by providing your billing information.',
+    buttonLabel: 'Subscribe',
+  },
+  success: {
+    h2: 'Payment received',
+    bodyText:
+      'Thank you for subscribing to My Ideal Map! You will receive an email confirmation.',
+    buttonLabel: 'Go to App',
+  },
+  canceled: {
+    h2: 'Payment canceled',
+    bodyText:
+      'You have not been charged. Please try again to start a monthly subscription.',
+    buttonLabel: 'Subscribe',
+  },
 };
 
 export const userLocationMarkerLabel = 'You are here!';

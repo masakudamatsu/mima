@@ -25,7 +25,9 @@ const positionComponentsVertically = `
     margin-top: ${dimension.button['minimum target size 100']}
   }
   & div[role="dialog"] h2 + div,
-  & div[role="alertdialog"] h2 + div {
+  & div[role="alertdialog"] h2 + div,
+  & section h2 + p,
+  & form h2 + p {
     margin-top: ${dimension.button['minimum target size 50']}  
   }
   & div[role="dialog"] p + p,
@@ -33,7 +35,9 @@ const positionComponentsVertically = `
     margin-top: ${dimension.button['minimum target size 25']}  
   }
   & div[role="dialog"] div + button,
-  & div[role="alertdialog"] div + div {
+  & div[role="alertdialog"] div + div,
+  p + button,
+  p + a {
     margin-top: ${dimension.button['minimum target size 50']}  
   }
 `;
