@@ -108,10 +108,7 @@ describe('api/places', () => {
     const req = buildReq({
       method: getWord().toUpperCase(),
     });
-    const res = buildRes({
-      end: jest.fn().mockName('res.end'),
-      setHeader: jest.fn().mockName('res.setHeader'),
-    });
+    const res = buildRes();
     await handlePlaces(req, res);
     expect(res.status).toHaveBeenCalledWith(405);
     expect(res.status).toHaveBeenCalledTimes(1);
