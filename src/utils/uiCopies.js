@@ -17,6 +17,11 @@ export const loginPage = {
   buttonLabel: 'Log in',
 };
 
+export const subscribePage = {
+  titleText: 'My Ideal Map',
+  buttonLabel: 'Subscribe',
+};
+
 export const userLocationMarkerLabel = 'You are here!';
 
 export const linkText = {

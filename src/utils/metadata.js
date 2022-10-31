@@ -7,3 +7,7 @@ export const index = {
 export const login = {
   title: 'Login to My Ideal Map',
 };
+
+export const subscribe = {
+  title: 'Subscribe to My Ideal Map',
+};
