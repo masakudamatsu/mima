@@ -1,7 +1,8 @@
 import {useState} from 'react';
 import Head from 'next/head';
 import {Wrapper} from '@googlemaps/react-wrapper';
-import {withPageAuthRequired} from '@auth0/nextjs-auth0';
+import {getSession, withPageAuthRequired} from '@auth0/nextjs-auth0';
+import {getAccessToken, getAppMetadata} from 'src/utils/callManagementApi';
 
 import {index} from 'src/utils/metadata';
 
@@ -52,7 +53,28 @@ export default withPageAuthRequired(function HomePage({savedPlaces}) {
 });
 
 export const getServerSideProps = withPageAuthRequired({
-  async getServerSideProps() {
+  async getServerSideProps({req, res}) {
+    // Retrieve the subscription expiration date
+    const {user} = await getSession(req, res);
+    console.log(user.sub);
+    const accessToken = await getAccessToken();
+    console.log(accessToken);
+    const {app_metadata} = await getAppMetadata({
+      accessToken,
+      userId: user.sub,
+    });
+    // Check if subscription period expires
+    const today = new Date();
+    const expirationDate = new Date(app_metadata['trial_expiration_date']);
+    if (today > expirationDate) {
+      return {
+        redirect: {
+          destination: '/subscribe',
+          permanent: false,
+        }, // API reference: https://nextjs.org/docs/api-reference/next.config.js/redirects
+      }; // Docs: https://nextjs.org/docs/api-reference/data-fetching/get-server-side-props#redirect
+    }
+    // Retrieve user's saved places
     const savedPlaces = await prisma.place.findMany();
     return {props: {savedPlaces}};
   },
