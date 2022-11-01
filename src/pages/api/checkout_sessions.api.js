@@ -1,8 +1,13 @@
 // adapted from https://stripe.com/docs/checkout/quickstart?client=next
 
+import {withApiAuthRequired} from '@auth0/nextjs-auth0';
+
 const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
 
-export default async function handleCheckoutSessions(req, res) {
+export default withApiAuthRequired(async function handleCheckoutSessions(
+  req,
+  res,
+) {
   if (req.method !== 'POST') {
     res.setHeader('Allow', 'POST');
     res.status(405).end('Method Not Allowed');
@@ -29,4 +34,4 @@ export default async function handleCheckoutSessions(req, res) {
   } catch (err) {
     res.status(err.statusCode || 500).json(err.message);
   }
-}
+});

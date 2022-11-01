@@ -7,6 +7,18 @@ import {buildReq, buildRes, getWord} from 'test/utils/generate';
 // function to test
 import handleCheckoutSessions from './checkout_sessions.api';
 
+// mock Auth0
+jest.mock('@auth0/nextjs-auth0', () => {
+  const originalModule = jest.requireActual('@auth0/nextjs-auth0');
+
+  return {
+    ...originalModule,
+    getAccessToken: () => 'access_token',
+    withApiAuthRequired: handler => handler,
+    withPageAuthRequired: page => () => page(),
+  };
+});
+
 describe('happy path', () => {
   beforeEach(() => {});
   // TODO #307: Mock Stripe module
