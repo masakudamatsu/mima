@@ -1,5 +1,7 @@
+// For updating Auth0 user data
+import {getAccessToken, updateAppMetadata} from 'src/utils/callManagementApi';
+// For Stripe webhooks
 import {buffer} from 'micro';
-
 const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
 
 // Disable Next.js's default parsing of request body
@@ -26,24 +28,39 @@ export default async function handleStripeWebhooks(req, res) {
       return;
     }
     // Handle the event
-    // See https://stripe.com/docs/billing/subscriptions/build-subscriptions?ui=checkout#provision-and-monitor
-    console.log(`event.type: ${event.type}`);
-    // switch (event.type) {
-    //   case 'checkout.session.completed':
-    //     // provision the subscription
-    //     // save customer ID to the database
-    //     break;
-    //   case 'invoice.paid':
-    //     // continue the provision
-    //     // store the status in the database
-    //     break;
-    //   case 'invoice.payment_failed':
-    //     // send user to customer portal to update their payment info
-    //     break;
-    //   // ... handle other event types
-    //   default:
-    //     console.log(`Unhandled event type ${event.type}`);
-    // }
+    // See https://stripe.com/docs/billing/quickstart#provision-access-webhooks
+    // See also https://stripe.com/docs/billing/subscriptions/build-subscriptions?ui=checkout#provision-and-monitor
+    switch (event.type) {
+      case 'customer.subscription.updated': {
+        const subscription = event.data.object;
+        const accessToken = await getAccessToken();
+        const appMetadata = {
+          // save customer ID to the database
+          stripe_id: subscription.customer,
+          // provision the subscription
+          trial_expiration_date: new Date(
+            subscription.current_period_end * 1000, // Stripe uses UNIX timestamps in seconds while JavaScript assumes in milliseconds
+          ).toISOString(), // save in the format of "2022-12-02T00:14:18.000Z"
+        };
+        const userId = subscription.metadata.auth0_user_id;
+        const updatedData = await updateAppMetadata({
+          accessToken,
+          appMetadata,
+          userId,
+        });
+        console.log(`User data updated with ${updatedData}`);
+        break;
+      }
+      // case 'invoice.paid':
+      //   // continue the provision
+      //   // store the status in the database
+      //   break;
+      // case 'invoice.payment_failed':
+      //   // send user to customer portal to update their payment info
+      //   break;
+      default:
+        console.log(`Unhandled event type ${event.type}`);
+    }
     // Return a 200 response to acknowledge receipt of the event
     // "Send a successful 200 response to Stripe as quickly as possible because Stripe retries the event if a response isn’t sent within a reasonable time." (https://stripe.com/docs/webhooks/quickstart)
     res.send({received: true});

@@ -30,6 +30,12 @@ export default withApiAuthRequired(async function handleCheckoutSessions(
         },
       ],
       mode: 'subscription',
+      subscription_data: {
+        // API ref: https://stripe.com/docs/api/checkout/sessions/create#create_checkout_session-subscription_data
+        metadata: {
+          auth0_user_id: user.sub, // to be used in stripe_webhooks.api.js
+        },
+      },
       success_url: `${req.headers.origin}/subscribe?success=true`,
       cancel_url: `${req.headers.origin}/subscribe?canceled=true`,
       // if req.headers.origin doesn't work, see https://stackoverflow.com/questions/29531521/req-headers-origin-is-undefined

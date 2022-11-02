@@ -38,3 +38,23 @@ export async function getAppMetadata({accessToken, userId}) {
     console.log(`Failed to get the app metadata: ${error}`);
   }
 }
+
+export async function updateAppMetadata({accessToken, appMetadata, userId}) {
+  let response;
+  try {
+    response = await axios.request({
+      method: 'PATCH',
+      url: `https://my-ideal-map.jp.auth0.com/api/v2/users/${userId}`,
+      headers: {
+        'content-type': 'application/json',
+        authorization: `Bearer ${accessToken}`,
+      },
+      data: {
+        app_metadata: appMetadata, // converting field name convention from JavaScript to Auth0
+      },
+    });
+    return response.data;
+  } catch (error) {
+    console.log(`Failed to update the app metadata: ${error}`);
+  }
+}
