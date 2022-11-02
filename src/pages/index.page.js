@@ -65,7 +65,7 @@ export const getServerSideProps = withPageAuthRequired({
     });
     // Check if subscription period expires
     const today = new Date();
-    const expirationDate = new Date(app_metadata['trial_expiration_date']);
+    const expirationDate = new Date(app_metadata['expiration_date']);
     if (today > expirationDate) {
       return {
         redirect: {

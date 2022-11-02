@@ -38,7 +38,7 @@ export default async function handleStripeWebhooks(req, res) {
           // save customer ID to the database
           stripe_id: subscription.customer,
           // provision the subscription
-          trial_expiration_date: new Date(
+          expiration_date: new Date(
             subscription.current_period_end * 1000, // Stripe uses UNIX timestamps in seconds while JavaScript assumes in milliseconds
           ).toISOString(), // save in the format of "2022-12-02T00:14:18.000Z"
         };
