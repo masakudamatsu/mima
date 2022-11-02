@@ -48,7 +48,7 @@ export default async function handleStripeWebhooks(req, res) {
           appMetadata,
           userId,
         });
-        console.log(`User data updated with ${updatedData}`);
+        console.log(`User data updated with ${JSON.stringify(updatedData)}`);
         break;
       }
       // case 'invoice.paid':

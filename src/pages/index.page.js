@@ -56,9 +56,7 @@ export const getServerSideProps = withPageAuthRequired({
   async getServerSideProps({req, res}) {
     // Retrieve the subscription expiration date
     const {user} = await getSession(req, res);
-    console.log(user.sub);
     const accessToken = await getAccessToken();
-    console.log(accessToken);
     const {app_metadata} = await getAppMetadata({
       accessToken,
       userId: user.sub,

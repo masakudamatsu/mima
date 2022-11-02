@@ -15,7 +15,9 @@ export async function getAccessToken() {
         audience: 'https://my-ideal-map.jp.auth0.com/api/v2/',
       }),
     });
-    console.log(`getAccessToken() obtains reponse.data: ${response.data}`);
+    console.log(
+      `getAccessToken() obtains reponse.data: ${JSON.stringify(response.data)}`,
+    );
     return response.data.access_token;
   } catch (error) {
     console.error(`Failed to obtain access token: ${error}`);
