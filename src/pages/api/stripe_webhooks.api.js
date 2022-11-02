@@ -31,8 +31,11 @@ export default async function handleStripeWebhooks(req, res) {
     // See https://stripe.com/docs/billing/quickstart#provision-access-webhooks
     // See also https://stripe.com/docs/billing/subscriptions/build-subscriptions?ui=checkout#provision-and-monitor
     switch (event.type) {
-      case 'customer.subscription.updated': {
-        const subscription = event.data.object;
+      case 'invoice.paid': {
+        const invoice = event.data.object; // API ref: https://stripe.com/docs/api/invoices/object
+        const subscription = await stripe.subscriptions.retrieve(
+          invoice.subscription,
+        ); // API ref: https://stripe.com/docs/api/subscriptions/retrieve
         const accessToken = await getAccessToken();
         const appMetadata = {
           // save customer ID to the database
@@ -51,10 +54,6 @@ export default async function handleStripeWebhooks(req, res) {
         console.log(`User data updated with ${JSON.stringify(updatedData)}`);
         break;
       }
-      // case 'invoice.paid':
-      //   // continue the provision
-      //   // store the status in the database
-      //   break;
       // case 'invoice.payment_failed':
       //   // send user to customer portal to update their payment info
       //   break;
