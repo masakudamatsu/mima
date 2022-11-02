@@ -32,10 +32,13 @@ export default async function handleStripeWebhooks(req, res) {
     // See also https://stripe.com/docs/billing/subscriptions/build-subscriptions?ui=checkout#provision-and-monitor
     switch (event.type) {
       case 'invoice.paid': {
+        // retrieve subscription object
         const invoice = event.data.object; // API ref: https://stripe.com/docs/api/invoices/object
         const subscription = await stripe.subscriptions.retrieve(
           invoice.subscription,
         ); // API ref: https://stripe.com/docs/api/subscriptions/retrieve
+
+        // prepare for updating Auth0 user data
         const accessToken = await getAccessToken();
         const appMetadata = {
           // save customer ID to the database
@@ -46,6 +49,8 @@ export default async function handleStripeWebhooks(req, res) {
           ).toISOString(), // save in the format of "2022-12-02T00:14:18.000Z"
         };
         const userId = subscription.metadata.auth0_user_id;
+
+        // update Auth0 user data with new subscription expiration date
         const updatedData = await updateAppMetadata({
           accessToken,
           appMetadata,
