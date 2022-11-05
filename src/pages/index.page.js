@@ -21,7 +21,10 @@ const prisma = require('src/utils/prisma');
 
 // wrap with withPageAuthRequired so any fetch request to API routes will be attached with access token
 // https://github.com/auth0/nextjs-auth0/blob/main/EXAMPLES.md#protect-an-api-route
-export default withPageAuthRequired(function HomePage({savedPlaces}) {
+export default withPageAuthRequired(function HomePage({
+  savedPlaces,
+  userStatus,
+}) {
   useNightMode(NightModeContext);
 
   const [mapObject, setMapObject] = useState(null);
@@ -33,7 +36,7 @@ export default withPageAuthRequired(function HomePage({savedPlaces}) {
       </Head>
       <Noscript />
       <PlaceIdProvider>
-        <Controls mapObject={mapObject} />
+        <Controls mapObject={mapObject} userStatus={userStatus} />
         <main>
           <Wrapper
             apiKey={process.env.NEXT_PUBLIC_API_KEY}
@@ -74,6 +77,11 @@ export const getServerSideProps = withPageAuthRequired({
     }
     // Retrieve user's saved places
     const savedPlaces = await prisma.place.findMany();
-    return {props: {savedPlaces}};
+    return {
+      props: {
+        savedPlaces,
+        userStatus: app_metadata['status'],
+      },
+    };
   },
 });

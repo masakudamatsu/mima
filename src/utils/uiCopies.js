@@ -50,6 +50,11 @@ export const buttonLabel = {
   close: 'Close',
   closePlaceDetail: 'Close place detail',
   closeSearchbox: 'Close search box',
+  customerPortal: {
+    cancel: 'Cancel subscription',
+    reactivate: 'Reactivate subscription',
+    update: 'Update billing info',
+  },
   delete: 'Delete',
   edit: 'Edit',
   locator: {

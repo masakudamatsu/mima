@@ -1,5 +1,6 @@
 import {useEffect, useRef, useState} from 'react';
 import PropTypes from 'prop-types';
+import {statusType} from 'src/utils/type';
 
 import {LocatorButton} from 'src/components/LocatorButton';
 import {MenuButton} from 'src/components/MenuButton';
@@ -18,7 +19,7 @@ const flightIcon = {
   width: 24,
 };
 
-export const Controls = ({mapObject}) => {
+export const Controls = ({mapObject, userStatus}) => {
   const [clientSideRendering, setClientSideRendering] = useState(false);
   useEffect(() => {
     setClientSideRendering(true);
@@ -214,6 +215,7 @@ export const Controls = ({mapObject}) => {
           moveToCurrentLocation={moveToCurrentLocation}
           stopTracking={stopTracking}
           trackUserLocation={trackUserLocation}
+          userStatus={userStatus}
           watchID={watchID}
         />
       )}
@@ -235,4 +237,5 @@ export const Controls = ({mapObject}) => {
 
 Controls.propTypes = {
   mapObject: PropTypes.object.isRequired,
+  userStatus: PropTypes.oneOf(Object.values(statusType)),
 };

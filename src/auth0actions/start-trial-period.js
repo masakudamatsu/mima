@@ -11,4 +11,5 @@ exports.onExecutePreUserRegistration = async (event, api) => {
   expirationDate.setDate(today.getDate() + 30);
 
   api.user.setAppMetadata('expiration_date', expirationDate);
+  api.user.setAppMetadata('status', 'trial');
 };

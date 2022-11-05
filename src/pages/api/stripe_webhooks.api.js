@@ -1,7 +1,10 @@
 // For updating Auth0 user data
 import {getAccessToken, updateAppMetadata} from 'src/utils/callManagementApi';
+import {statusType} from 'src/utils/type';
+
 // For Stripe webhooks
 import {buffer} from 'micro';
+
 const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
 
 // Disable Next.js's default parsing of request body
@@ -41,6 +44,7 @@ export default async function handleStripeWebhooks(req, res) {
         // prepare for updating Auth0 user data
         const accessToken = await getAccessToken();
         const appMetadata = {
+          status: statusType.subscribed,
           // save customer ID to the database
           stripe_id: subscription.customer,
           // provision the subscription
@@ -62,6 +66,39 @@ export default async function handleStripeWebhooks(req, res) {
       // case 'invoice.payment_failed':
       //   // send user to customer portal to update their payment info
       //   break;
+      case 'customer.subscription.updated': {
+        // retrieve subscription object
+        const subscription = event.data.object;
+        // record whether the user has cancelled subscription
+        let status;
+        if (subscription['cancel_at_period_end'] === true) {
+          status = statusType.cancelled;
+        } else if (subscription['cancel_at_period_end'] === false) {
+          status = statusType.subscribed;
+        } else {
+          throw new Error(
+            `Stripe subscription object misses "cancel_at_period_end" property.`,
+          );
+        }
+        // prepare for updating Auth0 user data
+        const accessToken = await getAccessToken();
+        const appMetadata = {
+          status,
+        };
+        const userId = subscription.metadata.auth0_user_id;
+        if (!userId) {
+          throw new Error('Stripe subscription object misses Auth0 user ID.');
+        }
+        // update Auth0 user data with new subscription expiration date
+        const updatedData = await updateAppMetadata({
+          accessToken,
+          appMetadata,
+          userId,
+        });
+        console.log(`User data updated with ${JSON.stringify(updatedData)}`);
+
+        break;
+      }
       default:
         console.log(`Unhandled event type ${event.type}`);
     }
