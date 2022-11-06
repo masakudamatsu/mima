@@ -2,7 +2,7 @@ import {index} from '../../src/utils/metadata';
 
 describe('Metadata', () => {
   beforeEach(() => {
-    cy.login();
+    cy.auth('testuser1');
   });
   it('index page', () => {
     cy.log(`Visiting the index page...`);

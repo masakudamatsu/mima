@@ -13,7 +13,7 @@ module.exports = defineConfig({
       return require('./cypress/plugins/index.js')(on, config);
     },
     baseUrl: 'http://localhost:3000',
-    experimentalSessionAndOrigin: true,
+    experimentalSessionAndOrigin: true, // to use cy.session(): https://docs.cypress.io/api/commands/session
     specPattern: 'cypress/e2e/**/*.cy.{js,jsx,ts,tsx}',
   },
 });

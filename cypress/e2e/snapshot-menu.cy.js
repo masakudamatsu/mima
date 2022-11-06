@@ -7,7 +7,7 @@ const menuUIbreakpoints = [
 
 describe('Menu window', () => {
   beforeEach(() => {
-    cy.login();
+    cy.auth('testuser1');
   });
   it('Rendered in Light Mode at Daytime', () => {
     cy.visitAtDaytime('/');

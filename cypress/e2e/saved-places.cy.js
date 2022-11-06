@@ -13,7 +13,7 @@ describe('Saved place detail feature', () => {
     cy.log('Resetting the database');
     cy.exec('npx prisma migrate reset --force'); // https://docs.cypress.io/guides/end-to-end-testing/testing-your-app#Seeding-data
     cy.log('Setting up');
-    cy.login();
+    cy.auth('testuser1');
     cy.visit('/');
     cy.waitForMapToLoad();
   });
