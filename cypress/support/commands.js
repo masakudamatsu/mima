@@ -21,16 +21,6 @@ Cypress.Commands.overwrite('log', (...args) => {
   }
 });
 
-// Programatic login
-// https://resultfor.dev/709934-cypress-load-environment-variables-in-custom-commands
-Cypress.Commands.add('loginWithCookie', session => {
-  return cy.task('encryptSession', session).then(token => {
-    return cy.setCookie('api_token', token).then(() => {
-      return session;
-    });
-  });
-});
-
 // Swipe from right to left
 Cypress.Commands.add('swipeScreenRightToLeft', () => {
   const screenWidth = Cypress.config('viewportWidth');
