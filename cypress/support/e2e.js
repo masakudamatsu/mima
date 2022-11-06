@@ -25,6 +25,9 @@ import '@percy/cypress';
 // cypress-real-events https://github.com/dmtrKovalenko/cypress-real-events
 import 'cypress-real-events/support';
 
+// Mocking nextjs-auth0
+import 'cypress-nextjs-auth0';
+
 // Import commands.js using ES2015 syntax:
 import './commands';
 // Alternatively you can use CommonJS syntax:

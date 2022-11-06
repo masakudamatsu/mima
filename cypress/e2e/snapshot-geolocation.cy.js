@@ -10,6 +10,7 @@ describe('After clicking the location button', () => {
   const initialLng = 135.768326;
   const oneMeterInDegree = 1 / 111000; // 1 degree = 111km https://www.usna.edu/Users/oceano/pguth/md_help/html/approx_equivalents.htm
   beforeEach(() => {
+    cy.login();
     cy.visitAtDaytime('/');
     cy.waitForMapToLoad();
   });
@@ -57,6 +58,7 @@ describe('Once user location is being watched', () => {
     accuracy: 15,
   };
   beforeEach(() => {
+    cy.login();
     cy.visitAtDaytime('/');
     cy.mockGetCurrentPosition(coords);
     cy.mockWatchPosition(coords);
@@ -79,6 +81,9 @@ describe('Once user location is being watched', () => {
 const errorCodes = [1, 2];
 errorCodes.forEach(errorCode => {
   describe(`Geolocation API error code: ${errorCode}`, () => {
+    beforeEach(() => {
+      cy.login();
+    });
     it('Clicking the locator button pops up a light-mode dialog at daytime', () => {
       cy.clock(Date.UTC(2021, 8, 28, 6), ['Date']); // https://docs.cypress.io/api/commands/clock#Function-names
       cy.visit('/', {
@@ -125,6 +130,9 @@ errorCodes.forEach(errorCode => {
 });
 
 describe('Geolocation API unsupported', () => {
+  beforeEach(() => {
+    cy.login();
+  });
   it('Clicking the locator button pops up a light-mode dialog at daytime', () => {
     cy.clock(Date.UTC(2021, 8, 28, 6), ['Date']); // https://docs.cypress.io/api/commands/clock#Function-names
     cy.visit('/', {

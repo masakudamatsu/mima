@@ -1,6 +1,7 @@
 import {buttonLabel, menuLabel} from '../../src/utils/uiCopies';
 describe('Menu feature', () => {
   beforeEach(() => {
+    cy.login();
     cy.visitAtDaytime('/');
     cy.waitForMapToLoad();
   });

@@ -1,5 +1,8 @@
 import {buttonLabel} from '../../src/utils/uiCopies';
 
+beforeEach(() => {
+  cy.login();
+});
 it('Landmark roles are given appropriately', () => {
   cy.visit('/');
   cy.waitForMapToLoad();

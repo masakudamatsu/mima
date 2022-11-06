@@ -1,4 +1,7 @@
 describe('Initial UI', () => {
+  beforeEach(() => {
+    cy.login();
+  });
   it('Rendered in Light Mode at Daytime', () => {
     cy.visitAtDaytime('/');
     cy.waitForMapToLoad();

@@ -13,6 +13,7 @@ describe('Geolocation feature: happy path', () => {
     accuracy: 15,
   };
   beforeEach(() => {
+    cy.login();
     cy.visit('/');
     cy.mockGetCurrentPosition(coords);
     cy.mockWatchPosition(coords);
@@ -112,6 +113,9 @@ describe('Geolocation feature: happy path', () => {
 });
 
 describe('Geolocation feature: sad paths', () => {
+  beforeEach(() => {
+    cy.login();
+  });
   it('Geolocation API not supported', () => {
     cy.log(`Setting up`);
     cy.visit('/', {

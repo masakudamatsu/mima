@@ -1,6 +1,9 @@
 import {index} from '../../src/utils/metadata';
 
 describe('Metadata', () => {
+  beforeEach(() => {
+    cy.login();
+  });
   it('index page', () => {
     cy.log(`Visiting the index page...`);
     cy.visit('/');

@@ -11,6 +11,9 @@ const editorUIbreakpoints = [
 ];
 describe('After clicking a saved place', () => {
   describe('UI changes as expected', () => {
+    beforeEach(() => {
+      cy.login();
+    });
     it('Daytime', () => {
       cy.visitAtDaytime('/');
       cy.waitForMapToLoad();
@@ -33,6 +36,9 @@ describe('After clicking a saved place', () => {
     });
   });
   describe('Clicking the close button', () => {
+    beforeEach(() => {
+      cy.login();
+    });
     it('UI changes as expected', () => {
       cy.visitAtDaytime('/');
       cy.waitForMapToLoad();
@@ -46,6 +52,9 @@ describe('After clicking a saved place', () => {
     });
   });
   describe('Clicking Edit button', () => {
+    beforeEach(() => {
+      cy.login();
+    });
     describe('UI changes as expected', () => {
       it('Daytime', () => {
         cy.visitAtDaytime('/');
