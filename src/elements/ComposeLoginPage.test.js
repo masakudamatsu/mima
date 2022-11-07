@@ -34,33 +34,22 @@ describe('ComposeLoginPage component', () => {
 }
 
 .c0 header + form,
-.c0 header + main,
-.c0 header + div[role="dialog"],
-.c0 header + div[role="alertdialog"] {
+.c0 header + main {
   margin-top: 48px;
 }
 
-.c0 div[role="dialog"] h2 + div,
-.c0 div[role="alertdialog"] h2 + div,
-.c0 main h2 + p,
-.c0 form h2 + p {
+.c0 form h2 + p,
+.c0 main h2 + p {
   margin-top: 24px;
 }
 
-.c0 div[role="dialog"] p + p,
-.c0 div[role="alertdialog"] p + p {
+.c0 form p + p {
   margin-top: 12px;
 }
 
-.c0 div[role="dialog"] div + button,
-.c0 div[role="alertdialog"] div + div,
 .c0 p + button,
 .c0 p + a {
   margin-top: 24px;
-}
-
-.c0 button + button {
-  margin-left: 8px;
 }
 
 .c0 a {
@@ -74,7 +63,8 @@ describe('ComposeLoginPage component', () => {
   line-height: 1.092;
 }
 
-.c0 div[role="dialog"] {
+.c0 form,
+.c0 main {
   max-width: 561px;
   width: 100%;
 }
