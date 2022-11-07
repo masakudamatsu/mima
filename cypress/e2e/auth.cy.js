@@ -28,4 +28,8 @@ describe('Authorised users', () => {
     cy.visit('/login');
     cy.url().should('eq', `${Cypress.config().baseUrl}/`);
   });
+  it('will not get redirected from signup page to the app', () => {
+    cy.visit('/signup');
+    cy.url().should('eq', `${Cypress.config().baseUrl}/signup`);
+  });
 });
