@@ -34,6 +34,11 @@ const positionComponentsVertically = `
   p + a {
     margin-top: ${dimension.button['minimum target size 50']}  
   }
+  a + a,
+  button + button {
+    margin-top: ${dimension.button['minimum target size 50']}
+  }
+
 `;
 
 const styleText = `
@@ -53,6 +58,15 @@ const styleText = `
   }
 `;
 
+const styleButton = `
+  & a[data-button-purpose="signup"],
+  & button[data-button-purpose="signup"] {
+    background-color: var(--dialog-button-color);
+    color: white; /* TODO #344: Make button label text see-through the background */
+    width: 100%;
+  }
+`;
+
 const setComponentSize = `
   & form,
   & main {
@@ -68,5 +82,6 @@ export const ComposeLoginPage = styled.div`
   ${centerAlignComponents}
   ${positionComponentsVertically}
   ${styleText}
+  ${styleButton}
   ${setComponentSize}
 `;

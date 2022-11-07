@@ -52,6 +52,11 @@ describe('ComposeLoginPage component', () => {
   margin-top: 24px;
 }
 
+.c0 a + a,
+.c0 button + button {
+  margin-top: 24px;
+}
+
 .c0 a {
   color: var(--link-text-color);
 }
@@ -61,6 +66,13 @@ describe('ComposeLoginPage component', () => {
   font-size: 1.3986rem;
   font-weight: 700;
   line-height: 1.092;
+}
+
+.c0 a[data-button-purpose="signup"],
+.c0 button[data-button-purpose="signup"] {
+  background-color: var(--dialog-button-color);
+  color: white;
+  width: 100%;
 }
 
 .c0 form,
