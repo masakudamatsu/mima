@@ -19,3 +19,13 @@ describe('Log in', () => {
     });
   });
 });
+
+describe('Authorised users', () => {
+  beforeEach(() => {
+    cy.auth('testuser1');
+  });
+  it('get redirected from login page to the app', () => {
+    cy.visit('/login');
+    cy.url().should('eq', `${Cypress.config().baseUrl}/`);
+  });
+});
