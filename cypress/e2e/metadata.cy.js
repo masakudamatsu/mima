@@ -3,7 +3,7 @@ import {index, signup} from '../../src/utils/metadata';
 describe('Metadata', () => {
   it('index page', () => {
     cy.log(`Visiting the index page as an authorised user...`);
-    cy.auth('testuser1');
+    cy.auth();
     cy.visit('/');
     cy.log(`...sets the page title`);
     cy.title().should('eq', index.title);

@@ -1,6 +1,6 @@
 describe('Initial UI', () => {
   beforeEach(() => {
-    cy.auth('testuser1');
+    cy.auth();
   });
   it('Rendered in Light Mode at Daytime', () => {
     cy.visitAtDaytime('/');

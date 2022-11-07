@@ -1,7 +1,7 @@
 import {buttonLabel} from '../../src/utils/uiCopies';
 
 beforeEach(() => {
-  cy.auth('testuser1');
+  cy.auth();
 });
 it('Landmark roles are given appropriately', () => {
   cy.visit('/');

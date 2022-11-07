@@ -2,7 +2,7 @@ import {map} from '../../src/utils/designtokens';
 
 describe('While loading the map', () => {
   beforeEach(() => {
-    cy.auth('testuser1');
+    cy.auth();
   });
   it('at daytime', () => {
     cy.clock(Date.UTC(2021, 8, 28, 6), ['Date']); // https://docs.cypress.io/api/commands/clock#Function-names

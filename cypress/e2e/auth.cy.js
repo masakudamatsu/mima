@@ -22,7 +22,7 @@ describe('Log in', () => {
 
 describe('Authorised users', () => {
   beforeEach(() => {
-    cy.auth('testuser1');
+    cy.auth();
   });
   it('get redirected from login page to the app', () => {
     cy.visit('/login');

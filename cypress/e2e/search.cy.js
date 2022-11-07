@@ -6,7 +6,7 @@ const placeAddress = '382-3 Mogamichō, Nakagyo Ward, Kyoto, 604-8303, Japan';
 describe('Search feature', () => {
   beforeEach(() => {
     cy.log('Loading app');
-    cy.auth('testuser1');
+    cy.auth();
     cy.visit('/');
     cy.waitForMapToLoad();
   });

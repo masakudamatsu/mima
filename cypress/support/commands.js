@@ -1,17 +1,26 @@
 import {userLocationMarkerLabel} from '../../src/utils/uiCopies';
 
 // Persist the access token across tests
-Cypress.Commands.add('auth', sessionName => {
-  cy.session(
-    sessionName, // API ref: https://docs.cypress.io/api/commands/session#Arguments
-    () => {
-      cy.login(); // cypress-nextjs-auth0: https://github.com/sir-dunxalot/cypress-nextjs-auth0/tree/main#login
-    },
+Cypress.Commands.add(
+  'auth',
+  (
+    sessionName = 'subscribed_user1',
     {
-      cacheAcrossSpecs: true, // use the same token for tests in other files: see https://docs.cypress.io/api/commands/session#Caching-session-data-across-specs
-    },
-  );
-});
+      username = Cypress.env('auth0UserSubscribed1'),
+      password = Cypress.env('auth0PassSubscribed1'),
+    } = {},
+  ) => {
+    cy.session(
+      sessionName, // API ref: https://docs.cypress.io/api/commands/session#Arguments
+      () => {
+        cy.login({username, password}); // cypress-nextjs-auth0: https://github.com/sir-dunxalot/cypress-nextjs-auth0/tree/main#login
+      },
+      {
+        cacheAcrossSpecs: true, // use the same token for tests in other files: see https://docs.cypress.io/api/commands/session#Caching-session-data-across-specs
+      },
+    );
+  },
+);
 
 // Customize cy.log
 // adapted from https://filiphric.com/improve-your-error-screenshots-in-cypress

@@ -12,7 +12,7 @@ const editorUIbreakpoints = [
 describe('After clicking a saved place', () => {
   describe('UI changes as expected', () => {
     beforeEach(() => {
-      cy.auth('testuser1');
+      cy.auth();
     });
     it('Daytime', () => {
       cy.visitAtDaytime('/');
@@ -37,7 +37,7 @@ describe('After clicking a saved place', () => {
   });
   describe('Clicking the close button', () => {
     beforeEach(() => {
-      cy.auth('testuser1');
+      cy.auth();
     });
     it('UI changes as expected', () => {
       cy.visitAtDaytime('/');
@@ -53,7 +53,7 @@ describe('After clicking a saved place', () => {
   });
   describe('Clicking Edit button', () => {
     beforeEach(() => {
-      cy.auth('testuser1');
+      cy.auth();
     });
     describe('UI changes as expected', () => {
       it('Daytime', () => {
