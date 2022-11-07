@@ -37,7 +37,9 @@ export default withPageAuthRequired(function HomePage({
       <Noscript />
       <PlaceIdProvider>
         <Controls mapObject={mapObject} userStatus={userStatus} />
-        <main>
+        <main
+          id="map" // used in GlobalStyle.js
+        >
           <Wrapper
             apiKey={process.env.NEXT_PUBLIC_API_KEY}
             version="weekly"

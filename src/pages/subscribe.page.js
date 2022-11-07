@@ -55,13 +55,13 @@ export default function Subscribe() {
               </ButtonDialog>
             </form>
           ) : ui === 'success' ? (
-            <section aria-labelledby="success">
+            <main aria-labelledby="success">
               <h2 id="success">{subscribePage.success.h2}</h2>
               <p>{subscribePage.success.bodyText}</p>
               <ButtonDialog as="a" data-reset-link-style="true" href="/">
                 {subscribePage.success.buttonLabel}
               </ButtonDialog>
-            </section>
+            </main>
           ) : ui === 'canceled' ? (
             <form action="/api/checkout_sessions" method="POST">
               <h2>{subscribePage.canceled.h2}</h2>

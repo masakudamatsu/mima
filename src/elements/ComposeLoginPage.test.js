@@ -34,6 +34,7 @@ describe('ComposeLoginPage component', () => {
 }
 
 .c0 header + form,
+.c0 header + main,
 .c0 header + div[role="dialog"],
 .c0 header + div[role="alertdialog"] {
   margin-top: 48px;
@@ -41,7 +42,7 @@ describe('ComposeLoginPage component', () => {
 
 .c0 div[role="dialog"] h2 + div,
 .c0 div[role="alertdialog"] h2 + div,
-.c0 section h2 + p,
+.c0 main h2 + p,
 .c0 form h2 + p {
   margin-top: 24px;
 }

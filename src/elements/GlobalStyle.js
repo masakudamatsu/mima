@@ -10,7 +10,7 @@ const makeMapFullscreen = `
   :root,
   body,
   #__next,
-  main {
+  #map {
     height: 100%;
   }
 `;

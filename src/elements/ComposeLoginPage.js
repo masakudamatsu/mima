@@ -20,13 +20,14 @@ const centerAlignComponents = `
 
 const positionComponentsVertically = `
   & header + form,
+  & header + main,
   & header + div[role="dialog"],
   & header + div[role="alertdialog"] {
     margin-top: ${dimension.button['minimum target size 100']}
   }
   & div[role="dialog"] h2 + div,
   & div[role="alertdialog"] h2 + div,
-  & section h2 + p,
+  & main h2 + p,
   & form h2 + p {
     margin-top: ${dimension.button['minimum target size 50']}  
   }
