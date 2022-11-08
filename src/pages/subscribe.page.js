@@ -1,5 +1,6 @@
 import {useEffect, useState} from 'react';
 import Head from 'next/head';
+import {withPageAuthRequired} from '@auth0/nextjs-auth0';
 
 import {ButtonDialog} from 'src/elements/ButtonDialog';
 import {ComposeLoginPage} from 'src/elements/ComposeLoginPage';
@@ -77,9 +78,4 @@ export default function Subscribe() {
   );
 }
 
-export async function getServerSideProps({req}) {
-  // API reference: https://nextjs.org/docs/api-reference/data-fetching/get-server-side-props#context-parameter
-  return {
-    props: {},
-  };
-}
+export const getServerSideProps = withPageAuthRequired();
