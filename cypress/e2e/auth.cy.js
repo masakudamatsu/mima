@@ -20,6 +20,32 @@ describe('Log in', () => {
   });
 });
 
+describe('Trial users', () => {
+  beforeEach(() => {
+    cy.auth('trial_user', {
+      username: Cypress.env('auth0UserTrial'),
+      password: Cypress.env('auth0PassTrial'),
+    });
+  });
+  it('can directly visit the app once logged in', () => {
+    cy.visit('/');
+    cy.url().should('eq', `${Cypress.config().baseUrl}/`);
+  });
+});
+
+describe('Expired trial users', () => {
+  beforeEach(() => {
+    cy.auth('trial_expired_user', {
+      username: Cypress.env('auth0UserTrialExpired'),
+      password: Cypress.env('auth0PassTrialExpired'),
+    });
+  });
+  it('gets redirected from the app to subscribe page', () => {
+    cy.visit('/');
+    cy.url().should('eq', `${Cypress.config().baseUrl}/subscribe`);
+  });
+});
+
 describe('Authorised users', () => {
   beforeEach(() => {
     cy.auth();
