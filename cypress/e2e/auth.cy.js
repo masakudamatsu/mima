@@ -60,21 +60,21 @@ describe('Trial users', () => {
       password: Cypress.env('auth0PassTrial'),
     });
   });
-  it('can directly visit the app once logged in', () => {
-    cy.visit('/');
+  it('will not get redirected from signup page', () => {
+    cy.visit('/signup');
+    cy.url().should('eq', `${Cypress.config().baseUrl}/signup`);
+  });
+  it('get redirected from login page to the app', () => {
+    cy.visit('/login');
     cy.url().should('eq', `${Cypress.config().baseUrl}/`);
   });
   it('gets directed from subscribe page to the app', () => {
     cy.visit('/subscribe');
     cy.url().should('eq', `${Cypress.config().baseUrl}/`);
   });
-  it('get redirected from login page to the app', () => {
-    cy.visit('/login');
+  it('can directly visit the app once logged in', () => {
+    cy.visit('/');
     cy.url().should('eq', `${Cypress.config().baseUrl}/`);
-  });
-  it('will not get redirected from signup page', () => {
-    cy.visit('/signup');
-    cy.url().should('eq', `${Cypress.config().baseUrl}/signup`);
   });
 });
 
@@ -85,27 +85,31 @@ describe('Expired trial users', () => {
       password: Cypress.env('auth0PassTrialExpired'),
     });
   });
-  it('gets redirected from the app to subscribe page', () => {
-    cy.visit('/');
+  it('will not get redirected from signup page', () => {
+    cy.visit('/signup');
+    cy.url().should('eq', `${Cypress.config().baseUrl}/signup`);
+  });
+  it('get redirected from login page to subscribe page', () => {
+    cy.visit('/login');
     cy.url().should('eq', `${Cypress.config().baseUrl}/subscribe`);
   });
   it('can directly visit subscribe page', () => {
     cy.visit('/subscribe');
     cy.url().should('eq', `${Cypress.config().baseUrl}/subscribe`);
   });
-  it('get redirected from login page to subscribe page', () => {
-    cy.visit('/login');
+  it('gets redirected from the app to subscribe page', () => {
+    cy.visit('/');
     cy.url().should('eq', `${Cypress.config().baseUrl}/subscribe`);
-  });
-  it('will not get redirected from signup page', () => {
-    cy.visit('/signup');
-    cy.url().should('eq', `${Cypress.config().baseUrl}/signup`);
   });
 });
 
-describe('Authorised users', () => {
+describe('Subscribed users', () => {
   beforeEach(() => {
     cy.auth();
+  });
+  it('will not get redirected from signup page to the app', () => {
+    cy.visit('/signup');
+    cy.url().should('eq', `${Cypress.config().baseUrl}/signup`);
   });
   it('get redirected from login page to the app', () => {
     cy.visit('/login');
@@ -114,9 +118,5 @@ describe('Authorised users', () => {
   it('get redirected from subscribe page to the app', () => {
     cy.visit('/subscribe');
     cy.url().should('eq', `${Cypress.config().baseUrl}/`);
-  });
-  it('will not get redirected from signup page to the app', () => {
-    cy.visit('/signup');
-    cy.url().should('eq', `${Cypress.config().baseUrl}/signup`);
   });
 });
