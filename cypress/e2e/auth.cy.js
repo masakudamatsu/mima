@@ -1,4 +1,9 @@
-import {buttonLabel, loginPage, signupPage} from '../../src/utils/uiCopies';
+import {
+  buttonLabel,
+  loginPage,
+  signupPage,
+  subscribePage,
+} from '../../src/utils/uiCopies';
 
 describe('First-time users', () => {
   it('can start a trial by visiting the Signup page', () => {
@@ -118,6 +123,17 @@ describe('Expired trial users', () => {
   it('gets redirected from the app to subscribe page', () => {
     cy.visit('/');
     cy.url().should('eq', `${Cypress.config().baseUrl}/subscribe`);
+  });
+  it('can start subscription on subscribe page', () => {
+    cy.intercept('POST', '/api/checkout_sessions').as('checkout');
+    cy.visit('/subscribe');
+    cy.findByRole('button', {name: subscribePage.offer.buttonLabel}).click();
+    cy.wait('@checkout').then(({response}) => {
+      expect(response.statusCode).to.eq(303);
+      expect(response.headers.location).to.match(
+        /https:\/\/checkout.stripe.com\/.*/i,
+      ); // API ref: https://docs.cypress.io/guides/references/assertions#BDD-Assertions
+    });
   });
 });
 
