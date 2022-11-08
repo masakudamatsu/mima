@@ -10,6 +10,7 @@ describe('First-time users', () => {
   });
   // TODO #345: handle the case where first time users visit Login page
   // TODO #345: handle the case where first time users visit Subscribe page
+  // TODO #345: handle the case where first time users visit App
 });
 describe('Logged-out users', () => {
   it('can log in by visiting the Signup page', () => {
@@ -35,6 +36,18 @@ describe('Logged-out users', () => {
         // API ref: https://docs.cypress.io/guides/references/assertions#BDD-Assertions
         'location',
         '/api/auth/login?returnTo=%2Fsubscribe',
+      );
+    });
+  });
+  it('gets redirected from the App to Auth0 login form', () => {
+    cy.intercept('GET', '/').as('subscribePage');
+    cy.visit('/');
+    cy.wait('@subscribePage').then(({response}) => {
+      expect(response.statusCode).to.eq(307);
+      expect(response.headers).to.have.deep.property(
+        // API ref: https://docs.cypress.io/guides/references/assertions#BDD-Assertions
+        'location',
+        '/api/auth/login?returnTo=%2F',
       );
     });
   });
