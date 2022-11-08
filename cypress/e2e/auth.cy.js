@@ -1,7 +1,7 @@
 import {loginPage, signupPage} from '../../src/utils/uiCopies';
 
-describe('Sign up', () => {
-  it('Signup page has a link to Auth0 signup form', () => {
+describe('First-time users', () => {
+  it('can start a trial by visiting the Signup page', () => {
     cy.visit('/signup');
     cy.findByText(signupPage.buttonLabel).then(link => {
       cy.wrap(link).should('have.attr', 'href', '/api/auth/signup');
@@ -9,9 +9,8 @@ describe('Sign up', () => {
     });
   });
 });
-
-describe('Log in', () => {
-  it('Users can log in via the Signup page', () => {
+describe('Logged-out users', () => {
+  it('can log in by visiting the Signup page', () => {
     cy.visit('/signup');
     cy.findByText(loginPage.buttonLabel).then(link => {
       cy.wrap(link).should('have.attr', 'href', '/api/auth/login');
