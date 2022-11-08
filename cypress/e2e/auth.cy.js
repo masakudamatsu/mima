@@ -72,6 +72,10 @@ describe('Trial users', () => {
     cy.visit('/login');
     cy.url().should('eq', `${Cypress.config().baseUrl}/`);
   });
+  it('will not get redirected from signup page', () => {
+    cy.visit('/signup');
+    cy.url().should('eq', `${Cypress.config().baseUrl}/signup`);
+  });
 });
 
 describe('Expired trial users', () => {
@@ -92,6 +96,10 @@ describe('Expired trial users', () => {
   it('get redirected from login page to subscribe page', () => {
     cy.visit('/login');
     cy.url().should('eq', `${Cypress.config().baseUrl}/subscribe`);
+  });
+  it('will not get redirected from signup page', () => {
+    cy.visit('/signup');
+    cy.url().should('eq', `${Cypress.config().baseUrl}/signup`);
   });
 });
 
