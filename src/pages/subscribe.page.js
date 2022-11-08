@@ -1,6 +1,7 @@
 import {useEffect, useState} from 'react';
 import Head from 'next/head';
-import {withPageAuthRequired} from '@auth0/nextjs-auth0';
+import {getSession, withPageAuthRequired} from '@auth0/nextjs-auth0';
+import {getAccessToken, getAppMetadata} from 'src/utils/callManagementApi';
 
 import {ButtonDialog} from 'src/elements/ButtonDialog';
 import {ComposeLoginPage} from 'src/elements/ComposeLoginPage';
@@ -78,4 +79,27 @@ export default function Subscribe() {
   );
 }
 
-export const getServerSideProps = withPageAuthRequired();
+export const getServerSideProps = withPageAuthRequired({
+  async getServerSideProps({req, res}) {
+    // Retrieve the subscription expiration date
+    const {user} = getSession(req, res);
+    const accessToken = await getAccessToken();
+    const {app_metadata} = await getAppMetadata({
+      accessToken,
+      userId: user.sub,
+    });
+    // Check if subscription period expires
+    const today = new Date();
+    const expirationDate = new Date(app_metadata['expiration_date']);
+    if (today > expirationDate) {
+      return {props: {}};
+    } else {
+      return {
+        redirect: {
+          destination: '/',
+          permanent: false,
+        }, // API reference: https://nextjs.org/docs/api-reference/next.config.js/redirects
+      }; // Docs: https://nextjs.org/docs/api-reference/data-fetching/get-server-side-props#redirect
+    }
+  },
+});
