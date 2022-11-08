@@ -8,10 +8,18 @@ describe('First-time users', () => {
       cy.request(link.prop('href')).its('status').should('eq', 200);
     });
   });
+  // TODO #345: handle the case where first time users visit Login page
 });
 describe('Logged-out users', () => {
   it('can log in by visiting the Signup page', () => {
     cy.visit('/signup');
+    cy.findByText(loginPage.buttonLabel).then(link => {
+      cy.wrap(link).should('have.attr', 'href', '/api/auth/login');
+      cy.request(link.prop('href')).its('status').should('eq', 200);
+    });
+  });
+  it('can log in by visiting the Login page', () => {
+    cy.visit('/login');
     cy.findByText(loginPage.buttonLabel).then(link => {
       cy.wrap(link).should('have.attr', 'href', '/api/auth/login');
       cy.request(link.prop('href')).its('status').should('eq', 200);

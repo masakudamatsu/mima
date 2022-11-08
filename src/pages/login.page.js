@@ -1,5 +1,5 @@
 import Head from 'next/head';
-import {getSession} from '@auth0/nextjs-auth0';
+import {getServerSidePropsWrapper, getSession} from '@auth0/nextjs-auth0';
 import {ButtonDialog} from 'src/elements/ButtonDialog';
 import {ComposeLoginPage} from 'src/elements/ComposeLoginPage';
 import {DivLoginPageBackground} from 'src/elements/DivLoginPageBackground';
@@ -47,21 +47,27 @@ export default function Login() {
   );
 }
 
-export async function getServerSideProps({req, res}) {
-  // API reference: https://nextjs.org/docs/api-reference/data-fetching/get-server-side-props#context-parameter
+export const getServerSideProps = getServerSidePropsWrapper(
+  // API reference: https://auth0.github.io/nextjs-auth0/modules/helpers_get_server_side_props_wrapper.html#getserversidepropswrapper
+  async ({req, res}) => {
+    // API reference: https://nextjs.org/docs/api-reference/data-fetching/get-server-side-props#context-parameter
 
-  // redirect authorised users to the app
-  const {user} = getSession(req, res);
-  if (user) {
-    return {
-      redirect: {
-        destination: '/',
-        permanent: false,
-      }, // API reference: https://nextjs.org/docs/api-reference/next.config.js/redirects
-    }; // Docs: https://nextjs.org/docs/api-reference/data-fetching/get-server-side-props#redirect
-  }
-  // otherwise, show the login button
-  return {
-    props: {},
-  };
-}
+    // check if the user is authorised
+    const session = getSession(req, res);
+    if (session) {
+      // TODO #346: Check session.accessTokenExpiresAt instead
+      // If authorised, redirect to the app
+      return {
+        redirect: {
+          destination: '/',
+          permanent: false,
+        }, // API reference: https://nextjs.org/docs/api-reference/next.config.js/redirects
+      }; // Docs: https://nextjs.org/docs/api-reference/data-fetching/get-server-side-props#redirect
+    } else {
+      // Otherwise, show the login button
+      return {
+        props: {},
+      };
+    }
+  },
+);
