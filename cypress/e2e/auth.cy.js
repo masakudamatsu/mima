@@ -1,4 +1,4 @@
-import {loginPage, signupPage} from '../../src/utils/uiCopies';
+import {buttonLabel, loginPage, signupPage} from '../../src/utils/uiCopies';
 
 describe('First-time users', () => {
   it('can start a trial by visiting the Signup page', () => {
@@ -49,6 +49,24 @@ describe('Logged-out users', () => {
         'location',
         '/api/auth/login?returnTo=%2F',
       );
+    });
+  });
+});
+
+describe('Logged-in users', () => {
+  beforeEach(() => {
+    cy.auth();
+  });
+  it('can log out from menu', () => {
+    cy.intercept('GET', '/api/auth/logout').as('logout');
+    cy.visit('/');
+    cy.findByRole('button', {name: buttonLabel.menu}).click();
+    cy.findByText(buttonLabel.logout).click();
+    cy.wait('@logout').then(({response}) => {
+      expect(response.statusCode).to.eq(302);
+      expect(response.headers.location).to.match(
+        /https:\/\/my-ideal-map.jp.auth0.com\/v2\/logout.*/i, // TODO #331: replace this url with our own Login page
+      ); // API ref: https://docs.cypress.io/guides/references/assertions#BDD-Assertions
     });
   });
 });
