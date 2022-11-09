@@ -35,6 +35,8 @@ const positionComponentsVertically = `
     margin-top: ${dimension.button['minimum target size 50']}  
   }
   a + a,
+  button + a,
+  a + button,
   button + button {
     margin-top: ${dimension.button['minimum target size 50']}
   }

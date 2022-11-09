@@ -26,8 +26,12 @@ export const subscribePage = {
   titleText: 'My Ideal Map',
   offer: {
     h2: 'Free trial period expires',
-    bodyText:
-      'Your 30-day free trial period is now over. Please start a monthly subscription by providing your billing information.',
+    bodyText: {
+      subscribe:
+        'Your 30-day free trial period is now over. Please start a monthly subscription by providing your billing information.',
+      logout:
+        'Or you can logout for now. You will be redirected to this page next time you log in.',
+    },
     buttonLabel: 'Subscribe',
   },
   success: {

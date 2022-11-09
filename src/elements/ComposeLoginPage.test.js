@@ -53,6 +53,8 @@ describe('ComposeLoginPage component', () => {
 }
 
 .c0 a + a,
+.c0 button + a,
+.c0 a + button,
 .c0 button + button {
   margin-top: 24px;
 }

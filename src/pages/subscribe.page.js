@@ -12,7 +12,7 @@ import {NightModeContext} from 'src/wrappers/NightModeContext';
 import {useNightMode} from 'src/hooks/useNightMode';
 
 import {subscribe} from 'src/utils/metadata';
-import {subscribePage} from 'src/utils/uiCopies';
+import {buttonLabel, subscribePage} from 'src/utils/uiCopies';
 
 export default function Subscribe() {
   useNightMode(NightModeContext);
@@ -51,9 +51,17 @@ export default function Subscribe() {
           {ui === 'offer' ? (
             <form action="/api/checkout_sessions" method="POST">
               <h2>{subscribePage.offer.h2}</h2>
-              <p>{subscribePage.offer.bodyText}</p>
-              <ButtonDialog type="submit">
+              <p>{subscribePage.offer.bodyText.subscribe}</p>
+              <p>{subscribePage.offer.bodyText.logout}</p>
+              <ButtonDialog data-button-purpose="signup" type="submit">
                 {subscribePage.offer.buttonLabel}
+              </ButtonDialog>
+              <ButtonDialog
+                as="a"
+                data-reset-link-style="true"
+                href="/api/auth/logout"
+              >
+                {buttonLabel.logout}
               </ButtonDialog>
             </form>
           ) : ui === 'success' ? (

@@ -135,6 +135,18 @@ describe('Expired trial users', () => {
       ); // API ref: https://docs.cypress.io/guides/references/assertions#BDD-Assertions
     });
   });
+  it('can log out on subscribe page', () => {
+    // users may be using a shared PC and have to go before subscribing
+    cy.intercept('GET', '/api/auth/logout').as('logout');
+    cy.visit('/subscribe');
+    cy.findByText(buttonLabel.logout).click();
+    cy.wait('@logout').then(({response}) => {
+      expect(response.statusCode).to.eq(302);
+      expect(response.headers.location).to.match(
+        /https:\/\/my-ideal-map.jp.auth0.com\/v2\/logout.*/i, // TODO #331: replace this url with our own Login page
+      ); // API ref: https://docs.cypress.io/guides/references/assertions#BDD-Assertions
+    });
+  });
 });
 
 describe('Subscribed users', () => {
