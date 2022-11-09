@@ -42,8 +42,12 @@ export const subscribePage = {
   },
   canceled: {
     h2: 'Payment canceled',
-    bodyText:
-      'You have not been charged. Please try again to start a monthly subscription.',
+    bodyText: {
+      subscribe:
+        'You have not been charged. Please try again to start a monthly subscription.',
+      logout:
+        'Or you can logout for now. Next time you log in, you will be redirected to the page from which you can start a subscription.',
+    },
     buttonLabel: 'Subscribe',
   },
 };

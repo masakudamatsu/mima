@@ -64,9 +64,17 @@ export default function Subscribe() {
           ) : ui === 'canceled' ? (
             <form action="/api/checkout_sessions" method="POST">
               <h2>{subscribePage.canceled.h2}</h2>
-              <p>{subscribePage.canceled.bodyText}</p>
-              <ButtonDialog type="submit">
+              <p>{subscribePage.canceled.bodyText.subscribe}</p>
+              <p>{subscribePage.canceled.bodyText.logout}</p>
+              <ButtonDialog data-button-purpose="signup" type="submit">
                 {subscribePage.canceled.buttonLabel}
+              </ButtonDialog>
+              <ButtonDialog
+                as="a"
+                data-reset-link-style="true"
+                href="/api/auth/logout"
+              >
+                {buttonLabel.logout}
               </ButtonDialog>
             </form>
           ) : null}
