@@ -14,16 +14,8 @@ import {useNightMode} from 'src/hooks/useNightMode';
 import {subscribe} from 'src/utils/metadata';
 import {buttonLabel, subscribePage} from 'src/utils/uiCopies';
 
-export default function Subscribe() {
+export default function Success() {
   useNightMode(NightModeContext);
-  const [ui, setUi] = useState('offer');
-  useEffect(() => {
-    // Check to see if this is a redirect back from Checkout
-    const query = new URLSearchParams(window.location.search);
-    if (query.get('canceled')) {
-      setUi('canceled');
-    }
-  }, []);
   return (
     <>
       <Head>
@@ -45,31 +37,13 @@ export default function Subscribe() {
           <header>
             <H1Logo>{subscribePage.titleText}</H1Logo>
           </header>
-          {ui === 'offer' ? (
-            <form action="/api/checkout_sessions" method="POST">
-              <h2>{subscribePage.offer.h2}</h2>
-              <p>{subscribePage.offer.bodyText.subscribe}</p>
-              <p>{subscribePage.offer.bodyText.logout}</p>
-              <ButtonDialog data-button-purpose="signup" type="submit">
-                {subscribePage.offer.buttonLabel}
-              </ButtonDialog>
-              <ButtonDialog
-                as="a"
-                data-reset-link-style="true"
-                href="/api/auth/logout"
-              >
-                {buttonLabel.logout}
-              </ButtonDialog>
-            </form>
-          ) : ui === 'canceled' ? (
-            <form action="/api/checkout_sessions" method="POST">
-              <h2>{subscribePage.canceled.h2}</h2>
-              <p>{subscribePage.canceled.bodyText}</p>
-              <ButtonDialog type="submit">
-                {subscribePage.canceled.buttonLabel}
-              </ButtonDialog>
-            </form>
-          ) : null}
+          <main aria-labelledby="success">
+            <h2 id="success">{subscribePage.success.h2}</h2>
+            <p>{subscribePage.success.bodyText}</p>
+            <ButtonDialog as="a" data-reset-link-style="true" href="/">
+              {subscribePage.success.buttonLabel}
+            </ButtonDialog>
+          </main>
         </ComposeLoginPage>{' '}
       </DivLoginPageBackground>
     </>
@@ -88,12 +62,12 @@ export const getServerSideProps = withPageAuthRequired({
     // Check if subscription period expires
     const today = new Date();
     const expirationDate = new Date(app_metadata['expiration_date']);
-    if (today > expirationDate) {
+    if (today < expirationDate) {
       return {props: {}};
     } else {
       return {
         redirect: {
-          destination: '/',
+          destination: '/subscribe',
           permanent: false,
         }, // API reference: https://nextjs.org/docs/api-reference/next.config.js/redirects
       }; // Docs: https://nextjs.org/docs/api-reference/data-fetching/get-server-side-props#redirect

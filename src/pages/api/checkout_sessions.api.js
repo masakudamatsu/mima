@@ -36,7 +36,7 @@ export default withApiAuthRequired(async function handleCheckoutSessions(
           auth0_user_id: user.sub, // to be used in stripe_webhooks.api.js
         },
       },
-      success_url: `${req.headers.origin}/subscribe?success=true`,
+      success_url: `${req.headers.origin}/success`,
       cancel_url: `${req.headers.origin}/subscribe?canceled=true`,
       // if req.headers.origin doesn't work, see https://stackoverflow.com/questions/29531521/req-headers-origin-is-undefined
     });

@@ -153,6 +153,11 @@ describe('Subscribed users', () => {
   beforeEach(() => {
     cy.auth();
   });
+  it('can visit the app after successful payment', () => {
+    cy.visit('/success');
+    cy.findByText(subscribePage.success.buttonLabel).click();
+    cy.url().should('eq', `${Cypress.config().baseUrl}/`);
+  });
   it('will not get redirected from signup page to the app', () => {
     cy.visit('/signup');
     cy.url().should('eq', `${Cypress.config().baseUrl}/signup`);
