@@ -147,6 +147,17 @@ describe('Expired trial users', () => {
       ); // API ref: https://docs.cypress.io/guides/references/assertions#BDD-Assertions
     });
   });
+  it('can try again after canceling payment', () => {
+    cy.intercept('POST', '/api/checkout_sessions').as('checkout');
+    cy.visit('/subscribe?canceled=true');
+    cy.findByRole('button', {name: subscribePage.canceled.buttonLabel}).click();
+    cy.wait('@checkout').then(({response}) => {
+      expect(response.statusCode).to.eq(303);
+      expect(response.headers.location).to.match(
+        /https:\/\/checkout.stripe.com\/.*/i,
+      ); // API ref: https://docs.cypress.io/guides/references/assertions#BDD-Assertions
+    });
+  });
 });
 
 describe('Subscribed users', () => {
