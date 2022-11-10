@@ -16,3 +16,7 @@ export const login = {
 export const subscribe = {
   title: 'Subscribe to My Ideal Map',
 };
+
+export const renewal = {
+  title: 'Renew subscription to My Ideal Map',
+};

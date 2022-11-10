@@ -193,3 +193,31 @@ describe('Subscribed users', () => {
     cy.url().should('eq', `${Cypress.config().baseUrl}/`);
   });
 });
+
+describe('Expired subscription users', () => {
+  beforeEach(() => {
+    cy.auth('subscription_expired_user', {
+      username: Cypress.env('auth0UserSubscriptionExpired'),
+      password: Cypress.env('auth0PassSubscriptionExpired'),
+    });
+  });
+  it('gets redirected from the app to renewal page', () => {
+    cy.visit('/');
+    cy.url().should('eq', `${Cypress.config().baseUrl}/renewal`);
+  });
+  it.skip('can renew subscription on renewal page', () => {
+    cy.visit('/renewal');
+    // TODO #335: Add a button to renew subscription on renewal page
+  });
+  it('can log out', () => {
+    cy.intercept('GET', '/api/auth/logout').as('logout');
+    cy.visit('/renewal');
+    cy.findByText(buttonLabel.logout).click();
+    cy.wait('@logout').then(({response}) => {
+      expect(response.statusCode).to.eq(302);
+      expect(response.headers.location).to.match(
+        /https:\/\/my-ideal-map.jp.auth0.com\/v2\/logout.*/i, // TODO #331: replace this url with our own Login page
+      ); // API ref: https://docs.cypress.io/guides/references/assertions#BDD-Assertions
+    });
+  });
+});

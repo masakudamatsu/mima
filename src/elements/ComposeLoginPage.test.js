@@ -43,7 +43,8 @@ describe('ComposeLoginPage component', () => {
   margin-top: 24px;
 }
 
-.c0 form p + p {
+.c0 form p + p,
+.c0 main p + p {
   margin-top: 12px;
 }
 

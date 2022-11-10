@@ -3,6 +3,7 @@ import Head from 'next/head';
 import {Wrapper} from '@googlemaps/react-wrapper';
 import {getSession, withPageAuthRequired} from '@auth0/nextjs-auth0';
 import {getAccessToken, getAppMetadata} from 'src/utils/callManagementApi';
+import {statusType} from 'src/utils/type';
 
 import {index} from 'src/utils/metadata';
 
@@ -70,12 +71,23 @@ export const getServerSideProps = withPageAuthRequired({
     const today = new Date();
     const expirationDate = new Date(app_metadata['expiration_date']);
     if (today > expirationDate) {
-      return {
-        redirect: {
-          destination: '/subscribe',
-          permanent: false,
-        }, // API reference: https://nextjs.org/docs/api-reference/next.config.js/redirects
-      }; // Docs: https://nextjs.org/docs/api-reference/data-fetching/get-server-side-props#redirect
+      if (app_metadata['status'] === statusType.trial) {
+        // Trial users
+        return {
+          redirect: {
+            destination: '/subscribe',
+            permanent: false,
+          }, // API reference: https://nextjs.org/docs/api-reference/next.config.js/redirects
+        };
+      } else {
+        // Subscribed users
+        return {
+          redirect: {
+            destination: '/renewal',
+            permanent: false,
+          }, // API reference: https://nextjs.org/docs/api-reference/next.config.js/redirects
+        };
+      }
     }
     // Retrieve user's saved places
     const savedPlaces = await prisma.place.findMany();

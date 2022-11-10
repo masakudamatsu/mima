@@ -27,7 +27,8 @@ const positionComponentsVertically = `
   & main h2 + p {
     margin-top: ${dimension.button['minimum target size 50']}  
   }
-  & form p + p {
+  & form p + p,
+  & main p + p {
     margin-top: ${dimension.button['minimum target size 25']}  
   }
   p + button,
