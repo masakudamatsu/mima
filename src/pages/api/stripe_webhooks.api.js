@@ -99,6 +99,32 @@ export default async function handleStripeWebhooks(req, res) {
 
         break;
       }
+      case 'invoice.marked_uncollectible': {
+        // this event takes place when users fail to pay after several recovery attempts by Stripe
+        // as configured in https://dashboard.stripe.com/settings/billing/automatic
+
+        // retrieve subscription object
+        const invoice = event.data.object; // API ref: https://stripe.com/docs/api/invoices/object
+        const subscription = await stripe.subscriptions.retrieve(
+          invoice.subscription,
+        ); // API ref: https://stripe.com/docs/api/subscriptions/retrieve
+
+        // prepare for updating Auth0 user data
+        const accessToken = await getAccessToken();
+        const appMetadata = {
+          status: statusType.unpaid,
+        };
+        const userId = subscription.metadata.auth0_user_id;
+
+        // update Auth0 user data with new subscription expiration date
+        const updatedData = await updateAppMetadata({
+          accessToken,
+          appMetadata,
+          userId,
+        });
+        console.log(`User data updated with ${JSON.stringify(updatedData)}`);
+        break;
+      }
       default:
         console.log(`Unhandled event type ${event.type}`);
     }

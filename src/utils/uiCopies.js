@@ -50,6 +50,17 @@ export const subscribePage = {
     },
     buttonLabel: 'Subscribe',
   },
+  unpaid: {
+    h2: 'Subscription canceled',
+    bodyText: {
+      subscribe:
+        'Sorry, but we have cancelled your subscription due to the repeated failure of processing your payment for renewal. To subscribe again, press the "Subscribe" button below to provide your billing information.',
+      data: 'Your data will be recovered once your new subscription starts.',
+      logout:
+        'Or you can logout for now. You will be redirected to this page next time you log in.',
+    },
+    buttonLabel: 'Subscribe',
+  },
   reoffer: {
     h2: 'Subscription canceled',
     bodyText: {

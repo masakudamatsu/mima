@@ -87,8 +87,16 @@ export const getServerSideProps = withPageAuthRequired({
             permanent: false,
           }, // API reference: https://nextjs.org/docs/api-reference/next.config.js/redirects
         };
+      } else if (app_metadata['status'] === statusType.unpaid) {
+        // Subscription cancelled due to repeated failure of payment
+        return {
+          redirect: {
+            destination: '/subscribe',
+            permanent: false,
+          }, // API reference: https://nextjs.org/docs/api-reference/next.config.js/redirects
+        };
       } else {
-        // Cancelled users
+        // Subscription cancelled by users themselves
         return {
           redirect: {
             destination: '/subscribe',

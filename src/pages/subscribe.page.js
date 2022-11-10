@@ -18,7 +18,11 @@ import {buttonLabel, subscribePage} from 'src/utils/uiCopies';
 export default function Subscribe({status}) {
   useNightMode(NightModeContext);
   const [ui, setUi] = useState(
-    status === statusType.cancelled ? 'reoffer' : 'offer',
+    status === statusType.unpaid
+      ? 'unpaid'
+      : status === statusType.cancelled
+      ? 'reoffer'
+      : 'offer',
   );
   useEffect(() => {
     // Check to see if this is a redirect back from Checkout
@@ -55,6 +59,23 @@ export default function Subscribe({status}) {
               <p>{subscribePage.offer.bodyText.logout}</p>
               <ButtonDialog data-button-purpose="signup" type="submit">
                 {subscribePage.offer.buttonLabel}
+              </ButtonDialog>
+              <ButtonDialog
+                as="a"
+                data-reset-link-style="true"
+                href="/api/auth/logout"
+              >
+                {buttonLabel.logout}
+              </ButtonDialog>
+            </form>
+          ) : ui === 'unpaid' ? (
+            <form action="/api/checkout_sessions" method="POST">
+              <h2>{subscribePage.unpaid.h2}</h2>
+              <p>{subscribePage.unpaid.bodyText.subscribe}</p>
+              <p>{subscribePage.unpaid.bodyText.data}</p>
+              <p>{subscribePage.unpaid.bodyText.logout}</p>
+              <ButtonDialog data-button-purpose="signup" type="submit">
+                {subscribePage.unpaid.buttonLabel}
               </ButtonDialog>
               <ButtonDialog
                 as="a"
