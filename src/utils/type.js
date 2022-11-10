@@ -8,6 +8,7 @@ export const statusType = {
 //
 // If status === 'cancelled', then
 // - Subscription to be cancelled if expiration_date > today
+// - Subscription cancelled if expiration_date < today
 //
 // If status === 'subscribed', then
 // - Subscribed if expiration_date > today

@@ -79,11 +79,19 @@ export const getServerSideProps = withPageAuthRequired({
             permanent: false,
           }, // API reference: https://nextjs.org/docs/api-reference/next.config.js/redirects
         };
-      } else {
+      } else if (app_metadata['status'] === statusType.subscribed) {
         // Subscribed users
         return {
           redirect: {
             destination: '/renewal',
+            permanent: false,
+          }, // API reference: https://nextjs.org/docs/api-reference/next.config.js/redirects
+        };
+      } else {
+        // Cancelled users
+        return {
+          redirect: {
+            destination: '/subscribe',
             permanent: false,
           }, // API reference: https://nextjs.org/docs/api-reference/next.config.js/redirects
         };

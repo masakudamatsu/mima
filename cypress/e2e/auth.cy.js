@@ -221,3 +221,45 @@ describe('Expired subscription users', () => {
     });
   });
 });
+
+describe('Cancelled users', () => {
+  beforeEach(() => {
+    cy.auth('cancelled_users', {
+      username: Cypress.env('auth0UserCancelled'),
+      password: Cypress.env('auth0PassCancelled'),
+    });
+  });
+  it('get redirected from the app to subscribe page with relevant message', () => {
+    cy.visit('/');
+    cy.url().should('eq', `${Cypress.config().baseUrl}/subscribe`);
+    cy.findByRole('heading', {name: subscribePage.reoffer.h2}).should(
+      'be.visible',
+    );
+    cy.findByText(subscribePage.reoffer.bodyText.subscribe).should(
+      'be.visible',
+    );
+  });
+  it('can start subscription on subscribe page', () => {
+    cy.intercept('POST', '/api/checkout_sessions').as('checkout');
+    cy.visit('/subscribe');
+    cy.findByRole('button', {name: subscribePage.reoffer.buttonLabel}).click();
+    cy.wait('@checkout').then(({response}) => {
+      expect(response.statusCode).to.eq(303);
+      expect(response.headers.location).to.match(
+        /https:\/\/checkout.stripe.com\/.*/i,
+      ); // API ref: https://docs.cypress.io/guides/references/assertions#BDD-Assertions
+    });
+  });
+  it('can log out if they wish', () => {
+    cy.intercept('GET', '/api/auth/logout').as('logout');
+    cy.visit('/subscribe');
+    cy.findByText(subscribePage.reoffer.bodyText.logout).should('be.visible');
+    cy.findByText(buttonLabel.logout).click();
+    cy.wait('@logout').then(({response}) => {
+      expect(response.statusCode).to.eq(302);
+      expect(response.headers.location).to.match(
+        /https:\/\/my-ideal-map.jp.auth0.com\/v2\/logout.*/i, // TODO #331: replace this url with our own Login page
+      ); // API ref: https://docs.cypress.io/guides/references/assertions#BDD-Assertions
+    });
+  });
+});

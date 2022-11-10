@@ -50,6 +50,16 @@ export const subscribePage = {
     },
     buttonLabel: 'Subscribe',
   },
+  reoffer: {
+    h2: 'Subscription canceled',
+    bodyText: {
+      subscribe:
+        'Your subscription has ended. To subscribe again, press the "Subscribe" button below to provide your billing information.',
+      logout:
+        'Or you can logout for now. You will be redirected to this page next time you log in.',
+    },
+    buttonLabel: 'Subscribe',
+  },
 };
 
 export const renewalPage = {

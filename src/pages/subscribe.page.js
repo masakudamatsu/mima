@@ -2,6 +2,7 @@ import {useEffect, useState} from 'react';
 import Head from 'next/head';
 import {getSession, withPageAuthRequired} from '@auth0/nextjs-auth0';
 import {getAccessToken, getAppMetadata} from 'src/utils/callManagementApi';
+import {statusType} from 'src/utils/type';
 
 import {ButtonDialog} from 'src/elements/ButtonDialog';
 import {ComposeLoginPage} from 'src/elements/ComposeLoginPage';
@@ -14,9 +15,11 @@ import {useNightMode} from 'src/hooks/useNightMode';
 import {subscribe} from 'src/utils/metadata';
 import {buttonLabel, subscribePage} from 'src/utils/uiCopies';
 
-export default function Subscribe() {
+export default function Subscribe({status}) {
   useNightMode(NightModeContext);
-  const [ui, setUi] = useState('offer');
+  const [ui, setUi] = useState(
+    status === statusType.cancelled ? 'reoffer' : 'offer',
+  );
   useEffect(() => {
     // Check to see if this is a redirect back from Checkout
     const query = new URLSearchParams(window.location.search);
@@ -77,6 +80,22 @@ export default function Subscribe() {
                 {buttonLabel.logout}
               </ButtonDialog>
             </form>
+          ) : ui === 'reoffer' ? (
+            <form action="/api/checkout_sessions" method="POST">
+              <h2>{subscribePage.reoffer.h2}</h2>
+              <p>{subscribePage.reoffer.bodyText.subscribe}</p>
+              <p>{subscribePage.reoffer.bodyText.logout}</p>
+              <ButtonDialog data-button-purpose="signup" type="submit">
+                {subscribePage.reoffer.buttonLabel}
+              </ButtonDialog>
+              <ButtonDialog
+                as="a"
+                data-reset-link-style="true"
+                href="/api/auth/logout"
+              >
+                {buttonLabel.logout}
+              </ButtonDialog>
+            </form>
           ) : null}
         </ComposeLoginPage>{' '}
       </DivLoginPageBackground>
@@ -97,7 +116,11 @@ export const getServerSideProps = withPageAuthRequired({
     const today = new Date();
     const expirationDate = new Date(app_metadata['expiration_date']);
     if (today > expirationDate) {
-      return {props: {}};
+      return {
+        props: {
+          status: app_metadata['status'],
+        },
+      };
     } else {
       return {
         redirect: {
