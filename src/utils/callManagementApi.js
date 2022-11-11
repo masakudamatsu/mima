@@ -15,9 +15,7 @@ export async function getAccessToken() {
         audience: 'https://my-ideal-map.jp.auth0.com/api/v2/',
       }),
     });
-    console.log(
-      `getAccessToken() obtains reponse.data: ${JSON.stringify(response.data)}`,
-    );
+    console.log(`Access token obtained`);
     return response.data.access_token;
   } catch (error) {
     console.error(`Failed to obtain access token: ${error}`);
@@ -35,6 +33,9 @@ export async function getAppMetadata({accessToken, userId}) {
         authorization: `Bearer ${accessToken}`,
       },
     });
+    console.log(
+      `Auth0 user app_metadata ${response.data['app_metadata']} retrieved`,
+    );
     return response.data;
   } catch (error) {
     console.log(`Failed to get the app metadata: ${error}`);
@@ -55,6 +56,11 @@ export async function updateAppMetadata({accessToken, appMetadata, userId}) {
         app_metadata: appMetadata, // converting field name convention from JavaScript to Auth0
       },
     });
+    console.log(
+      `Auth0 user app_metadata updated with ${JSON.stringify(
+        response.data['app_metadata'],
+      )}`,
+    );
     return response.data;
   } catch (error) {
     console.log(`Failed to update the app metadata: ${error}`);

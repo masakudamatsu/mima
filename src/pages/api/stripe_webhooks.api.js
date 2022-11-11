@@ -33,14 +33,22 @@ export default async function handleStripeWebhooks(req, res) {
     // Handle the event
     // See https://stripe.com/docs/billing/quickstart#provision-access-webhooks
     // See also https://stripe.com/docs/billing/subscriptions/build-subscriptions?ui=checkout#provision-and-monitor
+    console.log(`Event ${event.type} received`);
     switch (event.type) {
       case 'invoice.paid': {
         // retrieve subscription object
         const invoice = event.data.object; // API ref: https://stripe.com/docs/api/invoices/object
+        console.log(`Subscription ID ${invoice.subscription} retrieved`);
         const subscription = await stripe.subscriptions.retrieve(
           invoice.subscription,
         ); // API ref: https://stripe.com/docs/api/subscriptions/retrieve
-
+        console.log(`Stripe customer ID ${subscription.customer} retrieved`);
+        console.log(
+          `Subscription renewal date ${subscription.current_period_end} retrieved`,
+        );
+        console.log(
+          `Auth0 user ID ${subscription.metadata.auth0_user_id} retrieved`,
+        );
         // prepare for updating Auth0 user data
         const accessToken = await getAccessToken();
         const appMetadata = {
@@ -53,14 +61,16 @@ export default async function handleStripeWebhooks(req, res) {
           ).toISOString(), // save in the format of "2022-12-02T00:14:18.000Z"
         };
         const userId = subscription.metadata.auth0_user_id;
+        if (!userId) {
+          throw new Error('Stripe subscription object misses Auth0 user ID.');
+        }
 
         // update Auth0 user data with new subscription expiration date
-        const updatedData = await updateAppMetadata({
+        await updateAppMetadata({
           accessToken,
           appMetadata,
           userId,
         });
-        console.log(`User data updated with ${JSON.stringify(updatedData)}`);
         break;
       }
       // case 'invoice.payment_failed':
@@ -69,6 +79,12 @@ export default async function handleStripeWebhooks(req, res) {
       case 'customer.subscription.updated': {
         // retrieve subscription object
         const subscription = event.data.object;
+        console.log(
+          `Subscription object retrieved with 'cancel_at_period_end' value: "${subscription['cancel_at_period_end']}" retrieved`,
+        );
+        console.log(
+          `Auth0 user ID ${subscription.metadata.auth0_user_id} retrieved`,
+        );
         // record whether the user has cancelled subscription
         let status;
         if (subscription['cancel_at_period_end'] === true) {
@@ -90,13 +106,11 @@ export default async function handleStripeWebhooks(req, res) {
           throw new Error('Stripe subscription object misses Auth0 user ID.');
         }
         // update Auth0 user data with new subscription expiration date
-        const updatedData = await updateAppMetadata({
+        await updateAppMetadata({
           accessToken,
           appMetadata,
           userId,
         });
-        console.log(`User data updated with ${JSON.stringify(updatedData)}`);
-
         break;
       }
       case 'invoice.marked_uncollectible': {
@@ -115,14 +129,16 @@ export default async function handleStripeWebhooks(req, res) {
           status: statusType.unpaid,
         };
         const userId = subscription.metadata.auth0_user_id;
+        if (!userId) {
+          throw new Error('Stripe subscription object misses Auth0 user ID.');
+        }
 
         // update Auth0 user data with new subscription expiration date
-        const updatedData = await updateAppMetadata({
+        await updateAppMetadata({
           accessToken,
           appMetadata,
           userId,
         });
-        console.log(`User data updated with ${JSON.stringify(updatedData)}`);
         break;
       }
       default:
