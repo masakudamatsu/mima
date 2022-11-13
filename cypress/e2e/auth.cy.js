@@ -1,6 +1,7 @@
 import {
   buttonLabel,
   loginPage,
+  renewalPage,
   signupPage,
   subscribePage,
 } from '../../src/utils/uiCopies';
@@ -205,9 +206,16 @@ describe('Expired subscription users', () => {
     cy.visit('/');
     cy.url().should('eq', `${Cypress.config().baseUrl}/renewal`);
   });
-  it.skip('can renew subscription on renewal page', () => {
+  it('can renew subscription on renewal page', () => {
     cy.visit('/renewal');
-    // TODO #335: Add a button to renew subscription on renewal page
+    cy.findByText(renewalPage.offer.buttonLabel).then(link => {
+      cy.wrap(link).should(
+        'have.attr',
+        'href',
+        Cypress.env('customer_portal_url'),
+      );
+      cy.request(link.prop('href')).its('status').should('eq', 200);
+    });
   });
   it('can log out', () => {
     cy.intercept('GET', '/api/auth/logout').as('logout');

@@ -1,5 +1,5 @@
 import Head from 'next/head';
-import {getSession, withPageAuthRequired} from '@auth0/nextjs-auth0';
+import {withPageAuthRequired} from '@auth0/nextjs-auth0';
 
 import {ButtonDialog} from 'src/elements/ButtonDialog';
 import {ComposeLoginPage} from 'src/elements/ComposeLoginPage';
@@ -12,7 +12,7 @@ import {useNightMode} from 'src/hooks/useNightMode';
 import {renewal} from 'src/utils/metadata';
 import {buttonLabel, renewalPage} from 'src/utils/uiCopies';
 
-export default function Renewal({email}) {
+export default function Renewal() {
   useNightMode(NightModeContext);
   return (
     <>
@@ -36,9 +36,18 @@ export default function Renewal({email}) {
             <H1Logo>{renewalPage.titleText}</H1Logo>
           </header>
           <main>
+            {/* TODO #350: customize UI text for users who have clicked the email notice to update payment information */}
             <h2>{renewalPage.offer.h2}</h2>
-            <p>{renewalPage.offer.bodyText.renew(email)}</p>
+            <p>{renewalPage.offer.bodyText.renew}</p>
             <p>{renewalPage.offer.bodyText.logout}</p>
+            <ButtonDialog
+              as="a"
+              data-button-purpose="signup"
+              data-reset-link-style="true"
+              href={process.env.NEXT_PUBLIC_CUSTOMER_PORTAL_URL}
+            >
+              {renewalPage.offer.buttonLabel}
+            </ButtonDialog>
             <ButtonDialog
               as="a"
               data-reset-link-style="true"
@@ -53,14 +62,4 @@ export default function Renewal({email}) {
   );
 }
 
-export const getServerSideProps = withPageAuthRequired({
-  async getServerSideProps({req, res}) {
-    // retrieve user's email address
-    const {user} = getSession(req, res);
-    return {
-      props: {
-        email: user.email,
-      },
-    };
-  },
-});
+export const getServerSideProps = withPageAuthRequired();

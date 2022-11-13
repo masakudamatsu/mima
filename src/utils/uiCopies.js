@@ -76,13 +76,12 @@ export const subscribePage = {
 export const renewalPage = {
   titleText: 'My Ideal Map',
   offer: {
-    h2: 'Subscription failed to renew',
+    h2: 'Subscription renewal has failed',
     bodyText: {
-      renew: email => {
-        return `We could not process your payment to renew subscription. To continue using My Ideal Map, please check email from us (sent to ${email}) to update your payment information.`;
-      },
+      renew: `We could not process your payment to renew subscription. To continue using My Ideal Map, please update your payment information.`,
       logout: 'If you wish, you can logout for now.',
     },
+    buttonLabel: 'Update payment information',
   },
 };
 
