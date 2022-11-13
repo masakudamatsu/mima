@@ -1,7 +1,9 @@
-import {withApiAuthRequired} from '@auth0/nextjs-auth0';
+import {getSession, withApiAuthRequired} from '@auth0/nextjs-auth0';
 const prisma = require('src/utils/prisma');
 
 export default withApiAuthRequired(async function handlePlaces(req, res) {
+  // retrieve Auth0 user data from cookie
+  const {user} = getSession(req, res);
   switch (req.method) {
     case 'POST': {
       const {geometry, properties, type} = req.body;
@@ -10,6 +12,7 @@ export default withApiAuthRequired(async function handlePlaces(req, res) {
           geometry,
           properties,
           type,
+          userId: user.sub,
         },
       });
       res.status(201).json(post);

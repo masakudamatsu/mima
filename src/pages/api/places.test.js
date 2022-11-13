@@ -5,16 +5,26 @@ import {
   getId,
   getNote,
   getPlaceName,
+  getToken,
   getWord,
 } from 'test/utils/generate';
 import handlePlaces from 'src/pages/api/places.api';
 
 const {prismaMock} = require('test/utils/prismaMock');
 
+const mockUserId = getToken();
+
 jest.mock('@auth0/nextjs-auth0', () => {
   const originalModule = jest.requireActual('@auth0/nextjs-auth0');
   return {
     ...originalModule,
+    getSession: () => {
+      return {
+        user: {
+          sub: mockUserId,
+        },
+      };
+    },
     withApiAuthRequired: handler => handler,
   };
 });
@@ -30,7 +40,9 @@ describe('api/places', () => {
 
     await handlePlaces(req, res);
 
-    expect(prismaMock.place.create).toHaveBeenCalledWith({data: newPlace});
+    expect(prismaMock.place.create).toHaveBeenCalledWith({
+      data: {...newPlace, userId: mockUserId},
+    });
     expect(prismaMock.place.create).toHaveBeenCalledTimes(1);
 
     expect(res.status).toHaveBeenCalledWith(201);
@@ -40,7 +52,7 @@ describe('api/places', () => {
     expect(res.json).toHaveBeenCalledTimes(1);
   });
   test('handles PUT requests correctly', async () => {
-    const savedPlace = buildPlace({id: getId()});
+    const savedPlace = buildPlace({id: getId(), userId: mockUserId});
     const updates = {
       properties: {
         name: getPlaceName(),
@@ -81,7 +93,7 @@ describe('api/places', () => {
   });
 
   test('handles DELETE requests correctly', async () => {
-    const savedPlace = buildPlace({id: getId()});
+    const savedPlace = buildPlace({id: getId(), userId: mockUserId});
 
     const req = buildReq({
       method: 'DELETE',
