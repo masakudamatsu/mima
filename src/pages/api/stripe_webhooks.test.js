@@ -69,6 +69,73 @@ test.skip('invoice.paid: handling subscription renewal', () => {
   // }
 });
 
+test.skip('customer.subscription.updated: users cancel subscription', () => {
+  // ** Execute **
+  // Visit customer portal: https://billing.stripe.com/p/login/test_9AQ9Ebdw97VxbiE288
+  // Enter email address and click "Send code"
+  // Check email and enter confirmation code
+  // Click "Cancel plan" and click Cancel again
+  //
+  // ** Verify **
+  // Verify Auth0 user app_metadata to be:
+  // {
+  //   "expiration_date": Same as before
+  //   "status": "cancelled", (changed)
+  //   "stripe_id": Test user's Stripe customer ID
+  // }
+  //
+  // ** Execute **
+  // Advance time by one month and one hour
+  //
+  // ** Verify **
+  // Verify Auth0 user app_metadata to be:
+  // {
+  //   "expiration_date": Same as before
+  //   "status": "cancelled", (same as before)
+  //   "stripe_id": Test user's Stripe customer ID
+  // }
+});
+
+test.skip('customer.subscription.updated: users reactivate cancelled subscription', () => {
+  // ** Execute **
+  // Visit customer portal: https://billing.stripe.com/p/login/test_9AQ9Ebdw97VxbiE288
+  // Enter email address and click "Send code"
+  // Check email and enter confirmation code
+  // Click "Cancel plan" and click Cancel again
+  //
+  // ** Verify **
+  // Verify Auth0 user app_metadata to be:
+  // {
+  //   "expiration_date": Same as before
+  //   "status": "cancelled", (changed)
+  //   "stripe_id": Test user's Stripe customer ID
+  // }
+  //
+  // ** Execute **
+  // Advance time by one week
+  // Visit customer portal: https://billing.stripe.com/p/login/test_9AQ9Ebdw97VxbiE288
+  // Enter email address and click "Send code"
+  // Check email and enter confirmation code
+  // Click "Renew plan" and click Renew plan again
+  // ** Verify **
+  // Verify Auth0 user app_metadata to be:
+  // {
+  //   "expiration_date": Same as before
+  //   "status": "subscribed", (changed)
+  //   "stripe_id": Test user's Stripe customer ID
+  // }
+  // ** Execute **
+  // Advance time by one month and one hour
+  //
+  // ** Verify **
+  // Verify Auth0 user app_metadata to be:
+  // {
+  //   "expiration_date": updated to the date shown on Stripe dashboard
+  //   "status": "subscribed", (same as before)
+  //   "stripe_id": Test user's Stripe customer ID
+  // }
+});
+
 test.skip('handling failed payment', () => {
   // ** Simulate an invalid credit card **
   // visit the test clock on Stripe dashboard

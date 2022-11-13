@@ -77,40 +77,56 @@ export default async function handleStripeWebhooks(req, res) {
       //   // send user to customer portal to update their payment info
       //   break;
       case 'customer.subscription.updated': {
-        // retrieve subscription object
-        const subscription = event.data.object;
         console.log(
-          `Subscription object retrieved with 'cancel_at_period_end' value: "${subscription['cancel_at_period_end']}" retrieved`,
+          `Following attributes were updated: ${JSON.stringify(
+            Object.keys(event.data.previous_attributes), // API ref: https://stripe.com/docs/api/events/object#event_object-data-previous_attributes
+          )}`,
         );
-        console.log(
-          `Auth0 user ID ${subscription.metadata.auth0_user_id} retrieved`,
-        );
-        // record whether the user has cancelled subscription
-        let status;
-        if (subscription['cancel_at_period_end'] === true) {
-          status = statusType.cancelled;
-        } else if (subscription['cancel_at_period_end'] === false) {
-          status = statusType.subscribed;
+        // check if users cancel/reactivate subscription
+        if (
+          Object.keys(event.data.previous_attributes).includes(
+            'cancel_at_period_end',
+          )
+        ) {
+          // retrieve subscription object
+          const subscription = event.data.object;
+          console.log(
+            `Subscription object retrieved with 'cancel_at_period_end' value: "${subscription['cancel_at_period_end']}" retrieved`,
+          );
+          console.log(
+            `Auth0 user ID ${subscription.metadata.auth0_user_id} retrieved`,
+          );
+          // record whether the user has cancelled subscription
+          let status;
+          if (subscription['cancel_at_period_end'] === true) {
+            status = statusType.cancelled;
+          } else if (subscription['cancel_at_period_end'] === false) {
+            status = statusType.subscribed;
+          } else {
+            throw new Error(
+              `Stripe subscription object misses "cancel_at_period_end" property.`,
+            );
+          }
+          // prepare for updating Auth0 user data
+          const accessToken = await getAccessToken();
+          const appMetadata = {
+            status,
+          };
+          const userId = subscription.metadata.auth0_user_id;
+          if (!userId) {
+            throw new Error('Stripe subscription object misses Auth0 user ID.');
+          }
+          // update Auth0 user data with new subscription expiration date
+          await updateAppMetadata({
+            accessToken,
+            appMetadata,
+            userId,
+          });
         } else {
-          throw new Error(
-            `Stripe subscription object misses "cancel_at_period_end" property.`,
+          console.log(
+            `Subscription object was updated for reasons other than cancellation/reactivation by the user`,
           );
         }
-        // prepare for updating Auth0 user data
-        const accessToken = await getAccessToken();
-        const appMetadata = {
-          status,
-        };
-        const userId = subscription.metadata.auth0_user_id;
-        if (!userId) {
-          throw new Error('Stripe subscription object misses Auth0 user ID.');
-        }
-        // update Auth0 user data with new subscription expiration date
-        await updateAppMetadata({
-          accessToken,
-          appMetadata,
-          userId,
-        });
         break;
       }
       case 'invoice.marked_uncollectible': {
