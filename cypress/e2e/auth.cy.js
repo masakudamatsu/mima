@@ -6,6 +6,16 @@ import {
   subscribePage,
 } from '../../src/utils/uiCopies';
 
+import {
+  mockPlace1,
+  mockPlace2,
+  mockPlace3,
+  mockPlace4,
+  mockPlace5,
+  mockPlace6,
+  mockPlace7,
+} from '../../test/utils/mockData';
+
 describe('First-time users', () => {
   it('can start a trial by visiting the Signup page', () => {
     cy.visit('/signup');
@@ -309,5 +319,52 @@ describe('Cancelled users', () => {
         /https:\/\/my-ideal-map.jp.auth0.com\/v2\/logout.*/i, // TODO #331: replace this url with our own Login page
       ); // API ref: https://docs.cypress.io/guides/references/assertions#BDD-Assertions
     });
+  });
+});
+
+describe('Authorisation to access to user data', () => {
+  beforeEach(() => {
+    cy.log('**Resetting the database**');
+    cy.exec('npx prisma migrate reset --force'); // https://docs.cypress.io/guides/end-to-end-testing/testing-your-app#Seeding-data
+  });
+  it('Mock User #1 only sees their own saved places', () => {
+    cy.auth();
+    cy.visit('/');
+    cy.waitForMapToLoad();
+    // Mock user #2's saved places
+    cy.findByRole('button', {name: mockPlace3.properties.name}).should(
+      'not.exist',
+    );
+    cy.findByRole('button', {name: mockPlace5.properties.name}).should(
+      'not.exist',
+    );
+    // TODO: Assert that mock user #1's saved places are loaded
+    //       The 'should('be.visible')' doesn't work as it is "hidden" from the map view
+  });
+  it('Mock User #2 only sees their own saved places', () => {
+    cy.auth('subscribed_user2', {
+      username: Cypress.env('auth0UserSubscribed2'),
+      password: Cypress.env('auth0PassSubscribed2'),
+    });
+    cy.visit('/');
+    cy.waitForMapToLoad();
+    // Mock user #1's saved places
+    cy.findByRole('button', {name: mockPlace1.properties.name}).should(
+      'not.exist',
+    );
+    cy.findByRole('button', {name: mockPlace2.properties.name}).should(
+      'not.exist',
+    );
+    cy.findByRole('button', {name: mockPlace4.properties.name}).should(
+      'not.exist',
+    );
+    cy.findByRole('button', {name: mockPlace6.properties.name}).should(
+      'not.exist',
+    );
+    cy.findByRole('button', {name: mockPlace7.properties.name}).should(
+      'not.exist',
+    );
+    // TODO: Assert that mock user #2's saved places are loaded
+    //       The 'should('be.visible')' doesn't work as it is "hidden" from the map view
   });
 });

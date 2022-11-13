@@ -106,7 +106,11 @@ export const getServerSideProps = withPageAuthRequired({
       }
     }
     // Retrieve user's saved places
-    const savedPlaces = await prisma.place.findMany();
+    const savedPlaces = await prisma.place.findMany({
+      where: {
+        userId: user.sub,
+      },
+    }); // API ref: https://www.prisma.io/docs/reference/api-reference/prisma-client-reference#findmany
     return {
       props: {
         savedPlaces,
