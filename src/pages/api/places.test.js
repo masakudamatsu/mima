@@ -36,14 +36,15 @@ describe('Happy path for /api/places', () => {
     const req = buildReq({method: 'POST', body: newPlace});
     const res = buildRes();
 
-    prismaMock.place.create.mockResolvedValue(newPlace);
+    prismaMock.place.upsert.mockResolvedValue(newPlace);
 
     await handlePlaces(req, res);
 
-    expect(prismaMock.place.create).toHaveBeenCalledWith({
-      data: {...newPlace, userId: mockUserId},
+    expect(prismaMock.place.upsert.mock.calls[0][0]).toMatchObject({
+      create: {...newPlace, userId: mockUserId},
+      update: {...newPlace, userId: mockUserId},
     });
-    expect(prismaMock.place.create).toHaveBeenCalledTimes(1);
+    expect(prismaMock.place.upsert).toHaveBeenCalledTimes(1);
 
     expect(res.status).toHaveBeenCalledWith(201);
     expect(res.status).toHaveBeenCalledTimes(1);
@@ -136,7 +137,7 @@ describe('Sad paths for database access from /api/places', () => {
     });
     const res = buildRes();
 
-    prismaMock.place.create.mockRejectedValue(new Error());
+    prismaMock.place.upsert.mockRejectedValue(new Error());
 
     await handlePlaces(req, res);
 

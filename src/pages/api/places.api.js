@@ -1,5 +1,6 @@
 import {getSession, withApiAuthRequired} from '@auth0/nextjs-auth0';
 const prisma = require('src/utils/prisma');
+const crypto = require('crypto');
 
 export default withApiAuthRequired(async function handlePlaces(req, res) {
   // retrieve Auth0 user data from cookie
@@ -7,17 +8,25 @@ export default withApiAuthRequired(async function handlePlaces(req, res) {
   switch (req.method) {
     case 'POST': {
       const {geometry, properties, type} = req.body;
+      const newPlaceId = `place_${crypto.randomUUID()}`; // API ref: https://nodejs.org/dist/latest-v16.x/docs/api/crypto.html#cryptorandomuuidoptions
+      const newPlace = {
+        id: newPlaceId,
+        geometry,
+        properties,
+        type,
+        userId: user.sub,
+      };
       try {
-        const post = await prisma.place.create({
-          data: {
-            geometry,
-            properties,
-            type,
-            userId: user.sub,
+        const post = await prisma.place.upsert({
+          where: {
+            id: newPlaceId,
           },
+          create: newPlace,
+          update: newPlace, // in case that database access fails AFTER a new place is added to the database; {} won't work in case the user changes place data for the second attempt.
         });
         res.status(201).json(post);
       } catch (error) {
+        // TODO #282: send back the newPlaceId so the user's second attempt can include it in the POST request.
         console.error(error);
         res.status(500).end(`Database access fails.`);
       }

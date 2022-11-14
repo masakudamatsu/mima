@@ -1,10 +1,16 @@
+const {faker} = require('@faker-js/faker');
+
 const mockUser1 = {
   userId: 'auth0|636755e9d6ab9f314234831c',
 };
 const mockUser2 = {
   userId: 'auth0|63706eb164a1988e31375f3f',
 };
+
+faker.seed(5678); // make place ID always the same; see https://github.com/faker-js/faker#%EF%B8%8F-setting-a-randomness-seed
+
 const mockPlace1 = {
+  id: `place_${faker.datatype.uuid()}`, // API ref: https://fakerjs.dev/api/datatype.html#uuid
   geometry: {
     coordinates: [135.7621503, 35.0023024],
     type: 'Point',
@@ -30,6 +36,7 @@ const mockPlace1 = {
 };
 
 const mockPlace2 = {
+  id: `place_${faker.datatype.uuid()}`, // API ref: https://fakerjs.dev/api/datatype.html#uuid
   geometry: {
     coordinates: [135.6749029, 35.0148675],
     type: 'Point',
@@ -56,6 +63,7 @@ const mockPlace2 = {
 };
 
 const mockPlace3 = {
+  id: `place_${faker.datatype.uuid()}`, // API ref: https://fakerjs.dev/api/datatype.html#uuid
   geometry: {
     coordinates: [135.7628048, 35.0004696],
     type: 'Point',
@@ -82,6 +90,7 @@ const mockPlace3 = {
 };
 
 const mockPlace4 = {
+  id: `place_${faker.datatype.uuid()}`, // API ref: https://fakerjs.dev/api/datatype.html#uuid
   geometry: {
     coordinates: [135.7609794, 34.9936571],
     type: 'Point',
@@ -107,6 +116,7 @@ const mockPlace4 = {
 };
 
 const mockPlace5 = {
+  id: `place_${faker.datatype.uuid()}`, // API ref: https://fakerjs.dev/api/datatype.html#uuid
   geometry: {
     coordinates: [135.7700156, 35.006263],
     type: 'Point',
@@ -132,6 +142,7 @@ const mockPlace5 = {
 };
 
 const mockPlace6 = {
+  id: `place_${faker.datatype.uuid()}`, // API ref: https://fakerjs.dev/api/datatype.html#uuid
   geometry: {
     coordinates: [135.7749319, 35.0018511],
     type: 'Point',
@@ -158,6 +169,7 @@ const mockPlace6 = {
 };
 
 const mockPlace7 = {
+  id: `place_${faker.datatype.uuid()}`, // API ref: https://fakerjs.dev/api/datatype.html#uuid
   geometry: {
     coordinates: [135.7631616, 34.9933458],
     type: 'Point',

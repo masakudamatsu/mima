@@ -11,7 +11,7 @@ datasource db {
 }
 
 model Place {
-  id          Int   @id @default(autoincrement())
+  id          String @id
   geometry  Json
   properties  Json
   type        String
