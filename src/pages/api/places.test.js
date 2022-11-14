@@ -29,7 +29,7 @@ jest.mock('@auth0/nextjs-auth0', () => {
   };
 });
 
-describe('api/places', () => {
+describe('Happy path for /api/places', () => {
   test('handles POST requests correctly', async () => {
     const newPlace = buildPlace();
 
@@ -115,7 +115,9 @@ describe('api/places', () => {
     expect(res.json).toHaveBeenCalledWith({success: true});
     expect(res.json).toHaveBeenCalledTimes(1);
   });
+});
 
+describe('Sad paths for requests to /api/places', () => {
   test('handles invalid request methods', async () => {
     const req = buildReq({
       method: getWord().toUpperCase(),
