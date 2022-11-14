@@ -117,6 +117,97 @@ describe('Happy path for /api/places', () => {
   });
 });
 
+describe('Sad paths for database access from /api/places', () => {
+  // Mock console.error, to supress error messages in the console;
+  // For tests expected to call console.error, we check if it's called only for the expected # of times;
+  // If this assertion fails, there must be an error in the code.
+  beforeEach(() => {
+    jest.spyOn(console, 'error').mockImplementation(() => {});
+  });
+  afterEach(() => {
+    console.error.mockRestore();
+  });
+  it('handles database access failure for adding a place', async () => {
+    const newPlace = buildPlace();
+
+    const req = buildReq({
+      method: 'POST',
+      body: newPlace,
+    });
+    const res = buildRes();
+
+    prismaMock.place.create.mockRejectedValue(new Error());
+
+    await handlePlaces(req, res);
+
+    expect(res.status).toHaveBeenCalledWith(500);
+    expect(res.status).toHaveBeenCalledTimes(1);
+    expect(res.end).toHaveBeenCalledTimes(1);
+    expect(res.end.mock.calls[0]).toMatchInlineSnapshot(`
+Array [
+  "Database access fails.",
+]
+`);
+    expect(console.error).toHaveBeenCalledTimes(1);
+  });
+  it('handles database access failure for updating a place info', async () => {
+    const savedPlace = buildPlace({id: getId(), userId: mockUserId});
+    const updates = {
+      properties: {
+        name: getPlaceName(),
+        note: [getNote(), getNote()],
+      },
+    };
+    const req = buildReq({
+      method: 'PUT',
+      body: {
+        id: savedPlace.id,
+        ...updates,
+      },
+    });
+    const res = buildRes();
+
+    prismaMock.place.update.mockRejectedValue(new Error());
+
+    await handlePlaces(req, res);
+
+    expect(res.status).toHaveBeenCalledWith(500);
+    expect(res.status).toHaveBeenCalledTimes(1);
+    expect(res.end).toHaveBeenCalledTimes(1);
+    expect(res.end.mock.calls[0]).toMatchInlineSnapshot(`
+Array [
+  "Database access fails.",
+]
+`);
+    expect(console.error).toHaveBeenCalledTimes(1);
+  });
+  it('handles database access failure for deleting a place', async () => {
+    const savedPlace = buildPlace({id: getId(), userId: mockUserId});
+
+    const req = buildReq({
+      method: 'DELETE',
+      body: {
+        id: savedPlace.id,
+      },
+    });
+    const res = buildRes();
+
+    prismaMock.place.delete.mockRejectedValue(new Error());
+
+    await handlePlaces(req, res);
+
+    expect(res.status).toHaveBeenCalledWith(500);
+    expect(res.status).toHaveBeenCalledTimes(1);
+    expect(res.end).toHaveBeenCalledTimes(1);
+    expect(res.end.mock.calls[0]).toMatchInlineSnapshot(`
+Array [
+  "Database access fails.",
+]
+`);
+    expect(console.error).toHaveBeenCalledTimes(1);
+  });
+});
+
 describe('Sad paths for requests to /api/places', () => {
   test('handles invalid request methods', async () => {
     const req = buildReq({

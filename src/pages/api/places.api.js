@@ -7,38 +7,53 @@ export default withApiAuthRequired(async function handlePlaces(req, res) {
   switch (req.method) {
     case 'POST': {
       const {geometry, properties, type} = req.body;
-      const post = await prisma.place.create({
-        data: {
-          geometry,
-          properties,
-          type,
-          userId: user.sub,
-        },
-      });
-      res.status(201).json(post);
+      try {
+        const post = await prisma.place.create({
+          data: {
+            geometry,
+            properties,
+            type,
+            userId: user.sub,
+          },
+        });
+        res.status(201).json(post);
+      } catch (error) {
+        console.error(error);
+        res.status(500).end(`Database access fails.`);
+      }
       break;
     }
     case 'PUT': {
       const {id, properties} = req.body;
-      const result = await prisma.place.update({
-        where: {
-          id,
-        },
-        data: {
-          properties,
-        },
-      });
-      res.status(200).json(result);
+      try {
+        const result = await prisma.place.update({
+          where: {
+            id,
+          },
+          data: {
+            properties,
+          },
+        });
+        res.status(200).json(result);
+      } catch (error) {
+        console.error(error);
+        res.status(500).end(`Database access fails.`);
+      }
       break;
     }
     case 'DELETE': {
       const {id} = req.body;
-      await prisma.place.delete({
-        where: {
-          id,
-        },
-      });
-      res.json({success: true});
+      try {
+        await prisma.place.delete({
+          where: {
+            id,
+          },
+        });
+        res.json({success: true});
+      } catch (error) {
+        console.error(error);
+        res.status(500).end(`Database access fails.`);
+      }
       break;
     }
     default: {

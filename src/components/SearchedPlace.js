@@ -179,6 +179,7 @@ export const SearchedPlace = ({mapObject}) => {
   const updateData = async ([title, noteArray]) => {
     try {
       setState({status: 'saving'});
+      // TODO #282: handle database access error
       const response = await fetch('/api/places', {
         method: 'POST',
         headers: {'Content-Type': 'application/json'},

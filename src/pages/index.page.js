@@ -106,6 +106,7 @@ export const getServerSideProps = withPageAuthRequired({
       }
     }
     // Retrieve user's saved places
+    // TODO #282: handle database access error
     const savedPlaces = await prisma.place.findMany({
       where: {
         userId: user.sub,
