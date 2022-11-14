@@ -226,4 +226,51 @@ describe('Sad paths for requests to /api/places', () => {
     expect(res.end).toHaveBeenCalledWith(`Method ${req.method} Not Allowed`);
     expect(res.end).toHaveBeenCalledTimes(1);
   });
+  test('handles missing place ID for PUT request', async () => {
+    const savedPlace = buildPlace({id: undefined, userId: mockUserId});
+    const updates = {
+      properties: {
+        name: getPlaceName(),
+        note: [getNote(), getNote()],
+      },
+    };
+    const req = buildReq({
+      method: 'PUT',
+      body: {
+        id: savedPlace.id,
+        ...updates,
+      },
+    });
+    const res = buildRes();
+    await handlePlaces(req, res);
+    expect(res.status).toHaveBeenCalledWith(400);
+    expect(res.status).toHaveBeenCalledTimes(1);
+    expect(res.end).toHaveBeenCalledTimes(1);
+    expect(res.end.mock.calls[0]).toMatchInlineSnapshot(`
+Array [
+  "Place ID is missing.",
+]
+`);
+  });
+  test('handles missing place ID for DELETE request', async () => {
+    const savedPlace = buildPlace({id: undefined, userId: mockUserId});
+
+    const req = buildReq({
+      method: 'DELETE',
+      body: {
+        id: savedPlace.id,
+      },
+    });
+    const res = buildRes();
+
+    await handlePlaces(req, res);
+    expect(res.status).toHaveBeenCalledWith(400);
+    expect(res.status).toHaveBeenCalledTimes(1);
+    expect(res.end).toHaveBeenCalledTimes(1);
+    expect(res.end.mock.calls[0]).toMatchInlineSnapshot(`
+Array [
+  "Place ID is missing.",
+]
+`);
+  });
 });

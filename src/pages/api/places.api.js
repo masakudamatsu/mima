@@ -25,6 +25,10 @@ export default withApiAuthRequired(async function handlePlaces(req, res) {
     }
     case 'PUT': {
       const {id, properties} = req.body;
+      if (!id) {
+        res.status(400).end(`Place ID is missing.`);
+        return;
+      }
       try {
         const result = await prisma.place.update({
           where: {
@@ -43,6 +47,10 @@ export default withApiAuthRequired(async function handlePlaces(req, res) {
     }
     case 'DELETE': {
       const {id} = req.body;
+      if (!id) {
+        res.status(400).end(`Place ID is missing.`);
+        return;
+      }
       try {
         await prisma.place.delete({
           where: {
