@@ -33,7 +33,7 @@ function HomePage({savedPlaces}) {
         <Controls mapObject={mapObject} />
         <main>
           <Wrapper
-            apiKey={process.env.NEXT_PUBLIC_API_KEY}
+            apiKey={process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY}
             version="weekly"
             libraries={['places']}
           >
