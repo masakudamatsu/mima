@@ -203,6 +203,28 @@ describe('Subscribed users', () => {
     cy.visit('/subscribe');
     cy.url().should('eq', `${Cypress.config().baseUrl}/`);
   });
+  it('can update payment information from menu', () => {
+    cy.visit('/');
+    cy.findByText(buttonLabel.customerPortal.update).then(link => {
+      cy.wrap(link).should(
+        'have.attr',
+        'href',
+        Cypress.env('customer_portal_url'),
+      );
+      cy.request(link.prop('href')).its('status').should('eq', 200);
+    });
+  });
+  it('can cancel subscription from menu', () => {
+    cy.visit('/');
+    cy.findByText(buttonLabel.customerPortal.cancel).then(link => {
+      cy.wrap(link).should(
+        'have.attr',
+        'href',
+        Cypress.env('customer_portal_url'),
+      );
+      cy.request(link.prop('href')).its('status').should('eq', 200);
+    });
+  });
 });
 
 describe('Expired subscription users', () => {
