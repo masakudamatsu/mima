@@ -12,7 +12,10 @@ const editorUIbreakpoints = [
 describe('After clicking a saved place', () => {
   describe('UI changes as expected', () => {
     beforeEach(() => {
-      cy.auth();
+      cy.auth('subscribed_user2', {
+        username: Cypress.env('auth0UserSubscribed2'),
+        password: Cypress.env('auth0PassSubscribed2'),
+      });
     });
     it('Daytime', () => {
       cy.visitAtDaytime('/');
@@ -37,7 +40,10 @@ describe('After clicking a saved place', () => {
   });
   describe('Clicking the close button', () => {
     beforeEach(() => {
-      cy.auth();
+      cy.auth('subscribed_user2', {
+        username: Cypress.env('auth0UserSubscribed2'),
+        password: Cypress.env('auth0PassSubscribed2'),
+      });
     });
     it('UI changes as expected', () => {
       cy.visitAtDaytime('/');
@@ -53,7 +59,10 @@ describe('After clicking a saved place', () => {
   });
   describe('Clicking Edit button', () => {
     beforeEach(() => {
-      cy.auth();
+      cy.auth('subscribed_user2', {
+        username: Cypress.env('auth0UserSubscribed2'),
+        password: Cypress.env('auth0PassSubscribed2'),
+      });
     });
     describe('UI changes as expected', () => {
       it('Daytime', () => {
