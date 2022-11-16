@@ -1,4 +1,3 @@
-import {useEffect, useState} from 'react';
 import Head from 'next/head';
 import {getSession, withPageAuthRequired} from '@auth0/nextjs-auth0';
 import {getAccessToken, getAppMetadata} from 'src/utils/callManagementApi';
@@ -12,7 +11,7 @@ import {NightModeContext} from 'src/wrappers/NightModeContext';
 import {useNightMode} from 'src/hooks/useNightMode';
 
 import {subscribe} from 'src/utils/metadata';
-import {buttonLabel, subscribePage} from 'src/utils/uiCopies';
+import {subscribePage} from 'src/utils/uiCopies';
 
 export default function Success() {
   useNightMode(NightModeContext);
