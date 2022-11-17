@@ -81,7 +81,7 @@ describe('Logged-in users', () => {
     cy.wait('@logout').then(({response}) => {
       expect(response.statusCode).to.eq(302);
       expect(response.headers.location).to.match(
-        /https:\/\/my-ideal-map.jp.auth0.com\/v2\/logout.*/i, // TODO #331: replace this url with our own Login page
+        /https:\/\/my-ideal-map-development.jp.auth0.com\/v2\/logout.*/i, // TODO #331: replace this url with our own Login page
       ); // API ref: https://docs.cypress.io/guides/references/assertions#BDD-Assertions
     });
   });
@@ -154,7 +154,7 @@ describe('Expired trial users', () => {
     cy.wait('@logout').then(({response}) => {
       expect(response.statusCode).to.eq(302);
       expect(response.headers.location).to.match(
-        /https:\/\/my-ideal-map.jp.auth0.com\/v2\/logout.*/i, // TODO #331: replace this url with our own Login page
+        /https:\/\/my-ideal-map-development.jp.auth0.com\/v2\/logout.*/i, // TODO #331: replace this url with our own Login page
       ); // API ref: https://docs.cypress.io/guides/references/assertions#BDD-Assertions
     });
   });
@@ -176,7 +176,7 @@ describe('Expired trial users', () => {
     cy.wait('@logout').then(({response}) => {
       expect(response.statusCode).to.eq(302);
       expect(response.headers.location).to.match(
-        /https:\/\/my-ideal-map.jp.auth0.com\/v2\/logout.*/i, // TODO #331: replace this url with our own Login page
+        /https:\/\/my-ideal-map-development.jp.auth0.com\/v2\/logout.*/i, // TODO #331: replace this url with our own Login page
       ); // API ref: https://docs.cypress.io/guides/references/assertions#BDD-Assertions
     });
   });
@@ -256,7 +256,7 @@ describe('Expired subscription users', () => {
     cy.wait('@logout').then(({response}) => {
       expect(response.statusCode).to.eq(302);
       expect(response.headers.location).to.match(
-        /https:\/\/my-ideal-map.jp.auth0.com\/v2\/logout.*/i, // TODO #331: replace this url with our own Login page
+        /https:\/\/my-ideal-map-development.jp.auth0.com\/v2\/logout.*/i, // TODO #331: replace this url with our own Login page
       ); // API ref: https://docs.cypress.io/guides/references/assertions#BDD-Assertions
     });
   });
@@ -297,7 +297,7 @@ describe('Repeatedly failed payment users', () => {
     cy.wait('@logout').then(({response}) => {
       expect(response.statusCode).to.eq(302);
       expect(response.headers.location).to.match(
-        /https:\/\/my-ideal-map.jp.auth0.com\/v2\/logout.*/i, // TODO #331: replace this url with our own Login page
+        /https:\/\/my-ideal-map-development.jp.auth0.com\/v2\/logout.*/i, // TODO #331: replace this url with our own Login page
       ); // API ref: https://docs.cypress.io/guides/references/assertions#BDD-Assertions
     });
   });
@@ -338,7 +338,7 @@ describe('Cancelled users', () => {
     cy.wait('@logout').then(({response}) => {
       expect(response.statusCode).to.eq(302);
       expect(response.headers.location).to.match(
-        /https:\/\/my-ideal-map.jp.auth0.com\/v2\/logout.*/i, // TODO #331: replace this url with our own Login page
+        /https:\/\/my-ideal-map-development.jp.auth0.com\/v2\/logout.*/i, // TODO #331: replace this url with our own Login page
       ); // API ref: https://docs.cypress.io/guides/references/assertions#BDD-Assertions
     });
   });
