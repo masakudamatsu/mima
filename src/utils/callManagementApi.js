@@ -6,13 +6,13 @@ export async function getAccessToken() {
     // Adapted from https://auth0.com/docs/secure/tokens/access-tokens/get-management-api-access-tokens-for-production#get-access-tokens
     response = await axios.request({
       method: 'POST',
-      url: 'https://my-ideal-map.jp.auth0.com/oauth/token',
+      url: `${process.env.AUTH0_ISSUER_BASE_URL}/oauth/token`,
       headers: {'content-type': 'application/x-www-form-urlencoded'},
       data: new URLSearchParams({
         grant_type: 'client_credentials',
         client_id: process.env.AUTH0_MANAGEMENT_API_CLIENT_ID,
         client_secret: process.env.AUTH0_MANAGEMENT_API_CLIENT_SECRET,
-        audience: 'https://my-ideal-map.jp.auth0.com/api/v2/',
+        audience: `${process.env.AUTH0_ISSUER_BASE_URL}/api/v2/`,
       }),
     });
     console.log(`Access token obtained`);
@@ -27,7 +27,7 @@ export async function getAppMetadata({accessToken, userId}) {
   try {
     response = await axios.request({
       method: 'GET',
-      url: `https://my-ideal-map.jp.auth0.com/api/v2/users/${userId}`,
+      url: `${process.env.AUTH0_ISSUER_BASE_URL}/api/v2/users/${userId}`,
       headers: {
         'content-type': 'application/json',
         authorization: `Bearer ${accessToken}`,
@@ -47,7 +47,7 @@ export async function updateAppMetadata({accessToken, appMetadata, userId}) {
   try {
     response = await axios.request({
       method: 'PATCH',
-      url: `https://my-ideal-map.jp.auth0.com/api/v2/users/${userId}`,
+      url: `${process.env.AUTH0_ISSUER_BASE_URL}/api/v2/users/${userId}`,
       headers: {
         'content-type': 'application/json',
         authorization: `Bearer ${accessToken}`,
