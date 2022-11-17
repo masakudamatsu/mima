@@ -1,10 +1,10 @@
 const {faker} = require('@faker-js/faker');
 
 const mockUser1 = {
-  userId: 'auth0|636755e9d6ab9f314234831c',
+  userId: 'auth0|63758d34ecc33d71c8399095',
 };
 const mockUser2 = {
-  userId: 'auth0|63706eb164a1988e31375f3f',
+  userId: 'auth0|63758ee29cf81d16834bbea9',
 };
 
 faker.seed(5678); // make place ID always the same; see https://github.com/faker-js/faker#%EF%B8%8F-setting-a-randomness-seed
