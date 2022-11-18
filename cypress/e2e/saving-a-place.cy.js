@@ -17,6 +17,7 @@ describe('Saving feature', () => {
     cy.log('Resetting the database');
     cy.exec('npx prisma migrate reset --force'); // https://docs.cypress.io/guides/end-to-end-testing/testing-your-app#Seeding-data
     cy.log('Loading app');
+    cy.auth();
     cy.visit('/');
     cy.waitForMapToLoad();
     cy.log('Verify a place to be saved is not marked on the map yet');

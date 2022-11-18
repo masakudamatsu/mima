@@ -27,9 +27,19 @@ const setFocusStyle = `
   }
 `;
 
+const resetLinkStyle = `
+  &[data-reset-link-style="true"] {
+    align-items: center;
+    display: flex;
+    justify-content: center;
+    text-decoration: none;
+  }
+`; // if used as an <a> element
+
 // Define Button components
 export const ButtonDialog = styled.button`
   ${setShape}
   ${setColor}
   ${setFocusStyle}
+  ${resetLinkStyle}
 `;

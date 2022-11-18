@@ -27,6 +27,23 @@ describe('ButtonDialog component', () => {
   outline-offset: initial;
 }
 
+.c0[data-reset-link-style="true"] {
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  -webkit-text-decoration: none;
+  text-decoration: none;
+}
+
 <div>
   <button
     class="c0"

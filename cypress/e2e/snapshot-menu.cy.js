@@ -6,6 +6,9 @@ const menuUIbreakpoints = [
 ];
 
 describe('Menu window', () => {
+  beforeEach(() => {
+    cy.auth();
+  });
   it('Rendered in Light Mode at Daytime', () => {
     cy.visitAtDaytime('/');
     cy.waitForMapToLoad();

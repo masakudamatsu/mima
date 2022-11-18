@@ -20,7 +20,11 @@
  * @type {Cypress.PluginConfig}
  */
 
+const encrypt = require('cypress-nextjs-auth0/encrypt');
+
 module.exports = (on, config) => {
+  // For cypress-nextjs-auth0: https://github.com/sir-dunxalot/cypress-nextjs-auth0/tree/master#step-3-register-the-task
+  on('task', {encrypt});
   // IMPORTANT to return the config object
   // with the any changed environment variables
   return config;

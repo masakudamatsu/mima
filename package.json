@@ -65,6 +65,7 @@
   },
   "homepage": "https://mima.pages.dev",
   "dependencies": {
+    "@auth0/nextjs-auth0": "1.9.2",
     "@googlemaps/js-api-loader": "1.12.1",
     "@googlemaps/react-wrapper": "1.1.15",
     "@prisma/client": "4.3.1",
@@ -72,6 +73,7 @@
     "dompurify": "2.3.3",
     "downshift": "6.1.7",
     "escape-html": "1.0.3",
+    "micro": "9.4.1",
     "next": "12.2.5",
     "prisma": "4.3.1",
     "prop-types": "^15.7.2",
@@ -81,6 +83,7 @@
     "slate": "0.71.0",
     "slate-history": "0.66.0",
     "slate-react": "0.71.0",
+    "stripe": "10.15.0",
     "styled-components": "^5.2.1"
   },
   "devDependencies": {
@@ -98,11 +101,12 @@
     "@typescript-eslint/parser": "^4.8.2",
     "babel-eslint": "^10.1.0",
     "babel-jest": "^26.6.3",
-    "babel-loader": "8.2.2",
+    "babel-loader": "8.3.0",
     "babel-plugin-istanbul": "6.0.0",
     "babel-plugin-styled-components": "^1.12.0",
     "commitizen": "4.2.5",
-    "cypress": "10.8.0",
+    "cypress": "10.11.0",
+    "cypress-nextjs-auth0": "2.1.0",
     "cypress-real-events": "^1.7.1",
     "cz-conventional-changelog": "3.3.0",
     "eslint": "^7.32.0",

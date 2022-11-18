@@ -20,6 +20,10 @@ function getPlaceName() {
   return faker.company.name();
 }
 
+function getToken() {
+  return faker.internet.password(64, false, /[A-Za-z0-9+/]/); // 64-character-long base64 string; see https://en.wikipedia.org/wiki/Base64#Base64_table_from_RFC_4648
+} // API reference: https://fakerjs.dev/api/internet.html#password
+
 function getWord() {
   return faker.lorem.word();
 }
@@ -54,11 +58,22 @@ function buildReq(overrides = {}) {
 
 function buildRes(overrides = {}) {
   const res = {
-    json: jest.fn(() => res).mockName('json'),
-    status: jest.fn(() => res).mockName('status'),
+    end: jest.fn().mockName('res.end'),
+    json: jest.fn(() => res).mockName('res.json'),
+    setHeader: jest.fn().mockName('res.setHeader'),
+    status: jest.fn(() => res).mockName('res.status'),
     ...overrides,
   };
   return res;
 }
 
-export {buildPlace, buildReq, buildRes, getId, getNote, getPlaceName, getWord};
+export {
+  buildPlace,
+  buildReq,
+  buildRes,
+  getId,
+  getNote,
+  getPlaceName,
+  getToken,
+  getWord,
+};

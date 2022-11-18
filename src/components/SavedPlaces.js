@@ -163,6 +163,7 @@ export const SavedPlaces = ({mapObject}) => {
     const updateData = async ([newTitle, newNoteArray]) => {
       try {
         setPlaces({ui: 'saving'});
+        // TODO #282: handle database access error
         const response = await fetch('/api/places', {
           method: 'PUT',
           headers: {'Content-Type': 'application/json'},
@@ -196,6 +197,7 @@ export const SavedPlaces = ({mapObject}) => {
     const deletePlace = async () => {
       try {
         setDeleteUi('deleting');
+        // TODO #282: handle database access error
         const response = await fetch('/api/places', {
           method: 'DELETE',
           headers: {'Content-Type': 'application/json'},
