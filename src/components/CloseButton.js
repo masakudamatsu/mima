@@ -7,13 +7,7 @@ import {createRipple} from 'src/utils/createRipple';
 // TODO #201:
 // 2. Reuse this component in MenuButton
 export const CloseButton = forwardRef(function CloseButton(
-  {
-    ariaControls = null,
-    ariaExpanded = null,
-    ariaLabel,
-    handleClick,
-    testId = null,
-  },
+  {ariaExpanded = null, ariaLabel, handleClick, testId = null},
   ref,
 ) {
   const buttonElement = useRef();
@@ -34,7 +28,6 @@ export const CloseButton = forwardRef(function CloseButton(
   return (
     <>
       <ButtonCircle
-        aria-controls={ariaControls}
         aria-expanded={ariaExpanded}
         aria-label={ariaLabel}
         data-testid={testId}
@@ -53,7 +46,6 @@ export const CloseButton = forwardRef(function CloseButton(
 });
 
 CloseButton.propTypes = {
-  ariaControls: PropTypes.string,
   ariaExpanded: PropTypes.string,
   ariaLabel: PropTypes.string.isRequired,
   handleClick: PropTypes.func.isRequired,

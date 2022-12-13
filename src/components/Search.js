@@ -65,13 +65,10 @@ export const Search = () => {
     }
   });
 
-  const searchboxId = 'searchbox';
-
   return (
     <FormSearch data-searchbox={searchBoxOpen}>
       {searchBoxOpen === 'false' ? (
         <Button
-          aria-controls={searchboxId}
           aria-expanded="false"
           aria-label={buttonLabel.search}
           data-position="top-right"
@@ -87,13 +84,12 @@ export const Search = () => {
       ) : (
         <FocusLock>
           <CloseButton
-            ariaControls={searchboxId}
             ariaExpanded="true"
             ariaLabel={buttonLabel.closeSearchbox}
             handleClick={handleClickCloseButton}
             testId="searchbox-last-focusable-element" // to test focus management
           />
-          <SearchBox closeSearchBox={closeSearchBox} id={searchboxId} />
+          <SearchBox closeSearchBox={closeSearchBox} id="searchbox" />
         </FocusLock>
       )}
     </FormSearch>
