@@ -12,7 +12,6 @@ import {ParagraphLoading} from 'src/elements/ParagraphLoading';
 import {useOnEscKeyDown} from 'src/hooks/useOnEscKeyDown';
 
 import {buttonLabel} from 'src/utils/uiCopies';
-import {duration} from 'src/utils/designtokens';
 
 import dynamic from 'next/dynamic';
 const importSearchBox = () =>
@@ -39,14 +38,12 @@ export const Search = () => {
     closeButtonPressed.current = false;
     setSearchBoxOpen('closing');
   };
-  // with animation
-  useEffect(() => {
+  // Remove search box from DOM after transition animation is over
+  const handleAnimationEnd = () => {
     if (searchBoxOpen === 'closing') {
-      setTimeout(() => {
-        setSearchBoxOpen('false');
-      }, duration.modal.exit);
+      setSearchBoxOpen('false');
     }
-  }, [searchBoxOpen]);
+  };
 
   // close with Esc key
   useOnEscKeyDown({
@@ -66,7 +63,10 @@ export const Search = () => {
   });
 
   return (
-    <FormSearch data-searchbox={searchBoxOpen}>
+    <FormSearch
+      data-searchbox={searchBoxOpen}
+      onAnimationEnd={handleAnimationEnd}
+    >
       {searchBoxOpen === 'false' ? (
         <Button
           aria-expanded="false"
