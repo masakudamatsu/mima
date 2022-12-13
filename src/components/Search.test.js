@@ -43,24 +43,18 @@ describe('Once the search button is pressed...', () => {
   afterEach(() => {
     jest.useRealTimers();
   });
-  test(`sets 'data-searchbox' attribute to be true`, async () => {
-    expect(screen.getByTestId('div-search-background')).toHaveAttribute(
-      'data-searchbox',
-      'true',
-    );
-  });
   test(`assigns aria-expanded="true" to the close button`, () => {
     expect(
       screen.getByRole('button', {name: buttonLabel.closeSearchbox}),
     ).toHaveAttribute('aria-expanded', 'true');
   });
-  test(`sets 'data-searchbox' attribute to be closing after close button is clicked`, () => {
+  test(`sets 'data-closing' attribute to be 'true' after close button is clicked`, () => {
     userEvent.click(
       screen.getByRole('button', {name: buttonLabel.closeSearchbox}),
     );
     expect(screen.getByTestId('div-search-background')).toHaveAttribute(
-      'data-searchbox',
-      'closing',
+      'data-closing',
+      'true',
     );
   });
   test(`gets dismounted ${duration.modal.exit}ms after clicking close button`, async () => {

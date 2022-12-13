@@ -53,21 +53,18 @@ const animateTransitionIn = css`
 `;
 
 const animateTransitionOut = css`
-  animation-duration: ${duration.modal.exit}ms;
-  animation-name: ${animation.fadeOut};
-  animation-fill-mode: forwards;
+  &[data-closing='true'] {
+    animation-duration: ${duration.modal.exit}ms;
+    animation-name: ${animation.fadeOut};
+    animation-fill-mode: forwards;
+  }
 `;
 
 export const DivSearchBackground = styled.div`
-  &[data-searchbox='true'],
-  &[data-searchbox='closing'] {
-    ${placeOverMap}
-    ${setBackground}
-    ${setSize}
-    ${positionComponents}
-    ${animateTransitionIn}
-  }
-  &[data-searchbox='closing'] {
-    ${animateTransitionOut}
-  }
+  ${placeOverMap}
+  ${setBackground}
+  ${setSize}
+  ${positionComponents}
+  ${animateTransitionIn}
+  ${animateTransitionOut}
 `;

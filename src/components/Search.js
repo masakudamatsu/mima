@@ -23,6 +23,8 @@ const SearchBox = dynamic(importSearchBox, {
 export const Search = () => {
   const [searchBoxOpen, setSearchBoxOpen] = useState('false');
 
+  const searchBackground = useRef();
+
   // Open search box
   const handleClickSearchButton = () => {
     setSearchBoxOpen('true');
@@ -31,16 +33,16 @@ export const Search = () => {
   // Close search box by pressing close button
   const handleClickCloseButton = () => {
     closeButtonPressed.current = true;
-    setSearchBoxOpen('closing');
+    searchBackground.current.dataset.closing = 'true';
   };
   // Close search box by selecting an autocomplete suggestion
   const closeSearchBox = () => {
     closeButtonPressed.current = false;
-    setSearchBoxOpen('closing');
+    searchBackground.current.dataset.closing = 'true';
   };
   // Remove search box from DOM after transition animation is over
   const handleAnimationEnd = () => {
-    if (searchBoxOpen === 'closing') {
+    if (searchBackground.current.dataset.closing === 'true') {
       setSearchBoxOpen('false');
     }
   };
@@ -81,9 +83,10 @@ export const Search = () => {
       ) : (
         <FocusLock>
           <DivSearchBackground
-            data-searchbox={searchBoxOpen}
+            data-closing="false"
             data-testid="div-search-background"
             onAnimationEnd={handleAnimationEnd}
+            ref={searchBackground}
           >
             <CloseButton
               ariaExpanded="true"

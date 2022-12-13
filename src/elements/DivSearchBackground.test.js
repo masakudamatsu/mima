@@ -6,8 +6,7 @@ describe('DivSearchBackground component', () => {
   test('renders the UI correctly', () => {
     const {container} = render(<DivSearchBackground />);
     expect(container).toMatchInlineSnapshot(`
-.c0[data-searchbox='true'],
-.c0[data-searchbox='closing'] {
+.c0 {
   position: absolute;
   z-index: 2;
   --blur-radius: 8px;
@@ -25,34 +24,29 @@ describe('DivSearchBackground component', () => {
   animation-timing-fiunction: linear;
 }
 
-.c0[data-searchbox='true'] button[aria-label="Close search box"],
-.c0[data-searchbox='closing'] button[aria-label="Close search box"] {
+.c0 button[aria-label="Close search box"] {
   position: absolute;
   right: var(--popup-margin);
   top: var(--popup-margin);
   z-index: 4;
 }
 
-.c0[data-searchbox='true'] div[id="searchbox"],
-.c0[data-searchbox='closing'] div[id="searchbox"],
-.c0[data-searchbox='true'] ul[aria-label="Autocomplete suggestions"],
-.c0[data-searchbox='closing'] ul[aria-label="Autocomplete suggestions"] {
+.c0 div[id="searchbox"],
+.c0 ul[aria-label="Autocomplete suggestions"] {
   margin: 0 auto;
   width: calc(100% - var(--popup-margin) * 2);
   z-index: 3;
 }
 
-.c0[data-searchbox='true'] div[id="searchbox"],
-.c0[data-searchbox='closing'] div[id="searchbox"] {
+.c0 div[id="searchbox"] {
   margin-top: calc(48px + var(--popup-margin) * 2);
 }
 
-.c0[data-searchbox='true'] ul[aria-label="Autocomplete suggestions"],
-.c0[data-searchbox='closing'] ul[aria-label="Autocomplete suggestions"] {
+.c0 ul[aria-label="Autocomplete suggestions"] {
   margin-top: 8px;
 }
 
-.c0[data-searchbox='closing'] {
+.c0[data-closing='true'] {
   -webkit-animation-duration: 250ms;
   animation-duration: 250ms;
   -webkit-animation-name: jiroXv;
@@ -62,8 +56,7 @@ describe('DivSearchBackground component', () => {
 }
 
 @supports (-webkit-backdrop-filter:blur(var(--blur-radius))) or (backdrop-filter:blur(var(--blur-radius))) {
-  .c0[data-searchbox='true'],
-  .c0[data-searchbox='closing'] {
+  .c0 {
     background-color: var(--popup-background-color);
     -webkit-backdrop-filter: blur(var(--blur-radius));
     backdrop-filter: blur(var(--blur-radius));
@@ -71,13 +64,11 @@ describe('DivSearchBackground component', () => {
 }
 
 @supports (background-image:-moz-element(#map)) and (not (backdrop-filter:blur(var(--blur-radius)))) {
-  .c0[data-searchbox='true'],
-  .c0[data-searchbox='closing'] {
+  .c0 {
     background-color: transparent;
   }
 
-  .c0[data-searchbox='true']::before,
-  .c0[data-searchbox='closing']::before {
+  .c0::before {
     background-attachment: fixed;
     background-image: -moz-element(#map);
     content: "";
@@ -91,8 +82,7 @@ describe('DivSearchBackground component', () => {
     z-index: -2;
   }
 
-  .c0[data-searchbox='true']::after,
-  .c0[data-searchbox='closing']::after {
+  .c0::after {
     background-color: var(--popup-background-color);
     content: "";
     position: absolute;
