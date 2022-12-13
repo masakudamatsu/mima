@@ -14,14 +14,19 @@ describe('DivSearchBackground component', () => {
   height: 100%;
   width: 100%;
   --popup-margin: 8px;
-  -webkit-animation-duration: 300ms;
-  animation-duration: 300ms;
+  -webkit-animation-delay: 0ms,90ms;
+  animation-delay: 0ms,90ms;
+  -webkit-animation-duration: 300ms,210ms;
+  animation-duration: 300ms,210ms;
   -webkit-animation-fill-mode: backwards;
   animation-fill-mode: backwards;
-  -webkit-animation-name: jBcSpD;
-  animation-name: jBcSpD;
-  -webkit-animation-timing-fiunction: linear;
-  animation-timing-fiunction: linear;
+  -webkit-animation-name: hePhrH,jBcSpD;
+  animation-name: hePhrH,jBcSpD;
+  -webkit-animation-timing-fiunction: cubic-bezier(0.4,0.0,0.2,1),cubic-bezier(0.0,0.0,0.2,1);
+  animation-timing-fiunction: cubic-bezier(0.4,0.0,0.2,1),cubic-bezier(0.0,0.0,0.2,1);
+  -webkit-transform-origin: top right;
+  -ms-transform-origin: top right;
+  transform-origin: top right;
 }
 
 .c0 button[aria-label="Close search box"] {

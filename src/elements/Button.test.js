@@ -26,6 +26,16 @@ describe('Button component', () => {
   justify-content: center;
   position: absolute;
   z-index: 1;
+  -webkit-animation: jBcSpD 210ms cubic-bezier(0.0,0.0,0.2,1) 90ms;
+  animation: jBcSpD 210ms cubic-bezier(0.0,0.0,0.2,1) 90ms;
+  -webkit-animation-fill-mode: backwards;
+  animation-fill-mode: backwards;
+  -webkit-transform-origin: top right;
+  -ms-transform-origin: top right;
+  transform-origin: top right;
+  -webkit-transition: opacity 90ms cubic-bezier(0.4,0.0,1,1), -webkit-transform 300ms cubic-bezier(0.4,0.0,0.2,1);
+  -webkit-transition: opacity 90ms cubic-bezier(0.4,0.0,1,1), transform 300ms cubic-bezier(0.4,0.0,0.2,1);
+  transition: opacity 90ms cubic-bezier(0.4,0.0,1,1), transform 300ms cubic-bezier(0.4,0.0,0.2,1);
 }
 
 .c0:focus {
@@ -109,6 +119,13 @@ describe('Button component', () => {
 
 .c0:active #cloud {
   stroke: none;
+}
+
+.c0[data-transition='out'] {
+  opacity: 0;
+  -webkit-transform: scale(10);
+  -ms-transform: scale(10);
+  transform: scale(10);
 }
 
 .c0[data-loading='true'] {

@@ -46,10 +46,12 @@ const positionComponents = `
 `;
 
 const animateTransitionIn = css`
-  animation-duration: ${duration.modal.enter}ms;
+  animation-delay: 0ms, 90ms;
+  animation-duration: 300ms, 210ms;
   animation-fill-mode: backwards;
-  animation-name: ${animation.fadeIn};
-  animation-timing-fiunction: ${easing.linear};
+  animation-name: ${animation.searchBox}, ${animation.fadeIn};
+  animation-timing-fiunction: ${easing.standard}, ${easing.decelerate};
+  transform-origin: top right;
 `;
 
 const animateTransitionOut = css`

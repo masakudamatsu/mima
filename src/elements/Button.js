@@ -121,6 +121,21 @@ const setButtonShadow = `
   }
 `;
 
+const animateTransitionIn = css`
+  animation: ${animation.fadeIn} 210ms ${easing.decelerate} 90ms;
+  animation-fill-mode: backwards;
+`;
+
+const animateTransitionOut = `
+  transform-origin: top right;
+  transition: opacity 90ms ${easing.accelerate},
+    transform 300ms ${easing.standard};
+  &[data-transition='out'] {
+    opacity: 0;
+    transform: scale(10);
+  }
+`;
+
 const blinkButton = css`
   &[data-loading='true'] {
     animation: ${animation.flashing} ${duration.flashing} ${easing.linear}
@@ -138,5 +153,7 @@ export const Button = styled.button`
   ${setButtonLabelColor}
   ${setButtonColor}
   ${setButtonShadow}
+  ${animateTransitionIn}
+  ${animateTransitionOut}
   ${blinkButton}
 `;

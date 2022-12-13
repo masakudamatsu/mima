@@ -152,6 +152,14 @@ export const animation = {
       opacity: 1;
     }    
   `,
+  searchBox: keyframes`
+    0% {
+      transform: scale(0);
+    }
+    100% {
+      transform: scale(1);
+    }
+  `,
   'ripple 100': keyframes`
     to {
       transform: scale(4);
@@ -178,6 +186,7 @@ export const easing = {
   accelerate: 'cubic-bezier(0.4, 0.0, 1, 1)',
   decelerate: 'cubic-bezier(0.0, 0.0, 0.2, 1)',
   linear: 'linear',
+  standard: 'cubic-bezier(0.4, 0.0, 0.2, 1)',
 };
 
 export const buttonCircle = {
