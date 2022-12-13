@@ -5,10 +5,10 @@ const above = 1;
 
 const button = above + base;
 
-const formSearch = above + button;
-const paragraphLoading = above + formSearch;
+const divSearchBackground = above + button;
+const paragraphLoading = above + divSearchBackground;
 const closeButton = above + paragraphLoading;
-const divSearch = above + formSearch;
+const divSearch = above + divSearchBackground;
 
 const divScrim = above + button;
 const divPopup = above + divScrim;
@@ -19,7 +19,7 @@ const paragraphDeleting = above + divPopup;
 export const zIndex = {
   button,
   closeButton,
-  formSearch,
+  divSearchBackground,
   divModalBackdrop,
   divScrim,
   divSearch,

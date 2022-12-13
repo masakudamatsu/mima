@@ -44,7 +44,7 @@ describe('Once the search button is pressed...', () => {
     jest.useRealTimers();
   });
   test(`sets 'data-searchbox' attribute to be true`, async () => {
-    expect(screen.getByRole('search')).toHaveAttribute(
+    expect(screen.getByTestId('div-search-background')).toHaveAttribute(
       'data-searchbox',
       'true',
     );
@@ -58,7 +58,7 @@ describe('Once the search button is pressed...', () => {
     userEvent.click(
       screen.getByRole('button', {name: buttonLabel.closeSearchbox}),
     );
-    expect(screen.getByRole('search')).toHaveAttribute(
+    expect(screen.getByTestId('div-search-background')).toHaveAttribute(
       'data-searchbox',
       'closing',
     );

@@ -6,7 +6,7 @@ import {CloseButton} from './CloseButton';
 import {Button} from 'src/elements/Button';
 import {SvgCloud} from 'src/elements/SvgCloud';
 
-import {FormSearch} from 'src/elements/FormSearch';
+import {DivSearchBackground} from 'src/elements/DivSearchBackground';
 import {ParagraphLoading} from 'src/elements/ParagraphLoading';
 
 import {useOnEscKeyDown} from 'src/hooks/useOnEscKeyDown';
@@ -63,10 +63,7 @@ export const Search = () => {
   });
 
   return (
-    <FormSearch
-      data-searchbox={searchBoxOpen}
-      onAnimationEnd={handleAnimationEnd}
-    >
+    <form role="search">
       {searchBoxOpen === 'false' ? (
         <Button
           aria-expanded="false"
@@ -83,16 +80,22 @@ export const Search = () => {
         </Button>
       ) : (
         <FocusLock>
-          <CloseButton
-            ariaExpanded="true"
-            ariaLabel={buttonLabel.closeSearchbox}
-            handleClick={handleClickCloseButton}
-            testId="searchbox-last-focusable-element" // to test focus management
-          />
-          <SearchBox closeSearchBox={closeSearchBox} id="searchbox" />
+          <DivSearchBackground
+            data-searchbox={searchBoxOpen}
+            data-testid="div-search-background"
+            onAnimationEnd={handleAnimationEnd}
+          >
+            <CloseButton
+              ariaExpanded="true"
+              ariaLabel={buttonLabel.closeSearchbox}
+              handleClick={handleClickCloseButton}
+              testId="searchbox-last-focusable-element" // to test focus management
+            />
+            <SearchBox closeSearchBox={closeSearchBox} id="searchbox" />
+          </DivSearchBackground>
         </FocusLock>
       )}
-    </FormSearch>
+    </form>
   );
 };
 

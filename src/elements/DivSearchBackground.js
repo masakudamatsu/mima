@@ -12,7 +12,7 @@ import {zIndex} from 'src/utils/zIndex';
 
 const placeOverMap = `
   position: absolute;
-  z-index: ${zIndex.formSearch};
+  z-index: ${zIndex.divSearchBackground};
 `;
 
 const setBackground = stylePopupBackground();
@@ -58,9 +58,7 @@ const animateTransitionOut = css`
   animation-fill-mode: forwards;
 `;
 
-export const FormSearch = styled.form.attrs({
-  role: 'search',
-})`
+export const DivSearchBackground = styled.div`
   &[data-searchbox='true'],
   &[data-searchbox='closing'] {
     ${placeOverMap}

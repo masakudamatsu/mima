@@ -62,7 +62,7 @@ const styleFocusState = `
 
 const styleActiveState = css`
   overflow: hidden;
-  /* position: relative; (unnecessary because the button is absolutely positioined by FormSearch.js */
+  /* position: relative; (unnecessary because the button is absolutely positioined by DivSearchBackground.js */
   & .ripple {
     /* to be used in line 14 of createRipple.js */
     animation: ${animation['ripple 100']} 600ms linear;

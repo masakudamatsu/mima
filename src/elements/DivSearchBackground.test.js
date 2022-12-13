@@ -1,10 +1,10 @@
 import {render} from '@testing-library/react';
 
-import {FormSearch} from './FormSearch';
+import {DivSearchBackground} from './DivSearchBackground';
 
-describe('FormSearch component', () => {
+describe('DivSearchBackground component', () => {
   test('renders the UI correctly', () => {
-    const {container} = render(<FormSearch />);
+    const {container} = render(<DivSearchBackground />);
     expect(container).toMatchInlineSnapshot(`
 .c0[data-searchbox='true'],
 .c0[data-searchbox='closing'] {
@@ -105,9 +105,8 @@ describe('FormSearch component', () => {
 }
 
 <div>
-  <form
+  <div
     class="c0"
-    role="search"
   />
 </div>
 `);

@@ -25,7 +25,7 @@ const placeOverBackground = `
   position: absolute;
   top: 0; /* Without this, it won't be placed over the background */
   width: 100%;
-  z-index: ${zIndex.formSearch};
+  z-index: ${zIndex.divSearchBackground};
   &[data-delete="true"] {
     z-index: ${zIndex.paragraphDeleting};
   }
