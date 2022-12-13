@@ -21,13 +21,13 @@ const SearchBox = dynamic(importSearchBox, {
 });
 
 export const Search = () => {
-  const [searchBoxOpen, setSearchBoxOpen] = useState('false');
+  const [searchBox, setSearchBox] = useState('closed');
 
   const searchBackground = useRef();
 
   // Open search box
   const handleClickSearchButton = () => {
-    setSearchBoxOpen('true');
+    setSearchBox('open');
   };
 
   // Close search box by pressing close button
@@ -43,13 +43,13 @@ export const Search = () => {
   // Remove search box from DOM after transition animation is over
   const handleAnimationEnd = () => {
     if (searchBackground.current.dataset.closing === 'true') {
-      setSearchBoxOpen('false');
+      setSearchBox('closed');
     }
   };
 
   // close with Esc key
   useOnEscKeyDown({
-    state: searchBoxOpen === 'true',
+    state: searchBox === 'open',
     handler: handleClickCloseButton,
   });
 
@@ -57,7 +57,7 @@ export const Search = () => {
   const buttonElement = useRef();
   const closeButtonPressed = useRef(false);
   useEffect(() => {
-    if (searchBoxOpen === 'false') {
+    if (searchBox === 'closed') {
       if (closeButtonPressed.current === true) {
         buttonElement.current.focus();
       }
@@ -66,7 +66,7 @@ export const Search = () => {
 
   return (
     <form role="search">
-      {searchBoxOpen === 'false' ? (
+      {searchBox === 'closed' ? (
         <Button
           aria-expanded="false"
           aria-label={buttonLabel.search}
