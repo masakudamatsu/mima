@@ -122,8 +122,11 @@ const setButtonShadow = `
 `;
 
 const animateTransitionIn = css`
-  animation: ${animation.fadeIn} 210ms ${easing.decelerate} 90ms;
-  animation-fill-mode: backwards;
+  animation-duration: ${animation.toggleOut.duration};
+  animation-fill-mode: ${animation.toggleOut.button.fillMode};
+  animation-name: ${animation.toggleOut.button.opacity},
+    ${animation.toggleOut.button.scale};
+  animation-timing-function: ${animation.toggleOut.easing};
 `;
 
 const animateTransitionOut = css`

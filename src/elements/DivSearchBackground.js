@@ -1,11 +1,6 @@
 import styled, {css} from 'styled-components';
 import {stylePopupBackground} from 'src/utils/cssUtilities';
-import {
-  animation,
-  buttonCircle,
-  dimension,
-  duration,
-} from 'src/utils/designtokens';
+import {animation, buttonCircle, dimension} from 'src/utils/designtokens';
 import {buttonLabel, searchBoxLabel} from 'src/utils/uiCopies';
 import {zIndex} from 'src/utils/zIndex';
 
@@ -55,9 +50,10 @@ const animateTransitionIn = css`
 
 const animateTransitionOut = css`
   &[data-closing='true'] {
-    animation-duration: ${duration.modal.exit}ms;
-    animation-name: ${animation.fadeOut};
-    animation-fill-mode: forwards;
+    animation-duration: ${animation.toggleOut.duration};
+    animation-name: ${animation.toggleOut.popup.opacity};
+    animation-fill-mode: ${animation.toggleOut.popup.fillMode};
+    animation-timing-function: ${animation.toggleOut.easing};
   }
 `;
 

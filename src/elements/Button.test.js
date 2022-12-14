@@ -26,10 +26,14 @@ describe('Button component', () => {
   justify-content: center;
   position: absolute;
   z-index: 1;
-  -webkit-animation: jBcSpD 210ms cubic-bezier(0.0,0.0,0.2,1) 90ms;
-  animation: jBcSpD 210ms cubic-bezier(0.0,0.0,0.2,1) 90ms;
+  -webkit-animation-duration: 300ms;
+  animation-duration: 300ms;
   -webkit-animation-fill-mode: backwards;
   animation-fill-mode: backwards;
+  -webkit-animation-name: iYejkx,jWmlcs;
+  animation-name: iYejkx,jWmlcs;
+  -webkit-animation-timing-function: cubic-bezier(0.0,0.0,0.2,1);
+  animation-timing-function: cubic-bezier(0.0,0.0,0.2,1);
 }
 
 .c0:focus {

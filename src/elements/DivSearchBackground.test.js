@@ -50,12 +50,14 @@ describe('DivSearchBackground component', () => {
 }
 
 .c0[data-closing='true'] {
-  -webkit-animation-duration: 250ms;
-  animation-duration: 250ms;
-  -webkit-animation-name: jiroXv;
-  animation-name: jiroXv;
+  -webkit-animation-duration: 300ms;
+  animation-duration: 300ms;
+  -webkit-animation-name: ghzFOF;
+  animation-name: ghzFOF;
   -webkit-animation-fill-mode: forwards;
   animation-fill-mode: forwards;
+  -webkit-animation-timing-function: cubic-bezier(0.0,0.0,0.2,1);
+  animation-timing-function: cubic-bezier(0.0,0.0,0.2,1);
 }
 
 @supports (-webkit-backdrop-filter:blur(var(--blur-radius))) or (backdrop-filter:blur(var(--blur-radius))) {

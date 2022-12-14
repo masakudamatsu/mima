@@ -169,6 +169,48 @@ export const animation = {
       fillMode: 'backwards',
     },
   },
+  // For closing menu / search box
+  toggleOut: {
+    // Duration and keyframes follow the "Fade Through" spec of Material Design 2 (https://m2.material.io/design/motion/the-motion-system.html#fade-through)
+    // Easing is replaced with deceleration because the original spec makes animation look mechine-ish
+    duration: '300ms',
+    easing: 'cubic-bezier(0.0, 0.0, 0.2, 1)', // Decelerated easing in Material Design 2 (https://m2.material.io/design/motion/speed.html#easing)
+    origin: null,
+    button: {
+      opacity: keyframes`
+        0%,
+        30% { /* mocking 90ms delay */
+          opacity: 0; 
+        }
+        100% {
+          opacity: 1;
+        }
+      `,
+      scale: keyframes`
+        0%,
+        30% { /* mocking 90ms delay */
+          transform: scale(0.92); 
+        }
+        100% {
+          transform: scale(1);
+        }
+      `,
+      fillMode: 'backwards',
+    },
+    popup: {
+      opacity: keyframes`
+        0% {
+          opacity: 1;
+        }
+        30%, /* mocking 90ms duration */
+        100% { 
+          opacity: 0;
+        }
+      `,
+      scale: null,
+      fillMode: 'forwards',
+    },
+  },
   fadeIn: keyframes`
     from {
       opacity: 0;
