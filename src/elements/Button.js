@@ -127,6 +127,9 @@ const animateTransitionIn = css`
   animation-name: ${animation.toggleOut.button.opacity},
     ${animation.toggleOut.button.scale};
   animation-timing-function: ${animation.toggleOut.easing};
+  @media (prefers-reduced-motion: reduce) {
+    animation-name: ${animation.toggleOut.button.opacity};
+  }
 `;
 
 const animateTransitionOut = css`
@@ -137,6 +140,9 @@ const animateTransitionOut = css`
     animation-name: ${animation.toggleIn.button.opacity},
       ${animation.toggleIn.button.scale};
     animation-timing-function: ${animation.toggleIn.easing};
+    @media (prefers-reduced-motion: reduce) {
+      animation-name: ${animation.toggleIn.button.opacity};
+    }
   }
 `;
 

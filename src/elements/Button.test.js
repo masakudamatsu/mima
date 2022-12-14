@@ -138,6 +138,20 @@ describe('Button component', () => {
   animation: bPkxfw 1500ms linear infinite;
 }
 
+@media (prefers-reduced-motion:reduce) {
+  .c0 {
+    -webkit-animation-name: iYejkx;
+    animation-name: iYejkx;
+  }
+}
+
+@media (prefers-reduced-motion:reduce) {
+  .c0[data-transition='out'] {
+    -webkit-animation-name: dnyzVB;
+    animation-name: dnyzVB;
+  }
+}
+
 <div>
   <button
     class="c0"
