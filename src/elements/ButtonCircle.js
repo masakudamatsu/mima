@@ -60,7 +60,11 @@ const styleFocusState = `
 ;
 `;
 
+const removeTapHighlight = `
+  -webkit-tap-highlight-color: transparent;
+`;
 const styleActiveState = css`
+  ${removeTapHighlight}
   overflow: hidden;
   /* position: relative; (unnecessary because the button is absolutely positioined by DivSearchBackground.js */
   & .ripple {
