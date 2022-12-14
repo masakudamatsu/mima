@@ -5,7 +5,6 @@ import {
   buttonCircle,
   dimension,
   duration,
-  easing,
 } from 'src/utils/designtokens';
 import {buttonLabel, searchBoxLabel} from 'src/utils/uiCopies';
 import {zIndex} from 'src/utils/zIndex';
@@ -46,12 +45,12 @@ const positionComponents = `
 `;
 
 const animateTransitionIn = css`
-  animation-delay: 0ms, 90ms;
-  animation-duration: 300ms, 210ms;
-  animation-fill-mode: backwards;
-  animation-name: ${animation.searchBox}, ${animation.fadeIn};
-  animation-timing-fiunction: ${easing.standard}, ${easing.decelerate};
-  transform-origin: top right;
+  animation-duration: ${animation.toggleIn.duration};
+  animation-fill-mode: ${animation.toggleIn.popup.fillMode};
+  animation-name: ${animation.toggleIn.popup.opacity},
+    ${animation.toggleIn.popup.scale};
+  animation-timing-function: ${animation.toggleIn.easing};
+  transform-origin: ${animation.toggleIn.origin};
 `;
 
 const animateTransitionOut = css`

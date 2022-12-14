@@ -30,12 +30,6 @@ describe('Button component', () => {
   animation: jBcSpD 210ms cubic-bezier(0.0,0.0,0.2,1) 90ms;
   -webkit-animation-fill-mode: backwards;
   animation-fill-mode: backwards;
-  -webkit-transform-origin: top right;
-  -ms-transform-origin: top right;
-  transform-origin: top right;
-  -webkit-transition: opacity 90ms cubic-bezier(0.4,0.0,1,1), -webkit-transform 300ms cubic-bezier(0.4,0.0,0.2,1);
-  -webkit-transition: opacity 90ms cubic-bezier(0.4,0.0,1,1), transform 300ms cubic-bezier(0.4,0.0,0.2,1);
-  transition: opacity 90ms cubic-bezier(0.4,0.0,1,1), transform 300ms cubic-bezier(0.4,0.0,0.2,1);
 }
 
 .c0:focus {
@@ -122,10 +116,17 @@ describe('Button component', () => {
 }
 
 .c0[data-transition='out'] {
-  opacity: 0;
-  -webkit-transform: scale(10);
-  -ms-transform: scale(10);
-  transform: scale(10);
+  -webkit-transform-origin: top right;
+  -ms-transform-origin: top right;
+  transform-origin: top right;
+  -webkit-animation-duration: 300ms;
+  animation-duration: 300ms;
+  -webkit-animation-fill-mode: forwards;
+  animation-fill-mode: forwards;
+  -webkit-animation-name: dnyzVB,iVskkp;
+  animation-name: dnyzVB,iVskkp;
+  -webkit-animation-timing-function: cubic-bezier(0.0,0.0,0.2,1);
+  animation-timing-function: cubic-bezier(0.0,0.0,0.2,1);
 }
 
 .c0[data-loading='true'] {

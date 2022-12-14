@@ -125,6 +125,50 @@ export const dimension = {
 };
 
 export const animation = {
+  // For opening menu / search box
+  toggleIn: {
+    // Duration and keyframes follow the "Container Transform" spec of Material Design 2 (https://m2.material.io/design/motion/the-motion-system.html#container-transform)
+    // Easing is replaced with deceleration because the original spec makes animation look mechine-ish
+    duration: '300ms',
+    easing: 'cubic-bezier(0.0, 0.0, 0.2, 1)', // Decelerated easing in Material Design 2 (https://m2.material.io/design/motion/speed.html#easing)
+    origin: 'top right',
+    button: {
+      opacity: keyframes`
+        30% { /* mocking 90ms duration */
+          opacity: 0; 
+        }
+        100% {
+          opacity: 0;
+        }
+      `,
+      scale: keyframes`
+        100% {
+          transform: scale(4); /* manually adjusted to make it look seamless */
+        }
+      `,
+      fillMode: 'forwards',
+    },
+    popup: {
+      opacity: keyframes`
+        0%,
+        30% { /* mocking 90ms delay */
+          opacity: 0;
+        }
+        100% {
+          opacity: 1;
+        }
+      `,
+      scale: keyframes`
+        0% {
+          transform: scale(0);
+        }
+        100% {
+          transform: scale(1);
+        }
+      `,
+      fillMode: 'backwards',
+    },
+  },
   fadeIn: keyframes`
     from {
       opacity: 0;
@@ -151,14 +195,6 @@ export const animation = {
     100% {
       opacity: 1;
     }    
-  `,
-  searchBox: keyframes`
-    0% {
-      transform: scale(0);
-    }
-    100% {
-      transform: scale(1);
-    }
   `,
   'ripple 100': keyframes`
     to {
@@ -187,7 +223,7 @@ export const easing = {
   decelerate: 'cubic-bezier(0.0, 0.0, 0.2, 1)',
   linear: 'linear',
   standard: 'cubic-bezier(0.4, 0.0, 0.2, 1)',
-};
+}; // source: https://m2.material.io/design/motion/speed.html#easing
 
 export const buttonCircle = {
   clickableArea: dimension.button['minimum target size 100'],

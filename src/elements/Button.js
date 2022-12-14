@@ -126,13 +126,14 @@ const animateTransitionIn = css`
   animation-fill-mode: backwards;
 `;
 
-const animateTransitionOut = `
-  transform-origin: top right;
-  transition: opacity 90ms ${easing.accelerate},
-    transform 300ms ${easing.standard};
+const animateTransitionOut = css`
   &[data-transition='out'] {
-    opacity: 0;
-    transform: scale(10);
+    transform-origin: ${animation.toggleIn.origin};
+    animation-duration: ${animation.toggleIn.duration};
+    animation-fill-mode: ${animation.toggleIn.button.fillMode};
+    animation-name: ${animation.toggleIn.button.opacity},
+      ${animation.toggleIn.button.scale};
+    animation-timing-function: ${animation.toggleIn.easing};
   }
 `;
 
