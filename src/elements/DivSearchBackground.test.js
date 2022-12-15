@@ -31,14 +31,12 @@ describe('DivSearchBackground component', () => {
   position: absolute;
   right: var(--popup-margin);
   top: var(--popup-margin);
-  z-index: 4;
 }
 
 .c0 div[id="searchbox"],
 .c0 ul[aria-label="Autocomplete suggestions"] {
   margin: 0 auto;
   width: calc(100% - var(--popup-margin) * 2);
-  z-index: 3;
 }
 
 .c0 div[id="searchbox"] {

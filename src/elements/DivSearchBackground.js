@@ -23,13 +23,11 @@ const positionComponents = `
     position: absolute;
     right: var(--popup-margin);
     top:  var(--popup-margin);
-    z-index: ${zIndex.closeButton};  
   }
   & div[id="searchbox"],
   & ul[aria-label="${searchBoxLabel.listbox}"] {
     margin: 0 auto; 
     width: calc(100% - var(--popup-margin) * 2) ;
-    z-index: ${zIndex.divSearch};      
   }
   & div[id="searchbox"] {
     margin-top: calc(${buttonCircle.clickableArea} + var(--popup-margin) * 2);
