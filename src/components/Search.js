@@ -89,9 +89,9 @@ export const Search = () => {
         <Button
           aria-expanded="false"
           aria-label={buttonLabel.search}
+          data-closing={ui.searchButton === 'closing'}
           data-position="top-right"
           data-testid="search-button"
-          data-transition={ui.searchButton === 'closing' ? 'out' : null}
           onClick={handleClickSearchButton}
           onFocus={importSearchBox}
           onMouseEnter={importSearchBox}
@@ -104,7 +104,7 @@ export const Search = () => {
       {ui.searchBox !== 'closed' ? (
         <FocusLock>
           <DivSearchBackground
-            data-closing={ui.searchBox === 'closing' ? 'true' : null}
+            data-closing={ui.searchBox === 'closing'}
             data-testid="div-search-background"
           >
             <CloseButton

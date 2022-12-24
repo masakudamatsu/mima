@@ -119,7 +119,7 @@ describe('Button component', () => {
   stroke: none;
 }
 
-.c0[data-transition='out'] {
+.c0[data-closing='true'] {
   -webkit-transform-origin: top right;
   -ms-transform-origin: top right;
   transform-origin: top right;
@@ -146,7 +146,7 @@ describe('Button component', () => {
 }
 
 @media (prefers-reduced-motion:reduce) {
-  .c0[data-transition='out'] {
+  .c0[data-closing='true'] {
     -webkit-animation-name: dnyzVB;
     animation-name: dnyzVB;
   }

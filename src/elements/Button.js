@@ -133,7 +133,7 @@ const animateTransitionIn = css`
 `;
 
 const animateTransitionOut = css`
-  &[data-transition='out'] {
+  &[data-closing='true'] {
     transform-origin: ${animation.toggleIn.origin};
     animation-duration: ${animation.toggleIn.duration};
     animation-fill-mode: ${animation.toggleIn.button.fillMode};
