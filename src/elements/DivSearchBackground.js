@@ -9,7 +9,7 @@ const placeOverMap = `
   z-index: ${zIndex.divSearchBackground};
 `;
 
-const setBackground = stylePopupBackground();
+const setBackground = stylePopupBackground({withEdges: true});
 
 const setSize = `
   height: 100%;
