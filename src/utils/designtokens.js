@@ -178,8 +178,7 @@ export const animation = {
     origin: null,
     button: {
       opacity: keyframes`
-        0%,
-        30% { /* mocking 90ms delay */
+        0% {
           opacity: 0; 
         }
         100% {
@@ -187,8 +186,7 @@ export const animation = {
         }
       `,
       scale: keyframes`
-        0%,
-        30% { /* mocking 90ms delay */
+        0% { 
           transform: scale(0.92); 
         }
         100% {
@@ -202,7 +200,6 @@ export const animation = {
         0% {
           opacity: 1;
         }
-        30%, /* mocking 90ms duration */
         100% { 
           opacity: 0;
         }
