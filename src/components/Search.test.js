@@ -5,7 +5,6 @@ import {axe} from 'jest-axe';
 
 import {Search} from './Search';
 import {buttonLabel} from 'src/utils/uiCopies';
-import {duration} from 'src/utils/designtokens';
 
 import {PlaceIdProvider} from 'src/wrappers/PlaceIdContext';
 import {mockPlacesApi} from 'src/utils/mockFunfctions';
@@ -47,24 +46,6 @@ describe('Once the search button is pressed...', () => {
     expect(
       screen.getByRole('button', {name: buttonLabel.closeSearchbox}),
     ).toHaveAttribute('aria-expanded', 'true');
-  });
-  test(`sets 'data-closing' attribute to be 'true' after close button is clicked`, () => {
-    userEvent.click(
-      screen.getByRole('button', {name: buttonLabel.closeSearchbox}),
-    );
-    expect(screen.getByTestId('div-search-background')).toHaveAttribute(
-      'data-closing',
-      'true',
-    );
-  });
-  test(`gets dismounted ${duration.modal.exit}ms after clicking close button`, async () => {
-    userEvent.click(
-      screen.getByRole('button', {name: buttonLabel.closeSearchbox}),
-    );
-    await waitFor(() => {
-      jest.advanceTimersByTime(duration.modal.exit);
-    });
-    expect(screen.queryByTestId('cloud-background')).not.toBeInTheDocument();
   });
 });
 
