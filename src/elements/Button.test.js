@@ -30,8 +30,8 @@ describe('Button component', () => {
   animation-duration: 300ms;
   -webkit-animation-fill-mode: backwards;
   animation-fill-mode: backwards;
-  -webkit-animation-name: lbWRkT,eEZLiW;
-  animation-name: lbWRkT,eEZLiW;
+  -webkit-animation-name: lbWRkT;
+  animation-name: lbWRkT;
   -webkit-animation-timing-function: cubic-bezier(0.0,0.0,0.2,1);
   animation-timing-function: cubic-bezier(0.0,0.0,0.2,1);
 }

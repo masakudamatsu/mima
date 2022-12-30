@@ -185,14 +185,6 @@ export const animation = {
           opacity: 1;
         }
       `,
-      scale: keyframes`
-        0% { 
-          transform: scale(0.92); 
-        }
-        100% {
-          transform: scale(1);
-        }
-      `,
       fillMode: 'backwards',
     },
     popup: {
