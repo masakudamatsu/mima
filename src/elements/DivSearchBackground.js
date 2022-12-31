@@ -49,6 +49,22 @@ const animateTransitionIn = css`
   }
 `;
 
+const revealMapBeneath = `
+  &[data-closing='true'] {
+    color: black;
+    mix-blend-mode: lighten;
+  }
+  &[data-closing='true'] [id="ripple"] {
+    background-color: currentColor;
+  }
+`;
+
+const containRippleWithin = `
+  &[data-closing='true'] {
+    overflow: hidden;
+  }
+`; // Without this, the overflown ripple will render scroll bars, causing the layout shift temporarily
+
 const animateTransitionOut = css`
   &[data-closing='true'] {
     animation-duration: ${animation.toggleOut.duration};
@@ -65,4 +81,6 @@ export const DivSearchBackground = styled.div`
   ${positionComponents}
   ${animateTransitionIn}
   ${animateTransitionOut}
+  ${revealMapBeneath}
+  ${containRippleWithin}
 `;

@@ -171,10 +171,8 @@ export const animation = {
   },
   // For closing menu / search box
   toggleOut: {
-    // Duration and keyframes follow the "Fade Through" spec of Material Design 2 (https://m2.material.io/design/motion/the-motion-system.html#fade-through)
-    // Easing is replaced with deceleration because the original spec makes animation look mechine-ish
-    duration: '300ms',
-    easing: 'cubic-bezier(0.0, 0.0, 0.2, 1)', // Decelerated easing in Material Design 2 (https://m2.material.io/design/motion/speed.html#easing)
+    duration: '300ms', // Complex animation requires longer duration while long duration will increase "time to interactive" for cloud buttons
+    easing: 'linear', // Decelerated easing would make the ripple-erasing effect less noticeable
     origin: null,
     button: {
       opacity: keyframes`
@@ -189,7 +187,7 @@ export const animation = {
     },
     popup: {
       opacity: keyframes`
-        0% {
+        0% { 
           opacity: 1;
         }
         100% { 
@@ -198,6 +196,17 @@ export const animation = {
       `,
       scale: null,
       fillMode: 'forwards',
+    },
+    ripple: {
+      scale: keyframes`
+        from {
+          transform: scale(0);
+        }
+        to {
+          transform: scale(1);
+        }
+      `,
+      fillMode: 'backwards',
     },
   },
   fadeIn: keyframes`

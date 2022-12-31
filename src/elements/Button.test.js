@@ -32,8 +32,8 @@ describe('Button component', () => {
   animation-fill-mode: backwards;
   -webkit-animation-name: lbWRkT;
   animation-name: lbWRkT;
-  -webkit-animation-timing-function: cubic-bezier(0.0,0.0,0.2,1);
-  animation-timing-function: cubic-bezier(0.0,0.0,0.2,1);
+  -webkit-animation-timing-function: linear;
+  animation-timing-function: linear;
 }
 
 .c0:focus {

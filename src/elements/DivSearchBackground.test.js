@@ -55,8 +55,21 @@ describe('DivSearchBackground component', () => {
   animation-name: gHmQJP;
   -webkit-animation-fill-mode: forwards;
   animation-fill-mode: forwards;
-  -webkit-animation-timing-function: cubic-bezier(0.0,0.0,0.2,1);
-  animation-timing-function: cubic-bezier(0.0,0.0,0.2,1);
+  -webkit-animation-timing-function: linear;
+  animation-timing-function: linear;
+}
+
+.c0[data-closing='true'] {
+  color: black;
+  mix-blend-mode: lighten;
+}
+
+.c0[data-closing='true'] [id="ripple"] {
+  background-color: currentColor;
+}
+
+.c0[data-closing='true'] {
+  overflow: hidden;
 }
 
 @supports (-webkit-backdrop-filter:blur(var(--blur-radius))) or (backdrop-filter:blur(var(--blur-radius))) {

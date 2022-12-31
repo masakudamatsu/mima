@@ -4,6 +4,7 @@ import FocusLock from 'react-focus-lock';
 
 import {CloseButton} from './CloseButton';
 import {Button} from 'src/elements/Button';
+import {SpanRipple} from 'src/elements/SpanRipple';
 import {SvgCloud} from 'src/elements/SvgCloud';
 
 import {DivSearchBackground} from 'src/elements/DivSearchBackground';
@@ -35,11 +36,18 @@ export const Search = () => {
   };
 
   // Close search box by pressing close button
-  const handleClickCloseButton = () => {
+  const handleClickCloseButton = ({
+    rippleDiameter,
+    ripplePositionLeft,
+    ripplePositionTop,
+  }) => {
     closeButtonPressed.current = true;
     setUi({
       searchButton: 'opening',
       searchBox: 'closing',
+      rippleDiameter,
+      ripplePositionLeft,
+      ripplePositionTop,
     });
   };
   // Close search box by selecting an autocomplete suggestion
@@ -114,6 +122,17 @@ export const Search = () => {
               testId="searchbox-last-focusable-element" // to test focus management
             />
             <SearchBox closeSearchBox={closeSearchBox} id="searchbox" />
+            {ui.searchBox === 'closing' ? (
+              <SpanRipple
+                id="ripple"
+                style={{
+                  height: ui.rippleDiameter,
+                  left: ui.ripplePositionLeft,
+                  top: ui.ripplePositionTop,
+                  width: ui.rippleDiameter,
+                }}
+              />
+            ) : null}
           </DivSearchBackground>
         </FocusLock>
       ) : null}

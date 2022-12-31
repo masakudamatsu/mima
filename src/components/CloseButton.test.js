@@ -14,6 +14,14 @@ const mockProps = {
   handleClick: jest.fn().mockName('handleClick'),
 };
 
+// Mock offsetParent
+// source: https://github.com/jsdom/jsdom/issues/1261#issuecomment-362928131
+Object.defineProperty(HTMLElement.prototype, 'offsetParent', {
+  get() {
+    return this.parentNode;
+  },
+});
+
 describe(`Clicking the button`, () => {
   beforeEach(() => {
     render(<CloseButton {...mockProps} />);
