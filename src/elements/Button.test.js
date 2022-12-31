@@ -139,13 +139,6 @@ describe('Button component', () => {
 }
 
 @media (prefers-reduced-motion:reduce) {
-  .c0 {
-    -webkit-animation-name: lbWRkT;
-    animation-name: lbWRkT;
-  }
-}
-
-@media (prefers-reduced-motion:reduce) {
   .c0[data-closing='true'] {
     -webkit-animation-name: dnyzVB;
     animation-name: dnyzVB;
