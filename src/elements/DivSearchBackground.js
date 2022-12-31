@@ -71,6 +71,10 @@ const animateTransitionOut = css`
     animation-name: ${animation.toggleOut.popup.opacity};
     animation-fill-mode: ${animation.toggleOut.popup.fillMode};
     animation-timing-function: ${animation.toggleOut.easing};
+    @media (prefers-reduced-motion: reduce) {
+      animation-duration: ${animation.toggleOut.reducedMotion.duration};
+      animation-name: ${animation.toggleOut.reducedMotion.popup.opacity};
+    }
   }
 `;
 

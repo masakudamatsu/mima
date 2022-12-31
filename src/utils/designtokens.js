@@ -208,6 +208,19 @@ export const animation = {
       `,
       fillMode: 'backwards',
     },
+    reducedMotion: {
+      duration: '250ms', // no reason to delay the end of animation for the ripple effect to be noticeable
+      popup: {
+        opacity: keyframes`
+          0% { /* no reason to delay the beginning of animation for the ripple effect to be noticeable */
+            opacity: 1;
+          }
+          100% { 
+            opacity: 0;
+          }
+        `,
+      },
+    },
   },
   fadeIn: keyframes`
     from {

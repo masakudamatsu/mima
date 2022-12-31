@@ -121,6 +121,15 @@ describe('DivSearchBackground component', () => {
   }
 }
 
+@media (prefers-reduced-motion:reduce) {
+  .c0[data-closing='true'] {
+    -webkit-animation-duration: 250ms;
+    animation-duration: 250ms;
+    -webkit-animation-name: gHmQJP;
+    animation-name: gHmQJP;
+  }
+}
+
 <div>
   <div
     class="c0"

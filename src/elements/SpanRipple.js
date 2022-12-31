@@ -6,6 +6,11 @@ const animateRipple = css`
   animation-fill-mode: ${animation.toggleOut.ripple.fillMode};
   animation-name: ${animation.toggleOut.ripple.scale};
   animation-timing-function: ${animation.toggleOut.easing};
+  @media (prefers-reduced-motion: reduce) {
+    animation-duration: ${animation.toggleOut.reducedMotion.duration};
+    animation-name: none;
+    transform: scale(0);
+  }
 `;
 
 const shapeRipple = `

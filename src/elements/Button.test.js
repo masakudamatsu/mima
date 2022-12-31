@@ -139,6 +139,13 @@ describe('Button component', () => {
 }
 
 @media (prefers-reduced-motion:reduce) {
+  .c0 {
+    -webkit-animation-duration: 250ms;
+    animation-duration: 250ms;
+  }
+}
+
+@media (prefers-reduced-motion:reduce) {
   .c0[data-closing='true'] {
     -webkit-animation-name: dnyzVB;
     animation-name: dnyzVB;

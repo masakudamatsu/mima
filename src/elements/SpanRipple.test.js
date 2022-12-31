@@ -19,6 +19,18 @@ describe('SpanRipple component', () => {
   animation-timing-function: linear;
 }
 
+@media (prefers-reduced-motion:reduce) {
+  .c0 {
+    -webkit-animation-duration: 250ms;
+    animation-duration: 250ms;
+    -webkit-animation-name: none;
+    animation-name: none;
+    -webkit-transform: scale(0);
+    -ms-transform: scale(0);
+    transform: scale(0);
+  }
+}
+
 <div>
   <span
     class="c0"

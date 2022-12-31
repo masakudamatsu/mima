@@ -126,6 +126,9 @@ const animateTransitionIn = css`
   animation-fill-mode: ${animation.toggleOut.button.fillMode};
   animation-name: ${animation.toggleOut.button.opacity};
   animation-timing-function: ${animation.toggleOut.easing};
+  @media (prefers-reduced-motion: reduce) {
+    animation-duration: ${animation.toggleOut.reducedMotion.duration};
+  }
 `;
 
 const animateTransitionOut = css`
