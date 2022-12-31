@@ -4,9 +4,6 @@ import userEvent from '@testing-library/user-event';
 import {axe} from 'jest-axe';
 
 import {CloseButton} from './CloseButton';
-import {createRipple as mockCreateRipple} from 'src/utils/createRipple';
-
-jest.mock('src/utils/createRipple');
 
 beforeEach(() => {
   jest.clearAllMocks();
@@ -24,9 +21,6 @@ describe(`Clicking the button`, () => {
   });
   test(`calls a function specified with handleClick prop`, () => {
     expect(mockProps.handleClick).toHaveBeenCalledTimes(1);
-  });
-  test(`calls createRipple()`, () => {
-    expect(mockCreateRipple).toHaveBeenCalledTimes(1);
   });
 });
 

@@ -2,7 +2,6 @@ import {forwardRef, useImperativeHandle, useRef} from 'react';
 import PropTypes from 'prop-types';
 
 import {ButtonCircle} from 'src/elements/ButtonCircle';
-import {createRipple} from 'src/utils/createRipple';
 
 // TODO #201:
 // 2. Reuse this component in MenuButton
@@ -13,16 +12,8 @@ export const CloseButton = forwardRef(function CloseButton(
   const buttonElement = useRef();
   const focusButton = () => buttonElement.current.focus();
   useImperativeHandle(ref, () => ({focusButton}));
-  const clickHandler = event => {
-    createRipple(event);
+  const clickHandler = () => {
     handleClick();
-  };
-  const keydownHandler = event => {
-    if (event.key === 'Enter') {
-      event.preventDefault(); // otherwise click event will be fired as well
-      createRipple(event);
-      handleClick();
-    }
   };
 
   return (
@@ -32,7 +23,6 @@ export const CloseButton = forwardRef(function CloseButton(
         aria-label={ariaLabel}
         data-testid={testId}
         onClick={clickHandler}
-        onKeyDown={keydownHandler}
         ref={buttonElement}
         type="button"
       >

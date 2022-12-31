@@ -30,7 +30,6 @@ describe('ButtonCircle component', () => {
   top: 5px;
   z-index: 4;
   -webkit-tap-highlight-color: transparent;
-  overflow: hidden;
 }
 
 .c0 svg {
@@ -58,17 +57,6 @@ describe('ButtonCircle component', () => {
 
 .c0:focus:not(:focus-visible) svg {
   fill: var(--button-label-color-default);
-}
-
-.c0 .ripple {
-  -webkit-animation: ePEfzm 600ms linear;
-  animation: ePEfzm 600ms linear;
-  background-color: var(--ripple-color);
-  border-radius: 50%;
-  position: absolute;
-  -webkit-transform: scale(0);
-  -ms-transform: scale(0);
-  transform: scale(0);
 }
 
 <div>
