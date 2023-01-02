@@ -116,8 +116,8 @@ describe('DivSearchBackground component', () => {
 
 @media (prefers-reduced-motion:reduce) {
   .c0 {
-    -webkit-animation-name: iYejkx;
-    animation-name: iYejkx;
+    -webkit-animation-name: lbWRkT;
+    animation-name: lbWRkT;
   }
 }
 

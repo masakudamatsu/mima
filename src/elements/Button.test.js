@@ -147,8 +147,8 @@ describe('Button component', () => {
 
 @media (prefers-reduced-motion:reduce) {
   .c0[data-closing='true'] {
-    -webkit-animation-name: dnyzVB;
-    animation-name: dnyzVB;
+    -webkit-animation-name: gHmQJP;
+    animation-name: gHmQJP;
   }
 }
 

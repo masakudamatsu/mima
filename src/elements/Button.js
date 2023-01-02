@@ -140,7 +140,7 @@ const animateTransitionOut = css`
       ${animation.toggleIn.button.scale};
     animation-timing-function: ${animation.toggleIn.easing};
     @media (prefers-reduced-motion: reduce) {
-      animation-name: ${animation.toggleIn.button.opacity};
+      animation-name: ${animation.toggleIn.reducedMotion.button.opacity};
     }
   }
 `;

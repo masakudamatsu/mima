@@ -45,7 +45,7 @@ const animateTransitionIn = css`
   animation-timing-function: ${animation.toggleIn.easing};
   transform-origin: ${animation.toggleIn.origin};
   @media (prefers-reduced-motion: reduce) {
-    animation-name: ${animation.toggleIn.popup.opacity};
+    animation-name: ${animation.toggleIn.reducedMotion.popup.opacity};
   }
 `;
 

@@ -168,6 +168,28 @@ export const animation = {
       `,
       fillMode: 'backwards',
     },
+    reducedMotion: {
+      button: {
+        opacity: keyframes`
+          0% { 
+            opacity: 1;
+          }
+          100% { /* no reason to finish animation early */
+            opacity: 0;
+          }
+        `,
+      },
+      popup: {
+        opacity: keyframes`
+          0% { /* no reason to delay the beginning of animation */
+            opacity: 0;
+          }
+          100% { 
+            opacity: 1;
+          }
+        `,
+      },
+    },
   },
   // For closing menu / search box
   toggleOut: {
