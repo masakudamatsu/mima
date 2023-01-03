@@ -145,6 +145,10 @@ const animateTransitionOut = css`
   }
 `;
 
+const removeTapHighlight = `
+  -webkit-tap-highlight-color: transparent;
+`;
+
 const blinkButton = css`
   &[data-loading='true'] {
     animation: ${animation.flashing} ${duration.flashing} ${easing.linear}
@@ -164,5 +168,6 @@ export const Button = styled.button`
   ${setButtonShadow}
   ${animateTransitionIn}
   ${animateTransitionOut}
+  ${removeTapHighlight}
   ${blinkButton}
 `;

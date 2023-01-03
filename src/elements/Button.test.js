@@ -34,6 +34,7 @@ describe('Button component', () => {
   animation-name: lbWRkT;
   -webkit-animation-timing-function: linear;
   animation-timing-function: linear;
+  -webkit-tap-highlight-color: transparent;
 }
 
 .c0:focus {
