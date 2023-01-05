@@ -9,11 +9,27 @@ const placeOverMap = `
   z-index: ${zIndex.divSearchBackground};
 `;
 
+const minPopupWidth = 365;
+// to ensure 27 characters in the search box
+// see Nielsen (2002): https://www.nngroup.com/articles/top-ten-guidelines-for-homepage-usability/
+// TODO: Recalbriate once the font style is finalized
+const widthRatio = {
+  map: 67,
+  popup: 33,
+};
+// to ensure the popup will occupy at least one-third of the screen
+// for aesthestically pleasing effects (the rule of the third)
+const breakpoint = Math.round(
+  (minPopupWidth / widthRatio.popup) * (widthRatio.map + widthRatio.popup),
+);
 const setOuterSize = `
   bottom: 0;
   left: 0;
   right: 0;
   top: 0;
+  @media (min-width: ${breakpoint}px) {
+    left: calc(${widthRatio.map}%);
+  }
 `;
 
 const setBackground = stylePopupBackground({withEdges: true});
@@ -24,6 +40,9 @@ const setInnerSize = `
   position: absolute;
   right: 0;
   top: 0;
+  @media (min-width: ${breakpoint}px) {
+    left: calc(var(--blur-radius) * 2);
+  }
 `;
 
 const positionComponents = `

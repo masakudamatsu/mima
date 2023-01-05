@@ -125,6 +125,12 @@ describe('DivSearchBackground component', () => {
   }
 }
 
+@media (min-width:1106px) {
+  .c1 {
+    left: calc(var(--blur-radius) * 2);
+  }
+}
+
 @media (prefers-reduced-motion:reduce) {
   .c1 {
     -webkit-animation-name: lbWRkT;
@@ -138,6 +144,12 @@ describe('DivSearchBackground component', () => {
     animation-duration: 250ms;
     -webkit-animation-name: gHmQJP;
     animation-name: gHmQJP;
+  }
+}
+
+@media (min-width:1106px) {
+  .c0 {
+    left: calc(67%);
   }
 }
 
