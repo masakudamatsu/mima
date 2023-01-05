@@ -9,11 +9,21 @@ const placeOverMap = `
   z-index: ${zIndex.divSearchBackground};
 `;
 
+const setOuterSize = `
+  bottom: 0;
+  left: 0;
+  right: 0;
+  top: 0;
+`;
+
 const setBackground = stylePopupBackground({withEdges: true});
 
-const setSize = `
-  height: 100%;
-  width: 100%;
+const setInnerSize = `
+  bottom: 0;
+  left: 0;
+  position: absolute;
+  right: 0;
+  top: 0;
 `;
 
 const positionComponents = `
@@ -60,9 +70,7 @@ const revealMapBeneath = `
 `;
 
 const containRippleWithin = `
-  &[data-closing='true'] {
-    overflow: hidden;
-  }
+  overflow: hidden;
 `; // Without this, the overflown ripple will render scroll bars, causing the layout shift temporarily
 
 const animateTransitionOut = css`
@@ -79,12 +87,16 @@ const animateTransitionOut = css`
 `;
 
 export const DivSearchBackground = styled.div`
-  ${placeOverMap}
   ${setBackground}
-  ${setSize}
+  ${setInnerSize}
   ${positionComponents}
   ${animateTransitionIn}
   ${animateTransitionOut}
+`;
+
+DivSearchBackground.Wrapper = styled.div`
+  ${placeOverMap}
+  ${setOuterSize}
   ${revealMapBeneath}
   ${containRippleWithin}
 `;

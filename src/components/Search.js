@@ -111,17 +111,21 @@ export const Search = () => {
       ) : null}
       {ui.searchBox !== 'closed' ? (
         <FocusLock>
-          <DivSearchBackground
+          <DivSearchBackground.Wrapper
             data-closing={ui.searchBox === 'closing'}
-            data-testid="div-search-background"
           >
-            <CloseButton
-              ariaExpanded="true"
-              ariaLabel={buttonLabel.closeSearchbox}
-              handleClick={handleClickCloseButton}
-              testId="searchbox-last-focusable-element" // to test focus management
-            />
-            <SearchBox closeSearchBox={closeSearchBox} id="searchbox" />
+            <DivSearchBackground
+              data-closing={ui.searchBox === 'closing'}
+              data-testid="div-search-background"
+            >
+              <CloseButton
+                ariaExpanded="true"
+                ariaLabel={buttonLabel.closeSearchbox}
+                handleClick={handleClickCloseButton}
+                testId="searchbox-last-focusable-element" // to test focus management
+              />
+              <SearchBox closeSearchBox={closeSearchBox} id="searchbox" />
+            </DivSearchBackground>
             {ui.searchBox === 'closing' ? (
               <SpanRipple
                 id="ripple"
@@ -133,7 +137,7 @@ export const Search = () => {
                 }}
               />
             ) : null}
-          </DivSearchBackground>
+          </DivSearchBackground.Wrapper>
         </FocusLock>
       ) : null}
     </form>

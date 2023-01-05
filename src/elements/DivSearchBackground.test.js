@@ -4,16 +4,21 @@ import {DivSearchBackground} from './DivSearchBackground';
 
 describe('DivSearchBackground component', () => {
   test('renders the UI correctly', () => {
-    const {container} = render(<DivSearchBackground />);
+    const {container} = render(
+      <DivSearchBackground.Wrapper>
+        <DivSearchBackground />
+      </DivSearchBackground.Wrapper>,
+    );
     expect(container).toMatchInlineSnapshot(`
-.c0 {
-  position: absolute;
-  z-index: 2;
+.c1 {
   --blur-radius: 8px;
   background-color: var(--popup-background-color-fallback);
   box-shadow: 0px 0px var(--blur-radius) var(--blur-radius) var(--popup-glow-color-fallback);
-  height: 100%;
-  width: 100%;
+  bottom: 0;
+  left: 0;
+  position: absolute;
+  right: 0;
+  top: 0;
   --popup-margin: 8px;
   -webkit-animation-duration: 300ms;
   animation-duration: 300ms;
@@ -28,27 +33,27 @@ describe('DivSearchBackground component', () => {
   transform-origin: top right;
 }
 
-.c0 button[aria-label="Close search box"] {
+.c1 button[aria-label="Close search box"] {
   position: absolute;
   right: var(--popup-margin);
   top: var(--popup-margin);
 }
 
-.c0 div[id="searchbox"],
-.c0 ul[aria-label="Autocomplete suggestions"] {
+.c1 div[id="searchbox"],
+.c1 ul[aria-label="Autocomplete suggestions"] {
   margin: 0 auto;
   width: calc(100% - var(--popup-margin) * 2);
 }
 
-.c0 div[id="searchbox"] {
+.c1 div[id="searchbox"] {
   margin-top: calc(48px + var(--popup-margin) * 2);
 }
 
-.c0 ul[aria-label="Autocomplete suggestions"] {
+.c1 ul[aria-label="Autocomplete suggestions"] {
   margin-top: 8px;
 }
 
-.c0[data-closing='true'] {
+.c1[data-closing='true'] {
   -webkit-animation-duration: 300ms;
   animation-duration: 300ms;
   -webkit-animation-name: gHmQJP;
@@ -57,6 +62,16 @@ describe('DivSearchBackground component', () => {
   animation-fill-mode: forwards;
   -webkit-animation-timing-function: linear;
   animation-timing-function: linear;
+}
+
+.c0 {
+  position: absolute;
+  z-index: 2;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  top: 0;
+  overflow: hidden;
 }
 
 .c0[data-closing='true'] {
@@ -68,12 +83,8 @@ describe('DivSearchBackground component', () => {
   background-color: currentColor;
 }
 
-.c0[data-closing='true'] {
-  overflow: hidden;
-}
-
 @supports (-webkit-backdrop-filter:blur(var(--blur-radius))) or (backdrop-filter:blur(var(--blur-radius))) {
-  .c0 {
+  .c1 {
     background-color: var(--popup-background-color);
     -webkit-backdrop-filter: blur(var(--blur-radius));
     backdrop-filter: blur(var(--blur-radius));
@@ -82,12 +93,12 @@ describe('DivSearchBackground component', () => {
 }
 
 @supports (background-image:-moz-element(#map)) and (not (backdrop-filter:blur(var(--blur-radius)))) {
-  .c0 {
+  .c1 {
     background-color: transparent;
     box-shadow: none;
   }
 
-  .c0::before {
+  .c1::before {
     background-attachment: fixed;
     background-image: -moz-element(#map);
     content: "";
@@ -101,7 +112,7 @@ describe('DivSearchBackground component', () => {
     z-index: -2;
   }
 
-  .c0::after {
+  .c1::after {
     background-color: var(--popup-background-color);
     box-shadow: 0px 0px var(--blur-radius) var(--blur-radius) var(--popup-glow-color);
     content: "";
@@ -115,14 +126,14 @@ describe('DivSearchBackground component', () => {
 }
 
 @media (prefers-reduced-motion:reduce) {
-  .c0 {
+  .c1 {
     -webkit-animation-name: lbWRkT;
     animation-name: lbWRkT;
   }
 }
 
 @media (prefers-reduced-motion:reduce) {
-  .c0[data-closing='true'] {
+  .c1[data-closing='true'] {
     -webkit-animation-duration: 250ms;
     animation-duration: 250ms;
     -webkit-animation-name: gHmQJP;
@@ -133,7 +144,11 @@ describe('DivSearchBackground component', () => {
 <div>
   <div
     class="c0"
-  />
+  >
+    <div
+      class="c1"
+    />
+  </div>
 </div>
 `);
   });
