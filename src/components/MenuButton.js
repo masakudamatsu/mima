@@ -1,12 +1,15 @@
 import {useState} from 'react';
 import PropTypes from 'prop-types';
 import {useUser} from '@auth0/nextjs-auth0';
+import FocusLock from 'react-focus-lock';
 
 import {useOnEscKeyDown} from 'src/hooks/useOnEscKeyDown';
 
-import {ModalPopup} from 'src/components/ModalPopup';
 import {Button} from 'src/elements/Button';
 import {ButtonCircle} from 'src/elements/ButtonCircle';
+import {DivDialog} from 'src/elements/DivDialog';
+import {DivScrim} from 'src/elements/DivScrim';
+import {DivPopup} from 'src/elements/DivPopup';
 import {Heading} from 'src/elements/Heading';
 import {ListMenu} from 'src/elements/ListMenu';
 import {ParagraphMenu} from 'src/elements/ParagraphMenu';
@@ -72,91 +75,100 @@ export const MenuButton = ({
       >
         <SvgCloud icon="menu" />
       </Button>
-      <ModalPopup
-        hidden={menu === 'closed'}
-        slideFrom="left"
-        titleId="menu-label"
-      >
-        <Heading as="h2" id="menu-label">
-          {menuLabel}
-        </Heading>
-        <ButtonCircle
-          data-autofocus
-          data-testid="close-button-menu"
-          onClick={handleClickCloseButton}
-          type="button"
+      <FocusLock disabled={menu === 'closed'} returnFocus>
+        <DivDialog
+          role="dialog"
+          aria-labelledby="menu-label"
+          aria-hidden={menu === 'closed'}
         >
-          <SvgClose title={buttonLabel.close} />
-        </ButtonCircle>
-        <ParagraphMenu>
-          {isLoading
-            ? 'Loading...'
-            : error || !user
-            ? 'Failed to fetch your user info'
-            : `Logged in with ${user.email}`}
-        </ParagraphMenu>
-        <ListMenu>
-          <li>
-            <a href="/api/auth/logout">
-              <SvgLogout aria-hidden="true" /> {buttonLabel.logout}
-            </a>
-          </li>
-          <li>
-            <button>
-              <SvgSearch aria-hidden="true" /> {buttonLabel.search}
-            </button>
-          </li>
-          <li>
-            {!watchID ? (
-              <button type="button" onClick={handleClickFlightTakeoff}>
-                <SvgFlightTakeoff aria-hidden="true" />{' '}
-                {buttonLabel.locator.default}
-              </button>
-            ) : (
-              <button type="button" onClick={handleClickFlightFlying}>
-                <SvgFlightFlying aria-hidden="true" />
-                {buttonLabel.locator.activated}
-              </button>
-            )}
-          </li>
-          <li>
-            <button
+          <DivScrim />
+          <DivPopup
+            data-hidden={menu === 'closed'}
+            data-slide-from="left"
+            role="document"
+          >
+            <Heading as="h2" id="menu-label">
+              {menuLabel}
+            </Heading>
+            <ButtonCircle
+              data-autofocus
+              data-testid="close-button-menu"
+              onClick={handleClickCloseButton}
               type="button"
-              disabled={!watchID}
-              onClick={handleClickFlightLanding}
             >
-              <SvgFlightLanding aria-hidden="true" />{' '}
-              {buttonLabel.locator.deactivate}
-            </button>
-          </li>
-          <li>
-            <button>
-              <SvgAdd aria-hidden="true" /> {buttonLabel.save}
-            </button>
-          </li>
-          <li>
-            <a href={process.env.NEXT_PUBLIC_CUSTOMER_PORTAL_URL}>
-              <SvgCreditCard aria-hidden="true" />
-              {buttonLabel.customerPortal.update}
-            </a>
-          </li>
-          <li>
-            <a
-              data-testid="last-focusable-element" // to be used in menu.cy.js for testing focus trap
-              href={process.env.NEXT_PUBLIC_CUSTOMER_PORTAL_URL}
-            >
-              {userStatus === statusType.cancelled ? (
-                <SvgRefresh aria-hidden="true" />
-              ) : (
-                <SvgDeleteForever aria-hidden="true" />
-              )}
-              {userStatus === statusType.cancelled
-                ? buttonLabel.customerPortal.reactivate
-                : buttonLabel.customerPortal.cancel}
-            </a>
-          </li>
-        </ListMenu>
-      </ModalPopup>
+              <SvgClose title={buttonLabel.close} />
+            </ButtonCircle>
+            <ParagraphMenu>
+              {isLoading
+                ? 'Loading...'
+                : error || !user
+                ? 'Failed to fetch your user info'
+                : `Logged in with ${user.email}`}
+            </ParagraphMenu>
+            <ListMenu>
+              <li>
+                <a href="/api/auth/logout">
+                  <SvgLogout aria-hidden="true" /> {buttonLabel.logout}
+                </a>
+              </li>
+              <li>
+                <button>
+                  <SvgSearch aria-hidden="true" /> {buttonLabel.search}
+                </button>
+              </li>
+              <li>
+                {!watchID ? (
+                  <button type="button" onClick={handleClickFlightTakeoff}>
+                    <SvgFlightTakeoff aria-hidden="true" />{' '}
+                    {buttonLabel.locator.default}
+                  </button>
+                ) : (
+                  <button type="button" onClick={handleClickFlightFlying}>
+                    <SvgFlightFlying aria-hidden="true" />
+                    {buttonLabel.locator.activated}
+                  </button>
+                )}
+              </li>
+              <li>
+                <button
+                  type="button"
+                  disabled={!watchID}
+                  onClick={handleClickFlightLanding}
+                >
+                  <SvgFlightLanding aria-hidden="true" />{' '}
+                  {buttonLabel.locator.deactivate}
+                </button>
+              </li>
+              <li>
+                <button>
+                  <SvgAdd aria-hidden="true" /> {buttonLabel.save}
+                </button>
+              </li>
+              <li>
+                <a href={process.env.NEXT_PUBLIC_CUSTOMER_PORTAL_URL}>
+                  <SvgCreditCard aria-hidden="true" />
+                  {buttonLabel.customerPortal.update}
+                </a>
+              </li>
+              <li>
+                <a
+                  data-testid="last-focusable-element" // to be used in menu.cy.js for testing focus trap
+                  href={process.env.NEXT_PUBLIC_CUSTOMER_PORTAL_URL}
+                >
+                  {userStatus === statusType.cancelled ? (
+                    <SvgRefresh aria-hidden="true" />
+                  ) : (
+                    <SvgDeleteForever aria-hidden="true" />
+                  )}
+                  {userStatus === statusType.cancelled
+                    ? buttonLabel.customerPortal.reactivate
+                    : buttonLabel.customerPortal.cancel}
+                </a>
+              </li>
+            </ListMenu>
+          </DivPopup>
+        </DivDialog>
+      </FocusLock>
     </nav>
   );
 };
