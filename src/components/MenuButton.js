@@ -1,4 +1,4 @@
-import {useState} from 'react';
+import {useEffect, useRef, useState} from 'react';
 import PropTypes from 'prop-types';
 import {useUser} from '@auth0/nextjs-auth0';
 import FocusLock from 'react-focus-lock';
@@ -7,7 +7,6 @@ import {useOnEscKeyDown} from 'src/hooks/useOnEscKeyDown';
 
 import {Button} from 'src/elements/Button';
 import {ButtonCircle} from 'src/elements/ButtonCircle';
-import {DivDialog} from 'src/elements/DivDialog';
 import {DivScrim} from 'src/elements/DivScrim';
 import {DivPopup} from 'src/elements/DivPopup';
 import {Heading} from 'src/elements/Heading';
@@ -42,6 +41,14 @@ export const MenuButton = ({
 
   useOnEscKeyDown({state: menu === 'open', handler: closeMenu});
 
+  // Focus the menu button after closing the menu
+  const buttonElement = useRef();
+  useEffect(() => {
+    if (menu === 'closed') {
+      buttonElement.current.focus();
+    }
+  }, [menu]);
+
   const handleClick = () => {
     setMenu('open');
   };
@@ -66,17 +73,19 @@ export const MenuButton = ({
 
   return (
     <nav>
-      <Button
-        aria-label={buttonLabel.menu}
-        data-position="top-left"
-        data-testid="menu-button"
-        onClick={handleClick}
-        type="button"
-      >
-        <SvgCloud icon="menu" />
-      </Button>
-      <FocusLock disabled={menu === 'closed'} returnFocus>
-        <DivDialog aria-hidden={menu === 'closed'}>
+      {menu === 'closed' ? (
+        <Button
+          aria-label={buttonLabel.menu}
+          data-position="top-left"
+          data-testid="menu-button"
+          onClick={handleClick}
+          ref={buttonElement}
+          type="button"
+        >
+          <SvgCloud icon="menu" />
+        </Button>
+      ) : (
+        <FocusLock>
           <DivScrim />
           <DivPopup
             data-hidden={menu === 'closed'}
@@ -164,8 +173,8 @@ export const MenuButton = ({
               </li>
             </ListMenu>
           </DivPopup>
-        </DivDialog>
-      </FocusLock>
+        </FocusLock>
+      )}
     </nav>
   );
 };

@@ -50,7 +50,7 @@ describe('Menu window', () => {
     render(<MenuButton {...mockProps} />, {wrapper: Wrapper.lightMode});
   });
   test('is hidden by default', () => {
-    expect(screen.getByRole('heading', {hidden: true})).not.toBeVisible();
+    expect(screen.queryByRole('heading')).not.toBeInTheDocument();
   });
   test('is shown by clicking menu button', () => {
     userEvent.click(screen.getByRole('button', {name: buttonLabel.menu}));
@@ -63,7 +63,7 @@ describe('Menu window', () => {
   test('is hidden again by clicking close button on menu window', () => {
     userEvent.click(screen.getByRole('button', {name: buttonLabel.menu}));
     userEvent.click(screen.getByRole('button', {name: buttonLabel.close}));
-    expect(screen.getByRole('heading', {hidden: true})).not.toBeVisible();
+    expect(screen.queryByRole('heading')).not.toBeInTheDocument();
   });
   test('is hidden again by clicking Esc button', () => {
     userEvent.click(screen.getByRole('button', {name: buttonLabel.menu}));
@@ -71,7 +71,7 @@ describe('Menu window', () => {
       screen.getByRole('button', {name: buttonLabel.close}),
       '{esc}',
     );
-    expect(screen.getByRole('heading', {hidden: true})).not.toBeVisible();
+    expect(screen.queryByRole('heading')).not.toBeInTheDocument();
   });
 });
 
@@ -90,7 +90,7 @@ describe('Menu window content', () => {
       screen.getByRole('button', {name: buttonLabel.locator.default}),
     );
     expect(mockProps.trackUserLocation).toHaveBeenCalledTimes(1);
-    expect(screen.getByRole('heading', {hidden: true})).not.toBeVisible();
+    expect(screen.queryByRole('heading')).not.toBeInTheDocument();
   });
   it('includes disabled flight landing icon menu', () => {
     expect(
