@@ -76,16 +76,13 @@ export const MenuButton = ({
         <SvgCloud icon="menu" />
       </Button>
       <FocusLock disabled={menu === 'closed'} returnFocus>
-        <DivDialog
-          role="dialog"
-          aria-labelledby="menu-label"
-          aria-hidden={menu === 'closed'}
-        >
+        <DivDialog aria-hidden={menu === 'closed'}>
           <DivScrim />
           <DivPopup
             data-hidden={menu === 'closed'}
             data-slide-from="left"
-            role="document"
+            role="dialog"
+            aria-labelledby="menu-label"
           >
             <Heading as="h2" id="menu-label">
               {menuLabel}
