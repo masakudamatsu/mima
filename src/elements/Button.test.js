@@ -134,6 +134,12 @@ describe('Button component', () => {
   animation-timing-function: cubic-bezier(0.0,0.0,0.2,1);
 }
 
+.c0[data-closing='true'][data-position='top-left'] {
+  -webkit-transform-origin: top left;
+  -ms-transform-origin: top left;
+  transform-origin: top left;
+}
+
 .c0[data-loading='true'] {
   -webkit-animation: bPkxfw 1500ms linear infinite;
   animation: bPkxfw 1500ms linear infinite;

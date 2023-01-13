@@ -143,6 +143,9 @@ const animateTransitionOut = css`
       animation-name: ${animation.toggleIn.reducedMotion.button.opacity};
     }
   }
+  &[data-closing='true'][data-position='top-left'] {
+    transform-origin: top left;
+  }
 `;
 
 const removeTapHighlight = `

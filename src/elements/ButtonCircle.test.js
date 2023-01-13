@@ -25,10 +25,6 @@ describe('ButtonCircle component', () => {
   -webkit-justify-content: center;
   -ms-flex-pack: center;
   justify-content: center;
-  position: absolute;
-  right: 5px;
-  top: 5px;
-  z-index: 4;
   -webkit-tap-highlight-color: transparent;
 }
 

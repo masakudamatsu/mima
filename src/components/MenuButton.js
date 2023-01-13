@@ -5,16 +5,16 @@ import FocusLock from 'react-focus-lock';
 
 import {useOnEscKeyDown} from 'src/hooks/useOnEscKeyDown';
 
+import {CloseButton} from './CloseButton';
+
 import {Button} from 'src/elements/Button';
-import {ButtonCircle} from 'src/elements/ButtonCircle';
-import {DivScrim} from 'src/elements/DivScrim';
-import {DivPopup} from 'src/elements/DivPopup';
+import {DivMenuBackground} from 'src/elements/DivMenuBackground';
 import {Heading} from 'src/elements/Heading';
 import {ListMenu} from 'src/elements/ListMenu';
 import {ParagraphMenu} from 'src/elements/ParagraphMenu';
+import {SpanRipple} from 'src/elements/SpanRipple';
 import {SvgAdd} from 'src/elements/SvgAdd';
 import {SvgCloud} from 'src/elements/SvgCloud';
-import {SvgClose} from 'src/elements/SvgClose';
 import {SvgCreditCard} from 'src/elements/SvgCreditCard';
 import {SvgDeleteForever} from 'src/elements/SvgDeleteForever';
 import {SvgFlightLanding} from 'src/elements/SvgFlightLanding';
@@ -34,26 +34,63 @@ export const MenuButton = ({
   userStatus,
   watchID,
 }) => {
-  const [menu, setMenu] = useState('closed');
-  const closeMenu = () => {
-    setMenu('closed');
+  const [ui, setUi] = useState({
+    button: 'open',
+    menu: 'closed',
+  });
+
+  const openMenu = () => {
+    setUi({
+      button: 'closing',
+      menu: 'opening',
+    });
   };
 
-  useOnEscKeyDown({state: menu === 'open', handler: closeMenu});
+  const closeMenu = () => {
+    setUi({
+      button: 'opening',
+      menu: 'closing',
+    });
+  };
+
+  // Remove from DOM after transition animation is over
+  const handleAnimationEnd = () => {
+    if (ui.button === 'closing') {
+      setUi({
+        button: 'closed',
+        menu: 'open',
+      });
+    }
+    if (ui.menu === 'closing') {
+      setUi({
+        button: 'open',
+        menu: 'closed',
+      });
+    }
+  };
+
+  useOnEscKeyDown({state: ui.menu === 'open', handler: closeMenu});
 
   // Focus the menu button after closing the menu
   const buttonElement = useRef();
   useEffect(() => {
-    if (menu === 'closed') {
+    if (ui.menu === 'closed') {
       buttonElement.current.focus();
     }
-  }, [menu]);
+  }, [ui.menu]);
 
-  const handleClick = () => {
-    setMenu('open');
-  };
-  const handleClickCloseButton = () => {
-    closeMenu();
+  const handleClickCloseButton = ({
+    rippleDiameter,
+    ripplePositionLeft,
+    ripplePositionTop,
+  }) => {
+    setUi({
+      button: 'opening',
+      menu: 'closing',
+      rippleDiameter,
+      ripplePositionLeft,
+      ripplePositionTop,
+    });
   };
   const handleClickFlightTakeoff = () => {
     trackUserLocation();
@@ -72,109 +109,118 @@ export const MenuButton = ({
   const {user, error, isLoading} = useUser();
 
   return (
-    <nav>
-      {menu === 'closed' ? (
+    <nav onAnimationEnd={handleAnimationEnd}>
+      {ui.button !== 'closed' ? (
         <Button
           aria-label={buttonLabel.menu}
+          data-closing={ui.button === 'closing'}
           data-position="top-left"
           data-testid="menu-button"
-          onClick={handleClick}
+          onClick={openMenu}
           ref={buttonElement}
           type="button"
         >
           <SvgCloud icon="menu" />
         </Button>
-      ) : (
+      ) : null}
+      {ui.menu !== 'closed' ? (
         <FocusLock>
-          <DivScrim />
-          <DivPopup
-            data-hidden={menu === 'closed'}
-            data-slide-from="left"
-            role="dialog"
-            aria-labelledby="menu-label"
-          >
-            <Heading as="h2" id="menu-label">
-              {menuLabel}
-            </Heading>
-            <ButtonCircle
-              data-autofocus
-              data-testid="close-button-menu"
-              onClick={handleClickCloseButton}
-              type="button"
+          <DivMenuBackground.Wrapper data-closing={ui.menu === 'closing'}>
+            <DivMenuBackground
+              data-closing={ui.menu === 'closing'}
+              role="dialog"
+              aria-labelledby="menu-label"
             >
-              <SvgClose title={buttonLabel.close} />
-            </ButtonCircle>
-            <ParagraphMenu>
-              {isLoading
-                ? 'Loading...'
-                : error || !user
-                ? 'Failed to fetch your user info'
-                : `Logged in with ${user.email}`}
-            </ParagraphMenu>
-            <ListMenu>
-              <li>
-                <a href="/api/auth/logout">
-                  <SvgLogout aria-hidden="true" /> {buttonLabel.logout}
-                </a>
-              </li>
-              <li>
-                <button>
-                  <SvgSearch aria-hidden="true" /> {buttonLabel.search}
-                </button>
-              </li>
-              <li>
-                {!watchID ? (
-                  <button type="button" onClick={handleClickFlightTakeoff}>
-                    <SvgFlightTakeoff aria-hidden="true" />{' '}
-                    {buttonLabel.locator.default}
+              <Heading as="h2" id="menu-label">
+                {menuLabel}
+              </Heading>
+              <CloseButton
+                ariaLabel={buttonLabel.close}
+                handleClick={handleClickCloseButton}
+              />
+              <ParagraphMenu>
+                {isLoading
+                  ? 'Loading...'
+                  : error || !user
+                  ? 'Failed to fetch your user info'
+                  : `Logged in with ${user.email}`}
+              </ParagraphMenu>
+              <ListMenu>
+                <li>
+                  <a href="/api/auth/logout">
+                    <SvgLogout aria-hidden="true" /> {buttonLabel.logout}
+                  </a>
+                </li>
+                <li>
+                  <button>
+                    <SvgSearch aria-hidden="true" /> {buttonLabel.search}
                   </button>
-                ) : (
-                  <button type="button" onClick={handleClickFlightFlying}>
-                    <SvgFlightFlying aria-hidden="true" />
-                    {buttonLabel.locator.activated}
-                  </button>
-                )}
-              </li>
-              <li>
-                <button
-                  type="button"
-                  disabled={!watchID}
-                  onClick={handleClickFlightLanding}
-                >
-                  <SvgFlightLanding aria-hidden="true" />{' '}
-                  {buttonLabel.locator.deactivate}
-                </button>
-              </li>
-              <li>
-                <button>
-                  <SvgAdd aria-hidden="true" /> {buttonLabel.save}
-                </button>
-              </li>
-              <li>
-                <a href={process.env.NEXT_PUBLIC_CUSTOMER_PORTAL_URL}>
-                  <SvgCreditCard aria-hidden="true" />
-                  {buttonLabel.customerPortal.update}
-                </a>
-              </li>
-              <li>
-                <a
-                  data-testid="last-focusable-element" // to be used in menu.cy.js for testing focus trap
-                  href={process.env.NEXT_PUBLIC_CUSTOMER_PORTAL_URL}
-                >
-                  {userStatus === statusType.cancelled ? (
-                    <SvgRefresh aria-hidden="true" />
+                </li>
+                <li>
+                  {!watchID ? (
+                    <button type="button" onClick={handleClickFlightTakeoff}>
+                      <SvgFlightTakeoff aria-hidden="true" />{' '}
+                      {buttonLabel.locator.default}
+                    </button>
                   ) : (
-                    <SvgDeleteForever aria-hidden="true" />
+                    <button type="button" onClick={handleClickFlightFlying}>
+                      <SvgFlightFlying aria-hidden="true" />
+                      {buttonLabel.locator.activated}
+                    </button>
                   )}
-                  {userStatus === statusType.cancelled
-                    ? buttonLabel.customerPortal.reactivate
-                    : buttonLabel.customerPortal.cancel}
-                </a>
-              </li>
-            </ListMenu>
-          </DivPopup>
+                </li>
+                <li>
+                  <button
+                    type="button"
+                    disabled={!watchID}
+                    onClick={handleClickFlightLanding}
+                  >
+                    <SvgFlightLanding aria-hidden="true" />{' '}
+                    {buttonLabel.locator.deactivate}
+                  </button>
+                </li>
+                <li>
+                  <button>
+                    <SvgAdd aria-hidden="true" /> {buttonLabel.save}
+                  </button>
+                </li>
+                <li>
+                  <a href={process.env.NEXT_PUBLIC_CUSTOMER_PORTAL_URL}>
+                    <SvgCreditCard aria-hidden="true" />
+                    {buttonLabel.customerPortal.update}
+                  </a>
+                </li>
+                <li>
+                  <a
+                    data-testid="last-focusable-element" // to be used in menu.cy.js for testing focus trap
+                    href={process.env.NEXT_PUBLIC_CUSTOMER_PORTAL_URL}
+                  >
+                    {userStatus === statusType.cancelled ? (
+                      <SvgRefresh aria-hidden="true" />
+                    ) : (
+                      <SvgDeleteForever aria-hidden="true" />
+                    )}
+                    {userStatus === statusType.cancelled
+                      ? buttonLabel.customerPortal.reactivate
+                      : buttonLabel.customerPortal.cancel}
+                  </a>
+                </li>
+              </ListMenu>
+            </DivMenuBackground>
+            {ui.menu === 'closing' ? (
+              <SpanRipple
+                id="ripple"
+                style={{
+                  height: ui.rippleDiameter,
+                  left: ui.ripplePositionLeft,
+                  top: ui.ripplePositionTop,
+                  width: ui.rippleDiameter,
+                }}
+              />
+            ) : null}
+          </DivMenuBackground.Wrapper>
         </FocusLock>
-      )}
+      ) : null}
     </nav>
   );
 };

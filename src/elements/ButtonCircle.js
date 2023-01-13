@@ -2,7 +2,6 @@ import styled from 'styled-components';
 
 import {buttonCircle, color, dimension} from 'src/utils/designtokens';
 import {removeFocusRing, styleFocusRing} from 'src/utils/cssUtilities';
-import {zIndex} from 'src/utils/zIndex';
 
 const resetStyle = `
   background-color: ${color['white 0']};
@@ -19,14 +18,6 @@ const alignButtonLabel = `
   align-items: center;
   display: flex;
   justify-content: center;
-`;
-
-// TODO #201: remove this once CloseButton is reused in PlaceInfo, MenuButton, SearchedPlace
-const positionButton = `
-  position: absolute;
-  right: 5px;
-  top: 5px;
-  z-index: ${zIndex.closeButton};
 `;
 
 const styleButtonLabel = `
@@ -64,7 +55,6 @@ export const ButtonCircle = styled.button`
   ${resetStyle}
   ${setClickableArea}
   ${alignButtonLabel}
-  ${positionButton}
   ${styleButtonLabel}
   ${styleFocusState}
   ${removeTapHighlight}

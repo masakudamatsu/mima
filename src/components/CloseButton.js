@@ -3,8 +3,6 @@ import PropTypes from 'prop-types';
 
 import {ButtonCircle} from 'src/elements/ButtonCircle';
 
-// TODO #201:
-// 2. Reuse this component in MenuButton
 export const CloseButton = forwardRef(function CloseButton(
   {ariaExpanded = null, ariaLabel, handleClick, testId = null},
   ref,

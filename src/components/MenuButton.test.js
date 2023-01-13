@@ -1,5 +1,5 @@
 // eslint-disable-next-line no-unused-vars
-import {render, screen, act} from '@testing-library/react';
+import {fireEvent, render, screen} from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import {axe} from 'jest-axe';
 
@@ -28,6 +28,14 @@ const Wrapper = {
   ),
 };
 
+// Mock offsetParent
+// source: https://github.com/jsdom/jsdom/issues/1261#issuecomment-362928131
+Object.defineProperty(HTMLElement.prototype, 'offsetParent', {
+  get() {
+    return this.parentNode;
+  },
+});
+
 describe('HTML checks', () => {
   beforeEach(() => {
     render(<MenuButton {...mockProps} />, {wrapper: Wrapper.lightMode});
@@ -50,20 +58,20 @@ describe('Menu window', () => {
     render(<MenuButton {...mockProps} />, {wrapper: Wrapper.lightMode});
   });
   test('is hidden by default', () => {
-    expect(screen.queryByRole('heading')).not.toBeInTheDocument();
+    expect(screen.queryByRole('dialog')).not.toBeInTheDocument();
   });
   test('is shown by clicking menu button', () => {
     userEvent.click(screen.getByRole('button', {name: buttonLabel.menu}));
-    expect(screen.getByRole('heading')).toHaveTextContent(menuLabel);
+    expect(screen.getByRole('dialog')).toHaveTextContent(menuLabel);
   });
-  test('focuses close button after being opened', () => {
+  test('focuses close button after being opened', async () => {
     userEvent.click(screen.getByRole('button', {name: buttonLabel.menu}));
     expect(screen.getByRole('button', {name: buttonLabel.close})).toHaveFocus();
   });
-  test('is hidden again by clicking close button on menu window', () => {
+  test('starts closing animation by clicking close button on menu window', () => {
     userEvent.click(screen.getByRole('button', {name: buttonLabel.menu}));
     userEvent.click(screen.getByRole('button', {name: buttonLabel.close}));
-    expect(screen.queryByRole('heading')).not.toBeInTheDocument();
+    expect(screen.getByRole('dialog')).toHaveAttribute('data-closing', 'true');
   });
   test('is hidden again by clicking Esc button', () => {
     userEvent.click(screen.getByRole('button', {name: buttonLabel.menu}));
@@ -71,7 +79,13 @@ describe('Menu window', () => {
       screen.getByRole('button', {name: buttonLabel.close}),
       '{esc}',
     );
-    expect(screen.queryByRole('heading')).not.toBeInTheDocument();
+    expect(screen.getByRole('dialog')).toHaveAttribute('data-closing', 'true');
+  });
+  test('is removed from DOM once the closing animation ends', () => {
+    userEvent.click(screen.getByRole('button', {name: buttonLabel.menu}));
+    userEvent.click(screen.getByRole('button', {name: buttonLabel.close}));
+    fireEvent.animationEnd(screen.getByRole('navigation'));
+    expect(screen.queryByRole('dialog')).not.toBeInTheDocument();
   });
 });
 
@@ -90,7 +104,7 @@ describe('Menu window content', () => {
       screen.getByRole('button', {name: buttonLabel.locator.default}),
     );
     expect(mockProps.trackUserLocation).toHaveBeenCalledTimes(1);
-    expect(screen.queryByRole('heading')).not.toBeInTheDocument();
+    expect(screen.getByRole('dialog')).toHaveAttribute('data-closing', 'true');
   });
   it('includes disabled flight landing icon menu', () => {
     expect(
