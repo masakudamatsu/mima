@@ -32,15 +32,15 @@ export const MenuButton = ({
   userStatus,
   watchID,
 }) => {
-  const [open, setOpen] = useState(false);
+  const [menu, setMenu] = useState('closed');
   const closeMenu = () => {
-    setOpen(false);
+    setMenu('closed');
   };
 
-  useOnEscKeyDown({state: open, handler: closeMenu});
+  useOnEscKeyDown({state: menu === 'open', handler: closeMenu});
 
   const handleClick = () => {
-    setOpen(true);
+    setMenu('open');
   };
   const handleClickCloseButton = () => {
     closeMenu();
@@ -72,7 +72,11 @@ export const MenuButton = ({
       >
         <SvgCloud icon="menu" />
       </Button>
-      <ModalPopup hidden={!open} slideFrom="left" titleId="menu-label">
+      <ModalPopup
+        hidden={menu === 'closed'}
+        slideFrom="left"
+        titleId="menu-label"
+      >
         <Heading as="h2" id="menu-label">
           {menuLabel}
         </Heading>
