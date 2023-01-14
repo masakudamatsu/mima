@@ -125,6 +125,20 @@ export const dimension = {
 };
 
 export const animation = {
+  showDetail: {
+    // for opening place detail popup
+    duration: '250ms', // to coordinate with the snapping of the place mark to one-third from the top
+    easing: 'linear',
+    opacity: keyframes`
+      0% { 
+        opacity: 0;
+      }
+      100% { 
+        opacity: 1;
+      }
+    `,
+    fillMode: 'backwards',
+  },
   // For opening menu / search box
   toggleIn: {
     // Duration and keyframes follow the "Container Transform" spec of Material Design 2 (https://m2.material.io/design/motion/the-motion-system.html#container-transform)
@@ -191,7 +205,7 @@ export const animation = {
       },
     },
   },
-  // For closing menu / search box
+  // For closing menu / search box / place detail
   toggleOut: {
     duration: '300ms', // Complex animation requires longer duration while long duration will increase "time to interactive" for cloud buttons
     easing: 'linear', // Decelerated easing would make the ripple-erasing effect less noticeable
