@@ -1,17 +1,20 @@
 import {useContext, useEffect, useRef, useState} from 'react';
 import PropTypes from 'prop-types';
+import Autolinker from 'autolinker';
 import DOMPurify from 'dompurify';
 import FocusLock from 'react-focus-lock';
+
 import {ButtonDialog} from 'src/elements/ButtonDialog';
+import {CloseButton} from './CloseButton';
 import {ComposeDialog} from 'src/elements/ComposeDialog';
 import {DivCloud} from 'src/elements/DivCloud';
 import {DivModalBackdrop} from 'src/elements/DivModalBackdrop';
 import {ParagraphLoading} from 'src/elements/ParagraphLoading';
-import {PlaceInfo} from 'src/components/PlaceInfo';
 
 import {ClientOnlyPortal} from 'src/wrappers/ClientOnlyPortal';
 
 import {usePlaces} from './Places';
+import {useOnClickOutside} from 'src/hooks/useOnClickOutside';
 import {useOnEscKeyDown} from 'src/hooks/useOnEscKeyDown';
 import {getHtmlFromSlate} from 'src/utils/getHtmlFromSlate';
 import {NightModeContext} from 'src/wrappers/NightModeContext';
@@ -24,6 +27,11 @@ const importPlaceInfoEditor = () =>
     module => module.PlaceInfoEditor,
   );
 const PlaceInfoEditor = dynamic(importPlaceInfoEditor);
+
+// Prepare for converting URL text into link
+const autolinker = new Autolinker({
+  truncate: 25,
+}); // https://github.com/gregjacobs/Autolinker.js#usage
 
 export const SavedPlaces = ({mapObject}) => {
   const {places, setPlaces} = usePlaces();
@@ -148,6 +156,20 @@ export const SavedPlaces = ({mapObject}) => {
   };
   useOnEscKeyDown({state: selectedPlace, handler: handleEsc});
 
+  // close by clicking outside
+  const dialogDiv = useRef(null);
+  useOnClickOutside(dialogDiv, closePlaceInfo, {
+    disable: deleteUi === 'confirm',
+  });
+
+  // For autofocusing the close button when opened
+  const closeButton = useRef();
+  useEffect(() => {
+    if (ui === 'open') {
+      closeButton.current.focusButton();
+    }
+  }, [ui]);
+
   // for updating place info
   if (selectedPlace) {
     const selectedPlaceIndex = userData.findIndex(
@@ -226,15 +248,39 @@ export const SavedPlaces = ({mapObject}) => {
     if (ui === 'open') {
       return (
         <>
-          <PlaceInfo
-            closePlaceInfo={closePlaceInfo}
-            deletePlaceInfo={handleClickDelete}
-            importPlaceInfoEditor={importPlaceInfoEditor}
-            modalOpen={deleteUi === 'confirm'}
-            placeName={selectedPlaceName}
-            placeNoteHtml={selectedPlaceNoteHtml}
-            editPlaceInfo={() => setPlaces({ui: 'editing'})}
-          />
+          <ComposeDialog
+            aria-describedby="selected-place-detail"
+            aria-hidden={deleteUi === 'confirm'}
+            aria-labelledby="selected-place-name"
+            // data-closing={status === 'closing'}
+            ref={dialogDiv}
+            role="dialog"
+          >
+            <CloseButton
+              ariaLabel={buttonLabel.close}
+              handleClick={closePlaceInfo}
+              ref={closeButton}
+              testId="close-button-saved-place"
+            />
+            <h2 id="selected-place-name">{selectedPlaceName}</h2>
+            <div
+              dangerouslySetInnerHTML={{
+                __html: autolinker.link(selectedPlaceNoteHtml),
+              }}
+              id="selected-place-detail"
+            />
+            <ButtonDialog
+              onClick={() => setPlaces({ui: 'editing'})}
+              onFocus={importPlaceInfoEditor}
+              onMouseEnter={importPlaceInfoEditor}
+              type="button"
+            >
+              {buttonLabel.edit}
+            </ButtonDialog>
+            <ButtonDialog onClick={handleClickDelete} type="button">
+              {buttonLabel.delete}
+            </ButtonDialog>
+          </ComposeDialog>
           {deleteUi === 'confirm' ? (
             <ClientOnlyPortal selector="#modal">
               <DivModalBackdrop>
