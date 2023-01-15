@@ -113,7 +113,7 @@ export const SavedPlaces = ({mapObject}) => {
       // eslint-disable-next-line no-loop-func
       marker.addListener('click', () => {
         mapObject.panTo(userPlace.coordinates);
-        mapObject.panBy(0, viewportSize.current.height / 6);
+        mapObject.panBy(0, viewportSize.current.height / 4);
         setPlaces({
           ui: 'open',
           selectedPlace: {

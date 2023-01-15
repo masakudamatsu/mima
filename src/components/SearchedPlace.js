@@ -130,7 +130,7 @@ export const SearchedPlace = ({mapObject}) => {
       // eslint-disable-next-line no-loop-func
       marker.current.addListener('click', () => {
         mapObject.panTo(searchedPlace.coordinates);
-        mapObject.panBy(0, viewportSize.current.height / 6);
+        mapObject.panBy(0, viewportSize.current.height / 4);
         setState({status: 'open'});
       });
 
@@ -138,7 +138,7 @@ export const SearchedPlace = ({mapObject}) => {
       marker.current.setMap(mapObject);
       // snap the map to the marker
       mapObject.panTo(searchedPlace.coordinates);
-      mapObject.panBy(0, viewportSize.current.height / 6);
+      mapObject.panBy(0, viewportSize.current.height / 4);
       setState({status: 'open', placeData: searchedPlace});
     }
   }, [mapObject, nightMode, placeId, setState]);

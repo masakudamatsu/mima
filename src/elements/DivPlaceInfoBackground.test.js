@@ -100,7 +100,7 @@ describe('DivPlaceInfoBackground component', () => {
   bottom: 0;
   left: 0;
   right: 0;
-  top: 66%;
+  top: 50%;
   overflow: hidden;
 }
 
