@@ -47,9 +47,24 @@ export const MenuButton = ({
   };
 
   const closeMenu = () => {
+    closeButtonPressed.current = false;
     setUi({
       button: 'opening',
       menu: 'closing',
+    });
+  };
+  const handleClickCloseButton = ({
+    rippleDiameter,
+    ripplePositionLeft,
+    ripplePositionTop,
+  }) => {
+    closeButtonPressed.current = true;
+    setUi({
+      button: 'opening',
+      menu: 'closing',
+      rippleDiameter,
+      ripplePositionLeft,
+      ripplePositionTop,
     });
   };
 
@@ -69,29 +84,19 @@ export const MenuButton = ({
     }
   };
 
-  useOnEscKeyDown({state: ui.menu === 'open', handler: closeMenu});
+  useOnEscKeyDown({state: ui.menu === 'open', handler: handleClickCloseButton});
 
   // Focus the menu button after closing the menu
   const buttonElement = useRef();
+  const closeButtonPressed = useRef(false);
   useEffect(() => {
     if (ui.menu === 'closed') {
-      buttonElement.current.focus();
+      if (closeButtonPressed.current === true) {
+        buttonElement.current.focus();
+      }
     }
   }, [ui.menu]);
 
-  const handleClickCloseButton = ({
-    rippleDiameter,
-    ripplePositionLeft,
-    ripplePositionTop,
-  }) => {
-    setUi({
-      button: 'opening',
-      menu: 'closing',
-      rippleDiameter,
-      ripplePositionLeft,
-      ripplePositionTop,
-    });
-  };
   const handleClickFlightTakeoff = () => {
     trackUserLocation();
     closeMenu();
