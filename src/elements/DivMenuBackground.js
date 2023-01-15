@@ -49,13 +49,6 @@ const setInnerSize = `
   }
 `;
 
-const setPadding = `
-  padding: 0 10px 10px 10px;
-  @media screen and (min-width: ${dimension.breakpoint.divPopup.padding}) {
-    padding: 0 ${buttonCircle.clickableArea} ${buttonCircle.clickableArea} ${buttonCircle.clickableArea};
-  }
-`;
-
 const positionCloseButton = `
   --popup-margin: ${dimension.button['minimum target spacing 100']};
 
@@ -63,6 +56,13 @@ const positionCloseButton = `
     position: absolute;
     right: var(--popup-margin);
     top:  var(--popup-margin);
+  }
+`;
+
+const setPadding = `
+  padding: 0 10px 10px 10px;
+  @media screen and (min-width: ${dimension.breakpoint.divPopup.padding}) {
+    padding: 0 ${buttonCircle.clickableArea} ${buttonCircle.clickableArea} ${buttonCircle.clickableArea};
   }
 `;
 

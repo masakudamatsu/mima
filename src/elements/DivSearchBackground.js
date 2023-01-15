@@ -45,7 +45,7 @@ const setInnerSize = `
   }
 `;
 
-const positionComponents = `
+const positionCloseButton = `
   --popup-margin: ${dimension.button['minimum target spacing 100']};
 
   & button[aria-label="${buttonLabel.closeSearchbox}"] {
@@ -53,6 +53,10 @@ const positionComponents = `
     right: var(--popup-margin);
     top:  var(--popup-margin);
   }
+`;
+
+const positionComponents = `
+  ${positionCloseButton}
   & div[id="searchbox"],
   & ul[aria-label="${searchBoxLabel.listbox}"] {
     margin: 0 auto; 
