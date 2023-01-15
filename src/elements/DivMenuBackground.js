@@ -36,7 +36,7 @@ const setOuterSize = `
   }
 `;
 
-const setBackground = stylePopupBackground({withEdges: true});
+const setBackground = stylePopupBackground();
 
 const setInnerSize = `
   bottom: 0;

@@ -80,7 +80,7 @@ const setPadding = `
   }
 `;
 
-const setBackground = stylePopupBackground({withEdges: true});
+const setBackground = stylePopupBackground();
 
 const animateTransition = `
   &[data-slide-from="left"] {

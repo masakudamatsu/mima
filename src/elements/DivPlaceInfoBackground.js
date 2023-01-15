@@ -23,7 +23,7 @@ const setOuterSize = `
   top: 66%;
 `;
 
-const setBackground = stylePopupBackground({withEdges: true});
+const setBackground = stylePopupBackground();
 
 const setInnerSize = `
   bottom: 0;

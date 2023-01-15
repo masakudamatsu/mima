@@ -80,14 +80,12 @@ describe('DivMenuBackground component', () => {
     background-color: var(--popup-background-color);
     -webkit-backdrop-filter: blur(var(--blur-radius));
     backdrop-filter: blur(var(--blur-radius));
-    box-shadow: 0px 0px var(--blur-radius) var(--blur-radius) var(--popup-glow-color);
   }
 }
 
 @supports (background-image:-moz-element(#map)) and (not (backdrop-filter:blur(var(--blur-radius)))) {
   .c1 {
     background-color: transparent;
-    box-shadow: none;
   }
 
   .c1::before {
@@ -114,6 +112,22 @@ describe('DivMenuBackground component', () => {
     top: 0;
     bottom: 0;
     z-index: -1;
+  }
+}
+
+@supports (-webkit-backdrop-filter:blur(var(--blur-radius))) or (backdrop-filter:blur(var(--blur-radius))) {
+  .c1 {
+    box-shadow: 0px 0px var(--blur-radius) var(--blur-radius) var(--popup-glow-color);
+  }
+}
+
+@supports (background-image:-moz-element(#map)) and (not (backdrop-filter:blur(var(--blur-radius)))) {
+  .c1 {
+    box-shadow: none;
+  }
+
+  .c1::after {
+    box-shadow: 0px 0px var(--blur-radius) var(--blur-radius) var(--popup-glow-color);
   }
 }
 
