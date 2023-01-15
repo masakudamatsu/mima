@@ -9,7 +9,9 @@ import {CloseButton} from './CloseButton';
 import {ComposeDialog} from 'src/elements/ComposeDialog';
 import {DivCloud} from 'src/elements/DivCloud';
 import {DivModalBackdrop} from 'src/elements/DivModalBackdrop';
+import {DivPlaceInfoBackground} from 'src/elements/DivPlaceInfoBackground';
 import {ParagraphLoading} from 'src/elements/ParagraphLoading';
+import {SpanRipple} from 'src/elements/SpanRipple';
 
 import {ClientOnlyPortal} from 'src/wrappers/ClientOnlyPortal';
 
@@ -35,7 +37,7 @@ const autolinker = new Autolinker({
 
 export const SavedPlaces = ({mapObject}) => {
   const {places, setPlaces} = usePlaces();
-  const {ui, userData, selectedPlace} = places;
+  const {ui, userData, selectedPlace, ripple} = places;
 
   const nightMode = useContext(NightModeContext);
 
@@ -125,11 +127,35 @@ export const SavedPlaces = ({mapObject}) => {
     }
   }, [mapObject, nightMode, setPlaces, userData]);
 
-  const closePlaceInfo = () => {
+  const closePlaceInfo = ({
+    rippleDiameter,
+    ripplePositionLeft,
+    ripplePositionTop,
+  }) => {
     mapObject.panTo(selectedPlace.coordinates);
-    setPlaces({ui: null, selectedPlace: null});
+    setPlaces({
+      ui: 'closing',
+      ripple: {
+        diameter: rippleDiameter,
+        positionLeft: ripplePositionLeft,
+        positionTop: ripplePositionTop,
+      },
+    });
   };
-
+  // change `status` from "closing" to "closed" once the closing animation is over
+  const handleAnimationEnd = () => {
+    if (ui === 'closing') {
+      setPlaces({
+        ui: null,
+        selectedPlace: null,
+        ripple: {
+          diameter: null,
+          positionLeft: null,
+          positionTop: null,
+        },
+      });
+    }
+  };
   // For deleting the saved place
   const handleClickDelete = () => {
     setDeleteUi('confirm');
@@ -245,42 +271,59 @@ export const SavedPlaces = ({mapObject}) => {
         console.log(error);
       }
     };
-    if (ui === 'open') {
+    if (ui === 'open' || ui === 'closing') {
       return (
         <>
-          <ComposeDialog
-            aria-describedby="selected-place-detail"
-            aria-hidden={deleteUi === 'confirm'}
-            aria-labelledby="selected-place-name"
-            // data-closing={status === 'closing'}
-            ref={dialogDiv}
-            role="dialog"
+          <DivPlaceInfoBackground.Wrapper
+            data-closing={ui === 'closing'}
+            onAnimationEnd={handleAnimationEnd}
           >
-            <CloseButton
-              ariaLabel={buttonLabel.close}
-              handleClick={closePlaceInfo}
-              ref={closeButton}
-              testId="close-button-saved-place"
-            />
-            <h2 id="selected-place-name">{selectedPlaceName}</h2>
-            <div
-              dangerouslySetInnerHTML={{
-                __html: autolinker.link(selectedPlaceNoteHtml),
-              }}
-              id="selected-place-detail"
-            />
-            <ButtonDialog
-              onClick={() => setPlaces({ui: 'editing'})}
-              onFocus={importPlaceInfoEditor}
-              onMouseEnter={importPlaceInfoEditor}
-              type="button"
+            <DivPlaceInfoBackground
+              aria-describedby="selected-place-detail"
+              aria-hidden={deleteUi === 'confirm'}
+              aria-labelledby="selected-place-name"
+              data-closing={ui === 'closing'}
+              ref={dialogDiv}
+              role="dialog"
             >
-              {buttonLabel.edit}
-            </ButtonDialog>
-            <ButtonDialog onClick={handleClickDelete} type="button">
-              {buttonLabel.delete}
-            </ButtonDialog>
-          </ComposeDialog>
+              <CloseButton
+                ariaLabel={buttonLabel.closePlaceDetail}
+                handleClick={closePlaceInfo}
+                ref={closeButton}
+                testId="close-button-saved-place"
+              />
+              <h2 id="selected-place-name">{selectedPlaceName}</h2>
+              <div
+                dangerouslySetInnerHTML={{
+                  __html: autolinker.link(selectedPlaceNoteHtml),
+                }}
+                id="selected-place-detail"
+              />
+              <ButtonDialog
+                onClick={() => setPlaces({ui: 'editing'})}
+                onFocus={importPlaceInfoEditor}
+                onMouseEnter={importPlaceInfoEditor}
+                type="button"
+              >
+                {buttonLabel.edit}
+              </ButtonDialog>
+              <ButtonDialog onClick={handleClickDelete} type="button">
+                {buttonLabel.delete}
+              </ButtonDialog>
+              {ui === 'closing' ? (
+                <SpanRipple
+                  id="ripple"
+                  style={{
+                    height: ripple.diameter,
+                    left: ripple.positionLeft,
+                    top: ripple.positionTop,
+                    width: ripple.diameter,
+                  }}
+                />
+              ) : null}
+            </DivPlaceInfoBackground>
+          </DivPlaceInfoBackground.Wrapper>
+
           {deleteUi === 'confirm' ? (
             <ClientOnlyPortal selector="#modal">
               <DivModalBackdrop>
