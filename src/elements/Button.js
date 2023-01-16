@@ -56,8 +56,7 @@ const setButtonLabelColor = `
   & svg {
     fill: var(--button-label-color-default);
   }
-  &:focus svg,
-  &:hover svg {
+  &:focus svg {
     fill: var(--button-label-color-focus);
   }
   &:focus:not(:focus-visible) svg {
@@ -96,15 +95,13 @@ const setButtonShadow = `
   & svg {
     ${buttonShadow.blur}
   }
-  &:focus #cloud,
-  &:hover #cloud {
+  &:focus #cloud {
     stroke: var(--button-outline-color-focus);
   }
   &:focus:not(:focus-visible) #cloud {
     ${buttonShadow.edge}
   }
-  &:focus svg,
-  &:hover svg {
+  &:focus svg {
     filter: drop-shadow(
       ${dimension.glow['offset']} var(--button-shadow-blur-radius-focus)
         var(--button-shadow-color-focus)
