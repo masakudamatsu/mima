@@ -56,8 +56,7 @@ const setButtonLabelColor = `
   & svg {
     fill: var(--button-label-color-default);
   }
-  &:focus svg,
-  &:hover svg {
+  &:focus svg {
     fill: var(--button-label-color-focus);
   }
   &:focus:not(:focus-visible) svg {
@@ -96,15 +95,13 @@ const setButtonShadow = `
   & svg {
     ${buttonShadow.blur}
   }
-  &:focus #cloud,
-  &:hover #cloud {
+  &:focus #cloud {
     stroke: var(--button-outline-color-focus);
   }
   &:focus:not(:focus-visible) #cloud {
     ${buttonShadow.edge}
   }
-  &:focus svg,
-  &:hover svg {
+  &:focus svg {
     filter: drop-shadow(
       ${dimension.glow['offset']} var(--button-shadow-blur-radius-focus)
         var(--button-shadow-color-focus)
@@ -119,6 +116,37 @@ const setButtonShadow = `
   &:active #cloud {
     stroke: none;
   }
+`;
+
+const animateTransitionIn = css`
+  animation-duration: ${animation.toggleOut.duration};
+  animation-fill-mode: ${animation.toggleOut.button.fillMode};
+  animation-name: ${animation.toggleOut.button.opacity};
+  animation-timing-function: ${animation.toggleOut.easing};
+  @media (prefers-reduced-motion: reduce) {
+    animation-duration: ${animation.toggleOut.reducedMotion.duration};
+  }
+`;
+
+const animateTransitionOut = css`
+  &[data-closing='true'] {
+    transform-origin: ${animation.toggleIn.origin};
+    animation-duration: ${animation.toggleIn.duration};
+    animation-fill-mode: ${animation.toggleIn.button.fillMode};
+    animation-name: ${animation.toggleIn.button.opacity},
+      ${animation.toggleIn.button.scale};
+    animation-timing-function: ${animation.toggleIn.easing};
+    @media (prefers-reduced-motion: reduce) {
+      animation-name: ${animation.toggleIn.reducedMotion.button.opacity};
+    }
+  }
+  &[data-closing='true'][data-position='top-left'] {
+    transform-origin: top left;
+  }
+`;
+
+const removeTapHighlight = `
+  -webkit-tap-highlight-color: transparent;
 `;
 
 const blinkButton = css`
@@ -138,5 +166,8 @@ export const Button = styled.button`
   ${setButtonLabelColor}
   ${setButtonColor}
   ${setButtonShadow}
+  ${animateTransitionIn}
+  ${animateTransitionOut}
+  ${removeTapHighlight}
   ${blinkButton}
 `;

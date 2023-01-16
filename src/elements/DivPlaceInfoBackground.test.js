@@ -1,113 +1,120 @@
 import {render} from '@testing-library/react';
 
-import {ComposeDialog} from './ComposeDialog';
+import {DivPlaceInfoBackground} from './DivPlaceInfoBackground';
 
-describe('ComposeDialog component', () => {
+describe('DivPlaceInfoBackground component', () => {
   test('renders the UI correctly', () => {
-    const {container} = render(<ComposeDialog />);
+    const {container} = render(
+      <DivPlaceInfoBackground.Wrapper>
+        <DivPlaceInfoBackground />
+      </DivPlaceInfoBackground.Wrapper>,
+    );
     expect(container).toMatchInlineSnapshot(`
-.c0 {
-  --height: 34%;
+.c1 {
+  --blur-radius: 8px;
+  background-color: var(--popup-background-color-fallback);
+  box-shadow: 0px 0px var(--blur-radius) var(--blur-radius) var(--popup-glow-color-fallback);
+  bottom: 0;
+  left: 0;
+  position: absolute;
+  right: 0;
+  top: calc(var(--blur-radius) * 2);
+  --popup-margin: 8px;
   color: var(--popup-text-color);
   font-family: 'Noto Sans',Verdana,sans-serif;
   font-size: 1.0506rem;
   font-weight: 400;
   line-height: 1.25;
-  height: var(--height);
-  width: 100%;
-  --blur-radius: 8px;
-  background-color: var(--popup-background-color-fallback);
-  box-shadow: 0px 0px var(--blur-radius) var(--blur-radius) var(--popup-glow-color-fallback);
-  position: absolute;
-  left: 0;
-  top: calc(100% - var(--height));
-  z-index: 3;
-  --popup-margin: 12px;
-  -webkit-animation-duration: 300ms;
-  animation-duration: 300ms;
+  -webkit-animation-duration: 250ms;
+  animation-duration: 250ms;
   -webkit-animation-fill-mode: backwards;
   animation-fill-mode: backwards;
-  -webkit-animation-name: jBcSpD;
-  animation-name: jBcSpD;
-  -webkit-animation-timing-fiunction: linear;
-  animation-timing-fiunction: linear;
+  -webkit-animation-name: lbWRkT;
+  animation-name: lbWRkT;
+  -webkit-animation-timing-function: linear;
+  animation-timing-function: linear;
 }
 
-.c0 a {
+.c1 button[aria-label="Close place detail"] {
+  position: absolute;
+  right: var(--popup-margin);
+  top: var(--popup-margin);
+}
+
+.c1 h2,
+.c1 p,
+.c1 button:not([aria-label="Close place detail"]) {
+  margin-left: var(--popup-margin);
+}
+
+.c1 h2,
+.c1 p {
+  --close-button-width: calc(48px + 8px * 2);
+  max-width: 561px;
+  width: calc(100% - var(--close-button-width));
+}
+
+.c1 h2 {
+  padding-bottom: 0.8252rem;
+  padding-top: 0.7385rem;
+}
+
+.c1 p:first-of-type {
+  margin-top: -0.2836rem;
+}
+
+.c1 p + p {
+  margin-top: 0.4965rem;
+}
+
+.c1 div + button,
+.c1 p + button {
+  margin-top: 0.7801rem;
+}
+
+.c1 a {
   color: var(--link-text-color);
 }
 
-.c0 h2 {
+.c1 h2 {
   font-family: 'Noto Sans Display',Georgia,sans-serif;
   font-size: 1.3986rem;
   font-weight: 700;
   line-height: 1.092;
 }
 
-.c0[role="alertdialog"] {
-  height: 50%;
-  min-height: 300px;
-  min-width: 300px;
-  width: 50%;
+.c1[data-closing='true'] {
+  -webkit-animation-duration: 300ms;
+  animation-duration: 300ms;
+  -webkit-animation-name: gHmQJP;
+  animation-name: gHmQJP;
+  -webkit-animation-fill-mode: forwards;
+  animation-fill-mode: forwards;
+  -webkit-animation-timing-function: linear;
+  animation-timing-function: linear;
 }
 
-.c0[role="alertdialog"] {
-  left: 50%;
-  top: 50%;
-  -webkit-transform: translate(-50%,-50%);
-  -ms-transform: translate(-50%,-50%);
-  transform: translate(-50%,-50%);
-}
-
-.c0 button[aria-label="Close place detail"] {
+.c0 {
   position: absolute;
-  right: var(--popup-margin);
-  top: var(--popup-margin);
-  z-index: 4;
-}
-
-.c0 h2,
-.c0 p,
-.c0 button:not([aria-label="Close place detail"]) {
-  margin-left: var(--popup-margin);
-}
-
-.c0 h2,
-.c0 p {
-  --close-button-width: calc(48px + 8px * 2);
-  max-width: 561px;
-  width: calc(100% - var(--close-button-width));
-}
-
-.c0 h2 {
-  padding-bottom: 0.8252rem;
-  padding-top: 0.7385rem;
-}
-
-.c0 p:first-of-type {
-  margin-top: -0.2836rem;
-}
-
-.c0 p + p {
-  margin-top: 0.4965rem;
-}
-
-.c0 div + button,
-.c0 p + button {
-  margin-top: 0.7801rem;
+  z-index: 2;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  top: 50%;
+  overflow: hidden;
 }
 
 .c0[data-closing='true'] {
-  -webkit-animation-duration: 250ms;
-  animation-duration: 250ms;
-  -webkit-animation-name: jiroXv;
-  animation-name: jiroXv;
-  -webkit-animation-fill-mode: forwards;
-  animation-fill-mode: forwards;
+  color: black;
+  mix-blend-mode: lighten;
+}
+
+.c0[data-closing='true'] [id="ripple"] {
+  background-color: currentColor;
 }
 
 @supports (-webkit-backdrop-filter:blur(var(--blur-radius))) or (backdrop-filter:blur(var(--blur-radius))) {
-  .c0 {
+  .c1 {
     background-color: var(--popup-background-color);
     -webkit-backdrop-filter: blur(var(--blur-radius));
     backdrop-filter: blur(var(--blur-radius));
@@ -115,11 +122,11 @@ describe('ComposeDialog component', () => {
 }
 
 @supports (background-image:-moz-element(#map)) and (not (backdrop-filter:blur(var(--blur-radius)))) {
-  .c0 {
+  .c1 {
     background-color: transparent;
   }
 
-  .c0::before {
+  .c1::before {
     background-attachment: fixed;
     background-image: -moz-element(#map);
     content: "";
@@ -133,7 +140,7 @@ describe('ComposeDialog component', () => {
     z-index: -2;
   }
 
-  .c0::after {
+  .c1::after {
     background-color: var(--popup-background-color);
     box-shadow: 0px 0px var(--blur-radius) var(--blur-radius) var(--popup-glow-color);
     content: "";
@@ -147,25 +154,38 @@ describe('ComposeDialog component', () => {
 }
 
 @supports (-webkit-backdrop-filter:blur(var(--blur-radius))) or (backdrop-filter:blur(var(--blur-radius))) {
-  .c0 {
+  .c1 {
     box-shadow: 0px 0px var(--blur-radius) var(--blur-radius) var(--popup-glow-color);
   }
 }
 
 @supports (background-image:-moz-element(#map)) and (not (backdrop-filter:blur(var(--blur-radius)))) {
-  .c0 {
+  .c1 {
     box-shadow: none;
   }
 
-  .c0::after {
+  .c1::after {
     box-shadow: 0px 0px var(--blur-radius) var(--blur-radius) var(--popup-glow-color);
+  }
+}
+
+@media (prefers-reduced-motion:reduce) {
+  .c1[data-closing='true'] {
+    -webkit-animation-duration: 250ms;
+    animation-duration: 250ms;
+    -webkit-animation-name: gHmQJP;
+    animation-name: gHmQJP;
   }
 }
 
 <div>
   <div
     class="c0"
-  />
+  >
+    <div
+      class="c1"
+    />
+  </div>
 </div>
 `);
   });

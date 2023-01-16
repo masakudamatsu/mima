@@ -28,7 +28,7 @@ const setSize = `
   }
 `;
 
-const setBackground = stylePopupBackground({withEdges: true});
+const setBackground = stylePopupBackground();
 
 const placeOverMap = `
   position: absolute;

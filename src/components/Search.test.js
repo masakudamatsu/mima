@@ -5,7 +5,6 @@ import {axe} from 'jest-axe';
 
 import {Search} from './Search';
 import {buttonLabel} from 'src/utils/uiCopies';
-import {duration} from 'src/utils/designtokens';
 
 import {PlaceIdProvider} from 'src/wrappers/PlaceIdContext';
 import {mockPlacesApi} from 'src/utils/mockFunfctions';
@@ -43,34 +42,10 @@ describe('Once the search button is pressed...', () => {
   afterEach(() => {
     jest.useRealTimers();
   });
-  test(`sets 'data-searchbox' attribute to be true`, async () => {
-    expect(screen.getByRole('search')).toHaveAttribute(
-      'data-searchbox',
-      'true',
-    );
-  });
   test(`assigns aria-expanded="true" to the close button`, () => {
     expect(
       screen.getByRole('button', {name: buttonLabel.closeSearchbox}),
     ).toHaveAttribute('aria-expanded', 'true');
-  });
-  test(`sets 'data-searchbox' attribute to be closing after close button is clicked`, () => {
-    userEvent.click(
-      screen.getByRole('button', {name: buttonLabel.closeSearchbox}),
-    );
-    expect(screen.getByRole('search')).toHaveAttribute(
-      'data-searchbox',
-      'closing',
-    );
-  });
-  test(`gets dismounted ${duration.modal.exit}ms after clicking close button`, async () => {
-    userEvent.click(
-      screen.getByRole('button', {name: buttonLabel.closeSearchbox}),
-    );
-    await waitFor(() => {
-      jest.advanceTimersByTime(duration.modal.exit);
-    });
-    expect(screen.queryByTestId('cloud-background')).not.toBeInTheDocument();
   });
 });
 

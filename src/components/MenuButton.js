@@ -1,18 +1,20 @@
-import {useState} from 'react';
+import {useEffect, useRef, useState} from 'react';
 import PropTypes from 'prop-types';
 import {useUser} from '@auth0/nextjs-auth0';
+import FocusLock from 'react-focus-lock';
 
 import {useOnEscKeyDown} from 'src/hooks/useOnEscKeyDown';
 
-import {ModalPopup} from 'src/components/ModalPopup';
+import {CloseButton} from './CloseButton';
+
 import {Button} from 'src/elements/Button';
-import {ButtonCircle} from 'src/elements/ButtonCircle';
+import {DivMenuBackground} from 'src/elements/DivMenuBackground';
 import {Heading} from 'src/elements/Heading';
 import {ListMenu} from 'src/elements/ListMenu';
 import {ParagraphMenu} from 'src/elements/ParagraphMenu';
+import {SpanRipple} from 'src/elements/SpanRipple';
 import {SvgAdd} from 'src/elements/SvgAdd';
 import {SvgCloud} from 'src/elements/SvgCloud';
-import {SvgClose} from 'src/elements/SvgClose';
 import {SvgCreditCard} from 'src/elements/SvgCreditCard';
 import {SvgDeleteForever} from 'src/elements/SvgDeleteForever';
 import {SvgFlightLanding} from 'src/elements/SvgFlightLanding';
@@ -32,19 +34,69 @@ export const MenuButton = ({
   userStatus,
   watchID,
 }) => {
-  const [open, setOpen] = useState(false);
+  const [ui, setUi] = useState({
+    button: 'open',
+    menu: 'closed',
+  });
+
+  const openMenu = () => {
+    setUi({
+      button: 'closing',
+      menu: 'opening',
+    });
+  };
+
   const closeMenu = () => {
-    setOpen(false);
+    closeButtonPressed.current = false;
+    setUi({
+      button: 'opening',
+      menu: 'closing',
+    });
+  };
+  const handleClickCloseButton = ({
+    rippleDiameter,
+    ripplePositionLeft,
+    ripplePositionTop,
+  }) => {
+    closeButtonPressed.current = true;
+    setUi({
+      button: 'opening',
+      menu: 'closing',
+      rippleDiameter,
+      ripplePositionLeft,
+      ripplePositionTop,
+    });
   };
 
-  useOnEscKeyDown({state: open, handler: closeMenu});
+  // Remove from DOM after transition animation is over
+  const handleAnimationEnd = () => {
+    if (ui.button === 'closing') {
+      setUi({
+        button: 'closed',
+        menu: 'open',
+      });
+    }
+    if (ui.menu === 'closing') {
+      setUi({
+        button: 'open',
+        menu: 'closed',
+      });
+    }
+  };
 
-  const handleClick = () => {
-    setOpen(true);
-  };
-  const handleClickCloseButton = () => {
-    closeMenu();
-  };
+  useOnEscKeyDown({state: ui.menu === 'open', handler: handleClickCloseButton});
+
+  // Focus the menu button after closing the menu
+  const buttonElement = useRef();
+  const closeButtonPressed = useRef(false);
+  useEffect(() => {
+    if (ui.menu === 'closed') {
+      if (closeButtonPressed.current === true) {
+        buttonElement.current.focus();
+      }
+    }
+  }, [ui.menu]);
+
   const handleClickFlightTakeoff = () => {
     trackUserLocation();
     closeMenu();
@@ -62,97 +114,118 @@ export const MenuButton = ({
   const {user, error, isLoading} = useUser();
 
   return (
-    <nav>
-      <Button
-        aria-label={buttonLabel.menu}
-        data-position="top-left"
-        data-testid="menu-button"
-        onClick={handleClick}
-        type="button"
-      >
-        <SvgCloud icon="menu" />
-      </Button>
-      <ModalPopup hidden={!open} slideFrom="left" titleId="menu-label">
-        <Heading as="h2" id="menu-label">
-          {menuLabel}
-        </Heading>
-        <ButtonCircle
-          data-autofocus
-          data-testid="close-button-menu"
-          onClick={handleClickCloseButton}
+    <nav onAnimationEnd={handleAnimationEnd}>
+      {ui.button !== 'closed' ? (
+        <Button
+          aria-label={buttonLabel.menu}
+          data-closing={ui.button === 'closing'}
+          data-position="top-left"
+          data-testid="menu-button"
+          onClick={openMenu}
+          ref={buttonElement}
           type="button"
         >
-          <SvgClose title={buttonLabel.close} />
-        </ButtonCircle>
-        <ParagraphMenu>
-          {isLoading
-            ? 'Loading...'
-            : error || !user
-            ? 'Failed to fetch your user info'
-            : `Logged in with ${user.email}`}
-        </ParagraphMenu>
-        <ListMenu>
-          <li>
-            <a href="/api/auth/logout">
-              <SvgLogout aria-hidden="true" /> {buttonLabel.logout}
-            </a>
-          </li>
-          <li>
-            <button>
-              <SvgSearch aria-hidden="true" /> {buttonLabel.search}
-            </button>
-          </li>
-          <li>
-            {!watchID ? (
-              <button type="button" onClick={handleClickFlightTakeoff}>
-                <SvgFlightTakeoff aria-hidden="true" />{' '}
-                {buttonLabel.locator.default}
-              </button>
-            ) : (
-              <button type="button" onClick={handleClickFlightFlying}>
-                <SvgFlightFlying aria-hidden="true" />
-                {buttonLabel.locator.activated}
-              </button>
-            )}
-          </li>
-          <li>
-            <button
-              type="button"
-              disabled={!watchID}
-              onClick={handleClickFlightLanding}
+          <SvgCloud icon="menu" />
+        </Button>
+      ) : null}
+      {ui.menu !== 'closed' ? (
+        <FocusLock>
+          <DivMenuBackground.Wrapper data-closing={ui.menu === 'closing'}>
+            <DivMenuBackground
+              data-closing={ui.menu === 'closing'}
+              role="dialog"
+              aria-labelledby="menu-label"
             >
-              <SvgFlightLanding aria-hidden="true" />{' '}
-              {buttonLabel.locator.deactivate}
-            </button>
-          </li>
-          <li>
-            <button>
-              <SvgAdd aria-hidden="true" /> {buttonLabel.save}
-            </button>
-          </li>
-          <li>
-            <a href={process.env.NEXT_PUBLIC_CUSTOMER_PORTAL_URL}>
-              <SvgCreditCard aria-hidden="true" />
-              {buttonLabel.customerPortal.update}
-            </a>
-          </li>
-          <li>
-            <a
-              data-testid="last-focusable-element" // to be used in menu.cy.js for testing focus trap
-              href={process.env.NEXT_PUBLIC_CUSTOMER_PORTAL_URL}
-            >
-              {userStatus === statusType.cancelled ? (
-                <SvgRefresh aria-hidden="true" />
-              ) : (
-                <SvgDeleteForever aria-hidden="true" />
-              )}
-              {userStatus === statusType.cancelled
-                ? buttonLabel.customerPortal.reactivate
-                : buttonLabel.customerPortal.cancel}
-            </a>
-          </li>
-        </ListMenu>
-      </ModalPopup>
+              <Heading as="h2" id="menu-label">
+                {menuLabel}
+              </Heading>
+              <CloseButton
+                ariaLabel={buttonLabel.close}
+                handleClick={handleClickCloseButton}
+              />
+              <ParagraphMenu>
+                {isLoading
+                  ? 'Loading...'
+                  : error || !user
+                  ? 'Failed to fetch your user info'
+                  : `Logged in with ${user.email}`}
+              </ParagraphMenu>
+              <ListMenu>
+                <li>
+                  <a href="/api/auth/logout">
+                    <SvgLogout aria-hidden="true" /> {buttonLabel.logout}
+                  </a>
+                </li>
+                <li>
+                  <button>
+                    <SvgSearch aria-hidden="true" /> {buttonLabel.search}
+                  </button>
+                </li>
+                <li>
+                  {!watchID ? (
+                    <button type="button" onClick={handleClickFlightTakeoff}>
+                      <SvgFlightTakeoff aria-hidden="true" />{' '}
+                      {buttonLabel.locator.default}
+                    </button>
+                  ) : (
+                    <button type="button" onClick={handleClickFlightFlying}>
+                      <SvgFlightFlying aria-hidden="true" />
+                      {buttonLabel.locator.activated}
+                    </button>
+                  )}
+                </li>
+                <li>
+                  <button
+                    type="button"
+                    disabled={!watchID}
+                    onClick={handleClickFlightLanding}
+                  >
+                    <SvgFlightLanding aria-hidden="true" />{' '}
+                    {buttonLabel.locator.deactivate}
+                  </button>
+                </li>
+                <li>
+                  <button>
+                    <SvgAdd aria-hidden="true" /> {buttonLabel.save}
+                  </button>
+                </li>
+                <li>
+                  <a href={process.env.NEXT_PUBLIC_CUSTOMER_PORTAL_URL}>
+                    <SvgCreditCard aria-hidden="true" />
+                    {buttonLabel.customerPortal.update}
+                  </a>
+                </li>
+                <li>
+                  <a
+                    data-testid="last-focusable-element" // to be used in menu.cy.js for testing focus trap
+                    href={process.env.NEXT_PUBLIC_CUSTOMER_PORTAL_URL}
+                  >
+                    {userStatus === statusType.cancelled ? (
+                      <SvgRefresh aria-hidden="true" />
+                    ) : (
+                      <SvgDeleteForever aria-hidden="true" />
+                    )}
+                    {userStatus === statusType.cancelled
+                      ? buttonLabel.customerPortal.reactivate
+                      : buttonLabel.customerPortal.cancel}
+                  </a>
+                </li>
+              </ListMenu>
+            </DivMenuBackground>
+            {ui.menu === 'closing' ? (
+              <SpanRipple
+                id="ripple"
+                style={{
+                  height: ui.rippleDiameter,
+                  left: ui.ripplePositionLeft,
+                  top: ui.ripplePositionTop,
+                  width: ui.rippleDiameter,
+                }}
+              />
+            ) : null}
+          </DivMenuBackground.Wrapper>
+        </FocusLock>
+      ) : null}
     </nav>
   );
 };

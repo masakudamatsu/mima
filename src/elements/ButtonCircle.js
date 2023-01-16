@@ -1,13 +1,7 @@
-import styled, {css} from 'styled-components';
+import styled from 'styled-components';
 
-import {
-  animation,
-  buttonCircle,
-  color,
-  dimension,
-} from 'src/utils/designtokens';
+import {buttonCircle, color, dimension} from 'src/utils/designtokens';
 import {removeFocusRing, styleFocusRing} from 'src/utils/cssUtilities';
-import {zIndex} from 'src/utils/zIndex';
 
 const resetStyle = `
   background-color: ${color['white 0']};
@@ -24,14 +18,6 @@ const alignButtonLabel = `
   align-items: center;
   display: flex;
   justify-content: center;
-`;
-
-// TODO #201: remove this once CloseButton is reused in PlaceInfo, MenuButton, SearchedPlace
-const positionButton = `
-  position: absolute;
-  right: 5px;
-  top: 5px;
-  z-index: ${zIndex.closeButton};
 `;
 
 const styleButtonLabel = `
@@ -60,17 +46,8 @@ const styleFocusState = `
 ;
 `;
 
-const styleActiveState = css`
-  overflow: hidden;
-  /* position: relative; (unnecessary because the button is absolutely positioined by FormSearch.js */
-  & .ripple {
-    /* to be used in line 14 of createRipple.js */
-    animation: ${animation['ripple 100']} 600ms linear;
-    background-color: var(--ripple-color);
-    border-radius: 50%;
-    position: absolute;
-    transform: scale(0);
-  }
+const removeTapHighlight = `
+  -webkit-tap-highlight-color: transparent;
 `;
 
 // Define Button components
@@ -78,8 +55,7 @@ export const ButtonCircle = styled.button`
   ${resetStyle}
   ${setClickableArea}
   ${alignButtonLabel}
-  ${positionButton}
   ${styleButtonLabel}
   ${styleFocusState}
-  ${styleActiveState}
+  ${removeTapHighlight}
 `;

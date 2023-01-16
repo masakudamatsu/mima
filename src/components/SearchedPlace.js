@@ -6,10 +6,11 @@ import {PlaceIdContext} from 'src/wrappers/PlaceIdContext';
 
 import {ButtonDialog} from 'src/elements/ButtonDialog';
 import {CloseButton} from './CloseButton';
-import {ComposeDialog} from 'src/elements/ComposeDialog';
 import {DivCloud} from 'src/elements/DivCloud';
+import {DivPlaceInfoBackground} from 'src/elements/DivPlaceInfoBackground';
 import {ParagraphLoading} from 'src/elements/ParagraphLoading';
 import {PlaceInfoEditor} from './PlaceInfoEditor';
+import {SpanRipple} from 'src/elements/SpanRipple';
 
 import {useOnClickOutside} from 'src/hooks/useOnClickOutside';
 import {useOnEscKeyDown} from 'src/hooks/useOnEscKeyDown';
@@ -17,7 +18,6 @@ import {usePlaces} from './Places';
 import {useStateObject} from 'src/hooks/useStateObject';
 
 import {buttonLabel, linkText, loadingMessage} from 'src/utils/uiCopies';
-import {duration} from 'src/utils/designtokens';
 
 export const SearchedPlace = ({mapObject}) => {
   const [placeId] = useContext(PlaceIdContext);
@@ -30,8 +30,13 @@ export const SearchedPlace = ({mapObject}) => {
     status: 'initial',
     placeData: null,
     error: null,
+    ripple: {
+      diameter: null,
+      positionLeft: null,
+      positionRight: null,
+    },
   });
-  const {status, placeData, error} = state;
+  const {status, placeData, error, ripple} = state;
 
   const viewportSize = useRef({height: null, width: null});
   useEffect(() => {
@@ -125,7 +130,7 @@ export const SearchedPlace = ({mapObject}) => {
       // eslint-disable-next-line no-loop-func
       marker.current.addListener('click', () => {
         mapObject.panTo(searchedPlace.coordinates);
-        mapObject.panBy(0, viewportSize.current.height / 6);
+        mapObject.panBy(0, viewportSize.current.height / 4);
         setState({status: 'open'});
       });
 
@@ -133,7 +138,7 @@ export const SearchedPlace = ({mapObject}) => {
       marker.current.setMap(mapObject);
       // snap the map to the marker
       mapObject.panTo(searchedPlace.coordinates);
-      mapObject.panBy(0, viewportSize.current.height / 6);
+      mapObject.panBy(0, viewportSize.current.height / 4);
       setState({status: 'open', placeData: searchedPlace});
     }
   }, [mapObject, nightMode, placeId, setState]);
@@ -147,17 +152,34 @@ export const SearchedPlace = ({mapObject}) => {
   }, [status]);
 
   // handle clicking the close button
-  const closePlaceInfo = () => {
+  const closePlaceInfo = ({
+    rippleDiameter,
+    ripplePositionLeft,
+    ripplePositionTop,
+  }) => {
     mapObject.panTo(placeData.coordinates);
-    setState({status: 'closing'});
+    setState({
+      status: 'closing',
+      ripple: {
+        diameter: rippleDiameter,
+        positionLeft: ripplePositionLeft,
+        positionTop: ripplePositionTop,
+      },
+    });
   };
-  useEffect(() => {
+  // change `status` from "closing" to "closed" once the closing animation is over
+  const handleAnimationEnd = () => {
     if (status === 'closing') {
-      setTimeout(() => {
-        setState({status: 'closed'});
-      }, duration.modal.exit);
+      setState({
+        status: 'closed',
+        ripple: {
+          diameter: null,
+          positionLeft: null,
+          positionTop: null,
+        },
+      });
     }
-  }, [status, setState]);
+  };
 
   // close by clicking outside
   const dialogDiv = useRef(null);
@@ -260,37 +282,53 @@ export const SearchedPlace = ({mapObject}) => {
     return null; // TODO #199: Handle error properly
   } else if (status === 'open' || status === 'closing') {
     return (
-      <ComposeDialog
-        aria-describedby={placeDetailId}
-        aria-labelledby={placeNameId}
+      <DivPlaceInfoBackground.Wrapper
         data-closing={status === 'closing'}
-        ref={dialogDiv}
-        role="dialog"
+        onAnimationEnd={handleAnimationEnd}
       >
-        <CloseButton
-          ariaLabel={buttonLabel.closePlaceDetail}
-          handleClick={closePlaceInfo}
-          ref={closeButton}
-          testId="close-button-saved-place"
-        />
-        <h2 id={placeNameId}>{placeData.name}</h2>
-        <div id={placeDetailId}>
-          <p>{placeData.address}</p>
-          <p>
-            <a href={placeData.url} rel="noreferrer" target="_blank">
-              {linkText.searchedPlace}
-            </a>
-          </p>
-        </div>
-        <ButtonDialog
-          onClick={openEditor}
-          // onFocus={importPlaceInfoEditor}
-          // onMouseEnter={importPlaceInfoEditor}
-          type="button"
+        <DivPlaceInfoBackground
+          aria-describedby={placeDetailId}
+          aria-labelledby={placeNameId}
+          data-closing={status === 'closing'}
+          ref={dialogDiv}
+          role="dialog"
         >
-          {buttonLabel.saveSearchedPlace}
-        </ButtonDialog>
-      </ComposeDialog>
+          <CloseButton
+            ariaLabel={buttonLabel.closePlaceDetail}
+            handleClick={closePlaceInfo}
+            ref={closeButton}
+            testId="close-button-saved-place"
+          />
+          <h2 id={placeNameId}>{placeData.name}</h2>
+          <div id={placeDetailId}>
+            <p>{placeData.address}</p>
+            <p>
+              <a href={placeData.url} rel="noreferrer" target="_blank">
+                {linkText.searchedPlace}
+              </a>
+            </p>
+          </div>
+          <ButtonDialog
+            onClick={openEditor}
+            // onFocus={importPlaceInfoEditor}
+            // onMouseEnter={importPlaceInfoEditor}
+            type="button"
+          >
+            {buttonLabel.saveSearchedPlace}
+          </ButtonDialog>
+          {status === 'closing' ? (
+            <SpanRipple
+              id="ripple"
+              style={{
+                height: ripple.diameter,
+                left: ripple.positionLeft,
+                top: ripple.positionTop,
+                width: ripple.diameter,
+              }}
+            />
+          ) : null}
+        </DivPlaceInfoBackground>
+      </DivPlaceInfoBackground.Wrapper>
     );
   } else if (status === 'closed') {
     return null;

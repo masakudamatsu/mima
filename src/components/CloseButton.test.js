@@ -4,9 +4,6 @@ import userEvent from '@testing-library/user-event';
 import {axe} from 'jest-axe';
 
 import {CloseButton} from './CloseButton';
-import {createRipple as mockCreateRipple} from 'src/utils/createRipple';
-
-jest.mock('src/utils/createRipple');
 
 beforeEach(() => {
   jest.clearAllMocks();
@@ -17,6 +14,14 @@ const mockProps = {
   handleClick: jest.fn().mockName('handleClick'),
 };
 
+// Mock offsetParent
+// source: https://github.com/jsdom/jsdom/issues/1261#issuecomment-362928131
+Object.defineProperty(HTMLElement.prototype, 'offsetParent', {
+  get() {
+    return this.parentNode;
+  },
+});
+
 describe(`Clicking the button`, () => {
   beforeEach(() => {
     render(<CloseButton {...mockProps} />);
@@ -24,9 +29,6 @@ describe(`Clicking the button`, () => {
   });
   test(`calls a function specified with handleClick prop`, () => {
     expect(mockProps.handleClick).toHaveBeenCalledTimes(1);
-  });
-  test(`calls createRipple()`, () => {
-    expect(mockCreateRipple).toHaveBeenCalledTimes(1);
   });
 });
 

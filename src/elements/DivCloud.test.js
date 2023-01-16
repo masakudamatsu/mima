@@ -9,6 +9,7 @@ describe('DivCloud component', () => {
 .c0 {
   --blur-radius: 8px;
   background-color: var(--popup-background-color-fallback);
+  box-shadow: 0px 0px var(--blur-radius) var(--blur-radius) var(--popup-glow-color-fallback);
   font-family: 'Noto Sans',Verdana,sans-serif;
   font-size: 1.0506rem;
   font-weight: 400;
@@ -58,6 +59,7 @@ describe('DivCloud component', () => {
 
   .c0::after {
     background-color: var(--popup-background-color);
+    box-shadow: 0px 0px var(--blur-radius) var(--blur-radius) var(--popup-glow-color);
     content: "";
     position: absolute;
     left: 0;
@@ -65,6 +67,22 @@ describe('DivCloud component', () => {
     top: 0;
     bottom: 0;
     z-index: -1;
+  }
+}
+
+@supports (-webkit-backdrop-filter:blur(var(--blur-radius))) or (backdrop-filter:blur(var(--blur-radius))) {
+  .c0 {
+    box-shadow: 0px 0px var(--blur-radius) var(--blur-radius) var(--popup-glow-color);
+  }
+}
+
+@supports (background-image:-moz-element(#map)) and (not (backdrop-filter:blur(var(--blur-radius)))) {
+  .c0 {
+    box-shadow: none;
+  }
+
+  .c0::after {
+    box-shadow: 0px 0px var(--blur-radius) var(--blur-radius) var(--popup-glow-color);
   }
 }
 

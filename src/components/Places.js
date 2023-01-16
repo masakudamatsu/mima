@@ -11,6 +11,11 @@ export function Places({children, placeData}) {
     ui: null,
     userData: placeData,
     selectedPlace: null,
+    ripple: {
+      diameter: null,
+      positionLeft: null,
+      positionTop: null,
+    },
   });
 
   return (

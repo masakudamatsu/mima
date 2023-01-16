@@ -26,6 +26,15 @@ describe('Button component', () => {
   justify-content: center;
   position: absolute;
   z-index: 1;
+  -webkit-animation-duration: 300ms;
+  animation-duration: 300ms;
+  -webkit-animation-fill-mode: backwards;
+  animation-fill-mode: backwards;
+  -webkit-animation-name: lbWRkT;
+  animation-name: lbWRkT;
+  -webkit-animation-timing-function: linear;
+  animation-timing-function: linear;
+  -webkit-tap-highlight-color: transparent;
 }
 
 .c0:focus {
@@ -56,8 +65,7 @@ describe('Button component', () => {
   fill: var(--button-label-color-default);
 }
 
-.c0:focus svg,
-.c0:hover svg {
+.c0:focus svg {
   fill: var(--button-label-color-focus);
 }
 
@@ -82,8 +90,7 @@ describe('Button component', () => {
   filter: drop-shadow( 0px 0px 1px var(--button-shadow-color) ) drop-shadow( 0px 0px 2px var(--button-shadow-color) ) drop-shadow( 0px 0px 4px var(--button-shadow-color) );
 }
 
-.c0:focus #cloud,
-.c0:hover #cloud {
+.c0:focus #cloud {
   stroke: var(--button-outline-color-focus);
 }
 
@@ -91,8 +98,7 @@ describe('Button component', () => {
   stroke: var(--button-outline-color);
 }
 
-.c0:focus svg,
-.c0:hover svg {
+.c0:focus svg {
   -webkit-filter: drop-shadow( 0px 0px var(--button-shadow-blur-radius-focus) var(--button-shadow-color-focus) );
   filter: drop-shadow( 0px 0px var(--button-shadow-blur-radius-focus) var(--button-shadow-color-focus) );
 }
@@ -111,9 +117,43 @@ describe('Button component', () => {
   stroke: none;
 }
 
+.c0[data-closing='true'] {
+  -webkit-transform-origin: top right;
+  -ms-transform-origin: top right;
+  transform-origin: top right;
+  -webkit-animation-duration: 300ms;
+  animation-duration: 300ms;
+  -webkit-animation-fill-mode: forwards;
+  animation-fill-mode: forwards;
+  -webkit-animation-name: dnyzVB,iVskkp;
+  animation-name: dnyzVB,iVskkp;
+  -webkit-animation-timing-function: cubic-bezier(0.0,0.0,0.2,1);
+  animation-timing-function: cubic-bezier(0.0,0.0,0.2,1);
+}
+
+.c0[data-closing='true'][data-position='top-left'] {
+  -webkit-transform-origin: top left;
+  -ms-transform-origin: top left;
+  transform-origin: top left;
+}
+
 .c0[data-loading='true'] {
   -webkit-animation: bPkxfw 1500ms linear infinite;
   animation: bPkxfw 1500ms linear infinite;
+}
+
+@media (prefers-reduced-motion:reduce) {
+  .c0 {
+    -webkit-animation-duration: 250ms;
+    animation-duration: 250ms;
+  }
+}
+
+@media (prefers-reduced-motion:reduce) {
+  .c0[data-closing='true'] {
+    -webkit-animation-name: gHmQJP;
+    animation-name: gHmQJP;
+  }
 }
 
 <div>

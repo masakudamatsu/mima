@@ -4,15 +4,15 @@ import FocusLock from 'react-focus-lock';
 
 import {CloseButton} from './CloseButton';
 import {Button} from 'src/elements/Button';
+import {SpanRipple} from 'src/elements/SpanRipple';
 import {SvgCloud} from 'src/elements/SvgCloud';
 
-import {FormSearch} from 'src/elements/FormSearch';
+import {DivSearchBackground} from 'src/elements/DivSearchBackground';
 import {ParagraphLoading} from 'src/elements/ParagraphLoading';
 
 import {useOnEscKeyDown} from 'src/hooks/useOnEscKeyDown';
 
 import {buttonLabel} from 'src/utils/uiCopies';
-import {duration} from 'src/utils/designtokens';
 
 import dynamic from 'next/dynamic';
 const importSearchBox = () =>
@@ -22,35 +22,61 @@ const SearchBox = dynamic(importSearchBox, {
 });
 
 export const Search = () => {
-  const [searchBoxOpen, setSearchBoxOpen] = useState('false');
+  const [ui, setUi] = useState({
+    searchButton: 'open',
+    searchBox: 'closed',
+  });
 
   // Open search box
   const handleClickSearchButton = () => {
-    setSearchBoxOpen('true');
+    setUi({
+      searchButton: 'closing',
+      searchBox: 'opening',
+    });
   };
 
   // Close search box by pressing close button
-  const handleClickCloseButton = () => {
+  const handleClickCloseButton = ({
+    rippleDiameter,
+    ripplePositionLeft,
+    ripplePositionTop,
+  }) => {
     closeButtonPressed.current = true;
-    setSearchBoxOpen('closing');
+    setUi({
+      searchButton: 'opening',
+      searchBox: 'closing',
+      rippleDiameter,
+      ripplePositionLeft,
+      ripplePositionTop,
+    });
   };
   // Close search box by selecting an autocomplete suggestion
   const closeSearchBox = () => {
     closeButtonPressed.current = false;
-    setSearchBoxOpen('closing');
+    setUi({
+      searchButton: 'opening',
+      searchBox: 'closing',
+    });
   };
-  // with animation
-  useEffect(() => {
-    if (searchBoxOpen === 'closing') {
-      setTimeout(() => {
-        setSearchBoxOpen('false');
-      }, duration.modal.exit);
+  // Remove from DOM after transition animation is over
+  const handleAnimationEnd = () => {
+    if (ui.searchButton === 'closing') {
+      setUi({
+        searchButton: 'closed',
+        searchBox: 'open',
+      });
     }
-  }, [searchBoxOpen]);
+    if (ui.searchBox === 'closing') {
+      setUi({
+        searchButton: 'open',
+        searchBox: 'closed',
+      });
+    }
+  };
 
   // close with Esc key
   useOnEscKeyDown({
-    state: searchBoxOpen === 'true',
+    state: ui.searchBox === 'open',
     handler: handleClickCloseButton,
   });
 
@@ -58,22 +84,20 @@ export const Search = () => {
   const buttonElement = useRef();
   const closeButtonPressed = useRef(false);
   useEffect(() => {
-    if (searchBoxOpen === 'false') {
+    if (ui.searchBox === 'closed') {
       if (closeButtonPressed.current === true) {
         buttonElement.current.focus();
       }
     }
   });
 
-  const searchboxId = 'searchbox';
-
   return (
-    <FormSearch data-searchbox={searchBoxOpen}>
-      {searchBoxOpen === 'false' ? (
+    <form role="search" onAnimationEnd={handleAnimationEnd}>
+      {ui.searchButton !== 'closed' ? (
         <Button
-          aria-controls={searchboxId}
           aria-expanded="false"
           aria-label={buttonLabel.search}
+          data-closing={ui.searchButton === 'closing'}
           data-position="top-right"
           data-testid="search-button"
           onClick={handleClickSearchButton}
@@ -84,19 +108,39 @@ export const Search = () => {
         >
           <SvgCloud icon="search" />
         </Button>
-      ) : (
+      ) : null}
+      {ui.searchBox !== 'closed' ? (
         <FocusLock>
-          <CloseButton
-            ariaControls={searchboxId}
-            ariaExpanded="true"
-            ariaLabel={buttonLabel.closeSearchbox}
-            handleClick={handleClickCloseButton}
-            testId="searchbox-last-focusable-element" // to test focus management
-          />
-          <SearchBox closeSearchBox={closeSearchBox} id={searchboxId} />
+          <DivSearchBackground.Wrapper
+            data-closing={ui.searchBox === 'closing'}
+          >
+            <DivSearchBackground
+              data-closing={ui.searchBox === 'closing'}
+              data-testid="div-search-background"
+            >
+              <CloseButton
+                ariaExpanded="true"
+                ariaLabel={buttonLabel.closeSearchbox}
+                handleClick={handleClickCloseButton}
+                testId="searchbox-last-focusable-element" // to test focus management
+              />
+              <SearchBox closeSearchBox={closeSearchBox} id="searchbox" />
+            </DivSearchBackground>
+            {ui.searchBox === 'closing' ? (
+              <SpanRipple
+                id="ripple"
+                style={{
+                  height: ui.rippleDiameter,
+                  left: ui.ripplePositionLeft,
+                  top: ui.ripplePositionTop,
+                  width: ui.rippleDiameter,
+                }}
+              />
+            ) : null}
+          </DivSearchBackground.Wrapper>
         </FocusLock>
-      )}
-    </FormSearch>
+      ) : null}
+    </form>
   );
 };
 

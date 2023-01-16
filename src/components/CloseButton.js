@@ -2,44 +2,56 @@ import {forwardRef, useImperativeHandle, useRef} from 'react';
 import PropTypes from 'prop-types';
 
 import {ButtonCircle} from 'src/elements/ButtonCircle';
-import {createRipple} from 'src/utils/createRipple';
 
-// TODO #201:
-// 2. Reuse this component in MenuButton
 export const CloseButton = forwardRef(function CloseButton(
-  {
-    ariaControls = null,
-    ariaExpanded = null,
-    ariaLabel,
-    handleClick,
-    testId = null,
-  },
+  {ariaExpanded = null, ariaLabel, handleClick, testId = null},
   ref,
 ) {
   const buttonElement = useRef();
   const focusButton = () => buttonElement.current.focus();
   useImperativeHandle(ref, () => ({focusButton}));
   const clickHandler = event => {
-    createRipple(event);
-    handleClick();
-  };
-  const keydownHandler = event => {
-    if (event.key === 'Enter') {
-      event.preventDefault(); // otherwise click event will be fired as well
-      createRipple(event);
-      handleClick();
+    // Handle the clicking with Enter key
+    if (event.clientX === 0 && event.clientY === 0) {
+      const {
+        height: buttonHeight,
+        left: buttonPositionLeft,
+        top: buttonPositionTop,
+        width: buttonWidth,
+      } = event.currentTarget.getBoundingClientRect();
+      event.clientX = buttonPositionLeft + buttonWidth / 2;
+      event.clientY = buttonPositionTop + buttonHeight / 2;
     }
+    // Obtain the size and position of the ripple
+    const popup = event.currentTarget.offsetParent; // event.target would refer to <svg>, not <button>
+    const {
+      left: popupLeft,
+      top: popupTop,
+      height: popupHeight,
+      width: popupWidth,
+    } = popup.getBoundingClientRect();
+    const popupDiagonalLength = Math.sqrt(
+      Math.pow(popupWidth, 2) + Math.pow(popupHeight, 2),
+    );
+    const rippleRadius = popupDiagonalLength;
+    const rippleCenter = {
+      x: event.clientX - popupLeft,
+      y: event.clientY - popupTop,
+    };
+    handleClick({
+      rippleDiameter: `${Math.round(rippleRadius * 2)}px`,
+      ripplePositionLeft: `${Math.round(rippleCenter.x - rippleRadius)}px`,
+      ripplePositionTop: `${Math.round(rippleCenter.y - rippleRadius)}px`,
+    });
   };
 
   return (
     <>
       <ButtonCircle
-        aria-controls={ariaControls}
         aria-expanded={ariaExpanded}
         aria-label={ariaLabel}
         data-testid={testId}
         onClick={clickHandler}
-        onKeyDown={keydownHandler}
         ref={buttonElement}
         type="button"
       >
@@ -53,7 +65,6 @@ export const CloseButton = forwardRef(function CloseButton(
 });
 
 CloseButton.propTypes = {
-  ariaControls: PropTypes.string,
   ariaExpanded: PropTypes.string,
   ariaLabel: PropTypes.string.isRequired,
   handleClick: PropTypes.func.isRequired,

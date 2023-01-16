@@ -125,6 +125,139 @@ export const dimension = {
 };
 
 export const animation = {
+  showDetail: {
+    // for opening place detail popup
+    duration: '250ms', // to coordinate with the snapping of the place mark to one-third from the top
+    easing: 'linear',
+    opacity: keyframes`
+      0% { 
+        opacity: 0;
+      }
+      100% { 
+        opacity: 1;
+      }
+    `,
+    fillMode: 'backwards',
+  },
+  // For opening menu / search box
+  toggleIn: {
+    // Duration and keyframes follow the "Container Transform" spec of Material Design 2 (https://m2.material.io/design/motion/the-motion-system.html#container-transform)
+    // Easing is replaced with deceleration because the original spec makes animation look mechine-ish
+    duration: '300ms',
+    easing: 'cubic-bezier(0.0, 0.0, 0.2, 1)', // Decelerated easing in Material Design 2 (https://m2.material.io/design/motion/speed.html#easing)
+    origin: 'top right',
+    button: {
+      opacity: keyframes`
+        30% { /* mocking 90ms duration */
+          opacity: 0; 
+        }
+        100% {
+          opacity: 0;
+        }
+      `,
+      scale: keyframes`
+        100% {
+          transform: scale(4); /* manually adjusted to make it look seamless */
+        }
+      `,
+      fillMode: 'forwards',
+    },
+    popup: {
+      opacity: keyframes`
+        0%,
+        30% { /* mocking 90ms delay */
+          opacity: 0;
+        }
+        100% {
+          opacity: 1;
+        }
+      `,
+      scale: keyframes`
+        0% {
+          transform: scale(0);
+        }
+        100% {
+          transform: scale(1);
+        }
+      `,
+      fillMode: 'backwards',
+    },
+    reducedMotion: {
+      button: {
+        opacity: keyframes`
+          0% { 
+            opacity: 1;
+          }
+          100% { /* no reason to finish animation early */
+            opacity: 0;
+          }
+        `,
+      },
+      popup: {
+        opacity: keyframes`
+          0% { /* no reason to delay the beginning of animation */
+            opacity: 0;
+          }
+          100% { 
+            opacity: 1;
+          }
+        `,
+      },
+    },
+  },
+  // For closing menu / search box / place detail
+  toggleOut: {
+    duration: '300ms', // Complex animation requires longer duration while long duration will increase "time to interactive" for cloud buttons
+    easing: 'linear', // Decelerated easing would make the ripple-erasing effect less noticeable
+    origin: null,
+    button: {
+      opacity: keyframes`
+        0% {
+          opacity: 0; 
+        }
+        100% {
+          opacity: 1;
+        }
+      `,
+      fillMode: 'backwards',
+    },
+    popup: {
+      opacity: keyframes`
+        0% { 
+          opacity: 1;
+        }
+        100% { 
+          opacity: 0;
+        }
+      `,
+      scale: null,
+      fillMode: 'forwards',
+    },
+    ripple: {
+      scale: keyframes`
+        from {
+          transform: scale(0);
+        }
+        to {
+          transform: scale(1);
+        }
+      `,
+      fillMode: 'backwards',
+    },
+    reducedMotion: {
+      duration: '250ms', // no reason to delay the end of animation for the ripple effect to be noticeable
+      popup: {
+        opacity: keyframes`
+          0% { /* no reason to delay the beginning of animation for the ripple effect to be noticeable */
+            opacity: 1;
+          }
+          100% { 
+            opacity: 0;
+          }
+        `,
+      },
+    },
+  },
   fadeIn: keyframes`
     from {
       opacity: 0;
@@ -178,7 +311,8 @@ export const easing = {
   accelerate: 'cubic-bezier(0.4, 0.0, 1, 1)',
   decelerate: 'cubic-bezier(0.0, 0.0, 0.2, 1)',
   linear: 'linear',
-};
+  standard: 'cubic-bezier(0.4, 0.0, 0.2, 1)',
+}; // source: https://m2.material.io/design/motion/speed.html#easing
 
 export const buttonCircle = {
   clickableArea: dimension.button['minimum target size 100'],

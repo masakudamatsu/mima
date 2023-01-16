@@ -63,8 +63,8 @@ export const SvgCloud = ({icon, title}) => {
     <svg
       aria-hidden="true"
       data-testid="svg-cloud" // used in SvgCloud.test.js
-      width={`${width}px`}
-      height={`${height}px`}
+      width={`${width}px`} // MacOS Safari won't render SVG path without specifying either width or height for some reason...
+      height={`${height}px`} // MacOS Safari won't render SVG path without specifying either width or height for some reason...
       viewBox={`0 0 ${width} ${height}`}
     >
       <path

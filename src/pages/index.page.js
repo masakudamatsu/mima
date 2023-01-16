@@ -39,7 +39,7 @@ export default withPageAuthRequired(function HomePage({
       <PlaceIdProvider>
         <Controls mapObject={mapObject} userStatus={userStatus} />
         <main
-          id="map" // used in GlobalStyle.js
+          id="index-page-main" // used in GlobalStyle.js
         >
           <Wrapper
             apiKey={process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY}

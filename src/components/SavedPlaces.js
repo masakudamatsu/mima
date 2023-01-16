@@ -1,17 +1,22 @@
 import {useContext, useEffect, useRef, useState} from 'react';
 import PropTypes from 'prop-types';
+import Autolinker from 'autolinker';
 import DOMPurify from 'dompurify';
 import FocusLock from 'react-focus-lock';
+
 import {ButtonDialog} from 'src/elements/ButtonDialog';
+import {CloseButton} from './CloseButton';
 import {ComposeDialog} from 'src/elements/ComposeDialog';
 import {DivCloud} from 'src/elements/DivCloud';
 import {DivModalBackdrop} from 'src/elements/DivModalBackdrop';
+import {DivPlaceInfoBackground} from 'src/elements/DivPlaceInfoBackground';
 import {ParagraphLoading} from 'src/elements/ParagraphLoading';
-import {PlaceInfo} from 'src/components/PlaceInfo';
+import {SpanRipple} from 'src/elements/SpanRipple';
 
 import {ClientOnlyPortal} from 'src/wrappers/ClientOnlyPortal';
 
 import {usePlaces} from './Places';
+import {useOnClickOutside} from 'src/hooks/useOnClickOutside';
 import {useOnEscKeyDown} from 'src/hooks/useOnEscKeyDown';
 import {getHtmlFromSlate} from 'src/utils/getHtmlFromSlate';
 import {NightModeContext} from 'src/wrappers/NightModeContext';
@@ -25,9 +30,14 @@ const importPlaceInfoEditor = () =>
   );
 const PlaceInfoEditor = dynamic(importPlaceInfoEditor);
 
+// Prepare for converting URL text into link
+const autolinker = new Autolinker({
+  truncate: 25,
+}); // https://github.com/gregjacobs/Autolinker.js#usage
+
 export const SavedPlaces = ({mapObject}) => {
   const {places, setPlaces} = usePlaces();
-  const {ui, userData, selectedPlace} = places;
+  const {ui, userData, selectedPlace, ripple} = places;
 
   const nightMode = useContext(NightModeContext);
 
@@ -103,7 +113,7 @@ export const SavedPlaces = ({mapObject}) => {
       // eslint-disable-next-line no-loop-func
       marker.addListener('click', () => {
         mapObject.panTo(userPlace.coordinates);
-        mapObject.panBy(0, viewportSize.current.height / 6);
+        mapObject.panBy(0, viewportSize.current.height / 4);
         setPlaces({
           ui: 'open',
           selectedPlace: {
@@ -117,11 +127,35 @@ export const SavedPlaces = ({mapObject}) => {
     }
   }, [mapObject, nightMode, setPlaces, userData]);
 
-  const closePlaceInfo = () => {
+  const closePlaceInfo = ({
+    rippleDiameter,
+    ripplePositionLeft,
+    ripplePositionTop,
+  }) => {
     mapObject.panTo(selectedPlace.coordinates);
-    setPlaces({ui: null, selectedPlace: null});
+    setPlaces({
+      ui: 'closing',
+      ripple: {
+        diameter: rippleDiameter,
+        positionLeft: ripplePositionLeft,
+        positionTop: ripplePositionTop,
+      },
+    });
   };
-
+  // change `status` from "closing" to "closed" once the closing animation is over
+  const handleAnimationEnd = () => {
+    if (ui === 'closing') {
+      setPlaces({
+        ui: null,
+        selectedPlace: null,
+        ripple: {
+          diameter: null,
+          positionLeft: null,
+          positionTop: null,
+        },
+      });
+    }
+  };
   // For deleting the saved place
   const handleClickDelete = () => {
     setDeleteUi('confirm');
@@ -147,6 +181,20 @@ export const SavedPlaces = ({mapObject}) => {
     }
   };
   useOnEscKeyDown({state: selectedPlace, handler: handleEsc});
+
+  // close by clicking outside
+  const dialogDiv = useRef(null);
+  useOnClickOutside(dialogDiv, closePlaceInfo, {
+    disable: deleteUi === 'confirm',
+  });
+
+  // For autofocusing the close button when opened
+  const closeButton = useRef();
+  useEffect(() => {
+    if (ui === 'open') {
+      closeButton.current.focusButton();
+    }
+  }, [ui]);
 
   // for updating place info
   if (selectedPlace) {
@@ -223,18 +271,59 @@ export const SavedPlaces = ({mapObject}) => {
         console.log(error);
       }
     };
-    if (ui === 'open') {
+    if (ui === 'open' || ui === 'closing') {
       return (
         <>
-          <PlaceInfo
-            closePlaceInfo={closePlaceInfo}
-            deletePlaceInfo={handleClickDelete}
-            importPlaceInfoEditor={importPlaceInfoEditor}
-            modalOpen={deleteUi === 'confirm'}
-            placeName={selectedPlaceName}
-            placeNoteHtml={selectedPlaceNoteHtml}
-            editPlaceInfo={() => setPlaces({ui: 'editing'})}
-          />
+          <DivPlaceInfoBackground.Wrapper
+            data-closing={ui === 'closing'}
+            onAnimationEnd={handleAnimationEnd}
+          >
+            <DivPlaceInfoBackground
+              aria-describedby="selected-place-detail"
+              aria-hidden={deleteUi === 'confirm'}
+              aria-labelledby="selected-place-name"
+              data-closing={ui === 'closing'}
+              ref={dialogDiv}
+              role="dialog"
+            >
+              <CloseButton
+                ariaLabel={buttonLabel.closePlaceDetail}
+                handleClick={closePlaceInfo}
+                ref={closeButton}
+                testId="close-button-saved-place"
+              />
+              <h2 id="selected-place-name">{selectedPlaceName}</h2>
+              <div
+                dangerouslySetInnerHTML={{
+                  __html: autolinker.link(selectedPlaceNoteHtml),
+                }}
+                id="selected-place-detail"
+              />
+              <ButtonDialog
+                onClick={() => setPlaces({ui: 'editing'})}
+                onFocus={importPlaceInfoEditor}
+                onMouseEnter={importPlaceInfoEditor}
+                type="button"
+              >
+                {buttonLabel.edit}
+              </ButtonDialog>
+              <ButtonDialog onClick={handleClickDelete} type="button">
+                {buttonLabel.delete}
+              </ButtonDialog>
+              {ui === 'closing' ? (
+                <SpanRipple
+                  id="ripple"
+                  style={{
+                    height: ripple.diameter,
+                    left: ripple.positionLeft,
+                    top: ripple.positionTop,
+                    width: ripple.diameter,
+                  }}
+                />
+              ) : null}
+            </DivPlaceInfoBackground>
+          </DivPlaceInfoBackground.Wrapper>
+
           {deleteUi === 'confirm' ? (
             <ClientOnlyPortal selector="#modal">
               <DivModalBackdrop>
