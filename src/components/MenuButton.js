@@ -142,6 +142,7 @@ export const MenuButton = ({
               <CloseButton
                 ariaLabel={buttonLabel.close}
                 handleClick={handleClickCloseButton}
+                testId="close-button-menu"
               />
               <ParagraphMenu>
                 {isLoading
