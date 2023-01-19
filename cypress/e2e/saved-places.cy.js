@@ -102,7 +102,7 @@ describe('Saved place detail feature', () => {
     cy.log(`Setup`);
     cy.findByRole('button', {name: placeName}).click();
     cy.log('Clicking the close button...');
-    cy.findByRole('button', {name: buttonLabel.close}).click();
+    cy.findByRole('button', {name: buttonLabel.closePlaceDetail}).click();
     cy.log(`...Hides the place name (as heading)`);
     cy.findByRole('heading', {name: placeName}).should('not.exist');
     cy.log(`...Keeps the place marker to be shown`);
