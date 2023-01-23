@@ -40,7 +40,7 @@ export const Search = () => {
     rippleDiameter,
     ripplePositionLeft,
     ripplePositionTop,
-  }) => {
+  } = {}) => {
     closeButtonPressed.current = true;
     setUi({
       searchButton: 'opening',

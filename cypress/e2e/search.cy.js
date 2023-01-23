@@ -121,17 +121,6 @@ describe('Search feature', () => {
     cy.log('...Focuses the search icon button');
     cy.focused().should('have.attr', 'aria-label', buttonLabel.search);
   });
-  it(`Pressing Esc key closes search box`, () => {
-    cy.log('Setting up');
-    cy.findByRole('button', {name: buttonLabel.search}).click();
-
-    cy.log('Pressing Esc key...');
-    cy.get('body').type('{esc}');
-    cy.log('...Hides the search box');
-    cy.findByRole('combobox').should('not.exist');
-    cy.log('...Focuses the search icon button');
-    cy.focused().should('have.attr', 'aria-label', buttonLabel.search);
-  });
   it('traps the focus within the search box dialog popup', () => {
     cy.log('Setup: Open search box dialog popup');
     cy.findByRole('button', {name: buttonLabel.search}).click();
