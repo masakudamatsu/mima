@@ -131,7 +131,7 @@ export const SavedPlaces = ({mapObject}) => {
     rippleDiameter,
     ripplePositionLeft,
     ripplePositionTop,
-  }) => {
+  } = {}) => {
     mapObject.panTo(selectedPlace.coordinates);
     setPlaces({
       ui: 'closing',
