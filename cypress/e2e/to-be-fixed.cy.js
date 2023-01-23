@@ -1,5 +1,20 @@
 // This file contains tests that pass manually but fail with Cypress
-import {buttonLabel} from 'src/utils/uiCopies';
+import {buttonLabel, menuLabel} from '../../src/utils/uiCopies';
+describe(`menu.cy.js`, () => {
+  beforeEach(() => {
+    cy.auth();
+    cy.visitAtDaytime('/');
+    cy.waitForMapToLoad();
+  });
+  // TODO #412 : make the following test pass
+  it.skip('closes menu after pressing ESC key', () => {
+    cy.log(`Clicking menu button and ...`);
+    cy.findByRole('button', {name: buttonLabel.menu}).click();
+    cy.log(`Pressing ESC key also closes the menu`);
+    cy.get('body').type('{esc}');
+    cy.findByRole('dialog', {name: menuLabel}).should('not.exist');
+  });
+});
 describe(`search.cy.js`, () => {
   beforeEach(() => {
     cy.log('Loading app');

@@ -57,7 +57,7 @@ export const MenuButton = ({
     rippleDiameter,
     ripplePositionLeft,
     ripplePositionTop,
-  }) => {
+  } = {}) => {
     closeButtonPressed.current = true;
     setUi({
       button: 'opening',

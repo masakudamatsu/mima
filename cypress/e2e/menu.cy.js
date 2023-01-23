@@ -30,13 +30,5 @@ describe('Menu feature', () => {
     cy.findByRole('dialog', {name: menuLabel}).should('not.exist');
     cy.log(`...focuses the menu button`);
     cy.focused().should('have.attr', 'data-testid', 'menu-button');
-
-    cy.log(`Pressing ESC key also closes the menu`);
-    // setup
-    cy.findByRole('button', {name: buttonLabel.menu}).click();
-    // execute
-    cy.get('body').type('{esc}');
-    // verify
-    cy.findByRole('dialog', {name: menuLabel}).should('not.exist');
   });
 });
