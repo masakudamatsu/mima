@@ -1,4 +1,5 @@
 import {buttonLabel, linkText, searchBoxLabel} from '../../src/utils/uiCopies';
+import {minPopupWidth, popupWidthShare} from '../../src/utils/designtokens';
 // To be used for TODO #232
 // import {boldText} from '../../src/utils/designtokens';
 const searchWords = [/nijo/i, /koya/i];
@@ -120,6 +121,17 @@ describe('Search feature', () => {
     cy.findByRole('combobox').should('not.exist');
     cy.log('...Focuses the search icon button');
     cy.focused().should('have.attr', 'aria-label', buttonLabel.search);
+  });
+  it('Wide screen users can close search box by clicking outside the popup', () => {
+    cy.log('Setup: Screen width');
+    const breakpoint = minPopupWidth / popupWidthShare;
+    cy.viewport(breakpoint, 800); // 800px high for MacBook 13
+    cy.log('Execute: Click search icon button, and ...');
+    cy.findByRole('button', {name: buttonLabel.search}).click();
+    cy.log('Execute: Click anywhere outside the search box popup');
+    cy.get('body').click('left', {force: true});
+    cy.log('Verify: Searchbox closes');
+    cy.findByRole('combobox').should('not.exist');
   });
   it('traps the focus within the search box dialog popup', () => {
     cy.log('Setup: Open search box dialog popup');
