@@ -10,6 +10,7 @@ import {SvgCloud} from 'src/elements/SvgCloud';
 import {DivSearchBackground} from 'src/elements/DivSearchBackground';
 import {ParagraphLoading} from 'src/elements/ParagraphLoading';
 
+import {useOnClickOutside} from 'src/hooks/useOnClickOutside';
 import {useOnEscKeyDown} from 'src/hooks/useOnEscKeyDown';
 
 import {buttonLabel} from 'src/utils/uiCopies';
@@ -40,7 +41,7 @@ export const Search = () => {
     rippleDiameter,
     ripplePositionLeft,
     ripplePositionTop,
-  }) => {
+  } = {}) => {
     closeButtonPressed.current = true;
     setUi({
       searchButton: 'opening',
@@ -80,6 +81,10 @@ export const Search = () => {
     handler: handleClickCloseButton,
   });
 
+  // close by clicking outside
+  const popup = useRef(null);
+  useOnClickOutside(popup, handleClickCloseButton);
+
   // Focus the search button after closing the searchbox
   const buttonElement = useRef();
   const closeButtonPressed = useRef(false);
@@ -117,6 +122,7 @@ export const Search = () => {
             <DivSearchBackground
               data-closing={ui.searchBox === 'closing'}
               data-testid="div-search-background"
+              ref={popup}
             >
               <CloseButton
                 ariaExpanded="true"

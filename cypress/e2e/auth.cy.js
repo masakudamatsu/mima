@@ -205,6 +205,7 @@ describe('Subscribed users', () => {
   });
   it('can update payment information from menu', () => {
     cy.visit('/');
+    cy.findByRole('button', {name: buttonLabel.menu}).click();
     cy.findByText(buttonLabel.customerPortal.update).then(link => {
       cy.wrap(link).should(
         'have.attr',
@@ -216,6 +217,7 @@ describe('Subscribed users', () => {
   });
   it('can cancel subscription from menu', () => {
     cy.visit('/');
+    cy.findByRole('button', {name: buttonLabel.menu}).click();
     cy.findByText(buttonLabel.customerPortal.cancel).then(link => {
       cy.wrap(link).should(
         'have.attr',

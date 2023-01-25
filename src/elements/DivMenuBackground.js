@@ -5,6 +5,8 @@ import {
   bodyText,
   buttonCircle,
   dimension,
+  minPopupWidth,
+  popupWidthShare,
 } from 'src/utils/designtokens';
 import {buttonLabel} from 'src/utils/uiCopies';
 import {remify} from 'src/utils/remify';
@@ -15,24 +17,14 @@ const placeOverMap = `
   z-index: ${zIndex.divSearchBackground};
 `;
 
-const minPopupWidth = 365;
-// for consistency with Search box popup
-const widthRatio = {
-  map: 67,
-  popup: 33,
-};
-// to ensure the popup will occupy at least one-third of the screen
-// for aesthestically pleasing effects (the rule of the third)
-const breakpoint = Math.round(
-  (minPopupWidth / widthRatio.popup) * (widthRatio.map + widthRatio.popup),
-);
+const breakpoint = minPopupWidth / popupWidthShare;
 const setOuterSize = `
   bottom: 0;
   left: 0;
   right: 0;
   top: 0;
   @media (min-width: ${breakpoint}px) {
-    right: calc(${widthRatio.map}%);
+    right: ${Math.round((1 - popupWidthShare) * 100)}%;
   }
 `;
 

@@ -156,7 +156,7 @@ export const SearchedPlace = ({mapObject}) => {
     rippleDiameter,
     ripplePositionLeft,
     ripplePositionTop,
-  }) => {
+  } = {}) => {
     mapObject.panTo(placeData.coordinates);
     setState({
       status: 'closing',

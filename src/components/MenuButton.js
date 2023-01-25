@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import {useUser} from '@auth0/nextjs-auth0';
 import FocusLock from 'react-focus-lock';
 
+import {useOnClickOutside} from 'src/hooks/useOnClickOutside';
 import {useOnEscKeyDown} from 'src/hooks/useOnEscKeyDown';
 
 import {CloseButton} from './CloseButton';
@@ -57,7 +58,7 @@ export const MenuButton = ({
     rippleDiameter,
     ripplePositionLeft,
     ripplePositionTop,
-  }) => {
+  } = {}) => {
     closeButtonPressed.current = true;
     setUi({
       button: 'opening',
@@ -85,6 +86,10 @@ export const MenuButton = ({
   };
 
   useOnEscKeyDown({state: ui.menu === 'open', handler: handleClickCloseButton});
+
+  // close by clicking outside
+  const menu = useRef(null);
+  useOnClickOutside(menu, handleClickCloseButton);
 
   // Focus the menu button after closing the menu
   const buttonElement = useRef();
@@ -135,6 +140,7 @@ export const MenuButton = ({
               data-closing={ui.menu === 'closing'}
               role="dialog"
               aria-labelledby="menu-label"
+              ref={menu}
             >
               <Heading as="h2" id="menu-label">
                 {menuLabel}
@@ -142,6 +148,7 @@ export const MenuButton = ({
               <CloseButton
                 ariaLabel={buttonLabel.close}
                 handleClick={handleClickCloseButton}
+                testId="close-button-menu"
               />
               <ParagraphMenu>
                 {isLoading

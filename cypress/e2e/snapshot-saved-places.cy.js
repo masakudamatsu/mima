@@ -50,7 +50,7 @@ describe('After clicking a saved place', () => {
       cy.waitForMapToLoad();
       cy.findByRole('button', {name: placeName}).click();
       // execute
-      cy.findByRole('button', {name: buttonLabel.close}).click();
+      cy.findByRole('button', {name: buttonLabel.closePlaceDetail}).click();
       // verify
       cy.percySnapshot('saved-place-after-closed', {
         widths: [320, 768, 1024],

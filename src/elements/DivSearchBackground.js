@@ -1,6 +1,12 @@
 import styled, {css} from 'styled-components';
 import {stylePopupBackground} from 'src/utils/cssUtilities';
-import {animation, buttonCircle, dimension} from 'src/utils/designtokens';
+import {
+  animation,
+  buttonCircle,
+  dimension,
+  minPopupWidth,
+  popupWidthShare,
+} from 'src/utils/designtokens';
 import {buttonLabel, searchBoxLabel} from 'src/utils/uiCopies';
 import {zIndex} from 'src/utils/zIndex';
 
@@ -9,26 +15,15 @@ const placeOverMap = `
   z-index: ${zIndex.divSearchBackground};
 `;
 
-const minPopupWidth = 365;
-// to ensure 27 characters in the search box
-// see Nielsen (2002): https://www.nngroup.com/articles/top-ten-guidelines-for-homepage-usability/
-// TODO: Recalbriate once the font style is finalized
-const widthRatio = {
-  map: 67,
-  popup: 33,
-};
-// to ensure the popup will occupy at least one-third of the screen
-// for aesthestically pleasing effects (the rule of the third)
-const breakpoint = Math.round(
-  (minPopupWidth / widthRatio.popup) * (widthRatio.map + widthRatio.popup),
-);
+const breakpoint = minPopupWidth / popupWidthShare;
+
 const setOuterSize = `
   bottom: 0;
   left: 0;
   right: 0;
   top: 0;
   @media (min-width: ${breakpoint}px) {
-    left: calc(${widthRatio.map}%);
+    left: ${Math.round((1 - popupWidthShare) * 100)}%;
   }
 `;
 

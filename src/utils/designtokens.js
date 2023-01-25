@@ -124,6 +124,10 @@ export const dimension = {
   },
 };
 
+// For calculating Menu and Searchbox popup breakpoint
+export const minPopupWidth = 365;
+export const popupWidthShare = 1 / 3; // rule of the third
+
 export const animation = {
   showDetail: {
     // for opening place detail popup
