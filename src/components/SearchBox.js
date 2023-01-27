@@ -24,7 +24,6 @@ export const SearchBox = ({closeSearchBox, id}) => {
   );
   const [inputItems, setInputItems] = useState([]);
   const {
-    getComboboxProps,
     getInputProps,
     getItemProps,
     getMenuProps,
@@ -94,13 +93,6 @@ export const SearchBox = ({closeSearchBox, id}) => {
        */}
         </svg>
         <input
-          {...getComboboxProps(
-            {
-              'aria-haspopup': null,
-              'aria-owns': null,
-            },
-            {suppressRefError: true}, // otherwise, an error message appears even after Jest tests pass
-          )}
           {...getInputProps({
             'aria-label': searchBoxLabel.ariaLabel,
             'aria-labelledby': null, // override the default
