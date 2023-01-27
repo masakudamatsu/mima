@@ -36,15 +36,6 @@ test(`complies ARIA 1.2 guideline`, () => {
 
   userEvent.type(searchbox, 'a');
   expect(searchbox).toHaveAttribute('aria-expanded', 'true');
-  //   // TODO: mock google maps api so mock list items will be shown
-  //   const firstItem = screen.getByRole('option', {name: 'Suggestion 1'});
-  //   const firstItemId = 'downshift-0-item-0';
-  //   expect(firstItem).toHaveAttribute('id', firstItemId);
-  //   expect(firstItem).toHaveAttribute('aria-selected', 'false');
-
-  //   userEvent.type(searchbox, '{arrowdown}');
-  //   expect(searchbox).toHaveAttribute('aria-activedescendant', firstItemId);
-  //   expect(firstItem).toHaveAttribute('aria-selected', 'true');
 });
 test.skip(`The "aria-expanded" attribute toggles as the user enters text`, () => {
   // TODO: #414 Fix SearchBox.js so the following test passes.
@@ -53,6 +44,26 @@ test.skip(`The "aria-expanded" attribute toggles as the user enters text`, () =>
   expect(searchbox).toHaveAttribute('aria-expanded', 'false');
   userEvent.type(searchbox, 'a');
   expect(searchbox).toHaveAttribute('aria-expanded', 'true');
+});
+test.skip(`Autocomplete suggestions behave according to ARIA 1.2`, () => {
+  // TODO: #204 mock google maps api so mock list items will be shown
+  // setup
+  render(<SearchBox {...mockProps} />);
+  const searchbox = screen.getByLabelText(searchBoxLabel.ariaLabel);
+  userEvent.type(searchbox, 'a');
+  const firstItem = screen.getByRole('option', {name: 'Suggestion 1'});
+  const firstItemId = 'downshift-0-item-0';
+
+  // verify
+  expect(firstItem).toHaveAttribute('id', firstItemId);
+  expect(firstItem).toHaveAttribute('aria-selected', 'false');
+
+  // execute
+  userEvent.type(searchbox, '{arrowdown}');
+
+  // verify
+  expect(searchbox).toHaveAttribute('aria-activedescendant', firstItemId);
+  expect(firstItem).toHaveAttribute('aria-selected', 'true');
 });
 test(`Input search element's inputmode attribute is set to be "search"`, () => {
   // To show mobile keyboards with the return key labelled "Go" in iOS or magnifying glass icon in Android;
