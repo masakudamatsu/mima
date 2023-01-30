@@ -116,6 +116,17 @@ describe('Search feature', () => {
     );
   });
 
+  it('removes autocomplete suggestions when deleting all search text', () => {
+    cy.log('Setup: Open search box dialog popup');
+    cy.findByRole('button', {name: buttonLabel.search}).click();
+    cy.log('Setup: Type a place name');
+    cy.focused().realType('a');
+    cy.findAllByRole('option', {timeout: 20000}).should('be.visible');
+    cy.log('Execute: Delete all search text');
+    cy.findByRole('combobox').realType('{backspace}');
+    cy.log('Verify: autocomplete suggestions disappear');
+    cy.findAllByRole('option', {timeout: 20000}).should('not.exist');
+  });
   it(`allows user to close search box`, () => {
     cy.log('Verify the absence of elements to be shown');
     cy.findByRole('button', {name: buttonLabel.closeSearchbox}).should(

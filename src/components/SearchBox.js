@@ -31,6 +31,10 @@ export const SearchBox = ({closeSearchBox, id}) => {
   } = useCombobox({
     items: inputItems,
     onInputValueChange: ({inputValue}) => {
+      if (inputValue === '') {
+        setInputItems([]);
+        return;
+      }
       service.getPlacePredictions(
         {
           input: inputValue,
