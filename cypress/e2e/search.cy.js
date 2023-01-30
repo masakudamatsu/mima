@@ -102,6 +102,20 @@ describe('Search feature', () => {
     cy.findByRole('button', {name: placeName}).should('not.exist');
   });
 
+  it('keeps displaying autocomplete suggestions when blurring the search box', () => {
+    cy.log('Setup: Open search box dialog popup');
+    cy.findByRole('button', {name: buttonLabel.search}).click();
+    cy.log('Setup: Type a place name');
+    cy.focused().realType(searchWords[0].source);
+    cy.focused().realPress('Space').realType(searchWords[1].source);
+    cy.log('Execute: Blur the search box');
+    cy.findByRole('combobox').blur();
+    cy.log('Verify: autocomplete suggestions remain visible');
+    cy.findByRole('option', {name: placeName, timeout: 20000}).should(
+      'be.visible',
+    );
+  });
+
   it(`allows user to close search box`, () => {
     cy.log('Verify the absence of elements to be shown');
     cy.findByRole('button', {name: buttonLabel.closeSearchbox}).should(

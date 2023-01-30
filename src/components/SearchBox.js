@@ -28,7 +28,6 @@ export const SearchBox = ({closeSearchBox, id}) => {
     getItemProps,
     getMenuProps,
     highlightedIndex,
-    isOpen,
   } = useCombobox({
     items: inputItems,
     onInputValueChange: ({inputValue}) => {
@@ -121,7 +120,7 @@ export const SearchBox = ({closeSearchBox, id}) => {
           'aria-labelledby': null,
         })}
       >
-        {isOpen
+        {inputItems.length > 0
           ? inputItems.map((item, index) => {
               return (
                 <li
