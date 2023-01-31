@@ -33,9 +33,6 @@ test(`complies ARIA 1.2 guideline`, () => {
   expect(searchbox).toHaveAttribute('aria-autocomplete', 'list');
   expect(searchbox).toHaveAttribute('aria-controls', popuplistId);
   expect(popuplist).toHaveAttribute('role', 'listbox');
-
-  userEvent.type(searchbox, 'a');
-  expect(searchbox).toHaveAttribute('aria-expanded', 'true');
 });
 test.skip(`The "aria-expanded" attribute toggles as the user enters text`, () => {
   // TODO: #414 Fix SearchBox.js so the following test passes.
@@ -106,7 +103,6 @@ test('Accessibility checks', async () => {
   const {container} = render(<SearchBox {...mockProps} />);
   const results = await axe(container, {
     rules: {
-      'aria-required-children': {enabled: false}, // TODO: #414 remove this line once aria-expanded becomes "false" by default
       tabindex: {enabled: false},
       // react-focus-lock uses tabindex=1, which violates "Elements should not have tabindex greater than zero (tabindex)"
       // for detail on the rule, see https://dequeuniversity.com/rules/axe/4.1/tabindex?application=axeAPI

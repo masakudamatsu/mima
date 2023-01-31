@@ -97,6 +97,7 @@ export const SearchBox = ({closeSearchBox, id}) => {
         </svg>
         <input
           {...getInputProps({
+            'aria-expanded': inputItems.length > 0,
             'aria-label': searchBoxLabel.ariaLabel,
             'aria-labelledby': null, // override the default
             autoFocus: true,

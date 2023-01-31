@@ -32,14 +32,19 @@ describe('Search feature', () => {
     );
     cy.log('...Autofocuses the search box');
     cy.focused().should('have.attr', 'type', 'search');
+    cy.log('...Does not show any autocomplete suggestion');
+    cy.findByRole('option').should('not.exist');
+    cy.findByRole('combobox').should('have.attr', 'aria-expanded', 'false');
 
     cy.log('Typing a place name...');
     // eslint-disable-next-line cypress/no-unnecessary-waiting
     cy.wait(100); // otherwise, Cypress will type 'bc', not 'abc'. This is a known issue. See https://www.cypress.io/blog/2019/01/22/when-can-the-test-click/
     cy.focused().realType(searchWords[0].source);
+    cy.log('...shows autocomplete suggesstions');
     cy.findAllByRole('option', {name: searchWords[0], timeout: 20000}).should(
       'be.visible',
-    ); // To wait for autocomplete suggestions to be displayed
+    );
+    cy.findByRole('combobox').should('have.attr', 'aria-expanded', 'true');
 
     cy.log('...Highlights entered text in bold in autocomplete suggestions');
     cy.findAllByText(searchWords[0], {selector: 'b', timeout: 20000}).should(
@@ -118,6 +123,7 @@ describe('Search feature', () => {
     cy.findByRole('option', {name: placeName, timeout: 20000}).should(
       'be.visible',
     );
+    cy.findByRole('combobox').should('have.attr', 'aria-expanded', 'true');
   });
 
   it('removes autocomplete suggestions when deleting all search text', () => {
@@ -125,12 +131,14 @@ describe('Search feature', () => {
     cy.findByRole('button', {name: buttonLabel.search}).click();
     cy.log('Setup: Type a place name');
     cy.focused().realType('a');
-    cy.findAllByRole('option', {timeout: 20000}).should('be.visible');
+    cy.findAllByRole('option', {timeout: 20000}).should('be.visible'); // To wait for autocomplete suggestions to be displayed
     cy.log('Execute: Delete all search text');
     cy.findByRole('combobox').realType('{backspace}');
     cy.log('Verify: autocomplete suggestions disappear');
     cy.findAllByRole('option', {timeout: 20000}).should('not.exist');
+    cy.findByRole('combobox').should('have.attr', 'aria-expanded', 'false');
   });
+
   it(`allows user to close search box`, () => {
     cy.log('Verify the absence of elements to be shown');
     cy.findByRole('button', {name: buttonLabel.closeSearchbox}).should(
