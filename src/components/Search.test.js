@@ -7,7 +7,7 @@ import {Search} from './Search';
 import {buttonLabel} from 'src/utils/uiCopies';
 
 import {PlaceIdProvider} from 'src/wrappers/PlaceIdContext';
-import {mockPlacesApi} from 'src/utils/mockFunfctions';
+import {mockPlacesApi} from 'test/utils/mockFunctions';
 
 function Wrapper({children}) {
   return <PlaceIdProvider>{children}</PlaceIdProvider>;

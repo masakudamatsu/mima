@@ -7,7 +7,7 @@ import {SearchBox} from './SearchBox';
 import {searchBoxLabel} from 'src/utils/uiCopies';
 
 import {PlaceIdProvider} from 'src/wrappers/PlaceIdContext';
-import {mockGetPlacePredictions, mockPlacesApi} from 'src/utils/mockFunfctions';
+import {mockGetPlacePredictions, mockPlacesApi} from 'test/utils/mockFunctions';
 
 function Wrapper({children}) {
   return <PlaceIdProvider>{children}</PlaceIdProvider>;
