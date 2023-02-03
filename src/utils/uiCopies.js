@@ -124,6 +124,7 @@ export const searchBoxLabel = {
   ariaLabel: 'Search for a place on the map',
   placeholder: 'Enter place name or address',
   listbox: 'Autocomplete suggestions',
+  noResult: 'No place is found on the map. Try another search term.',
 };
 
 export const geolocationNotSupported = {

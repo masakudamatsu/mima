@@ -53,7 +53,8 @@ const positionCloseButton = `
 const positionComponents = `
   ${positionCloseButton}
   & div[id="searchbox"],
-  & ul[aria-label="${searchBoxLabel.listbox}"] {
+  & ul[aria-label="${searchBoxLabel.listbox}"],
+  & div[role="alert"] {
     margin: 0 auto; 
     width: calc(100% - var(--popup-margin) * 2) ;
   }

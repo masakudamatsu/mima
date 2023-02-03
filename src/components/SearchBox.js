@@ -5,6 +5,7 @@ import {useCombobox} from 'downshift';
 import {useStateObject} from 'src/hooks/useStateObject';
 
 import {ComposeSearchBox} from 'src/elements/ComposeSearchBox';
+import {DivAlertSearch} from 'src/elements/DivAlertSearch';
 import {ListAutocomplete} from 'src/elements/ListAutocomplete';
 
 import {VisuallyHidden} from 'src/elements/VisuallyHidden';
@@ -26,6 +27,7 @@ export const SearchBox = ({closeSearchBox, id}) => {
   );
   const [searchResult, setSearchResult] = useStateObject({
     autocompleteSuggestions: [],
+    noResult: false,
   });
   const {
     getInputProps,
@@ -38,6 +40,7 @@ export const SearchBox = ({closeSearchBox, id}) => {
       if (inputValue === '') {
         setSearchResult({
           autocompleteSuggestions: [],
+          noResult: false,
         });
         return;
       }
@@ -50,7 +53,14 @@ export const SearchBox = ({closeSearchBox, id}) => {
         handlePredictions,
       );
       function handlePredictions(predictions, status) {
-        if (status !== 'OK' || !predictions) {
+        if (status === 'ZERO_RESULTS') {
+          setSearchResult({
+            autocompleteSuggestions: [],
+            noResult: true,
+          });
+          return;
+        }
+        if (status !== 'OK') {
           // TODO: Handle error more properly (issue #196)
           console.error('Google Maps Places Autocomplete API call has failed.');
           setSearchResult({
@@ -91,6 +101,7 @@ export const SearchBox = ({closeSearchBox, id}) => {
         });
         setSearchResult({
           autocompleteSuggestions: autocompleteSuggestions,
+          noResult: false,
         });
       }
     },
@@ -182,6 +193,11 @@ export const SearchBox = ({closeSearchBox, id}) => {
             })
           : null}
       </ListAutocomplete>
+      {searchResult.noResult ? (
+        <DivAlertSearch role="alert">
+          <p>{searchBoxLabel.noResult}</p>
+        </DivAlertSearch>
+      ) : null}{' '}
     </>
   );
 };

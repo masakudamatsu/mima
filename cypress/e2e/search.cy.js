@@ -206,4 +206,25 @@ describe('Search feature', () => {
     cy.log(`...shows the place detail`);
     cy.findByText(linkText.searchedPlace).should('be.visible'); // agnostic about place name
   });
+  it('shows alert if no search result is returned', () => {
+    cy.log('Setup: Open search box dialog popup');
+    cy.findByRole('button', {name: buttonLabel.search}).click();
+    cy.findByRole('combobox').should('be.visible');
+    cy.log('Execute: Type a search term that returns no result');
+    cy.focused().realType('kyotoxxx');
+    cy.log('Verify: Alert message is shown');
+    cy.findByRole('alert', {
+      description: searchBoxLabel.noResult,
+      timeout: 20000,
+    }).should('be.visible');
+    cy.log(
+      'Execute: Delete the extra characters that invalidate the search term',
+    );
+    cy.findByRole('combobox').realType('{backspace}');
+    cy.log('Verify: Alert message disappears');
+    cy.findByRole('alert', {
+      description: searchBoxLabel.noResult,
+      timeout: 20000,
+    }).should('not.exist');
+  });
 });
