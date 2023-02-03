@@ -1,6 +1,8 @@
-import {useContext, useMemo, useState} from 'react';
+import {useContext, useMemo} from 'react';
 import PropTypes from 'prop-types';
 import {useCombobox} from 'downshift';
+
+import {useStateObject} from 'src/hooks/useStateObject';
 
 import {ComposeSearchBox} from 'src/elements/ComposeSearchBox';
 import {ListAutocomplete} from 'src/elements/ListAutocomplete';
@@ -22,17 +24,21 @@ export const SearchBox = ({closeSearchBox, id}) => {
     () => new google.maps.places.AutocompleteSessionToken(),
     [google.maps.places.AutocompleteSessionToken],
   );
-  const [inputItems, setInputItems] = useState([]);
+  const [searchResult, setSearchResult] = useStateObject({
+    autocompleteSuggestions: [],
+  });
   const {
     getInputProps,
     getItemProps,
     getMenuProps,
     highlightedIndex,
   } = useCombobox({
-    items: inputItems,
+    items: searchResult.autocompleteSuggestions,
     onInputValueChange: ({inputValue}) => {
       if (inputValue === '') {
-        setInputItems([]);
+        setSearchResult({
+          autocompleteSuggestions: [],
+        });
         return;
       }
       service.getPlacePredictions(
@@ -47,7 +53,9 @@ export const SearchBox = ({closeSearchBox, id}) => {
         if (status !== 'OK' || !predictions) {
           // TODO: Handle error more properly (issue #196)
           console.error('Google Maps Places Autocomplete API call has failed.');
-          setInputItems([]);
+          setSearchResult({
+            autocompleteSuggestions: [],
+          });
           return;
         }
         const autocompleteSuggestions = predictions.map(prediction => {
@@ -81,7 +89,9 @@ export const SearchBox = ({closeSearchBox, id}) => {
             },
           };
         });
-        setInputItems(autocompleteSuggestions);
+        setSearchResult({
+          autocompleteSuggestions: autocompleteSuggestions,
+        });
       }
     },
   });
@@ -97,7 +107,7 @@ export const SearchBox = ({closeSearchBox, id}) => {
         </svg>
         <input
           {...getInputProps({
-            'aria-expanded': inputItems.length > 0,
+            'aria-expanded': searchResult.autocompleteSuggestions.length > 0,
             'aria-label': searchBoxLabel.ariaLabel,
             'aria-labelledby': null, // override the default
             autoFocus: true,
@@ -110,7 +120,9 @@ export const SearchBox = ({closeSearchBox, id}) => {
                   return;
                 }
                 createRipple(event);
-                setPlaceId(inputItems[highlightedIndex].id);
+                setPlaceId(
+                  searchResult.autocompleteSuggestions[highlightedIndex].id,
+                );
                 closeSearchBox();
               }
             },
@@ -125,8 +137,8 @@ export const SearchBox = ({closeSearchBox, id}) => {
           'aria-labelledby': null,
         })}
       >
-        {inputItems.length > 0
-          ? inputItems.map((item, index) => {
+        {searchResult.autocompleteSuggestions.length > 0
+          ? searchResult.autocompleteSuggestions.map((item, index) => {
               return (
                 <li
                   key={item.id}
