@@ -7,16 +7,20 @@ import {
 const searchWords = [/nijo/i, /koya/i];
 const placeName = /.*nijo.*koya.*/i;
 const placeAddress = '382-3 Mogamichō, Nakagyo Ward, Kyoto, 604-8303, Japan';
-describe('Search feature', () => {
+
+describe('Search button feature', () => {
   beforeEach(() => {
     cy.log('Loading app');
     cy.auth();
     cy.visit('/');
     cy.waitForMapToLoad();
   });
-  it('happy path for mobile/mouse users', () => {
+  it('happy path', () => {
     cy.log('Verify the absence of elements to be shown');
     cy.findByRole('combobox').should('not.exist');
+    cy.findByRole('button', {name: buttonLabel.closeSearchbox}).should(
+      'not.exist',
+    );
     cy.findByRole('option', {name: placeName.regex}).should('not.exist');
     cy.findByRole('button', {name: placeName.japanese}).should('not.exist');
 
@@ -35,10 +39,20 @@ describe('Search feature', () => {
     cy.log('...Does not show any autocomplete suggestion');
     cy.findByRole('option').should('not.exist');
     cy.findByRole('combobox').should('have.attr', 'aria-expanded', 'false');
-
+  });
+});
+describe('Place search feature', () => {
+  beforeEach(() => {
+    cy.log('Loading app');
+    cy.auth();
+    cy.visit('/');
+    cy.waitForMapToLoad();
+    cy.log('Opening the search box');
+    cy.findByRole('button', {name: buttonLabel.search}).click();
+    cy.findByRole('combobox').should('be.visible'); // Wait for search box module to be loaded; Cypress may not wait before starting to type. See https://www.cypress.io/blog/2019/01/22/when-can-the-test-click/
+  });
+  it('happy path for mobile/mouse users', () => {
     cy.log('Typing a place name...');
-    // eslint-disable-next-line cypress/no-unnecessary-waiting
-    cy.wait(100); // otherwise, Cypress will type 'bc', not 'abc'. This is a known issue. See https://www.cypress.io/blog/2019/01/22/when-can-the-test-click/
     cy.focused().realType(searchWords[0].source);
     cy.log('...shows autocomplete suggesstions');
     cy.findAllByRole('option', {name: searchWords[0], timeout: 20000}).should(
@@ -110,10 +124,7 @@ describe('Search feature', () => {
     cy.log('...removes the place mark for the previous search');
     cy.findByRole('button', {name: placeName}).should('not.exist');
   });
-
   it('keeps displaying autocomplete suggestions when blurring the search box', () => {
-    cy.log('Setup: Open search box dialog popup');
-    cy.findByRole('button', {name: buttonLabel.search}).click();
     cy.log('Setup: Type a place name');
     cy.focused().realType(searchWords[0].source);
     cy.focused().realPress('Space').realType(searchWords[1].source);
@@ -125,10 +136,7 @@ describe('Search feature', () => {
     );
     cy.findByRole('combobox').should('have.attr', 'aria-expanded', 'true');
   });
-
   it('removes autocomplete suggestions when deleting all search text', () => {
-    cy.log('Setup: Open search box dialog popup');
-    cy.findByRole('button', {name: buttonLabel.search}).click();
     cy.log('Setup: Type a place name');
     cy.focused().realType('a');
     cy.findAllByRole('option', {timeout: 20000}).should('be.visible'); // To wait for autocomplete suggestions to be displayed
@@ -138,20 +146,7 @@ describe('Search feature', () => {
     cy.findAllByRole('option', {timeout: 20000}).should('not.exist');
     cy.findByRole('combobox').should('have.attr', 'aria-expanded', 'false');
   });
-
   it(`allows user to close search box`, () => {
-    cy.log('Verify the absence of elements to be shown');
-    cy.findByRole('button', {name: buttonLabel.closeSearchbox}).should(
-      'not.exist',
-    );
-
-    cy.log('Clicking search icon button...');
-    cy.findByRole('button', {name: buttonLabel.search}).click();
-    cy.log('...Shows a close button');
-    cy.findByRole('button', {name: buttonLabel.closeSearchbox}).should(
-      'be.visible',
-    );
-
     cy.log('Clicking the close button...');
     cy.findByRole('button', {name: buttonLabel.closeSearchbox}).click();
     cy.log('...Hides the search box');
@@ -163,16 +158,12 @@ describe('Search feature', () => {
     cy.log('Setup: Screen width');
     const breakpoint = minPopupWidth / popupWidthShare;
     cy.viewport(breakpoint, 800); // 800px high for MacBook 13
-    cy.log('Execute: Click search icon button, and ...');
-    cy.findByRole('button', {name: buttonLabel.search}).click();
     cy.log('Execute: Click anywhere outside the search box popup');
     cy.get('body').click('left', {force: true});
     cy.log('Verify: Searchbox closes');
     cy.findByRole('combobox').should('not.exist');
   });
   it('traps the focus within the search box dialog popup', () => {
-    cy.log('Setup: Open search box dialog popup');
-    cy.findByRole('button', {name: buttonLabel.search}).click();
     cy.log('Focusing the last focusable element, and...');
     cy.findByTestId('searchbox-last-focusable-element').focus();
     cy.log('Pressing Tab key...');
@@ -186,9 +177,6 @@ describe('Search feature', () => {
   });
   it('allows keyboard users to select an autocomplete suggestion with arrow keys', () => {
     cy.log(`Setup`);
-    cy.findByRole('button', {name: buttonLabel.search}).click();
-    // eslint-disable-next-line cypress/no-unnecessary-waiting
-    cy.wait(100); // otherwise, Cypress will type 'bc', not 'abc'. This is a known issue. See https://www.cypress.io/blog/2019/01/22/when-can-the-test-click/
     cy.focused().realType(searchWords[0].source);
 
     cy.log(`Pressing Down Arrow key...`);
@@ -207,9 +195,6 @@ describe('Search feature', () => {
     cy.findByText(linkText.searchedPlace).should('be.visible'); // agnostic about place name
   });
   it('shows alert if no search result is returned', () => {
-    cy.log('Setup: Open search box dialog popup');
-    cy.findByRole('button', {name: buttonLabel.search}).click();
-    cy.findByRole('combobox').should('be.visible');
     cy.log('Execute: Type a search term that returns no result');
     cy.focused().realType('kyotoxxx');
     cy.log('Verify: Alert message is shown');
