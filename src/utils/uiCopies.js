@@ -125,6 +125,8 @@ export const searchBoxLabel = {
   placeholder: 'Enter place name or address',
   listbox: 'Autocomplete suggestions',
   noResult: 'No place is found on the map. Try another search term.',
+  appError:
+    'My Ideal Map is currently unable to use Google Maps search. Please contact us so we can fix the problem.',
 };
 
 export const geolocationNotSupported = {

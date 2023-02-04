@@ -124,6 +124,34 @@ describe(`shows relevant alert when Places API fails`, () => {
       searchBoxLabel.noResult,
     );
   });
+  test('OVER_QUERY_LIMIT', () => {
+    mockGetPlacePredictions.mockImplementationOnce(
+      ({input, sessionToken}, callback) => {
+        const predictions = [];
+        const status = 'OVER_QUERY_LIMIT';
+        callback(predictions, status);
+      },
+    );
+    render(<SearchBox {...mockProps} />);
+    userEvent.type(screen.getByLabelText(searchBoxLabel.ariaLabel), 'a');
+    expect(screen.getByRole('alert')).toHaveTextContent(
+      searchBoxLabel.appError,
+    );
+  });
+  test('REQUEST_DENIED', () => {
+    mockGetPlacePredictions.mockImplementationOnce(
+      ({input, sessionToken}, callback) => {
+        const predictions = [];
+        const status = 'REQUEST_DENIED';
+        callback(predictions, status);
+      },
+    );
+    render(<SearchBox {...mockProps} />);
+    userEvent.type(screen.getByLabelText(searchBoxLabel.ariaLabel), 'a');
+    expect(screen.getByRole('alert')).toHaveTextContent(
+      searchBoxLabel.appError,
+    );
+  });
 });
 test('Accessibility checks', async () => {
   // disable warning in console; see https://github.com/nickcolley/jest-axe/issues/147#issuecomment-758804533

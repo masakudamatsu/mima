@@ -64,6 +64,13 @@ export const SearchBox = ({closeSearchBox, id}) => {
           });
           return;
         }
+        if (status === 'OVER_QUERY_LIMIT' || status === 'REQUEST_DENIED') {
+          setSearchResult({
+            autocompleteSuggestions: [],
+            alert: searchBoxLabel.appError,
+          });
+          return;
+        }
         if (status !== 'OK') {
           // TODO: Handle error more properly (issue #196)
           console.error('Google Maps Places Autocomplete API call has failed.');
