@@ -53,6 +53,7 @@ export const SearchBox = ({closeSearchBox, id}) => {
         handlePredictions,
       );
       function handlePredictions(predictions, status) {
+        // Docs on "status": https://developers.google.com/maps/documentation/javascript/reference/places-service#PlacesServiceStatus
         if (
           status === 'ZERO_RESULTS' ||
           status === 'INVALID_REQUEST' ||
@@ -72,11 +73,10 @@ export const SearchBox = ({closeSearchBox, id}) => {
           return;
         }
         if (status !== 'OK') {
-          // TODO: Handle error more properly (issue #196)
-          console.error('Google Maps Places Autocomplete API call has failed.');
+          // this case includes the prespecified value of status "UNKNOWN_ERROR"
           setSearchResult({
             autocompleteSuggestions: [],
-            alert: '',
+            alert: searchBoxLabel.serverError,
           });
           return;
         }

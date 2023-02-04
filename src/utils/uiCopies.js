@@ -127,6 +127,8 @@ export const searchBoxLabel = {
   noResult: 'No place is found on the map. Try another search term.',
   appError:
     'My Ideal Map is currently unable to use Google Maps search. Please contact us so we can fix the problem.',
+  serverError:
+    'Google Maps server is not responding. They usually fix the problem within a day. Please try again later.',
 };
 
 export const geolocationNotSupported = {

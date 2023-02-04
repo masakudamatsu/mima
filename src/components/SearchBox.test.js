@@ -152,6 +152,34 @@ describe(`shows relevant alert when Places API fails`, () => {
       searchBoxLabel.appError,
     );
   });
+  test('UNKNOWN_ERROR', () => {
+    mockGetPlacePredictions.mockImplementationOnce(
+      ({input, sessionToken}, callback) => {
+        const predictions = [];
+        const status = 'UNKNOWN_ERROR';
+        callback(predictions, status);
+      },
+    );
+    render(<SearchBox {...mockProps} />);
+    userEvent.type(screen.getByLabelText(searchBoxLabel.ariaLabel), 'a');
+    expect(screen.getByRole('alert')).toHaveTextContent(
+      searchBoxLabel.serverError,
+    );
+  });
+  test('Someone hacked Places API', () => {
+    mockGetPlacePredictions.mockImplementationOnce(
+      ({input, sessionToken}, callback) => {
+        const predictions = [];
+        const status = 'Someone hacked Places API';
+        callback(predictions, status);
+      },
+    );
+    render(<SearchBox {...mockProps} />);
+    userEvent.type(screen.getByLabelText(searchBoxLabel.ariaLabel), 'a');
+    expect(screen.getByRole('alert')).toHaveTextContent(
+      searchBoxLabel.serverError,
+    );
+  });
 });
 test('Accessibility checks', async () => {
   // disable warning in console; see https://github.com/nickcolley/jest-axe/issues/147#issuecomment-758804533
