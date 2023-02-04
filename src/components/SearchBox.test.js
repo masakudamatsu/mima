@@ -95,6 +95,36 @@ test('calls getPlacePredictions() with the same session token', () => {
   expect(secondToken).toBe(firstToken);
 });
 
+describe(`shows relevant alert when Places API fails`, () => {
+  test('INVALID_REQUEST', () => {
+    mockGetPlacePredictions.mockImplementationOnce(
+      ({input, sessionToken}, callback) => {
+        const predictions = [];
+        const status = 'INVALID_REQUEST';
+        callback(predictions, status);
+      },
+    );
+    render(<SearchBox {...mockProps} />);
+    userEvent.type(screen.getByLabelText(searchBoxLabel.ariaLabel), 'a');
+    expect(screen.getByRole('alert')).toHaveTextContent(
+      searchBoxLabel.noResult,
+    );
+  });
+  test('NOT_FOUND', () => {
+    mockGetPlacePredictions.mockImplementationOnce(
+      ({input, sessionToken}, callback) => {
+        const predictions = [];
+        const status = 'NOT_FOUND';
+        callback(predictions, status);
+      },
+    );
+    render(<SearchBox {...mockProps} />);
+    userEvent.type(screen.getByLabelText(searchBoxLabel.ariaLabel), 'a');
+    expect(screen.getByRole('alert')).toHaveTextContent(
+      searchBoxLabel.noResult,
+    );
+  });
+});
 test('Accessibility checks', async () => {
   // disable warning in console; see https://github.com/nickcolley/jest-axe/issues/147#issuecomment-758804533
   const {getComputedStyle} = window;

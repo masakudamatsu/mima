@@ -53,7 +53,11 @@ export const SearchBox = ({closeSearchBox, id}) => {
         handlePredictions,
       );
       function handlePredictions(predictions, status) {
-        if (status === 'ZERO_RESULTS') {
+        if (
+          status === 'ZERO_RESULTS' ||
+          status === 'INVALID_REQUEST' ||
+          status === 'NOT_FOUND'
+        ) {
           setSearchResult({
             autocompleteSuggestions: [],
             alert: searchBoxLabel.noResult,
