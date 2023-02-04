@@ -27,7 +27,7 @@ export const SearchBox = ({closeSearchBox, id}) => {
   );
   const [searchResult, setSearchResult] = useStateObject({
     autocompleteSuggestions: [],
-    noResult: false,
+    alert: '',
   });
   const {
     getInputProps,
@@ -40,7 +40,7 @@ export const SearchBox = ({closeSearchBox, id}) => {
       if (inputValue === '') {
         setSearchResult({
           autocompleteSuggestions: [],
-          noResult: false,
+          alert: '',
         });
         return;
       }
@@ -56,7 +56,7 @@ export const SearchBox = ({closeSearchBox, id}) => {
         if (status === 'ZERO_RESULTS') {
           setSearchResult({
             autocompleteSuggestions: [],
-            noResult: true,
+            alert: searchBoxLabel.noResult,
           });
           return;
         }
@@ -65,6 +65,7 @@ export const SearchBox = ({closeSearchBox, id}) => {
           console.error('Google Maps Places Autocomplete API call has failed.');
           setSearchResult({
             autocompleteSuggestions: [],
+            alert: '',
           });
           return;
         }
@@ -101,7 +102,7 @@ export const SearchBox = ({closeSearchBox, id}) => {
         });
         setSearchResult({
           autocompleteSuggestions: autocompleteSuggestions,
-          noResult: false,
+          alert: '',
         });
       }
     },
@@ -193,9 +194,9 @@ export const SearchBox = ({closeSearchBox, id}) => {
             })
           : null}
       </ListAutocomplete>
-      {searchResult.noResult ? (
+      {searchResult.alert !== '' ? (
         <DivAlertSearch role="alert">
-          <p>{searchBoxLabel.noResult}</p>
+          <p>{searchResult.alert}</p>
         </DivAlertSearch>
       ) : null}{' '}
     </>
