@@ -27,7 +27,7 @@ export const SearchBox = ({closeSearchBox, id}) => {
   );
   const [searchResult, setSearchResult] = useStateObject({
     autocompleteSuggestions: [],
-    alert: '',
+    status: '',
   });
   const {
     getInputProps,
@@ -40,7 +40,7 @@ export const SearchBox = ({closeSearchBox, id}) => {
       if (inputValue === '') {
         setSearchResult({
           autocompleteSuggestions: [],
-          alert: '',
+          status: '',
         });
         return;
       }
@@ -53,72 +53,51 @@ export const SearchBox = ({closeSearchBox, id}) => {
         handlePredictions,
       );
       function handlePredictions(predictions, status) {
-        // Docs on "status": https://developers.google.com/maps/documentation/javascript/reference/places-service#PlacesServiceStatus
-        if (
-          status === 'ZERO_RESULTS' ||
-          status === 'INVALID_REQUEST' ||
-          status === 'NOT_FOUND'
-        ) {
+        if (status === 'OK') {
+          const autocompleteSuggestions = predictions.map(prediction => {
+            return {
+              id: prediction.place_id,
+              name: {
+                length: prediction.structured_formatting
+                  .main_text_matched_substrings
+                  ? prediction.structured_formatting
+                      .main_text_matched_substrings[0]['length']
+                  : 0,
+                offset: prediction.structured_formatting
+                  .main_text_matched_substrings
+                  ? prediction.structured_formatting
+                      .main_text_matched_substrings[0]['offset']
+                  : 0,
+                string: prediction.structured_formatting.main_text,
+              },
+              address: prediction.structured_formatting.secondary_text && {
+                length: prediction.structured_formatting
+                  .secondary_text_matched_substrings
+                  ? prediction.structured_formatting
+                      .secondary_text_matched_substrings[0]['length']
+                  : 0,
+                offset: prediction.structured_formatting
+                  .secondary_text_matched_substrings
+                  ? prediction.structured_formatting
+                      .secondary_text_matched_substrings[0]['offset']
+                  : 0,
+                string: prediction.structured_formatting.secondary_text,
+              },
+            };
+          });
+          setSearchResult({
+            autocompleteSuggestions: autocompleteSuggestions,
+            status: 'OK',
+          });
+        } else {
           setSearchResult({
             autocompleteSuggestions: [],
-            alert: searchBoxLabel.noResult,
+            status: status,
           });
-          return;
         }
-        if (status === 'OVER_QUERY_LIMIT' || status === 'REQUEST_DENIED') {
-          setSearchResult({
-            autocompleteSuggestions: [],
-            alert: searchBoxLabel.appError,
-          });
-          return;
-        }
-        if (status !== 'OK') {
-          // this case includes the prespecified value of status "UNKNOWN_ERROR"
-          setSearchResult({
-            autocompleteSuggestions: [],
-            alert: searchBoxLabel.serverError,
-          });
-          return;
-        }
-        const autocompleteSuggestions = predictions.map(prediction => {
-          return {
-            id: prediction.place_id,
-            name: {
-              length: prediction.structured_formatting
-                .main_text_matched_substrings
-                ? prediction.structured_formatting
-                    .main_text_matched_substrings[0]['length']
-                : 0,
-              offset: prediction.structured_formatting
-                .main_text_matched_substrings
-                ? prediction.structured_formatting
-                    .main_text_matched_substrings[0]['offset']
-                : 0,
-              string: prediction.structured_formatting.main_text,
-            },
-            address: prediction.structured_formatting.secondary_text && {
-              length: prediction.structured_formatting
-                .secondary_text_matched_substrings
-                ? prediction.structured_formatting
-                    .secondary_text_matched_substrings[0]['length']
-                : 0,
-              offset: prediction.structured_formatting
-                .secondary_text_matched_substrings
-                ? prediction.structured_formatting
-                    .secondary_text_matched_substrings[0]['offset']
-                : 0,
-              string: prediction.structured_formatting.secondary_text,
-            },
-          };
-        });
-        setSearchResult({
-          autocompleteSuggestions: autocompleteSuggestions,
-          alert: '',
-        });
       }
     },
   });
-
   return (
     <>
       <ComposeSearchBox id={id}>
@@ -205,11 +184,24 @@ export const SearchBox = ({closeSearchBox, id}) => {
             })
           : null}
       </ListAutocomplete>
-      {searchResult.alert !== '' ? (
+      {/* Docs on "status": https://developers.google.com/maps/documentation/javascript/reference/places-service#PlacesServiceStatus */}
+      {searchResult.status === 'ZERO_RESULTS' ||
+      searchResult.status === 'INVALID_REQUEST' ||
+      searchResult.status === 'NOT_FOUND' ? (
         <DivAlertSearch role="alert">
-          <p>{searchResult.alert}</p>
+          <p>{searchBoxLabel.noResult}</p>
         </DivAlertSearch>
-      ) : null}{' '}
+      ) : searchResult.status === 'OVER_QUERY_LIMIT' ||
+        searchResult.status === 'REQUEST_DENIED' ? (
+        <DivAlertSearch role="alert">
+          <p>{searchBoxLabel.appError}</p>
+        </DivAlertSearch>
+      ) : searchResult.status === '' || searchResult.status === 'OK' ? null : (
+        // This last case includes status === "UNKNOWN_ERROR"
+        <DivAlertSearch role="alert">
+          <p>{searchBoxLabel.serverError}</p>
+        </DivAlertSearch>
+      )}
     </>
   );
 };
