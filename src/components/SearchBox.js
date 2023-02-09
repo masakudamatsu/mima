@@ -4,8 +4,9 @@ import {useCombobox} from 'downshift';
 
 import {useStateObject} from 'src/hooks/useStateObject';
 
+import {SearchErrorMessage} from './SearchErrorMessage';
+
 import {ComposeSearchBox} from 'src/elements/ComposeSearchBox';
-import {DivAlertSearch} from 'src/elements/DivAlertSearch';
 import {ListAutocomplete} from 'src/elements/ListAutocomplete';
 
 import {VisuallyHidden} from 'src/elements/VisuallyHidden';
@@ -184,24 +185,7 @@ export const SearchBox = ({closeSearchBox, id}) => {
             })
           : null}
       </ListAutocomplete>
-      {/* Docs on "status": https://developers.google.com/maps/documentation/javascript/reference/places-service#PlacesServiceStatus */}
-      {searchResult.status === 'ZERO_RESULTS' ||
-      searchResult.status === 'INVALID_REQUEST' ||
-      searchResult.status === 'NOT_FOUND' ? (
-        <DivAlertSearch role="alert">
-          <p>{searchBoxLabel.noResult}</p>
-        </DivAlertSearch>
-      ) : searchResult.status === 'OVER_QUERY_LIMIT' ||
-        searchResult.status === 'REQUEST_DENIED' ? (
-        <DivAlertSearch role="alert">
-          <p>{searchBoxLabel.appError}</p>
-        </DivAlertSearch>
-      ) : searchResult.status === '' || searchResult.status === 'OK' ? null : (
-        // This last case includes status === "UNKNOWN_ERROR"
-        <DivAlertSearch role="alert">
-          <p>{searchBoxLabel.serverError}</p>
-        </DivAlertSearch>
-      )}
+      <SearchErrorMessage status={searchResult.status} />
     </>
   );
 };
