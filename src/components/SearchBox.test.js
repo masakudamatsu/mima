@@ -180,6 +180,24 @@ describe(`shows relevant alert when Places API fails`, () => {
       searchBoxLabel.serverError,
     );
   });
+  test('When there is an error, deleting search text will hide the error message', () => {
+    mockGetPlacePredictions.mockImplementationOnce(
+      ({input, sessionToken}, callback) => {
+        const predictions = [];
+        const status = 'Someone hacked Places API';
+        callback(predictions, status);
+      },
+    );
+    render(<SearchBox {...mockProps} />);
+    // Execute
+    userEvent.type(screen.getByLabelText(searchBoxLabel.ariaLabel), 'a');
+    userEvent.type(
+      screen.getByLabelText(searchBoxLabel.ariaLabel),
+      '{backspace}',
+    );
+    // Verify
+    expect(screen.queryByRole('alert')).not.toBeInTheDocument();
+  });
 });
 test('Accessibility checks', async () => {
   // disable warning in console; see https://github.com/nickcolley/jest-axe/issues/147#issuecomment-758804533
