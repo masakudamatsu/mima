@@ -7,6 +7,9 @@ describe('DivAlertSearch component', () => {
     const {container} = render(<DivAlertSearch />);
     expect(container).toMatchInlineSnapshot(`
 .c0 {
+  color: var(--popup-text-color);
+  font-family: 'Noto Sans',Verdana,sans-serif;
+  font-size: 1rem;
   --height: 96px;
   --border-radius: calc(48px / 2);
   --margin-side: calc(var(--border-radius));
@@ -23,14 +26,11 @@ describe('DivAlertSearch component', () => {
 }
 
 .c0 p {
-  color: var(--popup-text-color);
   --blur-radius: 8px;
   background-color: var(--popup-background-color-fallback);
 }
 
 .c0 p {
-  font-family: 'Noto Sans',Verdana,sans-serif;
-  font-size: 1rem;
   padding: var(--margin-side);
 }
 

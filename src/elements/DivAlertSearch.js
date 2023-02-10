@@ -1,5 +1,6 @@
 import styled from 'styled-components';
-import {bodyText, dimension} from 'src/utils/designtokens';
+import {dimension} from 'src/utils/designtokens';
+import {styleText} from 'src/utils/cssUtilities';
 
 const setDimension = `
   --height: ${dimension.button['minimum target size 200']};
@@ -23,8 +24,6 @@ const positionAlertBox = `
 
 const colorAlertBox = `
   & p {
-    color: var(--popup-text-color);
-
     --blur-radius: 8px;
     /* legacy browsers */
     background-color: var(--popup-background-color-fallback);
@@ -36,18 +35,17 @@ const colorAlertBox = `
   }
 `;
 
-const styleText = `
+const positionText = `
   & p {
-    font-family: ${bodyText.fontFamily};
-    font-size: 1rem;
     padding: var(--margin-side);  
   }
 `;
 
 export const DivAlertSearch = styled.div`
+  ${styleText}
   ${setDimension}
   ${shapeAlertBox}
   ${positionAlertBox}
   ${colorAlertBox}
-  ${styleText}
+  ${positionText}
 `;

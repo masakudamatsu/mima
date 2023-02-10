@@ -14,6 +14,7 @@ describe('ListAutocomplete component', () => {
   --icon-size: 36px;
   --icon-vertical-margin: calc( ( var(--height) - var(--icon-size) ) / 2 );
   max-width: 561px;
+  color: var(--popup-text-color);
   font-family: 'Noto Sans',Verdana,sans-serif;
   font-size: 1rem;
 }
@@ -29,7 +30,6 @@ describe('ListAutocomplete component', () => {
 }
 
 .c0 li {
-  color: var(--popup-text-color);
   --blur-radius: 8px;
   background-color: var(--popup-background-color-fallback);
 }

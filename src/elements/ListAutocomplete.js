@@ -1,5 +1,6 @@
 import styled, {css} from 'styled-components';
-import {animation, bodyText, boldText, dimension} from 'src/utils/designtokens';
+import {animation, boldText, dimension} from 'src/utils/designtokens';
+import {styleText as styleBodyText} from 'src/utils/cssUtilities';
 
 const setDimension = `
   --height: ${dimension.button['minimum target size 100']};
@@ -27,8 +28,6 @@ const positionListItems = `
 
 const colorListItems = `
   & li {
-    color: var(--popup-text-color);
-
     --blur-radius: 8px;
     /* legacy browsers */
     background-color: var(--popup-background-color-fallback);
@@ -85,8 +84,7 @@ const truncateText = `
   overflow: hidden;
 }`; // source: https://css-tricks.com/line-clampin/
 const styleText = `
-  font-family: ${bodyText.fontFamily};
-  font-size: 1rem;
+  ${styleBodyText}
   & li dl dt,
   & li dl dd[data-dd-type="address"] {
     ${truncateText}

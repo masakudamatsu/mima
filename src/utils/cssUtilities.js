@@ -1,4 +1,11 @@
-import {dimension} from './designtokens';
+import {bodyText, dimension} from './designtokens';
+
+export const styleText = `
+  color: var(--popup-text-color);
+  font-family: ${bodyText.fontFamily};
+  font-size: 1rem;
+`;
+
 export const styleFocusRing = `
   border-color: var(--button-shadow-color-focus);
   box-shadow: ${dimension.glow['offset']} var(--button-shadow-blur-radius-focus) var(--button-shadow-color-focus);
