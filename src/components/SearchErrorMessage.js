@@ -6,6 +6,7 @@ import {searchBoxLabel} from 'src/utils/uiCopies';
 
 export const SearchErrorMessage = ({status}) => {
   // Docs on "status": https://developers.google.com/maps/documentation/javascript/reference/places-service#PlacesServiceStatus
+  // TODO: #422 improve error messages
   return status === '' || status === 'OK' ? null : (
     <DivAlertSearch role="alert">
       {status === 'ZERO_RESULTS' ||
