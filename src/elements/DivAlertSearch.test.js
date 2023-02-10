@@ -10,7 +10,6 @@ describe('DivAlertSearch component', () => {
   color: var(--popup-text-color);
   font-family: 'Noto Sans',Verdana,sans-serif;
   font-size: 1rem;
-  --height: 96px;
   --border-radius: calc(48px / 2);
   --margin-side: calc(var(--border-radius));
   max-width: 561px;
@@ -18,7 +17,6 @@ describe('DivAlertSearch component', () => {
 
 .c0 p {
   border-radius: var(--border-radius);
-  height: var(--height);
 }
 
 .c0 p {

@@ -3,7 +3,6 @@ import {dimension} from 'src/utils/designtokens';
 import {styleText} from 'src/utils/cssUtilities';
 
 const setDimension = `
-  --height: ${dimension.button['minimum target size 200']};
   --border-radius: calc(${dimension.button['minimum target size 100']} / 2);
   --margin-side: calc(var(--border-radius));
 `;
@@ -12,7 +11,6 @@ const shapeAlertBox = `
   max-width: ${dimension.searchBox['max-width']};
   & p {
     border-radius: var(--border-radius);
-    height: var(--height);
   }
 `;
 
