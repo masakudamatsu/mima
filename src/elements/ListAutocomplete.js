@@ -48,31 +48,28 @@ const colorListItems = `
 const positionListItemContent = `
   & li {
     padding-right: var(--margin-right);
-  }
-  & li dl {
-    height: 100%;
     position: relative;
   }
-  & li dl dd[data-dd-type="icon"] {
+  & li p[data-dd-type="icon"] {
     height: 100%;
     position: absolute;
     left: var(--margin-left);
     top: var(--icon-vertical-margin);
     bottom: var(--icon-vertical-margin);  
   } 
-  & li dl dd[data-dd-type="icon"] svg {
+  & li p[data-dd-type="icon"] svg {
     height: var(--icon-size);
     width: var(--icon-size);
   }
-  & li dl dt,
-  & li dl dd[data-dd-type="address"] {
+  & li p,
+  & li p[data-dd-type="address"] {
     position: absolute;
     left: calc( var(--margin-left) + var(--icon-size) + 5px); /* 5px is chosen to left-align with search box text OPTICALLY */
   }
-  & li dl dt {
+  & li p {
     top: 0;
   }
-  & li dl dd[data-dd-type="address"] {
+  & li p[data-dd-type="address"] {
     top: 50%;
   }
 `;
@@ -85,8 +82,8 @@ const truncateText = `
 }`; // source: https://css-tricks.com/line-clampin/
 const styleText = `
   ${styleBodyText}
-  & li dl dt,
-  & li dl dd[data-dd-type="address"] {
+  & li p,
+  & li p[data-dd-type="address"] {
     ${truncateText}
   }
   & b {
