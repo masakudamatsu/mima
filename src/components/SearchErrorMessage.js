@@ -14,7 +14,11 @@ export const SearchErrorMessage = ({status}) => {
       status === 'NOT_FOUND' ? (
         <p>{searchBoxLabel.noResult}</p>
       ) : status === 'OVER_QUERY_LIMIT' || status === 'REQUEST_DENIED' ? (
-        <p>{searchBoxLabel.appError}</p>
+        // TODO: #263 Include "Contact us" button
+        <p>
+          My Ideal Map is currently unable to use Google Maps search. Please
+          contact us so we can fix the problem.
+        </p>
       ) : (
         // This last case includes status === "UNKNOWN_ERROR"
         <p>
