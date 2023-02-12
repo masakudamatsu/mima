@@ -96,6 +96,7 @@ test('calls getPlacePredictions() with the same session token', () => {
 });
 
 describe(`shows relevant alert when Places API fails`, () => {
+  // We skip testing the case of "ZERO_RESULTS" because Cypress can cover it
   test('INVALID_REQUEST', () => {
     mockGetPlacePredictions.mockImplementationOnce(
       ({input, sessionToken}, callback) => {
