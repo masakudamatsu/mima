@@ -105,11 +105,18 @@ describe(`shows relevant alert when Places API fails`, () => {
         callback(predictions, status);
       },
     );
-    render(<SearchBox {...mockProps} />);
+    const {container} = render(<SearchBox {...mockProps} />);
     userEvent.type(screen.getByLabelText(searchBoxLabel.ariaLabel), 'a');
-    expect(screen.getByRole('alert')).toHaveTextContent(
-      searchBoxLabel.noResult,
-    );
+    expect(container.querySelector('div[role="alert"] p'))
+      .toMatchInlineSnapshot(`
+      @supports (-webkit-backdrop-filter:blur(var(--blur-radius))) or (backdrop-filter:blur(var(--blur-radius))) {
+
+      }
+
+      <p>
+        No place is found on the map. Try another search term.
+      </p>
+    `);
   });
   test('NOT_FOUND', () => {
     mockGetPlacePredictions.mockImplementationOnce(
@@ -119,11 +126,18 @@ describe(`shows relevant alert when Places API fails`, () => {
         callback(predictions, status);
       },
     );
-    render(<SearchBox {...mockProps} />);
+    const {container} = render(<SearchBox {...mockProps} />);
     userEvent.type(screen.getByLabelText(searchBoxLabel.ariaLabel), 'a');
-    expect(screen.getByRole('alert')).toHaveTextContent(
-      searchBoxLabel.noResult,
-    );
+    expect(container.querySelector('div[role="alert"] p'))
+      .toMatchInlineSnapshot(`
+      @supports (-webkit-backdrop-filter:blur(var(--blur-radius))) or (backdrop-filter:blur(var(--blur-radius))) {
+
+      }
+
+      <p>
+        No place is found on the map. Try another search term.
+      </p>
+    `);
   });
   test('OVER_QUERY_LIMIT', () => {
     mockGetPlacePredictions.mockImplementationOnce(
@@ -133,11 +147,18 @@ describe(`shows relevant alert when Places API fails`, () => {
         callback(predictions, status);
       },
     );
-    render(<SearchBox {...mockProps} />);
+    const {container} = render(<SearchBox {...mockProps} />);
     userEvent.type(screen.getByLabelText(searchBoxLabel.ariaLabel), 'a');
-    expect(screen.getByRole('alert')).toHaveTextContent(
-      searchBoxLabel.appError,
-    );
+    expect(container.querySelector('div[role="alert"] p'))
+      .toMatchInlineSnapshot(`
+      @supports (-webkit-backdrop-filter:blur(var(--blur-radius))) or (backdrop-filter:blur(var(--blur-radius))) {
+
+      }
+
+      <p>
+        My Ideal Map is currently unable to use Google Maps search. Please contact us so we can fix the problem.
+      </p>
+    `);
   });
   test('REQUEST_DENIED', () => {
     mockGetPlacePredictions.mockImplementationOnce(
@@ -147,11 +168,18 @@ describe(`shows relevant alert when Places API fails`, () => {
         callback(predictions, status);
       },
     );
-    render(<SearchBox {...mockProps} />);
+    const {container} = render(<SearchBox {...mockProps} />);
     userEvent.type(screen.getByLabelText(searchBoxLabel.ariaLabel), 'a');
-    expect(screen.getByRole('alert')).toHaveTextContent(
-      searchBoxLabel.appError,
-    );
+    expect(container.querySelector('div[role="alert"] p'))
+      .toMatchInlineSnapshot(`
+      @supports (-webkit-backdrop-filter:blur(var(--blur-radius))) or (backdrop-filter:blur(var(--blur-radius))) {
+
+      }
+
+      <p>
+        My Ideal Map is currently unable to use Google Maps search. Please contact us so we can fix the problem.
+      </p>
+    `);
   });
   test('UNKNOWN_ERROR', () => {
     mockGetPlacePredictions.mockImplementationOnce(
@@ -161,11 +189,18 @@ describe(`shows relevant alert when Places API fails`, () => {
         callback(predictions, status);
       },
     );
-    render(<SearchBox {...mockProps} />);
+    const {container} = render(<SearchBox {...mockProps} />);
     userEvent.type(screen.getByLabelText(searchBoxLabel.ariaLabel), 'a');
-    expect(screen.getByRole('alert')).toHaveTextContent(
-      searchBoxLabel.serverError,
-    );
+    expect(container.querySelector('div[role="alert"] p'))
+      .toMatchInlineSnapshot(`
+      @supports (-webkit-backdrop-filter:blur(var(--blur-radius))) or (backdrop-filter:blur(var(--blur-radius))) {
+
+      }
+
+      <p>
+        Google Maps server is not responding. They usually fix the problem within a day. Please try again later.
+      </p>
+    `);
   });
   test('Someone hacked Places API', () => {
     mockGetPlacePredictions.mockImplementationOnce(
@@ -175,11 +210,18 @@ describe(`shows relevant alert when Places API fails`, () => {
         callback(predictions, status);
       },
     );
-    render(<SearchBox {...mockProps} />);
+    const {container} = render(<SearchBox {...mockProps} />);
     userEvent.type(screen.getByLabelText(searchBoxLabel.ariaLabel), 'a');
-    expect(screen.getByRole('alert')).toHaveTextContent(
-      searchBoxLabel.serverError,
-    );
+    expect(container.querySelector('div[role="alert"] p'))
+      .toMatchInlineSnapshot(`
+      @supports (-webkit-backdrop-filter:blur(var(--blur-radius))) or (backdrop-filter:blur(var(--blur-radius))) {
+
+      }
+
+      <p>
+        Google Maps server is not responding. They usually fix the problem within a day. Please try again later.
+      </p>
+    `);
   });
   test('When there is an error, deleting search text will hide the error message', () => {
     mockGetPlacePredictions.mockImplementationOnce(
