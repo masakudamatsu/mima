@@ -198,7 +198,17 @@ describe(`shows relevant alert when Places API fails`, () => {
       }
 
       <p>
-        Google Maps server is not responding. They usually fix the problem within a day. Please try again later.
+         
+        Google Maps server is currently down.
+         
+        <a
+          href="https://status.cloud.google.com/maps-platform/products/i3CZYPyLB1zevsm2AV6M/history"
+          rel="noreferrer"
+          target="_blank"
+        >
+          Please check its status
+        </a>
+        , and try again once they fix the problem (usually within a few hours).
       </p>
     `);
   });
@@ -219,7 +229,17 @@ describe(`shows relevant alert when Places API fails`, () => {
       }
 
       <p>
-        Google Maps server is not responding. They usually fix the problem within a day. Please try again later.
+         
+        Google Maps server is currently down.
+         
+        <a
+          href="https://status.cloud.google.com/maps-platform/products/i3CZYPyLB1zevsm2AV6M/history"
+          rel="noreferrer"
+          target="_blank"
+        >
+          Please check its status
+        </a>
+        , and try again once they fix the problem (usually within a few hours).
       </p>
     `);
   });

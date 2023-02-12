@@ -17,9 +17,17 @@ const positionText = `
   }
 `;
 
+const styleLinkText = `
+  & a, 
+  & a:visited {
+    color: var(--link-text-color);
+  }
+`;
+
 export const DivAlertSearch = styled.div`
   ${styleText}
   ${setDimension}
   ${shapeAlertBox}
   ${positionText}
+  ${styleLinkText}
 `;

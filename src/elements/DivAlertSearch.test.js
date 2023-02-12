@@ -19,6 +19,11 @@ describe('DivAlertSearch component', () => {
   padding: var(--margin-side);
 }
 
+.c0 a,
+.c0 a:visited {
+  color: var(--link-text-color);
+}
+
 <div>
   <div
     class="c0"
