@@ -1,6 +1,10 @@
-import {useContext, useMemo, useState} from 'react';
+import {useContext, useMemo} from 'react';
 import PropTypes from 'prop-types';
 import {useCombobox} from 'downshift';
+
+import {useStateObject} from 'src/hooks/useStateObject';
+
+import {SearchErrorMessage} from './SearchErrorMessage';
 
 import {ComposeSearchBox} from 'src/elements/ComposeSearchBox';
 import {ListAutocomplete} from 'src/elements/ListAutocomplete';
@@ -22,17 +26,25 @@ export const SearchBox = ({closeSearchBox, id}) => {
     () => new google.maps.places.AutocompleteSessionToken(),
     [google.maps.places.AutocompleteSessionToken],
   );
-  const [inputItems, setInputItems] = useState([]);
+  const [searchResult, setSearchResult] = useStateObject({
+    autocompleteSuggestions: [],
+    status: '',
+  });
   const {
-    getComboboxProps,
     getInputProps,
     getItemProps,
     getMenuProps,
     highlightedIndex,
-    isOpen,
   } = useCombobox({
-    items: inputItems,
+    items: searchResult.autocompleteSuggestions,
     onInputValueChange: ({inputValue}) => {
+      if (inputValue === '') {
+        setSearchResult({
+          autocompleteSuggestions: [],
+          status: '',
+        });
+        return;
+      }
       service.getPlacePredictions(
         {
           input: inputValue,
@@ -42,48 +54,51 @@ export const SearchBox = ({closeSearchBox, id}) => {
         handlePredictions,
       );
       function handlePredictions(predictions, status) {
-        if (status !== 'OK' || !predictions) {
-          // TODO: Handle error more properly (issue #196)
-          console.error('Google Maps Places Autocomplete API call has failed.');
-          setInputItems([]);
-          return;
+        if (status === 'OK') {
+          const autocompleteSuggestions = predictions.map(prediction => {
+            return {
+              id: prediction.place_id,
+              name: {
+                length: prediction.structured_formatting
+                  .main_text_matched_substrings
+                  ? prediction.structured_formatting
+                      .main_text_matched_substrings[0]['length']
+                  : 0,
+                offset: prediction.structured_formatting
+                  .main_text_matched_substrings
+                  ? prediction.structured_formatting
+                      .main_text_matched_substrings[0]['offset']
+                  : 0,
+                string: prediction.structured_formatting.main_text,
+              },
+              address: prediction.structured_formatting.secondary_text && {
+                length: prediction.structured_formatting
+                  .secondary_text_matched_substrings
+                  ? prediction.structured_formatting
+                      .secondary_text_matched_substrings[0]['length']
+                  : 0,
+                offset: prediction.structured_formatting
+                  .secondary_text_matched_substrings
+                  ? prediction.structured_formatting
+                      .secondary_text_matched_substrings[0]['offset']
+                  : 0,
+                string: prediction.structured_formatting.secondary_text,
+              },
+            };
+          });
+          setSearchResult({
+            autocompleteSuggestions: autocompleteSuggestions,
+            status: 'OK',
+          });
+        } else {
+          setSearchResult({
+            autocompleteSuggestions: [],
+            status: status,
+          });
         }
-        const autocompleteSuggestions = predictions.map(prediction => {
-          return {
-            id: prediction.place_id,
-            name: {
-              length: prediction.structured_formatting
-                .main_text_matched_substrings
-                ? prediction.structured_formatting
-                    .main_text_matched_substrings[0]['length']
-                : 0,
-              offset: prediction.structured_formatting
-                .main_text_matched_substrings
-                ? prediction.structured_formatting
-                    .main_text_matched_substrings[0]['offset']
-                : 0,
-              string: prediction.structured_formatting.main_text,
-            },
-            address: prediction.structured_formatting.secondary_text && {
-              length: prediction.structured_formatting
-                .secondary_text_matched_substrings
-                ? prediction.structured_formatting
-                    .secondary_text_matched_substrings[0]['length']
-                : 0,
-              offset: prediction.structured_formatting
-                .secondary_text_matched_substrings
-                ? prediction.structured_formatting
-                    .secondary_text_matched_substrings[0]['offset']
-                : 0,
-              string: prediction.structured_formatting.secondary_text,
-            },
-          };
-        });
-        setInputItems(autocompleteSuggestions);
       }
     },
   });
-
   return (
     <>
       <ComposeSearchBox id={id}>
@@ -94,14 +109,8 @@ export const SearchBox = ({closeSearchBox, id}) => {
        */}
         </svg>
         <input
-          {...getComboboxProps(
-            {
-              'aria-haspopup': null,
-              'aria-owns': null,
-            },
-            {suppressRefError: true}, // otherwise, an error message appears even after Jest tests pass
-          )}
           {...getInputProps({
+            'aria-expanded': searchResult.autocompleteSuggestions.length > 0,
             'aria-label': searchBoxLabel.ariaLabel,
             'aria-labelledby': null, // override the default
             autoFocus: true,
@@ -114,7 +123,9 @@ export const SearchBox = ({closeSearchBox, id}) => {
                   return;
                 }
                 createRipple(event);
-                setPlaceId(inputItems[highlightedIndex].id);
+                setPlaceId(
+                  searchResult.autocompleteSuggestions[highlightedIndex].id,
+                );
                 closeSearchBox();
               }
             },
@@ -129,8 +140,8 @@ export const SearchBox = ({closeSearchBox, id}) => {
           'aria-labelledby': null,
         })}
       >
-        {isOpen
-          ? inputItems.map((item, index) => {
+        {searchResult.autocompleteSuggestions.length > 0
+          ? searchResult.autocompleteSuggestions.map((item, index) => {
               return (
                 <li
                   key={item.id}
@@ -145,35 +156,32 @@ export const SearchBox = ({closeSearchBox, id}) => {
                     },
                   })}
                 >
-                  <dl>
-                    <dt
-                      dangerouslySetInnerHTML={{
-                        __html: boldSubstring(item.name),
-                      }}
-                    />
-                    <dd
-                      data-dd-type="address"
-                      dangerouslySetInnerHTML={{
-                        __html: item.address
-                          ? boldSubstring(item.address)
-                          : null,
-                      }}
-                    />
-                    <dd data-dd-type="icon">
-                      <VisuallyHidden as="span">
-                        Found in Google Maps
-                      </VisuallyHidden>
-                      <svg aria-hidden="true" viewBox="0 0 24 24">
-                        <path d="M12 12c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2zm6-1.8C18 6.57 15.35 4 12 4s-6 2.57-6 6.2c0 2.34 1.95 5.44 6 9.14 4.05-3.7 6-6.8 6-9.14zM12 2c4.2 0 8 3.22 8 8.2 0 3.32-2.67 7.25-8 11.8-5.33-4.55-8-8.48-8-11.8C4 5.22 7.8 2 12 2z" />
-                        {/* source: https://fonts.google.com/icons?selected=Material%20Icons%20Outlined%3Aplace%3A */}
-                      </svg>
-                    </dd>
-                  </dl>
+                  <p
+                    dangerouslySetInnerHTML={{
+                      __html: boldSubstring(item.name),
+                    }}
+                  />
+                  <p
+                    data-dd-type="address"
+                    dangerouslySetInnerHTML={{
+                      __html: item.address ? boldSubstring(item.address) : null,
+                    }}
+                  />
+                  <p data-dd-type="icon">
+                    <VisuallyHidden as="span">
+                      Found in Google Maps
+                    </VisuallyHidden>
+                    <svg aria-hidden="true" viewBox="0 0 24 24">
+                      <path d="M12 12c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2zm6-1.8C18 6.57 15.35 4 12 4s-6 2.57-6 6.2c0 2.34 1.95 5.44 6 9.14 4.05-3.7 6-6.8 6-9.14zM12 2c4.2 0 8 3.22 8 8.2 0 3.32-2.67 7.25-8 11.8-5.33-4.55-8-8.48-8-11.8C4 5.22 7.8 2 12 2z" />
+                      {/* source: https://fonts.google.com/icons?selected=Material%20Icons%20Outlined%3Aplace%3A */}
+                    </svg>
+                  </p>
                 </li>
               );
             })
           : null}
       </ListAutocomplete>
+      <SearchErrorMessage status={searchResult.status} />
     </>
   );
 };

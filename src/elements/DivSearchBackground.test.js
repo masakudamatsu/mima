@@ -40,7 +40,8 @@ describe('DivSearchBackground component', () => {
 }
 
 .c1 div[id="searchbox"],
-.c1 ul[aria-label="Autocomplete suggestions"] {
+.c1 ul[aria-label="Autocomplete suggestions"],
+.c1 div[role="alert"] {
   margin: 0 auto;
   width: calc(100% - var(--popup-margin) * 2);
 }

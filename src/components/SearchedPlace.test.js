@@ -6,7 +6,7 @@ import {SearchedPlace} from './SearchedPlace';
 
 import {PlaceIdProvider} from 'src/wrappers/PlaceIdContext';
 import {Places} from 'src/components/Places';
-import {mockGetDetails, mockPlacesApi} from 'src/utils/mockFunfctions';
+import {mockGetDetails, mockPlacesApi} from 'test/utils/mockFunctions';
 
 const mockProps = {};
 

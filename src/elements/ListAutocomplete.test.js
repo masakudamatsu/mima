@@ -14,6 +14,7 @@ describe('ListAutocomplete component', () => {
   --icon-size: 36px;
   --icon-vertical-margin: calc( ( var(--height) - var(--icon-size) ) / 2 );
   max-width: 561px;
+  color: var(--popup-text-color);
   font-family: 'Noto Sans',Verdana,sans-serif;
   font-size: 1rem;
 }
@@ -29,7 +30,6 @@ describe('ListAutocomplete component', () => {
 }
 
 .c0 li {
-  color: var(--popup-text-color);
   --blur-radius: 8px;
   background-color: var(--popup-background-color-fallback);
 }
@@ -44,14 +44,10 @@ describe('ListAutocomplete component', () => {
 
 .c0 li {
   padding-right: var(--margin-right);
-}
-
-.c0 li dl {
-  height: 100%;
   position: relative;
 }
 
-.c0 li dl dd[data-dd-type="icon"] {
+.c0 li p[data-dd-type="icon"] {
   height: 100%;
   position: absolute;
   left: var(--margin-left);
@@ -59,27 +55,27 @@ describe('ListAutocomplete component', () => {
   bottom: var(--icon-vertical-margin);
 }
 
-.c0 li dl dd[data-dd-type="icon"] svg {
+.c0 li p[data-dd-type="icon"] svg {
   height: var(--icon-size);
   width: var(--icon-size);
 }
 
-.c0 li dl dt,
-.c0 li dl dd[data-dd-type="address"] {
+.c0 li p,
+.c0 li p[data-dd-type="address"] {
   position: absolute;
   left: calc( var(--margin-left) + var(--icon-size) + 5px);
 }
 
-.c0 li dl dt {
+.c0 li p {
   top: 0;
 }
 
-.c0 li dl dd[data-dd-type="address"] {
+.c0 li p[data-dd-type="address"] {
   top: 50%;
 }
 
-.c0 li dl dt,
-.c0 li dl dd[data-dd-type="address"] {
+.c0 li p,
+.c0 li p[data-dd-type="address"] {
   -webkit-box-orient: vertical;
   display: -webkit-box;
   -webkit-line-clamp: 1;
