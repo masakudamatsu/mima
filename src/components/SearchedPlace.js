@@ -20,7 +20,7 @@ import {useStateObject} from 'src/hooks/useStateObject';
 import {buttonLabel, linkText, loadingMessage} from 'src/utils/uiCopies';
 
 export const SearchedPlace = ({mapObject}) => {
-  const [placeId] = useContext(PlaceIdContext);
+  const [placeId, setPlaceId] = useContext(PlaceIdContext);
   const nightMode = useContext(NightModeContext);
 
   const {setPlaces, userData, setUserData} = usePlaces();
@@ -222,6 +222,7 @@ export const SearchedPlace = ({mapObject}) => {
         const jsonResponse = await response.json();
         marker.current.setMap(null); // remove the searched place marker
         setUserData([...userData, jsonResponse]);
+        setPlaceId('');
         setState({status: 'saved'});
         setPlaces({
           ui: 'open',

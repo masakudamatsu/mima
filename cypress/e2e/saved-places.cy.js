@@ -232,3 +232,38 @@ describe('Saved place detail feature', () => {
     cy.focused().contains(buttonLabel.delete);
   });
 });
+describe('Edge cases', () => {
+  beforeEach(() => {
+    cy.log('Resetting the database');
+    cy.exec('npx prisma migrate reset --force'); // https://docs.cypress.io/guides/end-to-end-testing/testing-your-app#Seeding-data
+    cy.log('Setting up');
+    cy.auth();
+    cy.visit('/');
+    cy.waitForMapToLoad();
+  });
+  it.skip('Searching a place just deleted will drop a place mark and show its detail', () => {
+    // TODO #428: Fix this test
+    cy.log(`Setup: Saving a place`);
+    const savedPlaceName = 'Kyoto Station';
+    cy.findByRole('button', {name: buttonLabel.search}).click();
+    cy.focused().realType(savedPlaceName);
+    cy.findByRole('option', {name: savedPlaceName})
+      .should('be.visible')
+      .click(); // This fails...
+    cy.findByRole('button', {name: buttonLabel.saveSearchedPlace}).click();
+    cy.findByRole('button', {name: buttonLabel.saveEdit}).click();
+    cy.log(`Setup: Deleting a place`);
+    cy.findByRole('button', {name: savedPlaceName}).click();
+    cy.findByRole('button', {name: buttonLabel.delete}).click();
+    cy.findByRole('button', {name: buttonLabel.delete}).click();
+    cy.log(`Execute: Searching for the place just deleted...`);
+    cy.findByRole('button', {name: buttonLabel.search}).click();
+    cy.focused().realType(savedPlaceName);
+    cy.findByRole('option', {name: savedPlaceName})
+      .should('be.visible')
+      .click(); // This fails...
+    cy.log('Verify: ...Shows the place on the map');
+    cy.findByRole('button', {name: savedPlaceName}).should('be.visible');
+    cy.findByRole('heading', {name: savedPlaceName}).should('be.visible');
+  });
+});
