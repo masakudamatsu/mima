@@ -23,8 +23,7 @@ export const SearchedPlace = ({mapObject}) => {
   const [placeId] = useContext(PlaceIdContext);
   const nightMode = useContext(NightModeContext);
 
-  const {places, setPlaces} = usePlaces();
-  const {userData} = places;
+  const {setPlaces, userData, setUserData} = usePlaces();
 
   const [state, setState] = useStateObject({
     status: 'initial',
@@ -222,10 +221,10 @@ export const SearchedPlace = ({mapObject}) => {
       if (response.ok) {
         const jsonResponse = await response.json();
         marker.current.setMap(null); // remove the searched place marker
+        setUserData([...userData, jsonResponse]);
         setState({status: 'saved'});
         setPlaces({
           ui: 'open',
-          userData: [...userData, jsonResponse],
           selectedPlace: {
             id: jsonResponse.id,
             coordinates: jsonResponse.coordinates,

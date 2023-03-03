@@ -36,8 +36,8 @@ const autolinker = new Autolinker({
 }); // https://github.com/gregjacobs/Autolinker.js#usage
 
 export const SavedPlaces = ({mapObject}) => {
-  const {places, setPlaces} = usePlaces();
-  const {ui, userData, selectedPlace, ripple} = places;
+  const {places, setPlaces, userData, setUserData} = usePlaces();
+  const {ui, selectedPlace, ripple} = places;
 
   const nightMode = useContext(NightModeContext);
 
@@ -231,9 +231,9 @@ export const SavedPlaces = ({mapObject}) => {
             ...userData[selectedPlaceIndex].properties,
             ...jsonResponse.properties,
           };
+          setUserData(newUserData);
           setPlaces({
             ui: 'open',
-            userData: newUserData,
           });
         } else {
           throw new Error('PUT request to /api/places has failed.');
@@ -262,8 +262,8 @@ export const SavedPlaces = ({mapObject}) => {
           setPlaces({
             ui: null,
             selectedPlace: null,
-            userData: newUserData,
           });
+          setUserData(newUserData); // this must be executed after setPlaces(); otherwise the entire component re-renders and the `if(selectedPlace)` block will be run, returning an error.
         } else {
           throw new Error('DELETE request to /api/places has failed.');
         }
