@@ -26,7 +26,7 @@ export const SearchedPlace = ({mapObject}) => {
   const {setPlaces, userData, setUserData} = usePlaces();
 
   const [state, setState] = useStateObject({
-    status: 'initial',
+    status: 'closed',
     placeData: null,
     error: null,
     ripple: {
@@ -223,7 +223,7 @@ export const SearchedPlace = ({mapObject}) => {
         marker.current.setMap(null); // remove the searched place marker
         setUserData([...userData, jsonResponse]);
         setPlaceId('');
-        setState({status: 'saved'});
+        setState({status: 'closed'});
         setPlaces({
           ui: 'open',
           selectedPlace: {
@@ -274,7 +274,7 @@ export const SearchedPlace = ({mapObject}) => {
       ]
     : null;
 
-  if (status === 'initial') {
+  if (status === 'closed') {
     return null;
   } else if (status === 'loading') {
     return null; // TODO #208: render loading spinner or its equivalent
@@ -330,8 +330,6 @@ export const SearchedPlace = ({mapObject}) => {
         </DivPlaceInfoBackground>
       </DivPlaceInfoBackground.Wrapper>
     );
-  } else if (status === 'closed') {
-    return null;
   } else if (status === 'editing') {
     return (
       <PlaceInfoEditor
@@ -347,8 +345,6 @@ export const SearchedPlace = ({mapObject}) => {
         <ParagraphLoading>{loadingMessage.create}</ParagraphLoading>
       </DivCloud>
     );
-  } else if (status === 'saved') {
-    return null;
   }
 };
 
