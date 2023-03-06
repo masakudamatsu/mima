@@ -7,7 +7,6 @@ import {Slate, Editable, withReact} from 'slate-react';
 import {Transforms, createEditor, Node, Element} from 'slate';
 import {withHistory} from 'slate-history';
 
-import {ModalPopup} from 'src/components/ModalPopup';
 import {InlineChromiumBugfix} from './InlineChromiumBugfix';
 import {H2PlaceName} from 'src/elements/H2PlaceName';
 import {HeaderEditor} from 'src/elements/HeaderEditor';
@@ -113,39 +112,37 @@ export const PlaceInfoEditor = ({
   };
 
   return (
-    <ModalPopup hidden={false} slideFrom="bottom" titleId="edit-place-info">
-      <form>
-        <Slate
-          editor={editor}
-          value={initialContent}
-          onChange={value => (content.current = value)}
-        >
-          <HeaderEditor>
-            <Heading as="h1" data-editor>
-              {editorLabel}
-            </Heading>
-            <section>
-              <button
-                onClick={() => {
-                  handleCancel();
-                }}
-                type="button"
-              >
-                {buttonLabel.cancel}
-              </button>
-              <button data-save onClick={handleClickSave} type="button">
-                {buttonLabel.saveEdit}
-              </button>
-            </section>
-          </HeaderEditor>
-          <Editable
-            data-autofocus // autoFocus won't work due to the use of react-focus-lock package
-            placeholder="Enter a place name"
-            renderElement={renderElement}
-          />
-        </Slate>
-      </form>
-    </ModalPopup>
+    <form>
+      <Slate
+        editor={editor}
+        value={initialContent}
+        onChange={value => (content.current = value)}
+      >
+        <HeaderEditor>
+          <Heading as="h1" data-editor>
+            {editorLabel}
+          </Heading>
+          <section>
+            <button
+              onClick={() => {
+                handleCancel();
+              }}
+              type="button"
+            >
+              {buttonLabel.cancel}
+            </button>
+            <button data-save onClick={handleClickSave} type="button">
+              {buttonLabel.saveEdit}
+            </button>
+          </section>
+        </HeaderEditor>
+        <Editable
+          data-autofocus // autoFocus won't work due to the use of react-focus-lock package
+          placeholder="Enter a place name"
+          renderElement={renderElement}
+        />
+      </Slate>
+    </form>
   );
 };
 

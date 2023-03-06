@@ -10,6 +10,7 @@ import {ComposeDialog} from 'src/elements/ComposeDialog';
 import {DivCloud} from 'src/elements/DivCloud';
 import {DivModalBackdrop} from 'src/elements/DivModalBackdrop';
 import {DivPlaceInfoBackground} from 'src/elements/DivPlaceInfoBackground';
+import {ModalPopup} from './ModalPopup';
 import {ParagraphLoading} from 'src/elements/ParagraphLoading';
 import {SpanRipple} from 'src/elements/SpanRipple';
 
@@ -365,12 +366,14 @@ export const SavedPlaces = ({mapObject}) => {
       );
     } else if (ui === 'editing') {
       return (
-        <PlaceInfoEditor
-          placeName={selectedPlaceName}
-          placeNoteArray={selectedPlaceNoteArray}
-          handleCancel={() => setPlaces({ui: 'open'})}
-          updateData={updateData}
-        />
+        <ModalPopup hidden={false} slideFrom="bottom" titleId="edit-place-info">
+          <PlaceInfoEditor
+            placeName={selectedPlaceName}
+            placeNoteArray={selectedPlaceNoteArray}
+            handleCancel={() => setPlaces({ui: 'open'})}
+            updateData={updateData}
+          />
+        </ModalPopup>
       );
     } else if (ui === 'saving') {
       return (
