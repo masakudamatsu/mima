@@ -1,5 +1,6 @@
 import {useContext, useEffect, useRef} from 'react';
 import PropTypes from 'prop-types';
+import FocusLock from 'react-focus-lock';
 
 import {NightModeContext} from 'src/wrappers/NightModeContext';
 import {PlaceIdContext} from 'src/wrappers/PlaceIdContext';
@@ -333,14 +334,16 @@ export const SearchedPlace = ({mapObject}) => {
     );
   } else if (status === 'editing') {
     return (
-      <ModalPopup hidden={false} slideFrom="bottom" titleId="edit-place-info">
-        <PlaceInfoEditor
-          handleCancel={handleCancel}
-          placeName={placeData.name}
-          placeNoteArray={placeNoteArray}
-          updateData={updateData}
-        />
-      </ModalPopup>
+      <FocusLock returnFocus>
+        <ModalPopup hidden={false} slideFrom="bottom" titleId="edit-place-info">
+          <PlaceInfoEditor
+            handleCancel={handleCancel}
+            placeName={placeData.name}
+            placeNoteArray={placeNoteArray}
+            updateData={updateData}
+          />
+        </ModalPopup>
+      </FocusLock>
     );
   } else if (status === 'saving') {
     return (

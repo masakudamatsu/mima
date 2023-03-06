@@ -366,14 +366,20 @@ export const SavedPlaces = ({mapObject}) => {
       );
     } else if (ui === 'editing') {
       return (
-        <ModalPopup hidden={false} slideFrom="bottom" titleId="edit-place-info">
-          <PlaceInfoEditor
-            placeName={selectedPlaceName}
-            placeNoteArray={selectedPlaceNoteArray}
-            handleCancel={() => setPlaces({ui: 'open'})}
-            updateData={updateData}
-          />
-        </ModalPopup>
+        <FocusLock returnFocus>
+          <ModalPopup
+            hidden={false}
+            slideFrom="bottom"
+            titleId="edit-place-info"
+          >
+            <PlaceInfoEditor
+              placeName={selectedPlaceName}
+              placeNoteArray={selectedPlaceNoteArray}
+              handleCancel={() => setPlaces({ui: 'open'})}
+              updateData={updateData}
+            />
+          </ModalPopup>
+        </FocusLock>
       );
     } else if (ui === 'saving') {
       return (
