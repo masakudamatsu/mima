@@ -57,7 +57,7 @@ const styleSearchboxText = `
     ${styleText}
   }
   & input[type="search"]::placeholder {
-    color: var(--popup-text-color);
+    color: var(--placeholder-text-color);
     opacity: 1; /* to override the default of Firefox */
   }  
 `;
