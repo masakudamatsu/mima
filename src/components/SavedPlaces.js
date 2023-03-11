@@ -10,7 +10,6 @@ import {ComposeDialog} from 'src/elements/ComposeDialog';
 import {DivCloud} from 'src/elements/DivCloud';
 import {DivModalBackdrop} from 'src/elements/DivModalBackdrop';
 import {DivPlaceInfoBackground} from 'src/elements/DivPlaceInfoBackground';
-import {ModalPopup} from './ModalPopup';
 import {ParagraphLoading} from 'src/elements/ParagraphLoading';
 import {SpanRipple} from 'src/elements/SpanRipple';
 
@@ -367,18 +366,21 @@ export const SavedPlaces = ({mapObject}) => {
     } else if (ui === 'editing') {
       return (
         <FocusLock returnFocus>
-          <ModalPopup
-            hidden={false}
-            slideFrom="bottom"
-            titleId="edit-place-info"
-          >
-            <PlaceInfoEditor
-              placeName={selectedPlaceName}
-              placeNoteArray={selectedPlaceNoteArray}
-              handleCancel={() => setPlaces({ui: 'open'})}
-              updateData={updateData}
-            />
-          </ModalPopup>
+          <DivPlaceInfoBackground.Wrapper data-fullscreen>
+            <DivPlaceInfoBackground
+              // aria-describedby="selected-place-detail"
+              aria-labelledby="edit-place-info"
+              data-fullscreen
+              role="dialog"
+            >
+              <PlaceInfoEditor
+                placeName={selectedPlaceName}
+                placeNoteArray={selectedPlaceNoteArray}
+                handleCancel={() => setPlaces({ui: 'open'})}
+                updateData={updateData}
+              />
+            </DivPlaceInfoBackground>
+          </DivPlaceInfoBackground.Wrapper>
         </FocusLock>
       );
     } else if (ui === 'saving') {

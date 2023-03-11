@@ -19,7 +19,10 @@ describe('DivPlaceInfoBackground component', () => {
   position: absolute;
   right: 0;
   top: calc(var(--blur-radius) * 2);
-  --popup-margin: 8px;
+  padding-bottom: 8px;
+  padding-left: 8px;
+  padding-right: 8px;
+  padding-top: 0;
   color: var(--popup-text-color);
   font-family: 'Noto Sans',Verdana,sans-serif;
   font-size: 1.0506rem;
@@ -35,16 +38,18 @@ describe('DivPlaceInfoBackground component', () => {
   animation-timing-function: linear;
 }
 
-.c1 button[aria-label="Close place detail"] {
-  position: absolute;
-  right: var(--popup-margin);
-  top: var(--popup-margin);
+.c1[data-fullscreen="true"] {
+  top: 0;
 }
 
-.c1 h2,
-.c1 p,
-.c1 button:not([aria-label="Close place detail"]) {
-  margin-left: var(--popup-margin);
+.c1 button[aria-label="Close place detail"] {
+  position: absolute;
+  right: 8px;
+  top: 8px;
+}
+
+.c1 button+button {
+  margin-left: 8px;
 }
 
 .c1 h2,
@@ -102,6 +107,10 @@ describe('DivPlaceInfoBackground component', () => {
   right: 0;
   top: 50%;
   overflow: hidden;
+}
+
+.c0[data-fullscreen="true"] {
+  top: 0;
 }
 
 .c0[data-closing='true'] {
@@ -166,6 +175,14 @@ describe('DivPlaceInfoBackground component', () => {
 
   .c1::after {
     box-shadow: 0px 0px var(--blur-radius) var(--blur-radius) var(--popup-glow-color);
+  }
+}
+
+@media screen and (min-width:540px) {
+  .c1 {
+    padding-bottom: 48px;
+    padding-left: 48px;
+    padding-right: 48px;
   }
 }
 

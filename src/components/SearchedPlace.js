@@ -9,7 +9,6 @@ import {ButtonDialog} from 'src/elements/ButtonDialog';
 import {CloseButton} from './CloseButton';
 import {DivCloud} from 'src/elements/DivCloud';
 import {DivPlaceInfoBackground} from 'src/elements/DivPlaceInfoBackground';
-import {ModalPopup} from './ModalPopup';
 import {ParagraphLoading} from 'src/elements/ParagraphLoading';
 import {PlaceInfoEditor} from './PlaceInfoEditor';
 import {SpanRipple} from 'src/elements/SpanRipple';
@@ -335,14 +334,21 @@ export const SearchedPlace = ({mapObject}) => {
   } else if (status === 'editing') {
     return (
       <FocusLock returnFocus>
-        <ModalPopup hidden={false} slideFrom="bottom" titleId="edit-place-info">
-          <PlaceInfoEditor
-            handleCancel={handleCancel}
-            placeName={placeData.name}
-            placeNoteArray={placeNoteArray}
-            updateData={updateData}
-          />
-        </ModalPopup>
+        <DivPlaceInfoBackground.Wrapper data-fullscreen>
+          <DivPlaceInfoBackground
+            // aria-describedby="selected-place-detail"
+            aria-labelledby="edit-place-info"
+            data-fullscreen
+            role="dialog"
+          >
+            <PlaceInfoEditor
+              handleCancel={handleCancel}
+              placeName={placeData.name}
+              placeNoteArray={placeNoteArray}
+              updateData={updateData}
+            />
+          </DivPlaceInfoBackground>
+        </DivPlaceInfoBackground.Wrapper>
       </FocusLock>
     );
   } else if (status === 'saving') {
