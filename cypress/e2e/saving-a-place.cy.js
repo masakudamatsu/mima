@@ -38,6 +38,7 @@ describe('Saving feature', () => {
     cy.log('Clicking the save button on the searched place detail popup');
     cy.findByRole('button', {name: buttonLabel.saveSearchedPlace}).click();
     cy.log('...shows the text editor');
+    cy.findByRole('form', {name: editorLabel}).should('be.visible'); // see https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Roles/form_role#description
     cy.findByRole('heading', {name: editorLabel}).should('be.visible');
     cy.findByRole('textbox').contains(searchedPlace.name);
     cy.findByRole('textbox').contains(searchedPlace.address);

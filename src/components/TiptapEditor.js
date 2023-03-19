@@ -162,9 +162,9 @@ export const TiptapEditor = ({
   };
 
   return (
-    <form>
+    <form aria-labelledby="editor-heading">
       <HeaderEditor>
-        <Heading as="h1" data-editor>
+        <Heading as="h1" data-editor id="editor-heading">
           {editorLabel}
         </Heading>
         <section>
