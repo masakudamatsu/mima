@@ -50,6 +50,10 @@ describe('Saved place detail feature', () => {
     );
     cy.log(`...autofocuses the note`);
     cy.focused().should('have.attr', 'role', 'textbox');
+    cy.log(
+      `...tells screen readers that pressing the Enter key will insert a line break, not submit the entered text`,
+    );
+    cy.focused().should('have.attr', 'aria-multiline', 'true');
 
     cy.log(`Typing text...`);
     // eslint-disable-next-line cypress/no-unnecessary-waiting

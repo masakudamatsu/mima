@@ -98,6 +98,7 @@ export const TiptapEditor = ({
     editorProps: {
       attributes: {
         role: 'textbox', // for accessibility: https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Roles/textbox_role
+        'aria-multiline': 'true', // for accessibility: https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-multiline
       },
     },
     injectCSS: false, // remove the default style
