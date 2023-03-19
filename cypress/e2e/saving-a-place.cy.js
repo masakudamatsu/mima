@@ -68,7 +68,7 @@ describe('Saving feature', () => {
         cy.log('...shows link text');
         cy.findByRole('link', {name: linkText.searchedPlace})
           .should('have.attr', 'target', '_blank')
-          .should('have.attr', 'rel', 'noreferrer')
+          .should('have.attr', 'rel', 'nofollow noreferrer')
           .then(link => {
             cy.request(link.prop('href')).its('status').should('eq', 200);
           });

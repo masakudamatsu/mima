@@ -72,8 +72,10 @@ export const TiptapEditor = ({
       CustomDocument,
       Link.configure({
         HTMLAttributes: {
-          rel: 'noreferrer', // to override the default of "noopener noreferrer nofollow"; see https://tiptap.dev/api/marks/link
+          rel: 'nofollow noreferrer', // to override the default of "noopener noreferrer nofollow"; see https://tiptap.dev/api/marks/link;
         },
+        // for nofollow, see https://developers.google.com/search/docs/fundamentals/seo-starter-guide?hl=en&visit_id=638148628535504987-2673944290&rd=1#linkwithcaution
+        // we drop noopener as we don't need to support legacy browsers (Google Maps doesn't support them); for modern browsers, noreferrer implies noopener; see https://html.spec.whatwg.org/multipage/links.html#link-type-noreferrer
       }),
       StarterKit.configure({
         document: false, // to use CustomDocument, not the default Document extension included in StarterKit
