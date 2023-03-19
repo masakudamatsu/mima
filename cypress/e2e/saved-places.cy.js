@@ -48,7 +48,7 @@ describe('Saved place detail feature', () => {
     cy.findByRole('heading', {name: editorLabel, timeout: 20000}).should(
       'be.visible',
     );
-    cy.log(`...autofocuses the note field`);
+    cy.log(`...autofocuses the note`);
     cy.focused().should('have.attr', 'role', 'textbox');
 
     cy.log(`Typing text...`);
@@ -56,13 +56,15 @@ describe('Saved place detail feature', () => {
     cy.wait(100); // otherwise, Cypress will type 'bc', not 'abc'. This is a known issue. See https://www.cypress.io/blog/2019/01/22/when-can-the-test-click/
     cy.findByRole('textbox').type('abc ');
     cy.log(`...updates the place name*`);
-    cy.findByRole('textbox').get('h2').contains('abc', {timeout: 20000});
+    cy.findByRole('heading', {level: 2}).should('include.text', 'abc', {
+      timeout: 20000,
+    });
 
     cy.log(`Pressing Down Arrow key and typing URL text...`);
     cy.findByRole('textbox').type('{downarrow}');
     cy.focused().type('https://google.com ');
     cy.log(`...updates the place note`);
-    cy.findByRole('textbox').get('p').contains('https://google.com');
+    cy.contains('https://google.com').should('be.visible');
 
     cy.log(`Clicking Save button...`);
     cy.findByRole('button', {name: buttonLabel.saveEdit}).click();

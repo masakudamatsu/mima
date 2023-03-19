@@ -141,6 +141,24 @@ const animateTransitionOut = css`
   }
 `;
 
+const showPlaceholderTextInEditor = css`
+  /* Docs: https://tiptap.dev/api/extensions/placeholder#additional-setup */
+  & .ProseMirror h2.is-empty::before,
+  & .ProseMirror p.is-empty:first-of-type::before {
+    color: var(--placeholder-text-color);
+    content: attr(data-placeholder);
+    float: left;
+    height: 0;
+    pointer-events: none;
+  }
+`;
+
+const styleTextEditor = css`
+  /* Remove the browser's default focus-ring */
+  & .ProseMirror:focus-visible {
+    outline-style: none;
+  }
+`;
 export const DivPlaceInfoBackground = styled.div`
   ${setBackground}
   ${setInnerSize}
@@ -149,6 +167,8 @@ export const DivPlaceInfoBackground = styled.div`
   ${setFontStyle} 
   ${animateTransitionIn}
   ${animateTransitionOut}
+  ${showPlaceholderTextInEditor}
+  ${styleTextEditor}
 `;
 
 DivPlaceInfoBackground.Wrapper = styled.div`

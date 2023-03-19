@@ -99,6 +99,19 @@ describe('DivPlaceInfoBackground component', () => {
   animation-timing-function: linear;
 }
 
+.c1 .ProseMirror h2.is-empty::before,
+.c1 .ProseMirror p.is-empty:first-of-type::before {
+  color: var(--placeholder-text-color);
+  content: attr(data-placeholder);
+  float: left;
+  height: 0;
+  pointer-events: none;
+}
+
+.c1 .ProseMirror:focus-visible {
+  outline-style: none;
+}
+
 .c0 {
   position: absolute;
   z-index: 2;

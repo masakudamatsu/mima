@@ -10,8 +10,8 @@ import {CloseButton} from './CloseButton';
 import {DivCloud} from 'src/elements/DivCloud';
 import {DivPlaceInfoBackground} from 'src/elements/DivPlaceInfoBackground';
 import {ParagraphLoading} from 'src/elements/ParagraphLoading';
-import {PlaceInfoEditor} from './PlaceInfoEditor';
 import {SpanRipple} from 'src/elements/SpanRipple';
+import {TiptapEditor} from './TiptapEditor';
 
 import {useOnClickOutside} from 'src/hooks/useOnClickOutside';
 import {useOnEscKeyDown} from 'src/hooks/useOnEscKeyDown';
@@ -191,89 +191,29 @@ export const SearchedPlace = ({mapObject}) => {
     handler: closePlaceInfo,
   });
 
+  // for saving the searched place
   const openEditor = () => {
     setState({status: 'editing'});
   };
   const handleCancel = () => {
     setState({status: 'open'});
   };
-
-  const updateData = async ([title, noteArray]) => {
-    try {
-      setState({status: 'saving'});
-      // TODO #282: handle database access error
-      const response = await fetch('/api/places', {
-        method: 'POST',
-        headers: {'Content-Type': 'application/json'},
-        body: JSON.stringify({
-          geometry: {
-            coordinates: [placeData.coordinates.lng, placeData.coordinates.lat],
-            type: 'Point',
-          },
-          properties: {
-            address: placeData.address,
-            'Google Maps URL': placeData.url,
-            name: title.children[0].text, // edited by user, not the one returned from Google Maps API server
-            note: noteArray,
-          },
-          type: 'Feature',
-        }),
-      });
-      if (response.ok) {
-        const jsonResponse = await response.json();
-        marker.current.setMap(null); // remove the searched place marker
-        setUserData([...userData, jsonResponse]);
-        setPlaceId('');
-        setState({status: 'closed'});
-        setPlaces({
-          ui: 'open',
-          selectedPlace: {
-            id: jsonResponse.id,
-            coordinates: jsonResponse.coordinates,
-          },
-        });
-      } else {
-        throw new Error('POST request to /api/places has failed.');
-      }
-    } catch (error) {
-      console.log(error);
-    }
+  const handleResponse = jsonResponse => {
+    marker.current.setMap(null); // remove the searched place marker
+    setUserData([...userData, jsonResponse]);
+    setPlaceId('');
+    setState({status: 'closed'});
+    setPlaces({
+      ui: 'open',
+      selectedPlace: {
+        id: jsonResponse.id,
+        coordinates: jsonResponse.coordinates,
+      },
+    });
   };
 
   const placeNameId = 'place-name';
   const placeDetailId = 'place-detail';
-  const placeNoteArray = placeData
-    ? [
-        {
-          type: 'paragraph',
-          children: [
-            {
-              text: placeData.address,
-            },
-          ],
-        },
-        {
-          type: 'paragraph',
-          children: [
-            {
-              text: '',
-            },
-            {
-              type: 'link',
-              url: placeData.url,
-              children: [
-                {
-                  text: linkText.searchedPlace,
-                },
-              ],
-            },
-            {
-              text: '',
-            },
-          ],
-        },
-      ]
-    : null;
 
   if (status === 'closed') {
     return null;
@@ -341,11 +281,19 @@ export const SearchedPlace = ({mapObject}) => {
             data-fullscreen
             role="dialog"
           >
-            <PlaceInfoEditor
+            <TiptapEditor
+              data={{
+                lat: placeData.coordinates.lat,
+                lng: placeData.coordinates.lng,
+                name: placeData.name,
+                address: placeData.address,
+                url: placeData.url,
+                linkText: linkText.searchedPlace,
+              }}
               handleCancel={handleCancel}
-              placeName={placeData.name}
-              placeNoteArray={placeNoteArray}
-              updateData={updateData}
+              handleResponse={handleResponse}
+              searchedPlace
+              setUi={setState}
             />
           </DivPlaceInfoBackground>
         </DivPlaceInfoBackground.Wrapper>
