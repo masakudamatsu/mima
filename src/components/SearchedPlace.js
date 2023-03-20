@@ -207,7 +207,10 @@ export const SearchedPlace = ({mapObject}) => {
       ui: 'open',
       selectedPlace: {
         id: jsonResponse.id,
-        coordinates: jsonResponse.coordinates,
+        coordinates: {
+          lat: jsonResponse.geometry.coordinates[1],
+          lng: jsonResponse.geometry.coordinates[0],
+        },
       },
     });
   };

@@ -73,6 +73,11 @@ describe('Saving feature', () => {
           .then(link => {
             cy.request(link.prop('href')).its('status').should('eq', 200);
           });
+        cy.log('...allows user to close the popup');
+        cy.findByRole('button', {name: buttonLabel.closePlaceDetail}).click();
+        cy.findByRole('heading', {name: searchedPlace.name}).should(
+          'not.exist',
+        );
       });
   });
   it('cancel button', () => {
