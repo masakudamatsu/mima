@@ -3,6 +3,7 @@
 
 import './auth.cy';
 import './background.cy';
+import './editor.cy';
 import './geolocation.cy';
 import './landmarks.cy';
 import './menu.cy';

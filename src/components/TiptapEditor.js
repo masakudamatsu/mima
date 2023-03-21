@@ -108,14 +108,26 @@ export const TiptapEditor = ({
   const handleClickSave = async event => {
     event.preventDefault();
     setUi(searchedPlace ? {status: 'saving'} : {ui: 'saving'});
-
-    const {content: userText} = editor.getJSON();
-    const userPlaceName = userText[0].content[0].text;
-
-    const userPlaceNote = DOMPurify.sanitize(
-      editor.getHTML(),
-      {ADD_ATTR: ['target']}, // see https://github.com/cure53/DOMPurify/issues/317#issuecomment-470429778
-    );
+    // retrieve user's note
+    const json = editor.getJSON();
+    let userPlaceName, userPlaceNote;
+    if (json.content[0].content) {
+      // User has provided place name
+      userPlaceName = json.content[0].content[0].text;
+      userPlaceNote = DOMPurify.sanitize(
+        editor.getHTML(),
+        {ADD_ATTR: ['target']}, // see https://github.com/cure53/DOMPurify/issues/317#issuecomment-470429778
+      );
+    } else {
+      // User has failed to provide place name
+      userPlaceName = 'Unnamed place';
+      json.content[0].content = [{type: 'text', text: userPlaceName}]; // fill in to <h2>, which would otherwise be empty
+      const {generateHTML} = await import('@tiptap/core'); // import here as it's needed only if user fails to provide place name.
+      userPlaceNote = DOMPurify.sanitize(
+        generateHTML(json, [StarterKit]), // docs: https://tiptap.dev/api/utilities/html#generate-html-from-json
+        {ADD_ATTR: ['target']}, // see https://github.com/cure53/DOMPurify/issues/317#issuecomment-470429778
+      ); // editor.getHTML() would include an empty <h2> element whose text content (apparently) cannot be modified...
+    }
 
     try {
       const response = await fetch('/api/places', {
