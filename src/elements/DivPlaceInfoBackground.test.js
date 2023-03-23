@@ -52,10 +52,15 @@ describe('DivPlaceInfoBackground component', () => {
   margin-left: 8px;
 }
 
+.c1 > div,
+.c1 > form {
+  margin: 0 auto;
+  max-width: 561px;
+}
+
 .c1 h2,
 .c1 p {
   --close-button-width: calc(48px + 8px * 2);
-  max-width: 561px;
   width: calc(100% - var(--close-button-width));
 }
 

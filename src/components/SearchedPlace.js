@@ -247,23 +247,25 @@ export const SearchedPlace = ({mapObject}) => {
             ref={closeButton}
             testId="close-button-saved-place"
           />
-          <h2 id={placeNameId}>{placeData.name}</h2>
-          <div id={placeDetailId}>
-            <p>{placeData.address}</p>
-            <p>
-              <a href={placeData.url} rel="noreferrer" target="_blank">
-                {linkText.searchedPlace}
-              </a>
-            </p>
+          <div>
+            <h2 id={placeNameId}>{placeData.name}</h2>
+            <div id={placeDetailId}>
+              <p>{placeData.address}</p>
+              <p>
+                <a href={placeData.url} rel="noreferrer" target="_blank">
+                  {linkText.searchedPlace}
+                </a>
+              </p>
+            </div>
+            <ButtonDialog
+              onClick={openEditor}
+              onFocus={importTiptapEditor}
+              onMouseEnter={importTiptapEditor}
+              type="button"
+            >
+              {buttonLabel.saveSearchedPlace}
+            </ButtonDialog>
           </div>
-          <ButtonDialog
-            onClick={openEditor}
-            onFocus={importTiptapEditor}
-            onMouseEnter={importTiptapEditor}
-            type="button"
-          >
-            {buttonLabel.saveSearchedPlace}
-          </ButtonDialog>
           {status === 'closing' ? (
             <SpanRipple
               id="ripple"

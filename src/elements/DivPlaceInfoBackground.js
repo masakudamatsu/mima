@@ -61,15 +61,25 @@ const positionOtherButtons = `
     margin-left: ${dimension.button['minimum target spacing 100']};
   }
 `;
+const centerAlignContent = `
+  /* "& > div" for searched and saved place info popup */
+  /* "& > form" for text editor */
+  & > div,
+  & > form {
+    margin: 0 auto;
+    max-width: ${dimension.searchBox['max-width']};
+  }
+`;
+
 const positionComponents = `
   ${positionCloseButton}
   ${positionOtherButtons}
+  ${centerAlignContent}
   & h2,
   & p {
     --close-button-width: calc(${
       dimension.button['minimum target size 100']
     } + ${dimension.button['minimum target spacing 100']} * 2);
-    max-width: ${dimension.searchBox['max-width']};
     width: calc(100% - var(--close-button-width));    
   }
 

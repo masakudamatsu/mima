@@ -283,22 +283,25 @@ export const SavedPlaces = ({mapObject}) => {
                 ref={closeButton}
                 testId="close-button-saved-place"
               />
-              <div
-                dangerouslySetInnerHTML={{
-                  __html: autolinker.link(selectedPlaceNoteHtml),
-                }}
-              />
-              <ButtonDialog
-                onClick={() => setPlaces({ui: 'editing'})}
-                onFocus={importTiptapEditor}
-                onMouseEnter={importTiptapEditor}
-                type="button"
-              >
-                {buttonLabel.edit}
-              </ButtonDialog>
-              <ButtonDialog onClick={handleClickDelete} type="button">
-                {buttonLabel.delete}
-              </ButtonDialog>
+              <div>
+                <div
+                  dangerouslySetInnerHTML={{
+                    __html: autolinker.link(selectedPlaceNoteHtml),
+                  }}
+                />
+                <ButtonDialog
+                  onClick={() => setPlaces({ui: 'editing'})}
+                  onFocus={importTiptapEditor}
+                  onMouseEnter={importTiptapEditor}
+                  type="button"
+                >
+                  {buttonLabel.edit}
+                </ButtonDialog>
+                <ButtonDialog onClick={handleClickDelete} type="button">
+                  {buttonLabel.delete}
+                </ButtonDialog>
+              </div>
+
               {ui === 'closing' ? (
                 <SpanRipple
                   id="ripple"
