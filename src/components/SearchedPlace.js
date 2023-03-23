@@ -22,7 +22,9 @@ import {buttonLabel, linkText, loadingMessage} from 'src/utils/uiCopies';
 import dynamic from 'next/dynamic';
 const importTiptapEditor = () =>
   import('src/components/TiptapEditor').then(module => module.TiptapEditor);
-const TiptapEditor = dynamic(importTiptapEditor);
+const TiptapEditor = dynamic(importTiptapEditor, {
+  loading: () => <ParagraphLoading>Loading text editor...</ParagraphLoading>,
+});
 
 export const SearchedPlace = ({mapObject}) => {
   const [placeId, setPlaceId] = useContext(PlaceIdContext);
