@@ -378,9 +378,17 @@ export const SavedPlaces = ({mapObject}) => {
       );
     } else if (ui === 'saving') {
       return (
-        <DivCloud>
-          <ParagraphLoading>{loadingMessage.update}</ParagraphLoading>
-        </DivCloud>
+        <DivPlaceInfoBackground.Wrapper data-fullscreen>
+          <DivPlaceInfoBackground
+            aria-labelledby="saving-changes"
+            data-fullscreen
+            role="dialog"
+          >
+            <ParagraphLoading id="saving-changes">
+              {loadingMessage.update}
+            </ParagraphLoading>
+          </DivPlaceInfoBackground>
+        </DivPlaceInfoBackground.Wrapper>
       );
     }
   }

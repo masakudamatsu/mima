@@ -7,7 +7,6 @@ import {PlaceIdContext} from 'src/wrappers/PlaceIdContext';
 
 import {ButtonDialog} from 'src/elements/ButtonDialog';
 import {CloseButton} from './CloseButton';
-import {DivCloud} from 'src/elements/DivCloud';
 import {DivPlaceInfoBackground} from 'src/elements/DivPlaceInfoBackground';
 import {ParagraphLoading} from 'src/elements/ParagraphLoading';
 import {SpanRipple} from 'src/elements/SpanRipple';
@@ -309,9 +308,17 @@ export const SearchedPlace = ({mapObject}) => {
     );
   } else if (status === 'saving') {
     return (
-      <DivCloud>
-        <ParagraphLoading>{loadingMessage.create}</ParagraphLoading>
-      </DivCloud>
+      <DivPlaceInfoBackground.Wrapper data-fullscreen>
+        <DivPlaceInfoBackground
+          aria-labelledby="saving-place"
+          data-fullscreen
+          role="dialog"
+        >
+          <ParagraphLoading id="saving-place">
+            {loadingMessage.create}
+          </ParagraphLoading>
+        </DivPlaceInfoBackground>
+      </DivPlaceInfoBackground.Wrapper>
     );
   }
 };
