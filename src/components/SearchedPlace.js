@@ -11,7 +11,6 @@ import {DivCloud} from 'src/elements/DivCloud';
 import {DivPlaceInfoBackground} from 'src/elements/DivPlaceInfoBackground';
 import {ParagraphLoading} from 'src/elements/ParagraphLoading';
 import {SpanRipple} from 'src/elements/SpanRipple';
-import {TiptapEditor} from './TiptapEditor';
 
 import {useOnClickOutside} from 'src/hooks/useOnClickOutside';
 import {useOnEscKeyDown} from 'src/hooks/useOnEscKeyDown';
@@ -19,6 +18,12 @@ import {usePlaces} from './Places';
 import {useStateObject} from 'src/hooks/useStateObject';
 
 import {buttonLabel, linkText, loadingMessage} from 'src/utils/uiCopies';
+
+// import Tiptap only when necessary
+import dynamic from 'next/dynamic';
+const importTiptapEditor = () =>
+  import('src/components/TiptapEditor').then(module => module.TiptapEditor);
+const TiptapEditor = dynamic(importTiptapEditor);
 
 export const SearchedPlace = ({mapObject}) => {
   const [placeId, setPlaceId] = useContext(PlaceIdContext);
@@ -254,8 +259,8 @@ export const SearchedPlace = ({mapObject}) => {
           </div>
           <ButtonDialog
             onClick={openEditor}
-            // onFocus={importPlaceInfoEditor}
-            // onMouseEnter={importPlaceInfoEditor}
+            onFocus={importTiptapEditor}
+            onMouseEnter={importTiptapEditor}
             type="button"
           >
             {buttonLabel.saveSearchedPlace}

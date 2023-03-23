@@ -12,7 +12,6 @@ import {DivModalBackdrop} from 'src/elements/DivModalBackdrop';
 import {DivPlaceInfoBackground} from 'src/elements/DivPlaceInfoBackground';
 import {ParagraphLoading} from 'src/elements/ParagraphLoading';
 import {SpanRipple} from 'src/elements/SpanRipple';
-import {TiptapEditor} from './TiptapEditor';
 
 import {ClientOnlyPortal} from 'src/wrappers/ClientOnlyPortal';
 
@@ -24,12 +23,11 @@ import {NightModeContext} from 'src/wrappers/NightModeContext';
 
 import {buttonLabel, loadingMessage, modal} from 'src/utils/uiCopies';
 
+// import Tiptap only when necessary
 import dynamic from 'next/dynamic';
-const importPlaceInfoEditor = () =>
-  import('src/components/PlaceInfoEditor').then(
-    module => module.PlaceInfoEditor,
-  );
-const PlaceInfoEditor = dynamic(importPlaceInfoEditor);
+const importTiptapEditor = () =>
+  import('src/components/TiptapEditor').then(module => module.TiptapEditor);
+const TiptapEditor = dynamic(importTiptapEditor);
 
 // Prepare for converting URL text into link
 const autolinker = new Autolinker({
@@ -292,8 +290,8 @@ export const SavedPlaces = ({mapObject}) => {
               />
               <ButtonDialog
                 onClick={() => setPlaces({ui: 'editing'})}
-                onFocus={importPlaceInfoEditor}
-                onMouseEnter={importPlaceInfoEditor}
+                onFocus={importTiptapEditor}
+                onMouseEnter={importTiptapEditor}
                 type="button"
               >
                 {buttonLabel.edit}
