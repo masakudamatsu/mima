@@ -215,9 +215,9 @@ export const SavedPlaces = ({mapObject}) => {
       const selectedPlaceNoteArray =
         userData[selectedPlaceIndex].properties.note;
       selectedPlaceNoteHtml = DOMPurify.sanitize(
-        `<h2 id="selected-place-name">${selectedPlaceName}</h2><div id="selected-place-detail">${getHtmlFromSlate(
-          {children: selectedPlaceNoteArray},
-        )}</div>`,
+        `<h2>${selectedPlaceName}</h2><div>${getHtmlFromSlate({
+          children: selectedPlaceNoteArray,
+        })}</div>`,
         {ADD_ATTR: ['target']}, // see https://github.com/cure53/DOMPurify/issues/317#issuecomment-470429778
       );
     }
@@ -274,7 +274,6 @@ export const SavedPlaces = ({mapObject}) => {
             <DivPlaceInfoBackground
               aria-describedby="selected-place-detail"
               aria-hidden={deleteUi === 'confirm'}
-              aria-labelledby="selected-place-name"
               data-closing={ui === 'closing'}
               ref={dialogDiv}
               role="dialog"
@@ -285,7 +284,7 @@ export const SavedPlaces = ({mapObject}) => {
                 ref={closeButton}
                 testId="close-button-saved-place"
               />
-              <div>
+              <div id="selected-place-detail">
                 <div
                   dangerouslySetInnerHTML={{
                     __html: autolinker.link(selectedPlaceNoteHtml),
@@ -362,8 +361,7 @@ export const SavedPlaces = ({mapObject}) => {
         <FocusLock returnFocus>
           <DivPlaceInfoBackground.Wrapper data-fullscreen>
             <DivPlaceInfoBackground
-              // aria-describedby="selected-place-detail"
-              aria-labelledby="edit-place-info"
+              aria-labelledby="editor-heading"
               data-fullscreen
               role="dialog"
             >

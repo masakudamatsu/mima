@@ -221,9 +221,6 @@ export const SearchedPlace = ({mapObject}) => {
     });
   };
 
-  const placeNameId = 'place-name';
-  const placeDetailId = 'place-detail';
-
   if (status === 'closed') {
     return null;
   } else if (status === 'loading') {
@@ -237,8 +234,7 @@ export const SearchedPlace = ({mapObject}) => {
         onAnimationEnd={handleAnimationEnd}
       >
         <DivPlaceInfoBackground
-          aria-describedby={placeDetailId}
-          aria-labelledby={placeNameId}
+          aria-describedby="place-detail"
           data-closing={status === 'closing'}
           ref={dialogDiv}
           role="dialog"
@@ -249,9 +245,9 @@ export const SearchedPlace = ({mapObject}) => {
             ref={closeButton}
             testId="close-button-saved-place"
           />
-          <div>
-            <h2 id={placeNameId}>{placeData.name}</h2>
-            <div id={placeDetailId}>
+          <div id="place-detail">
+            <h2>{placeData.name}</h2>
+            <div>
               <p>{placeData.address}</p>
               <p>
                 <a href={placeData.url} rel="noreferrer" target="_blank">
