@@ -1,5 +1,6 @@
 export const loadingMessage = {
   create: 'Saving your place note...',
+  search: 'Getting more information about this place...',
   update: 'Saving changes...',
   delete: placeName => `Deleting ${placeName}...`,
 };

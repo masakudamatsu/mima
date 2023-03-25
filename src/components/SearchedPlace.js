@@ -224,7 +224,19 @@ export const SearchedPlace = ({mapObject}) => {
   if (status === 'closed') {
     return null;
   } else if (status === 'loading') {
-    return null; // TODO #208: render loading spinner or its equivalent
+    return (
+      <DivPlaceInfoBackground.Wrapper data-fullscreen>
+        <DivPlaceInfoBackground
+          aria-labelledby="loading-searched-place"
+          data-fullscreen
+          role="dialog"
+        >
+          <ParagraphLoading id="loading-searched-place">
+            {loadingMessage.search}
+          </ParagraphLoading>
+        </DivPlaceInfoBackground>
+      </DivPlaceInfoBackground.Wrapper>
+    );
   } else if (status === 'error') {
     return null; // TODO #199: Handle error properly
   } else if (status === 'open' || status === 'closing') {

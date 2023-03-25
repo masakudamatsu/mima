@@ -1,4 +1,10 @@
-import {buttonLabel, linkText, searchBoxLabel} from '../../src/utils/uiCopies';
+import {interceptIndefinitely} from '../../test/utils/cypress';
+import {
+  buttonLabel,
+  linkText,
+  loadingMessage,
+  searchBoxLabel,
+} from '../../src/utils/uiCopies';
 import {
   boldText,
   minPopupWidth,
@@ -52,6 +58,10 @@ describe('Place search feature', () => {
     cy.findByRole('combobox').should('be.visible'); // Wait for search box module to be loaded; Cypress may not wait before starting to type. See https://www.cypress.io/blog/2019/01/22/when-can-the-test-click/
   });
   it('happy path for mobile/mouse users', () => {
+    cy.log(`Preparing for testing loading messages`);
+    const interception = interceptIndefinitely(
+      'https://maps.googleapis.com/maps/api/place/js/PlaceService.GetPlaceDetails',
+    );
     cy.log('Typing a place name...');
     cy.focused().realType(searchWords[0].source);
     cy.log('...shows autocomplete suggesstions');
@@ -71,58 +81,66 @@ describe('Place search feature', () => {
     cy.focused().realPress('Space').realType(searchWords[1].source);
     cy.log('Selecting one of the autocomplete suggestions');
     cy.findByRole('option', {name: placeName, timeout: 20000}).click();
-    cy.log('...Shows the place on the map');
-    cy.findByRole('button', {name: placeName}).should('be.visible');
-    cy.log('...Shows the place info');
-    cy.findByRole('heading', {name: placeName}).should('be.visible');
-    cy.findByText(placeAddress).should('be.visible');
-    cy.log(
-      '...Shows the working link to open Google Maps in a new tab for more detailed information',
-    );
-    cy.findByText(linkText.searchedPlace)
-      .should('have.attr', 'target', '_blank')
-      .should('have.attr', 'rel', 'noreferrer')
-      .then(link => {
-        cy.request(link.prop('href')).its('status').should('eq', 200);
+    cy.log('...initially shows a loading message');
+    cy.findByText(loadingMessage.search)
+      .should('be.visible')
+      .then(() => {
+        cy.log(`And then...`);
+        interception.sendResponse();
+
+        cy.log('...Shows the place on the map');
+        cy.findByRole('button', {name: placeName}).should('be.visible');
+        cy.log('...Shows the place info');
+        cy.findByRole('heading', {name: placeName}).should('be.visible');
+        cy.findByText(placeAddress).should('be.visible');
+        cy.log(
+          '...Shows the working link to open Google Maps in a new tab for more detailed information',
+        );
+        cy.findByText(linkText.searchedPlace)
+          .should('have.attr', 'target', '_blank')
+          .should('have.attr', 'rel', 'noreferrer')
+          .then(link => {
+            cy.request(link.prop('href')).its('status').should('eq', 200);
+          });
+        // TODO #207: Make the following test pass
+        // cy.log('...Focuses the close button');
+        // cy.focused().should(
+        //   'have.attr',
+        //   'aria-label',
+        //   buttonLabel.closePlaceDetail,
+        // );
+
+        cy.log('Clicking the close button closes the place info');
+        cy.findByRole('button', {name: buttonLabel.closePlaceDetail}).click();
+        cy.findByRole('heading', {name: placeName}).should('not.exist');
+
+        cy.log('Clicking the place on the map...');
+        cy.findByRole('button', {name: placeName}).click();
+        cy.log('...reopens the place info');
+        cy.findByRole('heading', {name: placeName}).should('be.visible');
+        cy.log('...focuses the close button');
+        cy.focused().should(
+          'have.attr',
+          'aria-label',
+          buttonLabel.closePlaceDetail,
+        );
+
+        cy.log('Pressing Esc key closes the place info');
+        cy.get('body').type('{esc}');
+        cy.findByRole('heading', {name: placeName}).should('not.exist');
+
+        cy.log('Searching another place...');
+        cy.findByRole('button', {name: buttonLabel.search}).click();
+        // eslint-disable-next-line cypress/no-unnecessary-waiting
+        cy.wait(100); // otherwise, Cypress will type 'bc', not 'abc'. This is a known issue. See https://www.cypress.io/blog/2019/01/22/when-can-the-test-click/
+        cy.focused().realType('fukuda art museum');
+        cy.findByRole('option', {
+          name: /fukuda art museum/i,
+          timeout: 20000,
+        }).click();
+        cy.log('...removes the place mark for the previous search');
+        cy.findByRole('button', {name: placeName}).should('not.exist');
       });
-    // TODO #207: Make the following test pass
-    // cy.log('...Focuses the close button');
-    // cy.focused().should(
-    //   'have.attr',
-    //   'aria-label',
-    //   buttonLabel.closePlaceDetail,
-    // );
-
-    cy.log('Clicking the close button closes the place info');
-    cy.findByRole('button', {name: buttonLabel.closePlaceDetail}).click();
-    cy.findByRole('heading', {name: placeName}).should('not.exist');
-
-    cy.log('Clicking the place on the map...');
-    cy.findByRole('button', {name: placeName}).click();
-    cy.log('...reopens the place info');
-    cy.findByRole('heading', {name: placeName}).should('be.visible');
-    cy.log('...focuses the close button');
-    cy.focused().should(
-      'have.attr',
-      'aria-label',
-      buttonLabel.closePlaceDetail,
-    );
-
-    cy.log('Pressing Esc key closes the place info');
-    cy.get('body').type('{esc}');
-    cy.findByRole('heading', {name: placeName}).should('not.exist');
-
-    cy.log('Searching another place...');
-    cy.findByRole('button', {name: buttonLabel.search}).click();
-    // eslint-disable-next-line cypress/no-unnecessary-waiting
-    cy.wait(100); // otherwise, Cypress will type 'bc', not 'abc'. This is a known issue. See https://www.cypress.io/blog/2019/01/22/when-can-the-test-click/
-    cy.focused().realType('fukuda art museum');
-    cy.findByRole('option', {
-      name: /fukuda art museum/i,
-      timeout: 20000,
-    }).click();
-    cy.log('...removes the place mark for the previous search');
-    cy.findByRole('button', {name: placeName}).should('not.exist');
   });
   it('keeps displaying autocomplete suggestions when blurring the search box', () => {
     cy.log('Setup: Type a place name');
