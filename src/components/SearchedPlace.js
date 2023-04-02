@@ -9,6 +9,7 @@ import {ButtonDialog} from 'src/elements/ButtonDialog';
 import {CloseButton} from './CloseButton';
 import {DivPlaceInfoBackground} from 'src/elements/DivPlaceInfoBackground';
 import {ParagraphLoading} from 'src/elements/ParagraphLoading';
+import {PlaceDetailErrorMessage} from './PlaceDetailErrorMessage';
 import {SpanRipple} from 'src/elements/SpanRipple';
 
 import {useOnClickOutside} from 'src/hooks/useOnClickOutside';
@@ -16,7 +17,12 @@ import {useOnEscKeyDown} from 'src/hooks/useOnEscKeyDown';
 import {usePlaces} from './Places';
 import {useStateObject} from 'src/hooks/useStateObject';
 
-import {buttonLabel, linkText, loadingMessage} from 'src/utils/uiCopies';
+import {
+  buttonLabel,
+  errorMessage,
+  linkText,
+  loadingMessage,
+} from 'src/utils/uiCopies';
 
 // import Tiptap only when necessary
 import dynamic from 'next/dynamic';
@@ -143,7 +149,6 @@ export const SearchedPlace = ({mapObject}) => {
         mapObject.panBy(0, viewportSize.current.height / 4);
         setState({status: 'open', placeData: searchedPlace});
       } else {
-        // TODO #199: Handle error more properly
         console.error('Google Maps Place Details API call has failed.');
         setState({status: 'error', error: status});
       }
@@ -164,7 +169,9 @@ export const SearchedPlace = ({mapObject}) => {
     ripplePositionLeft,
     ripplePositionTop,
   } = {}) => {
-    mapObject.panTo(placeData.coordinates);
+    if (placeData) {
+      mapObject.panTo(placeData.coordinates);
+    } // to be skipped if there is an error in Place Details API
     setState({
       status: 'closing',
       ripple: {
@@ -239,7 +246,34 @@ export const SearchedPlace = ({mapObject}) => {
       </DivPlaceInfoBackground.Wrapper>
     );
   } else if (status === 'error') {
-    return null; // TODO #199: Handle error properly
+    return (
+      <FocusLock>
+        <DivPlaceInfoBackground.Wrapper data-fullscreen>
+          <DivPlaceInfoBackground
+            aria-describedby="place-detail-error-text"
+            aria-labelledby="place-detail-error-title"
+            data-fullscreen
+            role="alertdialog"
+          >
+            <div>
+              <h2 id="place-detail-error-title">
+                {errorMessage.placeDetails.title}
+              </h2>
+              <div id="place-detail-error-text">
+                <PlaceDetailErrorMessage status={error} />
+              </div>
+              <ButtonDialog
+                data-autofocus
+                onClick={() => setState({status: 'closed'})}
+                type="button"
+              >
+                {buttonLabel.handleError}
+              </ButtonDialog>
+            </div>
+          </DivPlaceInfoBackground>
+        </DivPlaceInfoBackground.Wrapper>
+      </FocusLock>
+    );
   } else if (status === 'open' || status === 'closing') {
     return (
       <DivPlaceInfoBackground.Wrapper

@@ -70,7 +70,22 @@ const centerAlignContent = `
     max-width: ${dimension.searchBox['max-width']};
   }
 `;
-
+const positionErrorMessage = `
+  &[role="alertdialog"] {
+    align-items: center;
+    display: flex;
+    justify-content: center;  
+  }
+  &[role="alertdialog"] div {
+    align-items: flex-start;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;  
+  }
+  &[role="alertdialog"] p {
+    width: 100%; /* remove the space for the top-right close button */
+  }
+`;
 const positionComponents = `
   ${positionCloseButton}
   ${positionOtherButtons}
@@ -82,6 +97,7 @@ const positionComponents = `
     } + ${dimension.button['minimum target spacing 100']} * 2);
     width: calc(100% - var(--close-button-width));    
   }
+  ${positionErrorMessage}
 
   /* vertical spacing */
   & h2 {

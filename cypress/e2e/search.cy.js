@@ -1,6 +1,7 @@
 import {interceptIndefinitely} from '../../test/utils/cypress';
 import {
   buttonLabel,
+  errorMessage,
   linkText,
   loadingMessage,
   searchBoxLabel,
@@ -229,5 +230,52 @@ describe('Place search feature', () => {
       description: searchBoxLabel.noResult,
       timeout: 20000,
     }).should('not.exist');
+  });
+});
+describe('Sad path', () => {
+  beforeEach(() => {
+    cy.log('Loading app');
+    cy.auth();
+    cy.visit('/');
+    cy.waitForMapToLoad();
+    cy.log('Opening the search box');
+    cy.findByRole('button', {name: buttonLabel.search}).click();
+    cy.findByRole('combobox').should('be.visible'); // Wait for search box module to be loaded; Cypress may not wait before starting to type. See https://www.cypress.io/blog/2019/01/22/when-can-the-test-click/
+  });
+  it('Shows error message when Place Detail API fails', () => {
+    cy.log(`Mocking API failure`);
+    cy.intercept(
+      'https://maps.googleapis.com/maps/api/place/js/PlaceService.GetPlaceDetails*',
+      request => {
+        console.log(`cy.intercept is running`);
+        const searchParams = new URLSearchParams(request.url);
+        const callbackParam = searchParams.get('callback');
+        request.reply(
+          `${callbackParam} && ${callbackParam}(${JSON.stringify({
+            status: 'UNKNOWN_ERROR',
+          })})`,
+        );
+      },
+    ).as('PlaceDetailsAPI');
+    cy.log('Typing a place name and...');
+    cy.focused()
+      .realType(searchWords[0].source)
+      .realPress('Space')
+      .realType(searchWords[1].source);
+    cy.log('Selecting one of the autocomplete suggestions');
+    cy.findByRole('option', {name: placeName, timeout: 20000}).click();
+    cy.log('...shows an error message');
+    cy.findByRole('alertdialog', {
+      name: errorMessage.placeDetails.title,
+    }).should('be.visible');
+    cy.log('...autofocuses the Got It button');
+    cy.focused().should('have.attr', 'type', 'button');
+    cy.focused().should('have.text', buttonLabel.handleError);
+    cy.log('...traps focus between link text and the Got It button');
+    cy.realPress('Tab');
+    cy.focused().should('have.attr', 'target', '_blank');
+    cy.realPress('Tab');
+    cy.focused().should('have.attr', 'type', 'button');
+    cy.focused().should('have.text', buttonLabel.handleError);
   });
 });
