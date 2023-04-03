@@ -10,9 +10,12 @@ describe(`menu.cy.js`, () => {
   it.skip('closes menu after pressing ESC key', () => {
     cy.log(`Clicking menu button and ...`);
     cy.findByRole('button', {name: buttonLabel.menu}).click();
-    cy.log(`Pressing ESC key also closes the menu`);
+    cy.log(`Pressing ESC key...`);
     cy.get('body').type('{esc}');
+    cy.log('...Hides the search box');
     cy.findByRole('dialog', {name: menuLabel}).should('not.exist');
+    cy.log('...Focuses the search icon button');
+    cy.focused().should('have.attr', 'aria-label', buttonLabel.menu);
   });
 });
 describe(`search.cy.js`, () => {
