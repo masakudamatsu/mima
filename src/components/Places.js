@@ -1,4 +1,4 @@
-import {createContext, useContext} from 'react';
+import {createContext, useContext, useState} from 'react';
 import PropTypes from 'prop-types';
 
 import {useStateObject} from 'src/hooks/useStateObject';
@@ -7,9 +7,9 @@ const PlacesContext = createContext();
 PlacesContext.displayName = 'PlacesContext'; // for React DevTools to show
 
 export function Places({children, placeData}) {
+  const [userData, setUserData] = useState(placeData);
   const [places, setPlaces] = useStateObject({
     ui: null,
-    userData: placeData,
     selectedPlace: null,
     ripple: {
       diameter: null,
@@ -19,7 +19,7 @@ export function Places({children, placeData}) {
   });
 
   return (
-    <PlacesContext.Provider value={{places, setPlaces}}>
+    <PlacesContext.Provider value={{places, setPlaces, userData, setUserData}}>
       {children}
     </PlacesContext.Provider>
   );

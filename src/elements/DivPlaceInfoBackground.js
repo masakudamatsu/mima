@@ -21,6 +21,9 @@ const setOuterSize = `
   left: 0;
   right: 0;
   top: 50%;
+  &[data-fullscreen="true"] {
+    top: 0;
+  }
 `;
 
 const setBackground = stylePopupBackground();
@@ -31,33 +34,70 @@ const setInnerSize = `
   position: absolute;
   right: 0;
   top: calc(var(--blur-radius) * 2);
+  &[data-fullscreen="true"] {
+    top: 0;
+  }`;
+const setPadding = `
+  padding-bottom: ${dimension.button['minimum target spacing 100']};
+  padding-left: ${dimension.button['minimum target spacing 100']};
+  padding-right: ${dimension.button['minimum target spacing 100']};
+  padding-top: 0;
+  @media screen and (min-width: ${dimension.breakpoint.divPopup.padding}) {
+    padding-bottom: ${dimension.button['minimum target size 100']};
+    padding-left: ${dimension.button['minimum target size 100']};
+    padding-right: ${dimension.button['minimum target size 100']};
+  }
 `;
 
 const positionCloseButton = `
-  --popup-margin: ${dimension.button['minimum target spacing 100']};
-
   & button[aria-label="${buttonLabel.closePlaceDetail}"] {
     position: absolute;
-    right: var(--popup-margin);
-    top:  var(--popup-margin);
+    right: ${dimension.button['minimum target spacing 100']};
+    top: ${dimension.button['minimum target spacing 100']};
+  }
+`;
+const positionOtherButtons = `
+  & button+button {
+    margin-left: ${dimension.button['minimum target spacing 100']};
+  }
+`;
+const centerAlignContent = `
+  /* "& > div" for searched and saved place info popup */
+  /* "& > form" for text editor */
+  & > div,
+  & > form {
+    margin: 0 auto;
+    max-width: ${dimension.searchBox['max-width']};
+  }
+`;
+const positionErrorMessage = `
+  &[role="alertdialog"] {
+    align-items: center;
+    display: flex;
+    justify-content: center;  
+  }
+  &[role="alertdialog"] div {
+    align-items: flex-start;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;  
+  }
+  &[role="alertdialog"] p {
+    width: 100%; /* remove the space for the top-right close button */
   }
 `;
 const positionComponents = `
   ${positionCloseButton}
-  /* horizontal spacing */
-  & h2,
-  & p,
-  & button:not([aria-label="${buttonLabel.closePlaceDetail}"]) {
-    margin-left: var(--popup-margin); 
-  }
+  ${positionOtherButtons}
+  ${centerAlignContent}
   & h2,
   & p {
     --close-button-width: calc(${
       dimension.button['minimum target size 100']
     } + ${dimension.button['minimum target spacing 100']} * 2);
-    max-width: ${dimension.searchBox['max-width']};
     width: calc(100% - var(--close-button-width));    
   }
+  ${positionErrorMessage}
 
   /* vertical spacing */
   & h2 {
@@ -127,13 +167,34 @@ const animateTransitionOut = css`
   }
 `;
 
+const showPlaceholderTextInEditor = css`
+  /* Docs: https://tiptap.dev/api/extensions/placeholder#additional-setup */
+  & .ProseMirror h2.is-empty::before,
+  & .ProseMirror p.is-empty:first-of-type::before {
+    color: var(--placeholder-text-color);
+    content: attr(data-placeholder);
+    float: left;
+    height: 0;
+    pointer-events: none;
+  }
+`;
+
+const styleTextEditor = css`
+  /* Remove the browser's default focus-ring */
+  & .ProseMirror:focus-visible {
+    outline-style: none;
+  }
+`;
 export const DivPlaceInfoBackground = styled.div`
   ${setBackground}
   ${setInnerSize}
+  ${setPadding}
   ${positionComponents}
   ${setFontStyle} 
   ${animateTransitionIn}
   ${animateTransitionOut}
+  ${showPlaceholderTextInEditor}
+  ${styleTextEditor}
 `;
 
 DivPlaceInfoBackground.Wrapper = styled.div`

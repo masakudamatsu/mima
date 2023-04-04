@@ -23,12 +23,13 @@ import {NightModeContext} from 'src/wrappers/NightModeContext';
 
 import {buttonLabel, loadingMessage, modal} from 'src/utils/uiCopies';
 
+// import Tiptap only when necessary
 import dynamic from 'next/dynamic';
-const importPlaceInfoEditor = () =>
-  import('src/components/PlaceInfoEditor').then(
-    module => module.PlaceInfoEditor,
-  );
-const PlaceInfoEditor = dynamic(importPlaceInfoEditor);
+const importTiptapEditor = () =>
+  import('src/components/TiptapEditor').then(module => module.TiptapEditor);
+const TiptapEditor = dynamic(importTiptapEditor, {
+  loading: () => <ParagraphLoading>Loading text editor...</ParagraphLoading>,
+});
 
 // Prepare for converting URL text into link
 const autolinker = new Autolinker({
@@ -36,8 +37,8 @@ const autolinker = new Autolinker({
 }); // https://github.com/gregjacobs/Autolinker.js#usage
 
 export const SavedPlaces = ({mapObject}) => {
-  const {places, setPlaces} = usePlaces();
-  const {ui, userData, selectedPlace, ripple} = places;
+  const {places, setPlaces, userData, setUserData} = usePlaces();
+  const {ui, selectedPlace, ripple} = places;
 
   const nightMode = useContext(NightModeContext);
 
@@ -196,52 +197,43 @@ export const SavedPlaces = ({mapObject}) => {
     }
   }, [ui]);
 
-  // for updating place info
   if (selectedPlace) {
+    // for rendering saved place info
     const selectedPlaceIndex = userData.findIndex(
       feature => feature.id === selectedPlace.id,
     );
     const selectedPlaceName = userData[selectedPlaceIndex].properties.name;
-    const selectedPlaceNoteArray = userData[selectedPlaceIndex].properties.note;
-    const selectedPlaceNoteHtml = DOMPurify.sanitize(
-      getHtmlFromSlate({children: selectedPlaceNoteArray}),
-      {ADD_ATTR: ['target']}, // see https://github.com/cure53/DOMPurify/issues/317#issuecomment-470429778
-    );
-
-    const updateData = async ([newTitle, newNoteArray]) => {
-      try {
-        setPlaces({ui: 'saving'});
-        // TODO #282: handle database access error
-        const response = await fetch('/api/places', {
-          method: 'PUT',
-          headers: {'Content-Type': 'application/json'},
-          body: JSON.stringify({
-            id: selectedPlace.id,
-            properties: {
-              name: newTitle.children[0].text, // edited by user, not the one returned from Google Maps API server
-              note: newNoteArray,
-            },
-          }),
-        });
-        if (response.ok) {
-          const jsonResponse = await response.json();
-          // // update user data
-          const newUserData = [...userData];
-          newUserData[selectedPlaceIndex].properties = {
-            ...userData[selectedPlaceIndex].properties,
-            ...jsonResponse.properties,
-          };
-          setPlaces({
-            ui: 'open',
-            userData: newUserData,
-          });
-        } else {
-          throw new Error('PUT request to /api/places has failed.');
-        }
-      } catch (error) {
-        console.log(error);
-      }
+    let selectedPlaceNoteHtml;
+    if (typeof userData[selectedPlaceIndex].properties.note === 'string') {
+      // Tiptap format
+      selectedPlaceNoteHtml = DOMPurify.sanitize(
+        userData[selectedPlaceIndex].properties.note,
+        {ADD_ATTR: ['target']}, // see https://github.com/cure53/DOMPurify/issues/317#issuecomment-470429778
+      );
+    } else {
+      // Slate format
+      const selectedPlaceNoteArray =
+        userData[selectedPlaceIndex].properties.note;
+      selectedPlaceNoteHtml = DOMPurify.sanitize(
+        `<h2>${selectedPlaceName}</h2><div>${getHtmlFromSlate({
+          children: selectedPlaceNoteArray,
+        })}</div>`,
+        {ADD_ATTR: ['target']}, // see https://github.com/cure53/DOMPurify/issues/317#issuecomment-470429778
+      );
+    }
+    // for updating place info
+    const handleResponse = jsonResponse => {
+      const newUserData = [...userData];
+      newUserData[selectedPlaceIndex].properties = {
+        ...userData[selectedPlaceIndex].properties,
+        ...jsonResponse.properties,
+      };
+      setUserData(newUserData);
+      setPlaces({
+        ui: 'open',
+      });
     };
+    // for deleting saved place
     const deletePlace = async () => {
       try {
         setDeleteUi('deleting');
@@ -262,8 +254,8 @@ export const SavedPlaces = ({mapObject}) => {
           setPlaces({
             ui: null,
             selectedPlace: null,
-            userData: newUserData,
           });
+          setUserData(newUserData); // this must be executed after setPlaces(); otherwise the entire component re-renders and the `if(selectedPlace)` block will be run, returning an error.
         } else {
           throw new Error('DELETE request to /api/places has failed.');
         }
@@ -271,6 +263,7 @@ export const SavedPlaces = ({mapObject}) => {
         console.log(error);
       }
     };
+    // UI rendering
     if (ui === 'open' || ui === 'closing') {
       return (
         <>
@@ -281,7 +274,6 @@ export const SavedPlaces = ({mapObject}) => {
             <DivPlaceInfoBackground
               aria-describedby="selected-place-detail"
               aria-hidden={deleteUi === 'confirm'}
-              aria-labelledby="selected-place-name"
               data-closing={ui === 'closing'}
               ref={dialogDiv}
               role="dialog"
@@ -292,24 +284,25 @@ export const SavedPlaces = ({mapObject}) => {
                 ref={closeButton}
                 testId="close-button-saved-place"
               />
-              <h2 id="selected-place-name">{selectedPlaceName}</h2>
-              <div
-                dangerouslySetInnerHTML={{
-                  __html: autolinker.link(selectedPlaceNoteHtml),
-                }}
-                id="selected-place-detail"
-              />
-              <ButtonDialog
-                onClick={() => setPlaces({ui: 'editing'})}
-                onFocus={importPlaceInfoEditor}
-                onMouseEnter={importPlaceInfoEditor}
-                type="button"
-              >
-                {buttonLabel.edit}
-              </ButtonDialog>
-              <ButtonDialog onClick={handleClickDelete} type="button">
-                {buttonLabel.delete}
-              </ButtonDialog>
+              <div id="selected-place-detail">
+                <div
+                  dangerouslySetInnerHTML={{
+                    __html: autolinker.link(selectedPlaceNoteHtml),
+                  }}
+                />
+                <ButtonDialog
+                  onClick={() => setPlaces({ui: 'editing'})}
+                  onFocus={importTiptapEditor}
+                  onMouseEnter={importTiptapEditor}
+                  type="button"
+                >
+                  {buttonLabel.edit}
+                </ButtonDialog>
+                <ButtonDialog onClick={handleClickDelete} type="button">
+                  {buttonLabel.delete}
+                </ButtonDialog>
+              </div>
+
               {ui === 'closing' ? (
                 <SpanRipple
                   id="ripple"
@@ -365,18 +358,40 @@ export const SavedPlaces = ({mapObject}) => {
       );
     } else if (ui === 'editing') {
       return (
-        <PlaceInfoEditor
-          placeName={selectedPlaceName}
-          placeNoteArray={selectedPlaceNoteArray}
-          handleCancel={() => setPlaces({ui: 'open'})}
-          updateData={updateData}
-        />
+        <FocusLock returnFocus>
+          <DivPlaceInfoBackground.Wrapper data-fullscreen>
+            <DivPlaceInfoBackground
+              aria-labelledby="editor-heading"
+              data-fullscreen
+              role="dialog"
+            >
+              <TiptapEditor
+                data={{
+                  id: selectedPlace.id,
+                  name: selectedPlaceName, // to be removed once Slate is completely removed
+                  html: selectedPlaceNoteHtml,
+                }}
+                handleCancel={() => setPlaces({ui: 'open'})}
+                handleResponse={handleResponse}
+                setUi={setPlaces}
+              />
+            </DivPlaceInfoBackground>
+          </DivPlaceInfoBackground.Wrapper>
+        </FocusLock>
       );
     } else if (ui === 'saving') {
       return (
-        <DivCloud>
-          <ParagraphLoading>{loadingMessage.update}</ParagraphLoading>
-        </DivCloud>
+        <DivPlaceInfoBackground.Wrapper data-fullscreen>
+          <DivPlaceInfoBackground
+            aria-labelledby="saving-changes"
+            data-fullscreen
+            role="dialog"
+          >
+            <ParagraphLoading id="saving-changes">
+              {loadingMessage.update}
+            </ParagraphLoading>
+          </DivPlaceInfoBackground>
+        </DivPlaceInfoBackground.Wrapper>
       );
     }
   }

@@ -55,22 +55,22 @@ describe('ComposeSearchBox component', () => {
 }
 
 .c0 input[type="search"]::-webkit-input-placeholder {
-  color: var(--popup-text-color);
+  color: var(--placeholder-text-color);
   opacity: 1;
 }
 
 .c0 input[type="search"]::-moz-placeholder {
-  color: var(--popup-text-color);
+  color: var(--placeholder-text-color);
   opacity: 1;
 }
 
 .c0 input[type="search"]:-ms-input-placeholder {
-  color: var(--popup-text-color);
+  color: var(--placeholder-text-color);
   opacity: 1;
 }
 
 .c0 input[type="search"]::placeholder {
-  color: var(--popup-text-color);
+  color: var(--placeholder-text-color);
   opacity: 1;
 }
 

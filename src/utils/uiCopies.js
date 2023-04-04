@@ -1,7 +1,14 @@
 export const loadingMessage = {
   create: 'Saving your place note...',
+  search: 'Getting more information about this place...',
   update: 'Saving changes...',
   delete: placeName => `Deleting ${placeName}...`,
+};
+
+export const errorMessage = {
+  placeDetails: {
+    title: 'Unable to get place detail',
+  },
 };
 
 export const modal = {
@@ -103,6 +110,7 @@ export const buttonLabel = {
   },
   delete: 'Delete',
   edit: 'Edit',
+  handleError: 'Got it',
   locator: {
     default: 'Track your location',
     activated: 'Snap to your location',

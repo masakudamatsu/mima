@@ -48,21 +48,27 @@ describe('Saved place detail feature', () => {
     cy.findByRole('heading', {name: editorLabel, timeout: 20000}).should(
       'be.visible',
     );
-    cy.log(`...autofocuses the note field`);
+    cy.log(`...autofocuses the note`);
     cy.focused().should('have.attr', 'role', 'textbox');
+    cy.log(
+      `...tells screen readers that pressing the Enter key will insert a line break, not submit the entered text`,
+    );
+    cy.focused().should('have.attr', 'aria-multiline', 'true');
 
     cy.log(`Typing text...`);
     // eslint-disable-next-line cypress/no-unnecessary-waiting
     cy.wait(100); // otherwise, Cypress will type 'bc', not 'abc'. This is a known issue. See https://www.cypress.io/blog/2019/01/22/when-can-the-test-click/
     cy.findByRole('textbox').type('abc ');
     cy.log(`...updates the place name*`);
-    cy.findByRole('textbox').get('h2').contains('abc', {timeout: 20000});
+    cy.findByRole('heading', {level: 2}).should('include.text', 'abc', {
+      timeout: 20000,
+    });
 
     cy.log(`Pressing Down Arrow key and typing URL text...`);
     cy.findByRole('textbox').type('{downarrow}');
     cy.focused().type('https://google.com ');
     cy.log(`...updates the place note`);
-    cy.findByRole('textbox').get('p').contains('https://google.com');
+    cy.contains('https://google.com').should('be.visible');
 
     cy.log(`Clicking Save button...`);
     cy.findByRole('button', {name: buttonLabel.saveEdit}).click();
@@ -230,5 +236,40 @@ describe('Saved place detail feature', () => {
     cy.findByRole('button', {name: buttonLabel.cancel}).click();
     cy.log(`...autofocuses the Delete button`);
     cy.focused().contains(buttonLabel.delete);
+  });
+});
+describe('Edge cases', () => {
+  beforeEach(() => {
+    cy.log('Resetting the database');
+    cy.exec('npx prisma migrate reset --force'); // https://docs.cypress.io/guides/end-to-end-testing/testing-your-app#Seeding-data
+    cy.log('Setting up');
+    cy.auth();
+    cy.visit('/');
+    cy.waitForMapToLoad();
+  });
+  it.skip('Searching a place just deleted will drop a place mark and show its detail', () => {
+    // TODO #428: Fix this test
+    cy.log(`Setup: Saving a place`);
+    const savedPlaceName = 'Kyoto Station';
+    cy.findByRole('button', {name: buttonLabel.search}).click();
+    cy.focused().realType(savedPlaceName);
+    cy.findByRole('option', {name: savedPlaceName})
+      .should('be.visible')
+      .click(); // This fails...
+    cy.findByRole('button', {name: buttonLabel.saveSearchedPlace}).click();
+    cy.findByRole('button', {name: buttonLabel.saveEdit}).click();
+    cy.log(`Setup: Deleting a place`);
+    cy.findByRole('button', {name: savedPlaceName}).click();
+    cy.findByRole('button', {name: buttonLabel.delete}).click();
+    cy.findByRole('button', {name: buttonLabel.delete}).click();
+    cy.log(`Execute: Searching for the place just deleted...`);
+    cy.findByRole('button', {name: buttonLabel.search}).click();
+    cy.focused().realType(savedPlaceName);
+    cy.findByRole('option', {name: savedPlaceName})
+      .should('be.visible')
+      .click(); // This fails...
+    cy.log('Verify: ...Shows the place on the map');
+    cy.findByRole('button', {name: savedPlaceName}).should('be.visible');
+    cy.findByRole('heading', {name: savedPlaceName}).should('be.visible');
   });
 });
