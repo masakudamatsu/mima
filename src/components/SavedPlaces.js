@@ -200,6 +200,10 @@ export const SavedPlaces = ({mapObject}) => {
         {ADD_ATTR: ['target']}, // see https://github.com/cure53/DOMPurify/issues/317#issuecomment-470429778
       );
     }
+    const selectedPlaceUrl =
+      userData[selectedPlaceIndex].properties['Google Maps URL'];
+    const selectedPlaceAddress =
+      userData[selectedPlaceIndex].properties.address;
     // for updating place info
     const handleResponse = jsonResponse => {
       const newUserData = [...userData];
@@ -349,6 +353,8 @@ export const SavedPlaces = ({mapObject}) => {
                   id: selectedPlace.id,
                   name: selectedPlaceName, // to be removed once Slate is completely removed
                   html: selectedPlaceNoteHtml,
+                  address: selectedPlaceAddress,
+                  url: selectedPlaceUrl,
                 }}
                 handleCancel={() => setPlaces({ui: 'open'})}
                 handleResponse={handleResponse}

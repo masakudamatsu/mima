@@ -151,6 +151,8 @@ export const TiptapEditor = ({
             : {
                 id: data.id,
                 properties: {
+                  address: data.address, // cannot be omitted; otherwise deleted
+                  'Google Maps URL': data.url, // cannot be omitted; otherwise deleted
                   name: userPlaceName, // edited by user, not the one returned from Google Maps API server
                   note: userPlaceNote,
                 },
