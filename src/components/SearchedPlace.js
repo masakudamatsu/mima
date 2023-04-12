@@ -89,47 +89,21 @@ export const SearchedPlace = ({mapObject}) => {
           name: place.name,
           url: place.url,
         };
-
         // style marker
-        const plusSignIcon = {
-          // source: Material Icons Add: https://fonts.google.com/icons?selected=Material%20Icons%20Outlined%3Aadd%3A
-          height: 24,
-          path: `
-          M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z
-        `,
-          width: 24,
-        };
-        const shapedAsPlusSign = {
-          path: plusSignIcon.path,
-        };
-        const pinnedAtCenter = {
-          anchor: new google.maps.Point(
-            plusSignIcon.width / 2,
-            plusSignIcon.height / 2,
-          ), // to pin the icon at its center, rather than at its top-left (default)
-        };
-        const peach = nightMode
-          ? {
-              fillColor: '#e31081', // hue 328; chroma 82.75; luminance 4.66
-              strokeColor: '#fed0e8', // hue 329; chroma 18.04; luminance 15.4
-            }
-          : {
-              fillColor: '#cf5673', // hue 346, chroma 47.45, luminance 5.23
-              strokeColor: '#82001c', // hue 347, chroma 50.98, luminance 1.97
-            };
-        const colored = {
-          fillOpacity: 1, // to disable the default value of 0
-          ...peach,
-        };
-        const scaled = {
-          scale: 2,
+        const plusSign = {
+          filePath: nightMode
+            ? '/searched-place-mark-night.svg'
+            : '/searched-place-mark-day.svg',
+          height: 37.876, // copied from /public/searched-place-mark-*.svg
+          width: 39.644, // copied from /public/searched-place-mark-*.svg
         };
         marker.current = new google.maps.Marker({
           icon: {
-            ...shapedAsPlusSign,
-            ...pinnedAtCenter,
-            ...colored,
-            ...scaled,
+            url: plusSign.filePath,
+            anchor: new google.maps.Point(
+              plusSign.width / 2,
+              plusSign.height / 2,
+            ), // to pin the icon at its center, rather than at its top-left (default)
           },
           optimized: false,
           position: searchedPlace.coordinates,

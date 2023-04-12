@@ -1,0 +1,13 @@
+<!-- obtained by converting the plus sign (+) of Train One (font-size 68) into an SVG file with https://danmarshall.github.io/google-font-to-svg-path/ -->
+<!-- and by trimming unnecessary code -->
+<!-- "stroke" attribute is necessary to be the same color as "fill" to ensure the width of lines -->
+<svg 
+  fill="#e31081"
+  height="37.876"
+  stroke="#fed0e8"
+  viewBox="0 0 39.644 37.876"
+  width="39.644"
+  xmlns="http://www.w3.org/2000/svg"
+>
+  <path d="M 25.092 24.004 L 25.092 37.876 L 21.828 37.876 L 21.828 20.74 L 39.644 20.74 L 39.644 24.004 L 25.092 24.004 Z M 21.828 16.864 L 21.828 0 L 25.092 0 L 25.092 13.6 L 39.644 13.6 L 39.644 16.864 L 21.828 16.864 Z M 14.144 37.876 L 14.144 24.004 L 0 24.004 L 0 20.74 L 17.408 20.74 L 17.408 37.876 L 14.144 37.876 Z M 0 16.864 L 0 13.6 L 14.144 13.6 L 14.144 0 L 17.408 0 L 17.408 16.864 L 0 16.864 Z"/>
+</svg>
