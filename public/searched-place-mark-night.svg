@@ -1,10 +1,12 @@
 <!-- obtained by converting the plus sign (+) of Train One (font-size 68) into an SVG file with https://danmarshall.github.io/google-font-to-svg-path/ -->
 <!-- and by trimming unnecessary code -->
 <!-- "stroke" attribute is necessary to be the same color as "fill" to ensure the width of lines -->
+<!-- #8d2824 is chosen from the red dress in the dark mode mood board: https://app.milanote.com/1Me5i51ZahoH4M/mood-board-dark-final -->
+<!-- #fed2d2 is chosen as the same hue as the fill color and satisfy 3 to 1 luminance contrast against the brightest color on the map: #ae6f2f (orange for the streets)-->
 <svg 
-  fill="#e31081"
+  fill="#8d2824"
   height="37.876"
-  stroke="#fed0e8"
+  stroke="#fed2d2"
   viewBox="0 0 39.644 37.876"
   width="39.644"
   xmlns="http://www.w3.org/2000/svg"
