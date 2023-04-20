@@ -41,7 +41,7 @@ export const TiptapEditor = ({
         },
         {
           type: 'paragraph',
-          content: [{type: 'text', text: data.address}],
+          content: [{type: 'text', text: 'your note...'}],
         },
       ],
     };

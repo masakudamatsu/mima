@@ -289,6 +289,7 @@ export const SavedPlaces = ({mapObject}) => {
                     {linkText.searchedPlace}
                   </a>
                 </p>{' '}
+                <p data-address>{selectedPlaceAddress}</p>{' '}
               </div>
 
               {ui === 'closing' ? (
