@@ -21,7 +21,7 @@ import {useOnEscKeyDown} from 'src/hooks/useOnEscKeyDown';
 import {getHtmlFromSlate} from 'src/utils/getHtmlFromSlate';
 import {NightModeContext} from 'src/wrappers/NightModeContext';
 
-import {buttonLabel, loadingMessage, modal} from 'src/utils/uiCopies';
+import {buttonLabel, linkText, loadingMessage, modal} from 'src/utils/uiCopies';
 
 // import Tiptap only when necessary
 import dynamic from 'next/dynamic';
@@ -284,6 +284,11 @@ export const SavedPlaces = ({mapObject}) => {
                 <ButtonDialog onClick={handleClickDelete} type="button">
                   {buttonLabel.delete}
                 </ButtonDialog>
+                <p data-url>
+                  <a href={selectedPlaceUrl} rel="noreferrer" target="_blank">
+                    {linkText.searchedPlace}
+                  </a>
+                </p>{' '}
               </div>
 
               {ui === 'closing' ? (

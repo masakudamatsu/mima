@@ -119,6 +119,10 @@ describe('DivPlaceInfoBackground component', () => {
   margin-top: 0.7801rem;
 }
 
+.c1 p[data-url] {
+  margin-top: 0.715rem;
+}
+
 .c1 a {
   color: var(--link-text-color);
 }

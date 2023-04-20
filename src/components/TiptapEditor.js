@@ -43,25 +43,6 @@ export const TiptapEditor = ({
           type: 'paragraph',
           content: [{type: 'text', text: data.address}],
         },
-        {
-          type: 'paragraph',
-          content: [
-            {
-              type: 'text',
-              marks: [
-                {
-                  type: 'link',
-                  attrs: {
-                    href: data.url,
-                    target: '_blank',
-                    class: null,
-                  },
-                },
-              ],
-              text: data.linkText,
-            },
-          ],
-        },
       ],
     };
   }

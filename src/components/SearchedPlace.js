@@ -316,7 +316,6 @@ export const SearchedPlace = ({mapObject}) => {
                 name: placeData.name,
                 address: placeData.address,
                 url: placeData.url,
-                linkText: linkText.searchedPlace,
               }}
               handleCancel={handleCancel}
               handleResponse={handleResponse}

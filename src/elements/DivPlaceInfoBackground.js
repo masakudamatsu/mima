@@ -114,6 +114,9 @@ const positionComponents = `
     p + button {
     margin-top: ${remify(capHeight[200] - bodyText.spaceBottom)};
   }
+  & p[data-url] {
+    margin-top: ${remify(capHeight[200] - bodyText.spaceTop)};
+  }
 `;
 
 const setFontStyle = `
