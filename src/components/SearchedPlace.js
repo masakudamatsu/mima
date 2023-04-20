@@ -269,12 +269,12 @@ export const SearchedPlace = ({mapObject}) => {
           <div id="place-detail">
             <h2>{placeData.name}</h2>
             <div>
-              <p>{placeData.address}</p>
               <p>
                 <a href={placeData.url} rel="noreferrer" target="_blank">
                   {linkText.searchedPlace}
                 </a>
               </p>
+              <p>{placeData.address}</p>
             </div>
             <ButtonDialog
               onClick={openEditor}
