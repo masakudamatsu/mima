@@ -7,6 +7,7 @@ import {PlaceIdContext} from 'src/wrappers/PlaceIdContext';
 
 import {ButtonDialog} from 'src/elements/ButtonDialog';
 import {CloseButton} from './CloseButton';
+import {DivButtonsRow} from 'src/elements/DivButtonsRow';
 import {DivPlaceInfoBackground} from 'src/elements/DivPlaceInfoBackground';
 import {ParagraphLoading} from 'src/elements/ParagraphLoading';
 import {PlaceDetailErrorMessage} from './PlaceDetailErrorMessage';
@@ -268,22 +269,35 @@ export const SearchedPlace = ({mapObject}) => {
           />
           <div id="place-detail">
             <h2>{placeData.name}</h2>
-            <div>
-              <p>
-                <a href={placeData.url} rel="noreferrer" target="_blank">
-                  {linkText.searchedPlace}
-                </a>
-              </p>
-              <p>{placeData.address}</p>
-            </div>
-            <ButtonDialog
-              onClick={openEditor}
-              onFocus={importTiptapEditor}
-              onMouseEnter={importTiptapEditor}
-              type="button"
-            >
-              {buttonLabel.saveSearchedPlace}
-            </ButtonDialog>
+            <p>{placeData.address}</p>
+            <DivButtonsRow data-buttons-row>
+              <ButtonDialog
+                onClick={openEditor}
+                onFocus={importTiptapEditor}
+                onMouseEnter={importTiptapEditor}
+                type="button"
+              >
+                {buttonLabel.saveSearchedPlace}
+              </ButtonDialog>
+              <ButtonDialog
+                as="a"
+                data-reset-link-style
+                href={placeData.url}
+                rel="noreferrer"
+                target="_blank"
+              >
+                {linkText.searchedPlace}
+              </ButtonDialog>
+              <ButtonDialog
+                as="a"
+                data-reset-link-style
+                href={`https://www.google.com/maps/dir/?api=1&destination=${placeData.coordinates.lat},${placeData.coordinates.lng}`} // See Issue #122
+                rel="noreferrer"
+                target="_blank"
+              >
+                {linkText.directions}
+              </ButtonDialog>
+            </DivButtonsRow>
           </div>
           {status === 'closing' ? (
             <SpanRipple

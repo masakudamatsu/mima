@@ -110,17 +110,19 @@ describe('DivPlaceInfoBackground component', () => {
   margin-top: -0.2836rem;
 }
 
-.c1 p + p {
+.c1 p + p,
+.c1 p[data-address] {
   margin-top: 0.4965rem;
 }
 
 .c1 div + button,
-.c1 p + button {
+.c1 p + button,
+.c1 p + div[data-buttons-row] {
   margin-top: 0.7801rem;
 }
 
-.c1 p[data-url] {
-  margin-top: 0.715rem;
+.c1 div[data-buttons-row] + button {
+  margin-top: 8px;
 }
 
 .c1 a {

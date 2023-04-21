@@ -95,7 +95,8 @@ export const renewalPage = {
 export const userLocationMarkerLabel = 'You are here!';
 
 export const linkText = {
-  searchedPlace: 'See more detail on Google Maps',
+  directions: 'Directions',
+  searchedPlace: 'More info',
 };
 
 export const buttonLabel = {

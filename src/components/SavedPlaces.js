@@ -7,6 +7,7 @@ import FocusLock from 'react-focus-lock';
 import {ButtonDialog} from 'src/elements/ButtonDialog';
 import {CloseButton} from './CloseButton';
 import {ComposeDialog} from 'src/elements/ComposeDialog';
+import {DivButtonsRow} from 'src/elements/DivButtonsRow';
 import {DivCloud} from 'src/elements/DivCloud';
 import {DivModalBackdrop} from 'src/elements/DivModalBackdrop';
 import {DivPlaceInfoBackground} from 'src/elements/DivPlaceInfoBackground';
@@ -273,25 +274,39 @@ export const SavedPlaces = ({mapObject}) => {
                     __html: autolinker.link(selectedPlaceNoteHtml),
                   }}
                 />
-                <ButtonDialog
-                  onClick={() => setPlaces({ui: 'editing'})}
-                  onFocus={importTiptapEditor}
-                  onMouseEnter={importTiptapEditor}
-                  type="button"
-                >
-                  {buttonLabel.edit}
-                </ButtonDialog>
+                <p data-address>{selectedPlaceAddress}</p>
+                <DivButtonsRow data-buttons-row>
+                  <ButtonDialog
+                    onClick={() => setPlaces({ui: 'editing'})}
+                    onFocus={importTiptapEditor}
+                    onMouseEnter={importTiptapEditor}
+                    type="button"
+                  >
+                    {buttonLabel.edit}
+                  </ButtonDialog>
+                  <ButtonDialog
+                    as="a"
+                    data-reset-link-style
+                    href={selectedPlaceUrl}
+                    rel="noreferrer"
+                    target="_blank"
+                  >
+                    {linkText.searchedPlace}
+                  </ButtonDialog>
+                  <ButtonDialog
+                    as="a"
+                    data-reset-link-style
+                    href={`https://www.google.com/maps/dir/?api=1&destination=${selectedPlace.coordinates.lat},${selectedPlace.coordinates.lng}`} // See Issue #122
+                    rel="noreferrer"
+                    target="_blank"
+                  >
+                    {linkText.directions}
+                  </ButtonDialog>
+                </DivButtonsRow>
                 <ButtonDialog onClick={handleClickDelete} type="button">
                   {buttonLabel.delete}
                 </ButtonDialog>
-                <p data-url>
-                  <a href={selectedPlaceUrl} rel="noreferrer" target="_blank">
-                    {linkText.searchedPlace}
-                  </a>
-                </p>{' '}
-                <p data-address>{selectedPlaceAddress}</p>{' '}
               </div>
-
               {ui === 'closing' ? (
                 <SpanRipple
                   id="ripple"
