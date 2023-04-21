@@ -291,7 +291,9 @@ export const SearchedPlace = ({mapObject}) => {
               <ButtonDialog
                 as="a"
                 data-reset-link-style
-                href={`https://www.google.com/maps/dir/?api=1&destination=${placeData.coordinates.lat},${placeData.coordinates.lng}`} // See Issue #122
+                href={`https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(
+                  placeData.name,
+                )}&destination_id=${placeId}`} // See Issue #122
                 rel="noreferrer"
                 target="_blank"
               >
