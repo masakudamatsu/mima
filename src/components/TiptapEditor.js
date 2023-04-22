@@ -123,6 +123,7 @@ export const TiptapEditor = ({
                 },
                 properties: {
                   address: data.address,
+                  'Google Maps place name': data.name, // to be used for constructing Directions URL
                   'Google Maps URL': data.url,
                   name: userPlaceName, // edited by user, not the one returned from Google Maps API server
                   note: userPlaceNote,

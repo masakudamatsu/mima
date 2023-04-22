@@ -205,6 +205,15 @@ export const SavedPlaces = ({mapObject}) => {
       userData[selectedPlaceIndex].properties['Google Maps URL'];
     const selectedPlaceAddress =
       userData[selectedPlaceIndex].properties.address;
+
+    // Construct Directions URL
+    const selectedPlaceOriginalName =
+      userData[selectedPlaceIndex].properties['Google Maps place name'];
+    const destination = selectedPlaceOriginalName
+      ? encodeURIComponent(selectedPlaceOriginalName)
+      : `${selectedPlace.coordinates.lat},${selectedPlace.coordinates.lng}`;
+    const directionsURL = `https://www.google.com/maps/dir/?api=1&destination=${destination}&destination_id=${selectedPlace.id}`; // See Issue #122
+
     // for updating place info
     const handleResponse = jsonResponse => {
       const newUserData = [...userData];
@@ -296,7 +305,7 @@ export const SavedPlaces = ({mapObject}) => {
                   <ButtonDialog
                     as="a"
                     data-reset-link-style
-                    href={`https://www.google.com/maps/dir/?api=1&destination=${selectedPlace.coordinates.lat},${selectedPlace.coordinates.lng}`} // See Issue #122
+                    href={directionsURL}
                     rel="noreferrer"
                     target="_blank"
                   >
