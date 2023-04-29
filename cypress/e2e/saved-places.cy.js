@@ -2,6 +2,7 @@ import {interceptIndefinitely} from '../../test/utils/cypress';
 import {
   buttonLabel,
   editorLabel,
+  linkText,
   loadingMessage,
   modal,
 } from '../../src/utils/uiCopies';
@@ -40,7 +41,7 @@ describe('Saved place detail feature', () => {
     // while should('be.visible') won't fail in that case
     // DO NOT ADD ANY MORE ASSERTIONS HERE; place detail is now hidden.
   });
-  it.only('Happy path for editing place detail', () => {
+  it('Happy path for editing place detail', () => {
     cy.log(`Preparing for testing loading messages`);
     const interception = interceptIndefinitely('/api/places');
     cy.log(`Clicking place mark...`);
@@ -92,6 +93,16 @@ describe('Saved place detail feature', () => {
         cy.findByRole('button', {
           name: 'abc ' + mockPlace5.properties.name,
         }).should('be.visible');
+
+        // Make sure no data is lost due to the editing of place notes
+        cy.log(`...shows the place address`);
+        cy.findByText(mockPlace5.properties.address).should('be.visible');
+        cy.log('...shows the button for more information in Google Maps');
+        cy.findByRole('link', {name: linkText.searchedPlace}).should(
+          'have.attr',
+          'href',
+          mockPlace5.properties['Google Maps URL'],
+        );
 
         cy.log(`...autofocuses the close button`);
         cy.focused().should(
