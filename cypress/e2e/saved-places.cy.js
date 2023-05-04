@@ -6,7 +6,7 @@ import {
   loadingMessage,
   modal,
 } from '../../src/utils/uiCopies';
-import {mockPlace5} from '../../test/utils/mockData';
+import {mockPlace5, mockPlace8} from '../../test/utils/mockData';
 
 describe('Saved place detail feature', () => {
   beforeEach(() => {
@@ -40,6 +40,14 @@ describe('Saved place detail feature', () => {
     // this fails if another element covers it up
     // while should('be.visible') won't fail in that case
     // DO NOT ADD ANY MORE ASSERTIONS HERE; place detail is now hidden.
+  });
+  it('Place marks without Google Maps URL', () => {
+    cy.log(`Clicking place mark...`);
+    cy.findByRole('button', {name: mockPlace8.properties.name}).click();
+    cy.log(`...disables the "More Info" button`);
+    cy.findByRole('link', {name: linkText.searchedPlace})
+      .should('not.have.attr', 'href')
+      .should('have.css', 'cursor', 'not-allowed');
   });
   it('Happy path for editing place detail', () => {
     cy.log(`Preparing for testing loading messages`);

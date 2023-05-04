@@ -36,10 +36,18 @@ const resetLinkStyle = `
   }
 `; // if used as an <a> element
 
+const setDisabledStyle = `
+  &[data-reset-link-style="true"]:not([href]) {
+    cursor: not-allowed;
+    opacity: 0.3; /* make button label barely readable */
+  }
+`;
+
 // Define Button components
 export const ButtonDialog = styled.button`
   ${setShape}
   ${setColor}
   ${setFocusStyle}
   ${resetLinkStyle}
+  ${setDisabledStyle}
 `;

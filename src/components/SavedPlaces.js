@@ -296,7 +296,7 @@ export const SavedPlaces = ({mapObject}) => {
                   <ButtonDialog
                     as="a"
                     data-reset-link-style
-                    href={selectedPlaceUrl}
+                    href={selectedPlaceUrl === '' ? false : selectedPlaceUrl}
                     rel="noreferrer"
                     target="_blank"
                   >
