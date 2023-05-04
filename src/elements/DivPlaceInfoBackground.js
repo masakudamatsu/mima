@@ -138,6 +138,10 @@ const setFontStyle = `
   }
 `;
 
+const handleOverflow = `
+  overflow: auto;
+`;
+
 const animateTransitionIn = css`
   animation-duration: ${animation.showDetail.duration};
   animation-fill-mode: ${animation.showDetail.fillMode};
@@ -195,7 +199,8 @@ export const DivPlaceInfoBackground = styled.div`
   ${setInnerSize}
   ${setPadding}
   ${positionComponents}
-  ${setFontStyle} 
+  ${setFontStyle}
+  ${handleOverflow}
   ${animateTransitionIn}
   ${animateTransitionOut}
   ${showPlaceholderTextInEditor}

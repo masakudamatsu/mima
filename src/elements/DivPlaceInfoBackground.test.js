@@ -28,6 +28,7 @@ describe('DivPlaceInfoBackground component', () => {
   font-size: 1.0506rem;
   font-weight: 400;
   line-height: 1.25;
+  overflow: auto;
   -webkit-animation-duration: 250ms;
   animation-duration: 250ms;
   -webkit-animation-fill-mode: backwards;
