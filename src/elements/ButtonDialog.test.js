@@ -44,6 +44,11 @@ describe('ButtonDialog component', () => {
   text-decoration: none;
 }
 
+.c0[data-reset-link-style="true"]:not([href]) {
+  cursor: not-allowed;
+  opacity: 0.3;
+}
+
 <div>
   <button
     class="c0"

@@ -41,12 +41,6 @@ describe('Saving feature', () => {
     cy.findByRole('form', {name: editorLabel}).should('be.visible'); // see https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Roles/form_role#description
     cy.findByRole('heading', {name: editorLabel}).should('be.visible');
     cy.findByRole('textbox').contains(searchedPlace.name);
-    cy.findByRole('textbox').contains(searchedPlace.address);
-    cy.findByRole('link', {name: linkText.searchedPlace}).should(
-      'have.attr',
-      'href',
-      searchedPlace.url,
-    );
     cy.log('Clicking the save button in the text editor');
     cy.findByRole('button', {name: buttonLabel.saveEdit}).click();
     cy.log('...initially shows a loading message');
@@ -61,18 +55,38 @@ describe('Saving feature', () => {
         cy.findByRole('button', {name: searchedPlace.name}).should(
           'be.visible',
         );
-        cy.log('...shows the place detail popup');
+        // TODO #431: add id to <h2> in Tiptap so it can be referred to with aria-labelledby
+        // cy.log('...shows the place detail popup');
+        // cy.findByRole('dialog', {name: searchedPlace.name}).should('be.visible');
+        cy.log('...shows the place name');
         cy.findByRole('heading', {name: searchedPlace.name}).should(
           'be.visible',
         );
+        cy.log('...shows the place address');
+        cy.findByText(searchedPlace.address).should('be.visible');
+        cy.log('...shows the button for editing the note');
         cy.findByRole('button', {name: buttonLabel.edit}).should('be.visible');
-        cy.log('...shows link text');
+        cy.log('...shows the button for deleting the place');
+        cy.findByRole('button', {name: buttonLabel.delete}).should(
+          'be.visible',
+        );
+        cy.log('...shows the button for more information in Google Maps');
         cy.findByRole('link', {name: linkText.searchedPlace})
           .should('have.attr', 'target', '_blank')
-          .should('have.attr', 'rel', 'nofollow noreferrer')
+          .should('have.attr', 'rel', 'noreferrer')
+          .should('have.attr', 'href', searchedPlace.url)
           .then(link => {
             cy.request(link.prop('href')).its('status').should('eq', 200);
           });
+        cy.log(
+          '...shows the button for seeing how to get there in Google Maps',
+        );
+        cy.findByRole('link', {name: linkText.directions})
+          .should('have.attr', 'target', '_blank')
+          .should('have.attr', 'rel', 'noreferrer')
+          .then(link => {
+            cy.request(link.prop('href')).its('status').should('eq', 200);
+          }); // exact URL cannot be tested because place ID changes every time
         cy.log('...allows user to close the popup');
         cy.findByRole('button', {name: buttonLabel.closePlaceDetail}).click();
         cy.findByRole('heading', {name: searchedPlace.name}).should(

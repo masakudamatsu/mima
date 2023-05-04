@@ -9,6 +9,7 @@ const {
   mockPlace5,
   mockPlace6,
   mockPlace7,
+  mockPlace8,
 } = require('../test/utils/mockData');
 
 async function main() {
@@ -34,7 +35,10 @@ async function main() {
   const place7 = await prisma.place.create({
     data: mockPlace7,
   });
-  console.log([place1, place2, place3, place4, place5, place6, place7]);
+  const place8 = await prisma.place.create({
+    data: mockPlace8,
+  });
+  console.log([place1, place2, place3, place4, place5, place6, place7, place8]);
 }
 
 main()

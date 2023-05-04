@@ -7,6 +7,7 @@ import FocusLock from 'react-focus-lock';
 import {ButtonDialog} from 'src/elements/ButtonDialog';
 import {CloseButton} from './CloseButton';
 import {ComposeDialog} from 'src/elements/ComposeDialog';
+import {DivButtonsRow} from 'src/elements/DivButtonsRow';
 import {DivCloud} from 'src/elements/DivCloud';
 import {DivModalBackdrop} from 'src/elements/DivModalBackdrop';
 import {DivPlaceInfoBackground} from 'src/elements/DivPlaceInfoBackground';
@@ -21,7 +22,7 @@ import {useOnEscKeyDown} from 'src/hooks/useOnEscKeyDown';
 import {getHtmlFromSlate} from 'src/utils/getHtmlFromSlate';
 import {NightModeContext} from 'src/wrappers/NightModeContext';
 
-import {buttonLabel, loadingMessage, modal} from 'src/utils/uiCopies';
+import {buttonLabel, linkText, loadingMessage, modal} from 'src/utils/uiCopies';
 
 // import Tiptap only when necessary
 import dynamic from 'next/dynamic';
@@ -200,6 +201,19 @@ export const SavedPlaces = ({mapObject}) => {
         {ADD_ATTR: ['target']}, // see https://github.com/cure53/DOMPurify/issues/317#issuecomment-470429778
       );
     }
+    const selectedPlaceUrl =
+      userData[selectedPlaceIndex].properties['Google Maps URL'];
+    const selectedPlaceAddress =
+      userData[selectedPlaceIndex].properties.address;
+
+    // Construct Directions URL
+    const selectedPlaceOriginalName =
+      userData[selectedPlaceIndex].properties['Google Maps place name'];
+    const destination = selectedPlaceOriginalName
+      ? encodeURIComponent(selectedPlaceOriginalName)
+      : `${selectedPlace.coordinates.lat},${selectedPlace.coordinates.lng}`;
+    const directionsURL = `https://www.google.com/maps/dir/?api=1&destination=${destination}&destination_id=${selectedPlace.id}`; // See Issue #122
+
     // for updating place info
     const handleResponse = jsonResponse => {
       const newUserData = [...userData];
@@ -269,19 +283,39 @@ export const SavedPlaces = ({mapObject}) => {
                     __html: autolinker.link(selectedPlaceNoteHtml),
                   }}
                 />
-                <ButtonDialog
-                  onClick={() => setPlaces({ui: 'editing'})}
-                  onFocus={importTiptapEditor}
-                  onMouseEnter={importTiptapEditor}
-                  type="button"
-                >
-                  {buttonLabel.edit}
-                </ButtonDialog>
+                <p data-address>{selectedPlaceAddress}</p>
+                <DivButtonsRow data-buttons-row>
+                  <ButtonDialog
+                    onClick={() => setPlaces({ui: 'editing'})}
+                    onFocus={importTiptapEditor}
+                    onMouseEnter={importTiptapEditor}
+                    type="button"
+                  >
+                    {buttonLabel.edit}
+                  </ButtonDialog>
+                  <ButtonDialog
+                    as="a"
+                    data-reset-link-style
+                    href={selectedPlaceUrl === '' ? false : selectedPlaceUrl}
+                    rel="noreferrer"
+                    target="_blank"
+                  >
+                    {linkText.searchedPlace}
+                  </ButtonDialog>
+                  <ButtonDialog
+                    as="a"
+                    data-reset-link-style
+                    href={directionsURL}
+                    rel="noreferrer"
+                    target="_blank"
+                  >
+                    {linkText.directions}
+                  </ButtonDialog>
+                </DivButtonsRow>
                 <ButtonDialog onClick={handleClickDelete} type="button">
                   {buttonLabel.delete}
                 </ButtonDialog>
               </div>
-
               {ui === 'closing' ? (
                 <SpanRipple
                   id="ripple"
@@ -349,6 +383,8 @@ export const SavedPlaces = ({mapObject}) => {
                   id: selectedPlace.id,
                   name: selectedPlaceName, // to be removed once Slate is completely removed
                   html: selectedPlaceNoteHtml,
+                  address: selectedPlaceAddress,
+                  url: selectedPlaceUrl,
                 }}
                 handleCancel={() => setPlaces({ui: 'open'})}
                 handleResponse={handleResponse}

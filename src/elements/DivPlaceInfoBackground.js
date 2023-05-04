@@ -107,12 +107,17 @@ const positionComponents = `
   & p:first-of-type {
     margin-top: -${remify(bodyText.spaceTop)};
   }
-  & p + p {
-    margin-top: ${remify(bodyText.spaceBetweenParagraphs)};
+  & p + p,
+  & p[data-address] {
+      margin-top: ${remify(bodyText.spaceBetweenParagraphs)};
   }
   & div + button,
-    p + button {
+    p + button,
+    p + div[data-buttons-row] {
     margin-top: ${remify(capHeight[200] - bodyText.spaceBottom)};
+  }
+  & div[data-buttons-row] + button {
+    margin-top: ${dimension.button['minimum target spacing 100']}
   }
 `;
 
@@ -131,6 +136,10 @@ const setFontStyle = `
     font-weight: ${h2PlaceName.fontWeight};
     line-height: ${h2PlaceName.lineHeight};
   }
+`;
+
+const handleOverflow = `
+  overflow: auto;
 `;
 
 const animateTransitionIn = css`
@@ -190,7 +199,8 @@ export const DivPlaceInfoBackground = styled.div`
   ${setInnerSize}
   ${setPadding}
   ${positionComponents}
-  ${setFontStyle} 
+  ${setFontStyle}
+  ${handleOverflow}
   ${animateTransitionIn}
   ${animateTransitionOut}
   ${showPlaceholderTextInEditor}

@@ -28,6 +28,7 @@ describe('DivPlaceInfoBackground component', () => {
   font-size: 1.0506rem;
   font-weight: 400;
   line-height: 1.25;
+  overflow: auto;
   -webkit-animation-duration: 250ms;
   animation-duration: 250ms;
   -webkit-animation-fill-mode: backwards;
@@ -110,13 +111,19 @@ describe('DivPlaceInfoBackground component', () => {
   margin-top: -0.2836rem;
 }
 
-.c1 p + p {
+.c1 p + p,
+.c1 p[data-address] {
   margin-top: 0.4965rem;
 }
 
 .c1 div + button,
-.c1 p + button {
+.c1 p + button,
+.c1 p + div[data-buttons-row] {
   margin-top: 0.7801rem;
+}
+
+.c1 div[data-buttons-row] + button {
+  margin-top: 8px;
 }
 
 .c1 a {

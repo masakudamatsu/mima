@@ -103,6 +103,15 @@ describe('Place search feature', () => {
           .then(link => {
             cy.request(link.prop('href')).its('status').should('eq', 200);
           });
+        cy.log(
+          '...shows the button for seeing how to get there in Google Maps',
+        );
+        cy.findByRole('link', {name: linkText.directions})
+          .should('have.attr', 'target', '_blank')
+          .should('have.attr', 'rel', 'noreferrer')
+          .then(link => {
+            cy.request(link.prop('href')).its('status').should('eq', 200);
+          }); // exact URL cannot be tested because place ID changes every time
         // TODO #207: Make the following test pass
         // cy.log('...Focuses the close button');
         // cy.focused().should(

@@ -41,26 +41,7 @@ export const TiptapEditor = ({
         },
         {
           type: 'paragraph',
-          content: [{type: 'text', text: data.address}],
-        },
-        {
-          type: 'paragraph',
-          content: [
-            {
-              type: 'text',
-              marks: [
-                {
-                  type: 'link',
-                  attrs: {
-                    href: data.url,
-                    target: '_blank',
-                    class: null,
-                  },
-                },
-              ],
-              text: data.linkText,
-            },
-          ],
+          content: [{type: 'text', text: 'your note...'}],
         },
       ],
     };
@@ -142,6 +123,7 @@ export const TiptapEditor = ({
                 },
                 properties: {
                   address: data.address,
+                  'Google Maps place name': data.name, // to be used for constructing Directions URL
                   'Google Maps URL': data.url,
                   name: userPlaceName, // edited by user, not the one returned from Google Maps API server
                   note: userPlaceNote,
@@ -151,6 +133,8 @@ export const TiptapEditor = ({
             : {
                 id: data.id,
                 properties: {
+                  address: data.address, // cannot be omitted; otherwise deleted
+                  'Google Maps URL': data.url, // cannot be omitted; otherwise deleted
                   name: userPlaceName, // edited by user, not the one returned from Google Maps API server
                   note: userPlaceNote,
                 },

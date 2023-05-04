@@ -194,6 +194,33 @@ const mockPlace7 = {
   userId: mockUser1.userId,
 };
 
+// for testing places saved directly, not via Google Maps search
+const mockPlace8 = {
+  id: `place_${faker.datatype.uuid()}`, // API ref: https://fakerjs.dev/api/datatype.html#uuid
+  geometry: {
+    coordinates: [135.7712, 35.0064],
+    type: 'Point',
+  },
+  properties: {
+    address: '',
+    'country code': '',
+    'Google Maps URL': '',
+    name: '先斗町公園',
+    note: [
+      {
+        type: 'paragraph',
+        children: [
+          {
+            text: 'A place saved directly by user, not via Google Maps search',
+          },
+        ],
+      },
+    ],
+  },
+  type: 'Feature',
+  userId: mockUser2.userId,
+};
+
 module.exports = {
   mockUser1,
   mockUser2,
@@ -204,4 +231,5 @@ module.exports = {
   mockPlace5,
   mockPlace6,
   mockPlace7,
+  mockPlace8,
 };
