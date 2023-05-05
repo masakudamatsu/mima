@@ -20,16 +20,7 @@ const mockPlace1 = {
     'country code': 'JP',
     'Google Maps URL': 'http://maps.google.com/?cid=11397677192332095799',
     name: 'Okaffe Kyoto',
-    note: [
-      {
-        type: 'paragraph',
-        children: [
-          {
-            text: 'https://okaffe.kyoto/menu/cafe_menu/',
-          },
-        ],
-      },
-    ],
+    note: '<h2>Okaffe Kyoto</h2><p>https://okaffe.kyoto/menu/cafe_menu/</p>',
   },
   type: 'Feature',
   userId: mockUser1.userId,
@@ -47,16 +38,8 @@ const mockPlace2 = {
     'country code': 'JP',
     'Google Maps URL': 'http://maps.google.com/?cid=1227974347151193049',
     name: 'Bread & Espresso & Arashiyama Garden',
-    note: [
-      {
-        type: 'paragraph',
-        children: [
-          {
-            text: 'https://www.instagram.com/bread.espresso.and.arashiyama/',
-          },
-        ],
-      },
-    ],
+    note:
+      '<h2>Bread & Espresso & Arashiyama Garden</h2><p>https://www.instagram.com/bread.espresso.and.arashiyama/</p>',
   },
   type: 'Feature',
   userId: mockUser1.userId,
@@ -74,16 +57,8 @@ const mockPlace3 = {
     'country code': 'JP',
     'Google Maps URL': 'http://maps.google.com/?cid=5220687755832863894',
     name: 'D&DEPARTMENT KYOTO d食堂 京都',
-    note: [
-      {
-        type: 'paragraph',
-        children: [
-          {
-            text: 'https://gotrip.jp/2019/05/113932/',
-          },
-        ],
-      },
-    ],
+    note:
+      '<h2>D&DEPARTMENT KYOTO d食堂 京都</h2><p>https://gotrip.jp/2019/05/113932/</p>',
   },
   type: 'Feature',
   userId: mockUser2.userId,
@@ -100,16 +75,8 @@ const mockPlace4 = {
     'country code': 'JP',
     'Google Maps URL': 'http://maps.google.com/?cid=2755578752090318796',
     name: 'Lorimer Kyoto',
-    note: [
-      {
-        type: 'paragraph',
-        children: [
-          {
-            text: 'https://www.asahi.com/and/article/20210806/407331671/',
-          },
-        ],
-      },
-    ],
+    note:
+      '<h2>Lorimer Kyoto</h2><p>https://www.asahi.com/and/article/20210806/407331671/</p>',
   },
   type: 'Feature',
   userId: mockUser1.userId,
@@ -126,16 +93,8 @@ const mockPlace5 = {
     'country code': 'JP',
     'Google Maps URL': 'http://maps.google.com/?cid=14329270928985000839',
     name: '出逢ひ茶屋おせん',
-    note: [
-      {
-        type: 'paragraph',
-        children: [
-          {
-            text: 'https://www.asahi.com/and/article/20201225/300307708/',
-          },
-        ],
-      },
-    ],
+    note:
+      '<h2>出逢ひ茶屋おせん</h2><p>https://www.asahi.com/and/article/20201225/300307708/</p>',
   },
   type: 'Feature',
   userId: mockUser2.userId,
@@ -153,16 +112,7 @@ const mockPlace6 = {
     'country code': 'JP',
     'Google Maps URL': 'http://maps.google.com/?cid=13724563353852976456',
     name: 'GION NITI',
-    note: [
-      {
-        type: 'paragraph',
-        children: [
-          {
-            text: '',
-          },
-        ],
-      },
-    ],
+    note: '<h2>GION NITI</h2><p></p>',
   },
   type: 'Feature',
   userId: mockUser1.userId,
@@ -179,16 +129,8 @@ const mockPlace7 = {
     'country code': 'JP',
     'Google Maps URL': 'http://maps.google.com/?cid=17532417395355382157',
     name: 'Walden Woods Kyoto',
-    note: [
-      {
-        type: 'paragraph',
-        children: [
-          {
-            text: 'https://madamefigaro.jp/series/kyoto/181004-coffee.html',
-          },
-        ],
-      },
-    ],
+    note:
+      '<h2>Walden Woods Kyoto</h2><p>https://madamefigaro.jp/series/kyoto/181004-coffee.html</p>',
   },
   type: 'Feature',
   userId: mockUser1.userId,
@@ -206,16 +148,8 @@ const mockPlace8 = {
     'country code': '',
     'Google Maps URL': '',
     name: '先斗町公園',
-    note: [
-      {
-        type: 'paragraph',
-        children: [
-          {
-            text: 'A place saved directly by user, not via Google Maps search',
-          },
-        ],
-      },
-    ],
+    note:
+      '<h2>先斗町公園</h2><p>A place saved directly by user, not via Google Maps search</p>',
   },
   type: 'Feature',
   userId: mockUser2.userId,
