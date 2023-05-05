@@ -182,24 +182,10 @@ export const SavedPlaces = ({mapObject}) => {
       feature => feature.id === selectedPlace.id,
     );
     const selectedPlaceName = userData[selectedPlaceIndex].properties.name;
-    let selectedPlaceNoteHtml;
-    // if (typeof userData[selectedPlaceIndex].properties.note === 'string') {
-    // Tiptap format
-    selectedPlaceNoteHtml = DOMPurify.sanitize(
+    const selectedPlaceNoteHtml = DOMPurify.sanitize(
       userData[selectedPlaceIndex].properties.note,
       {ADD_ATTR: ['target']}, // see https://github.com/cure53/DOMPurify/issues/317#issuecomment-470429778
     );
-    // } else {
-    //   // Slate format
-    //   const selectedPlaceNoteArray =
-    //     userData[selectedPlaceIndex].properties.note;
-    //   selectedPlaceNoteHtml = DOMPurify.sanitize(
-    //     `<h2>${selectedPlaceName}</h2><div>${getHtmlFromSlate({
-    //       children: selectedPlaceNoteArray,
-    //     })}</div>`,
-    //     {ADD_ATTR: ['target']}, // see https://github.com/cure53/DOMPurify/issues/317#issuecomment-470429778
-    //   );
-    // }
     const selectedPlaceUrl =
       userData[selectedPlaceIndex].properties['Google Maps URL'];
     const selectedPlaceAddress =
