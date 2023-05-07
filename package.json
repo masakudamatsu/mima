@@ -69,6 +69,7 @@
     "@googlemaps/js-api-loader": "1.12.1",
     "@googlemaps/react-wrapper": "1.1.15",
     "@prisma/client": "4.3.1",
+    "@tiptap/core": "2.0.3",
     "@tiptap/extension-link": "2.0.3",
     "@tiptap/extension-placeholder": "2.0.3",
     "@tiptap/react": "2.0.3",
