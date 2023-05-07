@@ -71,7 +71,6 @@
     "@prisma/client": "4.3.1",
     "@tiptap/extension-link": "2.0.0-beta.220",
     "@tiptap/extension-placeholder": "2.0.0-beta.220",
-    "@tiptap/pm": "2.0.0-beta.220",
     "@tiptap/react": "2.0.0-beta.220",
     "@tiptap/starter-kit": "2.0.0-beta.220",
     "autolinker": "3.14.3",
