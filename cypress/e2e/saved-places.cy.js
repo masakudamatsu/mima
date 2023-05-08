@@ -49,84 +49,6 @@ describe('Saved place detail feature', () => {
       .should('not.have.attr', 'href')
       .should('have.css', 'cursor', 'not-allowed');
   });
-  it('Happy path for editing place detail', () => {
-    cy.log(`Preparing for testing loading messages`);
-    const interception = interceptIndefinitely('/api/places');
-    cy.log(`Clicking place mark...`);
-    cy.findByRole('button', {name: mockPlace5.properties.name}).click();
-    cy.log(`Clicking Edit button...`);
-    cy.findByRole('button', {name: buttonLabel.edit}).click();
-    cy.log(`...shows the editor title`);
-    cy.findByRole('heading', {name: editorLabel, timeout: 20000}).should(
-      'be.visible',
-    );
-    cy.log(`...autofocuses the note`);
-    cy.focused().should('have.attr', 'role', 'textbox');
-    cy.log(
-      `...tells screen readers that pressing the Enter key will insert a line break, not submit the entered text`,
-    );
-    cy.focused().should('have.attr', 'aria-multiline', 'true');
-
-    cy.log(`Typing text...`);
-    // eslint-disable-next-line cypress/no-unnecessary-waiting
-    cy.wait(100); // otherwise, Cypress will type 'bc', not 'abc'. This is a known issue. See https://www.cypress.io/blog/2019/01/22/when-can-the-test-click/
-    cy.findByRole('textbox').type('abc ');
-    cy.log(`...updates the place name*`);
-    cy.findByRole('heading', {level: 2}).should('include.text', 'abc', {
-      timeout: 20000,
-    });
-
-    cy.log(`Pressing Down Arrow key and typing URL text...`);
-    cy.findByRole('textbox').type('{downarrow}');
-    cy.focused().type('https://google.com ');
-    cy.log(`...updates the place note`);
-    cy.contains('https://google.com').should('be.visible');
-
-    cy.log(`Clicking Save button...`);
-    cy.findByRole('button', {name: buttonLabel.saveEdit}).click();
-    cy.log('...initially shows a loading message');
-    cy.findByText(loadingMessage.update)
-      .should('be.visible')
-      .then(() => {
-        cy.log(`And then...`);
-        interception.sendResponse();
-        cy.log(`...saves the updated place name`);
-        cy.findByRole('heading', {
-          name: 'abc ' + mockPlace5.properties.name,
-        }).should('be.visible');
-        cy.log(`...saves the updated place note with text link`);
-        cy.findByRole('link', {name: /google\.com.*/i}).should('be.visible');
-        cy.findByRole('link', {name: /asahi\.com.*/i}).should('be.visible');
-        cy.log(`...updates the place mark`);
-        cy.findByRole('button', {
-          name: 'abc ' + mockPlace5.properties.name,
-        }).should('be.visible');
-
-        // Make sure no data is lost due to the editing of place notes
-        cy.log(`...shows the place address`);
-        cy.findByText(mockPlace5.properties.address).should('be.visible');
-        cy.log('...shows the button for more information in Google Maps');
-        cy.findByRole('link', {name: linkText.searchedPlace}).should(
-          'have.attr',
-          'href',
-          mockPlace5.properties['Google Maps URL'],
-        );
-
-        cy.log(`...autofocuses the close button`);
-        cy.focused().should(
-          'have.attr',
-          'data-testid',
-          'close-button-saved-place',
-        );
-
-        cy.log(`Reloading the page...`);
-        cy.reload();
-        cy.log(`...retains the changes`);
-        cy.findByRole('button', {
-          name: 'abc ' + mockPlace5.properties.name,
-        }).should('be.visible');
-      });
-  });
   it('Clicking close button closes place detail', () => {
     cy.log(`Setup`);
     cy.findByRole('button', {name: mockPlace5.properties.name}).click();
@@ -168,37 +90,6 @@ describe('Saved place detail feature', () => {
     cy.findByRole('button', {name: mockPlace5.properties.name}).click();
     // This fails if another element covers it up
     // while should('be.visible') won't fail in that case
-  });
-  it('Clicking Cancel button closes editor without saving any changes', () => {
-    cy.log(`Setup`);
-    cy.findByRole('button', {name: mockPlace5.properties.name}).click();
-    cy.findByRole('button', {name: buttonLabel.edit}).click();
-    // eslint-disable-next-line cypress/no-unnecessary-waiting
-    cy.wait(100); // otherwise, Cypress will type 'bc', not 'abc'. This is a known issue. See https://www.cypress.io/blog/2019/01/22/when-can-the-test-click/
-    cy.findByRole('textbox').type('abc ');
-    cy.findByRole('textbox').type('{downarrow}');
-    cy.focused().type('https://google.com ');
-
-    cy.log(`Clicking Cancel button...`);
-    cy.findByRole('button', {name: /cancel/i}).click();
-    cy.log(`...does not save any change`);
-    cy.findByRole('heading', {
-      name: 'abc ' + mockPlace5.properties.name,
-    }).should('not.exist');
-    cy.findByRole('link', {name: /google\.com.*/i}).should('not.exist');
-    cy.findByRole('button', {name: 'abc ' + mockPlace5.properties.name}).should(
-      'not.exist',
-    );
-    cy.log(`...shows the original place detail`);
-    cy.findByRole('heading', {name: mockPlace5.properties.name}).should(
-      'be.visible',
-    );
-    cy.findByRole('link', {name: /asahi\.com.*/i}).should('be.visible');
-    cy.findByRole('button', {name: mockPlace5.properties.name}).should(
-      'be.visible',
-    );
-    cy.log(`...autofocuses the close button`);
-    cy.focused().should('have.attr', 'data-testid', 'close-button-saved-place');
   });
   it('Clicking Delete button removes the saved place', () => {
     cy.log(`Preparing for testing loading messages`);
@@ -283,6 +174,133 @@ describe('Saved place detail feature', () => {
     cy.findByRole('button', {name: buttonLabel.cancel}).click();
     cy.log(`...autofocuses the Delete button`);
     cy.focused().contains(buttonLabel.delete);
+  });
+});
+describe('Editing notes on saved places', () => {
+  beforeEach(() => {
+    cy.log('Resetting the database');
+    cy.exec('npx prisma migrate reset --force'); // https://docs.cypress.io/guides/end-to-end-testing/testing-your-app#Seeding-data
+    cy.log('Setting up');
+    cy.auth('subscribed_user2', {
+      username: Cypress.env('auth0UserSubscribed2'),
+      password: Cypress.env('auth0PassSubscribed2'),
+    });
+    cy.visit('/');
+    cy.waitForMapToLoad();
+    cy.log(`Clicking place mark...`);
+    cy.findByRole('button', {name: mockPlace5.properties.name}).click();
+    cy.log(`Clicking Edit button...`);
+    cy.findByRole('button', {name: buttonLabel.edit}).click();
+  });
+  it('Happy path: users can add their own note on the place', () => {
+    cy.log(`Preparing for testing loading messages`);
+    const interception = interceptIndefinitely('/api/places');
+    // UI check
+    cy.log(`...shows the editor title`);
+    cy.findByRole('heading', {name: editorLabel, timeout: 20000}).should(
+      'be.visible',
+    );
+    cy.log(`...autofocuses the note`);
+    cy.focused().should('have.attr', 'role', 'textbox');
+    cy.log(
+      `...tells screen readers that pressing the Enter key will insert a line break, not submit the entered text`,
+    );
+    cy.focused().should('have.attr', 'aria-multiline', 'true');
+    // Execute
+    cy.log(`Pressing Down Arrow key and typing URL text...`);
+    cy.findByRole('textbox').type('{downarrow}');
+    cy.focused().type('https://google.com ');
+    // Verify
+    cy.log(`...updates the place note`);
+    cy.contains('https://google.com').should('be.visible');
+    // Execute
+    cy.log(`Clicking Save button...`);
+    cy.findByRole('button', {name: buttonLabel.saveEdit}).click();
+    // Verify
+    cy.log('...initially shows a loading message');
+    cy.findByText(loadingMessage.update)
+      .should('be.visible')
+      .then(() => {
+        cy.log(`And then...`);
+        interception.sendResponse();
+        cy.log(`...saves the updated place note with text link`);
+        cy.findByRole('link', {name: /google\.com.*/i}).should('be.visible');
+        cy.findByRole('link', {name: /asahi\.com.*/i}).should('be.visible');
+
+        // Make sure no data is lost due to the editing of place notes
+        cy.log(`...shows the place address`);
+        cy.findByText(mockPlace5.properties.address).should('be.visible');
+        cy.log('...shows the button for more information in Google Maps');
+        cy.findByRole('link', {name: linkText.searchedPlace}).should(
+          'have.attr',
+          'href',
+          mockPlace5.properties['Google Maps URL'],
+        );
+
+        cy.log(`...autofocuses the close button`);
+        cy.focused().should(
+          'have.attr',
+          'data-testid',
+          'close-button-saved-place',
+        );
+
+        cy.log(`Reloading the page...`);
+        cy.reload();
+        cy.log(`...retains the changes`);
+        cy.findByRole('button', {name: mockPlace5.properties.name}).click();
+        cy.findByRole('link', {name: /google\.com.*/i}).should('be.visible');
+      });
+  });
+  it('Place name is editable', () => {
+    cy.log(`Typing text...`);
+    // eslint-disable-next-line cypress/no-unnecessary-waiting
+    cy.wait(100); // otherwise, Cypress will type 'bc', not 'abc'. This is a known issue. See https://www.cypress.io/blog/2019/01/22/when-can-the-test-click/
+    cy.findByRole('textbox').type('abc ');
+    cy.log(`...updates the place name*`);
+    cy.findByRole('heading', {level: 2}).should('include.text', 'abc', {
+      timeout: 20000,
+    });
+    // Execute
+    cy.log(`Clicking Save button...`);
+    cy.findByRole('button', {name: buttonLabel.saveEdit}).click();
+    // Verify
+    cy.log(`...saves the updated place name`);
+    cy.findByRole('heading', {
+      name: 'abc ' + mockPlace5.properties.name,
+    }).should('be.visible');
+    cy.log(`...updates the place mark`);
+    cy.findByRole('button', {
+      name: 'abc ' + mockPlace5.properties.name,
+    }).should('be.visible');
+  });
+  it('Clicking Cancel button closes editor without saving any changes', () => {
+    // eslint-disable-next-line cypress/no-unnecessary-waiting
+    cy.wait(100); // otherwise, Cypress will type 'bc', not 'abc'. This is a known issue. See https://www.cypress.io/blog/2019/01/22/when-can-the-test-click/
+    cy.log(`Editing the note...`);
+    cy.findByRole('textbox').type('abc ');
+    cy.findByRole('textbox').type('{downarrow}');
+    cy.focused().type('https://google.com ');
+
+    cy.log(`But clicking Cancel button...`);
+    cy.findByRole('button', {name: /cancel/i}).click();
+    cy.log(`...does not save any change`);
+    cy.findByRole('heading', {
+      name: 'abc ' + mockPlace5.properties.name,
+    }).should('not.exist');
+    cy.findByRole('link', {name: /google\.com.*/i}).should('not.exist');
+    cy.findByRole('button', {name: 'abc ' + mockPlace5.properties.name}).should(
+      'not.exist',
+    );
+    cy.log(`...shows the original place detail`);
+    cy.findByRole('heading', {name: mockPlace5.properties.name}).should(
+      'be.visible',
+    );
+    cy.findByRole('link', {name: /asahi\.com.*/i}).should('be.visible');
+    cy.findByRole('button', {name: mockPlace5.properties.name}).should(
+      'be.visible',
+    );
+    cy.log(`...autofocuses the close button`);
+    cy.focused().should('have.attr', 'data-testid', 'close-button-saved-place');
   });
 });
 describe('Edge cases', () => {
