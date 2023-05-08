@@ -68,10 +68,10 @@ export const TiptapEditor = ({
       Placeholder.configure({
         placeholder: ({node}) => {
           if (node.type.name === 'heading') {
-            return 'Enter the place name'; // Shown when no place name is provided
+            return editorLabel.placeholder.placeName; // Shown when no place name is provided
           }
 
-          return 'Enter your notes on the place'; // Shown when no note is provided
+          return editorLabel.placeholder.placeNote; // Shown when no note is provided
         },
       }),
     ],
@@ -98,7 +98,7 @@ export const TiptapEditor = ({
       userPlaceName = json.content[0].content[0].text;
     } else {
       // User has failed to provide place name
-      userPlaceName = 'Unnamed place';
+      userPlaceName = editorLabel.unnamedPlace;
       json.content[0].content = [{type: 'text', text: userPlaceName}]; // fill in to <h2>, which would otherwise be empty
     }
     const userPlaceNote = DOMPurify.sanitize(
@@ -156,7 +156,7 @@ export const TiptapEditor = ({
     <form aria-labelledby="editor-heading">
       <HeaderEditor>
         <Heading as="h1" data-editor id="editor-heading">
-          {editorLabel}
+          {editorLabel.title}
         </Heading>
         <section>
           <button

@@ -127,7 +127,14 @@ export const buttonLabel = {
 };
 
 export const menuLabel = 'Menu';
-export const editorLabel = 'Edit place info';
+export const editorLabel = {
+  title: 'Edit place info',
+  placeholder: {
+    placeName: 'Enter the place name',
+    placeNote: 'Enter your notes on the place',
+  },
+  unnamedPlace: 'Unnamed place',
+};
 
 export const searchBoxLabel = {
   ariaLabel: 'Search for a place on the map',

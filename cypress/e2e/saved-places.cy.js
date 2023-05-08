@@ -197,7 +197,7 @@ describe('Editing notes on saved places', () => {
     const interception = interceptIndefinitely('/api/places');
     // UI check
     cy.log(`...shows the editor title`);
-    cy.findByRole('heading', {name: editorLabel, timeout: 20000}).should(
+    cy.findByRole('heading', {name: editorLabel.title, timeout: 20000}).should(
       'be.visible',
     );
     cy.log(`...autofocuses the note`);
