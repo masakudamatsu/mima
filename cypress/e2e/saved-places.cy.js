@@ -274,6 +274,29 @@ describe('Editing notes on saved places', () => {
       name: 'abc ' + mockPlace5.properties.name,
     }).should('be.visible');
   });
+  it(`Deleting place name will show ${editorLabel.unnamedPlace}`, () => {
+    // Execute
+    cy.log(`Deleting the place name...`);
+    // eslint-disable-next-line cypress/no-unnecessary-waiting
+    cy.wait(100); // otherwise, Cypress will type 'bc', not 'abc'. This is a known issue. See https://www.cypress.io/blog/2019/01/22/when-can-the-test-click/
+    cy.findByRole('textbox').type(
+      '{home}{del}{del}{del}{del}{del}{del}{del}{del}',
+    ); // mockPlace5.properties.name(出会い茶屋おせん) has 8 characters; the loop doesn't work...
+    // TODO #453: Make the following assertion work
+    // cy.log(`...shows the placeholder text`);
+    // cy.findByPlaceholderText(editorLabel.placeholder.placeName).should('be.visible');
+    cy.log(`Clicking Save button...`);
+    cy.findByRole('button', {name: buttonLabel.saveEdit}).click();
+    // Verify
+    cy.log(`...shows ${editorLabel.unnamedPlace} as the place name`);
+    cy.findByRole('heading', {
+      name: editorLabel.unnamedPlace,
+    }).should('be.visible');
+    cy.log(`...updates the place mark`);
+    cy.findByRole('button', {
+      name: editorLabel.unnamedPlace,
+    }).should('be.visible');
+  });
   it('Clicking Cancel button closes editor without saving any changes', () => {
     // eslint-disable-next-line cypress/no-unnecessary-waiting
     cy.wait(100); // otherwise, Cypress will type 'bc', not 'abc'. This is a known issue. See https://www.cypress.io/blog/2019/01/22/when-can-the-test-click/
