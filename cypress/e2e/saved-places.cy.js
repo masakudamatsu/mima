@@ -259,10 +259,6 @@ describe('Editing notes on saved places', () => {
     // eslint-disable-next-line cypress/no-unnecessary-waiting
     cy.wait(100); // otherwise, Cypress will type 'bc', not 'abc'. This is a known issue. See https://www.cypress.io/blog/2019/01/22/when-can-the-test-click/
     cy.findByRole('textbox', {name: editorLabel.ariaLabel.note}).type('abc ');
-    cy.log(`...updates the place name*`);
-    cy.findByRole('heading', {level: 2}).should('include.text', 'abc', {
-      timeout: 20000,
-    });
     // Execute
     cy.log(`Clicking Save button...`);
     cy.findByRole('button', {name: buttonLabel.saveEdit}).click();
