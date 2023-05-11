@@ -277,9 +277,13 @@ describe('Editing notes on saved places', () => {
     cy.log(`Deleting the place name...`);
     // eslint-disable-next-line cypress/no-unnecessary-waiting
     cy.wait(100); // otherwise, Cypress will type 'bc', not 'abc'. This is a known issue. See https://www.cypress.io/blog/2019/01/22/when-can-the-test-click/
+    let deleteAllCharacters = '';
+    for (let i = 0; i < mockPlace5.properties.name.length; i++) {
+      deleteAllCharacters = deleteAllCharacters + '{del}';
+    }
     cy.findByRole('textbox', {name: editorLabel.ariaLabel.note}).type(
-      '{home}{del}{del}{del}{del}{del}{del}{del}{del}',
-    ); // mockPlace5.properties.name(出会い茶屋おせん) has 8 characters; the loop doesn't work...
+      '{home}' + deleteAllCharacters,
+    );
     // TODO #453: Make the following assertion work
     // cy.log(`...shows the placeholder text`);
     // cy.findByPlaceholderText(editorLabel.placeholder.placeName).should('be.visible');
