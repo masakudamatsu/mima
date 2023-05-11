@@ -1,7 +1,9 @@
 import {generateHTML} from '@tiptap/core';
 import Document from '@tiptap/extension-document';
 import Link from '@tiptap/extension-link';
+import Paragraph from '@tiptap/extension-paragraph';
 import {Placeholder} from '@tiptap/extension-placeholder';
+import Text from '@tiptap/extension-text';
 import {useEditor, EditorContent} from '@tiptap/react';
 import StarterKit from '@tiptap/starter-kit';
 
@@ -16,6 +18,10 @@ import {buttonLabel, editorLabel} from 'src/utils/uiCopies';
 
 const CustomDocument = Document.extend({
   content: 'heading block*', // turning the first element into <h1>
+});
+
+const SingleBlockDocument = Document.extend({
+  content: 'block',
 });
 
 export const TiptapEditor = ({
@@ -86,13 +92,25 @@ export const TiptapEditor = ({
     },
     injectCSS: false, // remove the default style
   });
-
+  // setting up address editor
+  const addressEditor = useEditor({
+    extensions: [SingleBlockDocument, Paragraph, Text],
+    content: `<p>${DOMPurify.sanitize(data.address)}</p>`,
+    editorProps: {
+      attributes: {
+        role: 'textbox', // for accessibility: https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Roles/textbox_role
+        'aria-label': editorLabel.ariaLabel.address,
+      },
+    },
+    injectCSS: false, // remove the default style
+  });
   // Handling output
   const handleClickSave = async event => {
     event.preventDefault();
     setUi(searchedPlace ? {status: 'saving'} : {ui: 'saving'});
     // retrieve user's note
     const json = editor.getJSON();
+    // handle place name
     let userPlaceName;
     if (json.content[0].content) {
       // User has provided place name
@@ -102,10 +120,13 @@ export const TiptapEditor = ({
       userPlaceName = editorLabel.unnamedPlace;
       json.content[0].content = [{type: 'text', text: userPlaceName}]; // fill in to <h2>, which would otherwise be empty
     }
+    // handle place note (including place name)
     const userPlaceNote = DOMPurify.sanitize(
       generateHTML(json, [CustomDocument, Link, StarterKit]), // docs: https://tiptap.dev/api/utilities/html#generate-html-from-json
       {ADD_ATTR: ['target']}, // see https://github.com/cure53/DOMPurify/issues/317#issuecomment-470429778
     ); // editor.getHTML() would include an empty <h2> element whose text content (apparently) cannot be modified...
+    // handle address
+    const userPlaceAddress = addressEditor.getJSON().content[0].content[0].text;
     try {
       const response = await fetch('/api/places', {
         method: searchedPlace ? 'POST' : 'PUT',
@@ -118,7 +139,7 @@ export const TiptapEditor = ({
                   type: 'Point',
                 },
                 properties: {
-                  address: data.address,
+                  address: userPlaceAddress,
                   'Google Maps place name': data.name, // to be used for constructing Directions URL
                   'Google Maps URL': data.url,
                   name: userPlaceName, // edited by user, not the one returned from Google Maps API server
@@ -129,7 +150,7 @@ export const TiptapEditor = ({
             : {
                 id: data.id,
                 properties: {
-                  address: data.address, // cannot be omitted; otherwise deleted
+                  address: userPlaceAddress, // cannot be omitted; otherwise deleted
                   'Google Maps URL': data.url, // cannot be omitted; otherwise deleted
                   name: userPlaceName, // edited by user, not the one returned from Google Maps API server
                   note: userPlaceNote,
@@ -174,6 +195,10 @@ export const TiptapEditor = ({
         </section>
       </HeaderEditor>
       <EditorContent editor={editor} />
+      <Heading as="h2" data-address-editor>
+        {editorLabel.address}
+      </Heading>
+      <EditorContent editor={addressEditor} />
     </form>
   );
 };

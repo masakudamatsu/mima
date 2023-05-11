@@ -9,16 +9,23 @@ export const Heading = styled.h1`
   line-height: ${heading.lineHeight.wideScreen};
   padding-bottom: ${remify(heading.paddingBottom.wideScreen)};
   padding-top: ${remify(heading.paddingTop.wideScreen)};
-  &[data-editor] {
+  &[data-editor],
+  &[data-address-editor] {
     font-size: ${remify(heading.fontSize.narrowScreen)};
     line-height: ${heading.lineHeight.narrowScreen};
     padding-bottom: ${remify(heading.paddingBottom.narrowScreen)};
     padding-top: ${remify(heading.paddingTop.narrowScreen)};
+  }
+  &[data-editor] {
     @media screen and (min-width: ${dimension.breakpoint.divPopup.padding}) {
       font-size: ${remify(heading.fontSize.wideScreen)};
       line-height: ${heading.lineHeight.wideScreen};
       padding-bottom: ${remify(heading.paddingBottom.wideScreen)};
       padding-top: ${remify(heading.paddingTop.wideScreen)};
     }
+  }
+  &[data-address-editor] {
+    border-top: 1px solid var(--button-outline-color);
+    margin-top: 10px;
   }
 `;

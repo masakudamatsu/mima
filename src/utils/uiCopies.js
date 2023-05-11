@@ -129,8 +129,10 @@ export const buttonLabel = {
 export const menuLabel = 'Menu';
 export const editorLabel = {
   title: 'Edit place info',
+  address: 'Street address (optional)',
   ariaLabel: {
     note: 'Edit the name of and notes on the place',
+    address: 'Edit the address of the place',
   },
   placeholder: {
     placeName: 'Enter the place name',

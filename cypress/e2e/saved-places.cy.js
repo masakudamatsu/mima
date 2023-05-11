@@ -299,6 +299,18 @@ describe('Editing notes on saved places', () => {
       name: editorLabel.unnamedPlace,
     }).should('be.visible');
   });
+  it('Users can edit the place address', () => {
+    cy.log('Editing the place address and saving it...');
+    const textAdded = '123';
+    cy.findByRole('textbox', {name: editorLabel.ariaLabel.address}).type(
+      '{home}' + textAdded,
+    );
+    cy.findByRole('button', {name: buttonLabel.saveEdit}).click();
+    cy.log('...retains the edited address');
+    cy.findByText(textAdded + mockPlace5.properties.address).should(
+      'be.visible',
+    );
+  });
   it('Clicking Cancel button closes editor without saving any changes', () => {
     // eslint-disable-next-line cypress/no-unnecessary-waiting
     cy.wait(100); // otherwise, Cypress will type 'bc', not 'abc'. This is a known issue. See https://www.cypress.io/blog/2019/01/22/when-can-the-test-click/

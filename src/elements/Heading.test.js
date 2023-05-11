@@ -17,11 +17,17 @@ test('renders UI correctly', () => {
   padding-top: 0.9833rem;
 }
 
-.c0[data-editor] {
+.c0[data-editor],
+.c0[data-address-editor] {
   font-size: 1.0504rem;
   line-height: 1.092;
   padding-bottom: 0.6197rem;
   padding-top: 0.5546rem;
+}
+
+.c0[data-address-editor] {
+  border-top: 1px solid var(--button-outline-color);
+  margin-top: 10px;
 }
 
 @media screen and (min-width:540px) {
