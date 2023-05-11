@@ -40,7 +40,9 @@ describe('Saving feature', () => {
     cy.log('...shows the text editor');
     cy.findByRole('form', {name: editorLabel.title}).should('be.visible'); // see https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Roles/form_role#description
     cy.findByRole('heading', {name: editorLabel.title}).should('be.visible');
-    cy.findByRole('textbox').contains(searchedPlace.name);
+    cy.findByRole('textbox', {name: editorLabel.ariaLabel.note}).contains(
+      searchedPlace.name,
+    );
     cy.log('Clicking the save button in the text editor');
     cy.findByRole('button', {name: buttonLabel.saveEdit}).click();
     cy.log('...initially shows a loading message');
@@ -50,7 +52,9 @@ describe('Saving feature', () => {
         cy.log(`And then...`);
         interception.sendResponse();
         cy.log('...closes the text editor');
-        cy.findByRole('textbox').should('not.exist');
+        cy.findByRole('textbox', {name: editorLabel.ariaLabel.note}).should(
+          'not.exist',
+        );
         cy.log('...renders the marker at the saved place location');
         cy.findByRole('button', {name: searchedPlace.name}).should(
           'be.visible',
@@ -100,7 +104,9 @@ describe('Saving feature', () => {
     cy.log('Clicking the cancel button...');
     cy.findByRole('button', {name: /cancel/i}).click();
     cy.log('...closes the text editor');
-    cy.findByRole('textbox').should('not.exist');
+    cy.findByRole('textbox', {name: editorLabel.ariaLabel.note}).should(
+      'not.exist',
+    );
     cy.log('...shows the searched place detail');
     cy.findByRole('heading', {name: searchedPlace.name}).should('be.visible');
   });

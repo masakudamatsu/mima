@@ -209,7 +209,9 @@ describe('Editing notes on saved places', () => {
     cy.focused().should('have.attr', 'aria-multiline', 'true');
     // Execute
     cy.log(`Pressing Down Arrow key and typing URL text...`);
-    cy.findByRole('textbox').type('{downarrow}');
+    cy.findByRole('textbox', {name: editorLabel.ariaLabel.note}).type(
+      '{downarrow}',
+    );
     cy.focused().type('https://google.com ');
     // Verify
     cy.log(`...updates the place note`);
@@ -256,7 +258,7 @@ describe('Editing notes on saved places', () => {
     cy.log(`Typing text...`);
     // eslint-disable-next-line cypress/no-unnecessary-waiting
     cy.wait(100); // otherwise, Cypress will type 'bc', not 'abc'. This is a known issue. See https://www.cypress.io/blog/2019/01/22/when-can-the-test-click/
-    cy.findByRole('textbox').type('abc ');
+    cy.findByRole('textbox', {name: editorLabel.ariaLabel.note}).type('abc ');
     cy.log(`...updates the place name*`);
     cy.findByRole('heading', {level: 2}).should('include.text', 'abc', {
       timeout: 20000,
@@ -279,7 +281,7 @@ describe('Editing notes on saved places', () => {
     cy.log(`Deleting the place name...`);
     // eslint-disable-next-line cypress/no-unnecessary-waiting
     cy.wait(100); // otherwise, Cypress will type 'bc', not 'abc'. This is a known issue. See https://www.cypress.io/blog/2019/01/22/when-can-the-test-click/
-    cy.findByRole('textbox').type(
+    cy.findByRole('textbox', {name: editorLabel.ariaLabel.note}).type(
       '{home}{del}{del}{del}{del}{del}{del}{del}{del}',
     ); // mockPlace5.properties.name(出会い茶屋おせん) has 8 characters; the loop doesn't work...
     // TODO #453: Make the following assertion work
@@ -301,8 +303,10 @@ describe('Editing notes on saved places', () => {
     // eslint-disable-next-line cypress/no-unnecessary-waiting
     cy.wait(100); // otherwise, Cypress will type 'bc', not 'abc'. This is a known issue. See https://www.cypress.io/blog/2019/01/22/when-can-the-test-click/
     cy.log(`Editing the note...`);
-    cy.findByRole('textbox').type('abc ');
-    cy.findByRole('textbox').type('{downarrow}');
+    cy.findByRole('textbox', {name: editorLabel.ariaLabel.note}).type('abc ');
+    cy.findByRole('textbox', {name: editorLabel.ariaLabel.note}).type(
+      '{downarrow}',
+    );
     cy.focused().type('https://google.com ');
 
     cy.log(`But clicking Cancel button...`);
