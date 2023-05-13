@@ -41,14 +41,16 @@ describe('Saved place detail feature', () => {
     // while should('be.visible') won't fail in that case
     // DO NOT ADD ANY MORE ASSERTIONS HERE; place detail is now hidden.
   });
-  it.skip('Place marks without Google Maps URL', () => {
+  it('Place marks without Google Maps URL', () => {
     cy.log(`Clicking place mark...`);
     cy.findByRole('button', {name: mockPlace8.properties.name}).click();
-    // TODO #453: Make the following assertion work
-    // cy.log(`...disables the "More Info" button`);
-    // cy.findByRole('link', {name: linkText.searchedPlace})
-    //   .should('not.have.attr', 'href')
-    //   .should('have.css', 'cursor', 'not-allowed');
+    cy.log(`...disables the "More Info" button`);
+    cy.findByText(linkText.searchedPlace).should('not.have.attr', 'href'); // see https://github.com/masakudamatsu/mima/issues/453#issuecomment-1546766926
+    cy.findByText(linkText.searchedPlace).should(
+      'have.css',
+      'cursor',
+      'not-allowed',
+    ); // see https://github.com/masakudamatsu/mima/issues/453#issuecomment-1546766926
   });
   it('Clicking close button closes place detail', () => {
     cy.log(`Setup`);
@@ -284,9 +286,14 @@ describe('Editing notes on saved places', () => {
     cy.findByRole('textbox', {name: editorLabel.ariaLabel.note}).type(
       '{home}' + deleteAllCharacters,
     );
-    // TODO #453: Make the following assertion work
-    // cy.log(`...shows the placeholder text`);
-    // cy.findByPlaceholderText(editorLabel.placeholder.placeName).should('be.visible');
+    cy.log(`...shows the placeholder text`);
+    cy.findByRole('textbox', {name: editorLabel.ariaLabel.note})
+      .children()
+      .should(
+        'have.attr',
+        'data-placeholder',
+        editorLabel.placeholder.placeName,
+      ); // see https://github.com/masakudamatsu/mima/issues/453#issuecomment-1546767334
     cy.log(`Clicking Save button...`);
     cy.findByRole('button', {name: buttonLabel.saveEdit}).click();
     // Verify
@@ -325,7 +332,7 @@ describe('Editing notes on saved places', () => {
         'have.attr',
         'data-placeholder',
         editorLabel.placeholder.placeAddress,
-      );
+      ); // see https://github.com/masakudamatsu/mima/issues/453#issuecomment-1546767334
     cy.log('...removes the address from the saved note');
     cy.findByRole('button', {name: buttonLabel.saveEdit}).click();
     cy.findByText(mockPlace5.properties.address).should('not.exist');
