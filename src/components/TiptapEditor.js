@@ -94,7 +94,14 @@ export const TiptapEditor = ({
   });
   // setting up address editor
   const addressEditor = useEditor({
-    extensions: [SingleBlockDocument, Paragraph, Text],
+    extensions: [
+      SingleBlockDocument,
+      Paragraph,
+      Text,
+      Placeholder.configure({
+        placeholder: editorLabel.placeholder.placeAddress, // Shown when no address is provided
+      }),
+    ],
     content: `<p>${DOMPurify.sanitize(data.address)}</p>`,
     editorProps: {
       attributes: {
@@ -139,7 +146,9 @@ export const TiptapEditor = ({
       {ADD_ATTR: ['target']}, // see https://github.com/cure53/DOMPurify/issues/317#issuecomment-470429778
     ); // editor.getHTML() would include an empty <h2> element whose text content (apparently) cannot be modified...
     // handle address
-    const userPlaceAddress = addressEditor.getJSON().content[0].content[0].text;
+    const userPlaceAddress = addressEditor.getJSON().content[0].content
+      ? addressEditor.getJSON().content[0].content[0].text
+      : ''; // when the user provides no address, `addressEditor.getJSON()` returns  {"type":"doc","content":[{"type":"paragraph"}]}
     // handle URL
     const userPlaceUrl = urlEditor.getJSON().content[0].content[0].text;
     try {

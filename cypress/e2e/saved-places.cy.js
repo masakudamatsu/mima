@@ -311,6 +311,25 @@ describe('Editing notes on saved places', () => {
       'be.visible',
     );
   });
+  it('Removing the address will show placeholder text in the editor and remove it from the saved note', () => {
+    cy.log('Removing the address...');
+    let deleteAllCharacters = '';
+    for (let i = 0; i < mockPlace5.properties.address.length; i++) {
+      deleteAllCharacters = deleteAllCharacters + '{del}';
+    }
+    cy.log('...shows placeholder text');
+    cy.findByRole('textbox', {name: editorLabel.ariaLabel.address})
+      .type('{home}' + deleteAllCharacters)
+      .children()
+      .should(
+        'have.attr',
+        'data-placeholder',
+        editorLabel.placeholder.placeAddress,
+      );
+    cy.log('...removes the address from the saved note');
+    cy.findByRole('button', {name: buttonLabel.saveEdit}).click();
+    cy.findByText(mockPlace5.properties.address).should('not.exist');
+  });
   it('Users can edit the URL for More Info button', () => {
     cy.log('Editing the More Info URL and saving it...');
     const newURL = 'https://google.com';
