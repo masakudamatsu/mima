@@ -2,7 +2,7 @@ import styled from 'styled-components';
 import {dimension, heading} from 'src/utils/designtokens';
 import {remify} from 'src/utils/remify';
 
-export const Heading = styled.h1`
+export const H2 = styled.h2`
   font-family: ${heading.fontFamily};
   font-size: ${remify(heading.fontSize.wideScreen)};
   font-weight: ${heading.fontWeight};

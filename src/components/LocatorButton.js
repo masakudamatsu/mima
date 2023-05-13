@@ -4,7 +4,7 @@ import {ModalPopup} from 'src/components/ModalPopup';
 
 import {Button} from 'src/elements/Button';
 import {ButtonDialog} from 'src/elements/ButtonDialog';
-import {Heading} from 'src/elements/Heading';
+import {H2} from 'src/elements/H2';
 import {SvgCloud} from 'src/elements/SvgCloud';
 
 import {
@@ -49,9 +49,9 @@ export const LocatorButton = ({
         slideFrom="bottom"
         titleId="permission-denied"
       >
-        <Heading as="h1" id="permission-denied">
+        <H2 as="h1" id="permission-denied">
           {geolocationPermissionDenied.what}
-        </Heading>
+        </H2>
         <p>{geolocationPermissionDenied.why}</p>
         <p>{geolocationPermissionDenied.how}</p>
         <ButtonDialog
@@ -69,9 +69,9 @@ export const LocatorButton = ({
         slideFrom="bottom"
         titleId="position-unavailable"
       >
-        <Heading as="h1" id="position-unavailable">
+        <H2 as="h1" id="position-unavailable">
           {geolocationPositionUnavailable.what}
-        </Heading>
+        </H2>
         <p>{geolocationPositionUnavailable.why}</p>
         <p>{geolocationPositionUnavailable.how}</p>
         <ButtonDialog
@@ -96,9 +96,9 @@ export const LocatorButton = ({
         slideFrom="bottom"
         titleId="geolocation-unsupported"
       >
-        <Heading as="h1" id="geolocation-unsupported">
+        <H2 as="h1" id="geolocation-unsupported">
           {geolocationNotSupported.what}
-        </Heading>
+        </H2>
         <p>{geolocationNotSupported.why}</p>
         <p>{geolocationNotSupported.how}</p>
         <ButtonDialog

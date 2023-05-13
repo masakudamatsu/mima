@@ -13,7 +13,7 @@ import DOMPurify from 'dompurify';
 import PropTypes from 'prop-types';
 
 import {HeaderEditor} from 'src/elements/HeaderEditor';
-import {Heading} from 'src/elements/Heading';
+import {H2} from 'src/elements/H2';
 
 import {buttonLabel, editorLabel} from 'src/utils/uiCopies';
 
@@ -213,9 +213,9 @@ export const TiptapEditor = ({
   return (
     <form aria-labelledby="editor-heading">
       <HeaderEditor>
-        <Heading as="h1" data-editor id="editor-heading">
+        <H2 as="h1" data-editor id="editor-heading">
           {editorLabel.title}
-        </Heading>
+        </H2>
         <section>
           <button
             onClick={() => {
@@ -231,13 +231,9 @@ export const TiptapEditor = ({
         </section>
       </HeaderEditor>
       <EditorContent editor={editor} />
-      <Heading as="h2" data-address-editor>
-        {editorLabel.address}
-      </Heading>
+      <H2 data-address-editor>{editorLabel.address}</H2>
       <EditorContent editor={addressEditor} />
-      <Heading as="h2" data-url-editor>
-        {editorLabel.url}
-      </Heading>
+      <H2 data-url-editor>{editorLabel.url}</H2>
       <EditorContent editor={urlEditor} />
     </form>
   );
