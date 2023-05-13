@@ -113,7 +113,14 @@ export const TiptapEditor = ({
   });
   // setting up URL editor
   const urlEditor = useEditor({
-    extensions: [SingleBlockDocument, Paragraph, Text],
+    extensions: [
+      SingleBlockDocument,
+      Paragraph,
+      Text,
+      Placeholder.configure({
+        placeholder: editorLabel.placeholder.placeUrl, // Shown when no address is provided
+      }),
+    ],
     content: `<p>${DOMPurify.sanitize(data.url)}</p>`,
     editorProps: {
       attributes: {
@@ -150,7 +157,9 @@ export const TiptapEditor = ({
       ? addressEditor.getJSON().content[0].content[0].text
       : ''; // when the user provides no address, `addressEditor.getJSON()` returns  {"type":"doc","content":[{"type":"paragraph"}]}
     // handle URL
-    const userPlaceUrl = urlEditor.getJSON().content[0].content[0].text;
+    const userPlaceUrl = urlEditor.getJSON().content[0].content
+      ? urlEditor.getJSON().content[0].content[0].text
+      : '';
     try {
       const response = await fetch('/api/places', {
         method: searchedPlace ? 'POST' : 'PUT',

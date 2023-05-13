@@ -355,6 +355,26 @@ describe('Editing notes on saved places', () => {
       newURL,
     );
   });
+  it('Removing the URL will show placeholder text in the editor and remove it from the saved note', () => {
+    cy.log('Removing the URL...');
+    let deleteAllCharacters = '';
+    for (let i = 0; i < mockPlace5.properties['Google Maps URL'].length; i++) {
+      deleteAllCharacters = deleteAllCharacters + '{del}';
+    }
+    cy.log('...shows placeholder text');
+    cy.findByRole('textbox', {name: editorLabel.ariaLabel.url})
+      .type('{home}' + deleteAllCharacters)
+      .children()
+      .should(
+        'have.attr',
+        'data-placeholder',
+        editorLabel.placeholder.placeUrl,
+      );
+    cy.log('...removes the URL from the saved note');
+    cy.findByRole('button', {name: buttonLabel.saveEdit}).click();
+    cy.findByText(linkText.searchedPlace).should('not.have.attr', 'href');
+  });
+
   it('Clicking Cancel button closes editor without saving any changes', () => {
     // eslint-disable-next-line cypress/no-unnecessary-waiting
     cy.wait(100); // otherwise, Cypress will type 'bc', not 'abc'. This is a known issue. See https://www.cypress.io/blog/2019/01/22/when-can-the-test-click/

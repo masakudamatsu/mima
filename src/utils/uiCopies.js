@@ -139,6 +139,7 @@ export const editorLabel = {
     placeAddress: 'Enter the address of the place (optional)',
     placeName: 'Enter the place name',
     placeNote: 'Enter your notes on the place',
+    placeUrl: 'Enter the URL for more information on the place (optional)',
   },
   unnamedPlace: 'Unnamed place',
   url: 'URL for More Info button (optional)',
