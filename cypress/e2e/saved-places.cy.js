@@ -311,6 +311,24 @@ describe('Editing notes on saved places', () => {
       'be.visible',
     );
   });
+  it('Users can edit the URL for More Info button', () => {
+    cy.log('Editing the More Info URL and saving it...');
+    const newURL = 'https://google.com';
+    let deleteAllCharacters = '';
+    for (let i = 0; i < mockPlace5.properties['Google Maps URL'].length; i++) {
+      deleteAllCharacters = deleteAllCharacters + '{del}';
+    }
+    cy.findByRole('textbox', {name: editorLabel.ariaLabel.url}).type(
+      '{home}' + deleteAllCharacters + newURL,
+    );
+    cy.findByRole('button', {name: buttonLabel.saveEdit}).click();
+    cy.log('...retains the edited URL');
+    cy.findByRole('link', {name: linkText.searchedPlace}).should(
+      'have.attr',
+      'href',
+      newURL,
+    );
+  });
   it('Clicking Cancel button closes editor without saving any changes', () => {
     // eslint-disable-next-line cypress/no-unnecessary-waiting
     cy.wait(100); // otherwise, Cypress will type 'bc', not 'abc'. This is a known issue. See https://www.cypress.io/blog/2019/01/22/when-can-the-test-click/

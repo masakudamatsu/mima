@@ -133,12 +133,14 @@ export const editorLabel = {
   ariaLabel: {
     note: 'Edit the name of and notes on the place',
     address: 'Edit the address of the place',
+    url: 'Edit the URL for more information on the place',
   },
   placeholder: {
     placeName: 'Enter the place name',
     placeNote: 'Enter your notes on the place',
   },
   unnamedPlace: 'Unnamed place',
+  url: 'URL for More Info button (optional)',
 };
 
 export const searchBoxLabel = {

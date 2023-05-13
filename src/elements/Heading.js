@@ -10,7 +10,8 @@ export const Heading = styled.h1`
   padding-bottom: ${remify(heading.paddingBottom.wideScreen)};
   padding-top: ${remify(heading.paddingTop.wideScreen)};
   &[data-editor],
-  &[data-address-editor] {
+  &[data-address-editor],
+  &[data-url-editor] {
     font-size: ${remify(heading.fontSize.narrowScreen)};
     line-height: ${heading.lineHeight.narrowScreen};
     padding-bottom: ${remify(heading.paddingBottom.narrowScreen)};

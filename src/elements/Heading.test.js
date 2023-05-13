@@ -18,7 +18,8 @@ test('renders UI correctly', () => {
 }
 
 .c0[data-editor],
-.c0[data-address-editor] {
+.c0[data-address-editor],
+.c0[data-url-editor] {
   font-size: 1.0504rem;
   line-height: 1.092;
   padding-bottom: 0.6197rem;

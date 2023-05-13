@@ -104,6 +104,19 @@ export const TiptapEditor = ({
     },
     injectCSS: false, // remove the default style
   });
+  // setting up URL editor
+  const urlEditor = useEditor({
+    extensions: [SingleBlockDocument, Paragraph, Text],
+    content: `<p>${DOMPurify.sanitize(data.url)}</p>`,
+    editorProps: {
+      attributes: {
+        role: 'textbox', // for accessibility: https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Roles/textbox_role
+        'aria-label': editorLabel.ariaLabel.url,
+      },
+    },
+    injectCSS: false, // remove the default style
+  });
+
   // Handling output
   const handleClickSave = async event => {
     event.preventDefault();
@@ -127,6 +140,8 @@ export const TiptapEditor = ({
     ); // editor.getHTML() would include an empty <h2> element whose text content (apparently) cannot be modified...
     // handle address
     const userPlaceAddress = addressEditor.getJSON().content[0].content[0].text;
+    // handle URL
+    const userPlaceUrl = urlEditor.getJSON().content[0].content[0].text;
     try {
       const response = await fetch('/api/places', {
         method: searchedPlace ? 'POST' : 'PUT',
@@ -141,7 +156,7 @@ export const TiptapEditor = ({
                 properties: {
                   address: userPlaceAddress,
                   'Google Maps place name': data.name, // to be used for constructing Directions URL
-                  'Google Maps URL': data.url,
+                  'Google Maps URL': userPlaceUrl,
                   name: userPlaceName, // edited by user, not the one returned from Google Maps API server
                   note: userPlaceNote,
                 },
@@ -151,7 +166,7 @@ export const TiptapEditor = ({
                 id: data.id,
                 properties: {
                   address: userPlaceAddress, // cannot be omitted; otherwise deleted
-                  'Google Maps URL': data.url, // cannot be omitted; otherwise deleted
+                  'Google Maps URL': userPlaceUrl, // cannot be omitted; otherwise deleted
                   name: userPlaceName, // edited by user, not the one returned from Google Maps API server
                   note: userPlaceNote,
                 },
@@ -199,6 +214,10 @@ export const TiptapEditor = ({
         {editorLabel.address}
       </Heading>
       <EditorContent editor={addressEditor} />
+      <Heading as="h2" data-url-editor>
+        {editorLabel.url}
+      </Heading>
+      <EditorContent editor={urlEditor} />
     </form>
   );
 };
