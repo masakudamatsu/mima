@@ -1,5 +1,6 @@
 import {generateHTML} from '@tiptap/core';
 import Document from '@tiptap/extension-document';
+import History from '@tiptap/extension-history';
 import Link from '@tiptap/extension-link';
 import Paragraph from '@tiptap/extension-paragraph';
 import {Placeholder} from '@tiptap/extension-placeholder';
@@ -98,6 +99,7 @@ export const TiptapEditor = ({
       SingleBlockDocument,
       Paragraph,
       Text,
+      History, // for undo feature; Docs: https://tiptap.dev/api/extensions/history
       Placeholder.configure({
         placeholder: editorLabel.placeholder.placeAddress, // Shown when no address is provided
       }),
@@ -117,6 +119,7 @@ export const TiptapEditor = ({
       SingleBlockDocument,
       Paragraph,
       Text,
+      History, // for undo feature; Docs: https://tiptap.dev/api/extensions/history
       Placeholder.configure({
         placeholder: editorLabel.placeholder.placeUrl, // Shown when no address is provided
       }),
