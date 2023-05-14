@@ -1,12 +1,12 @@
 import {generateHTML} from '@tiptap/core';
 import Document from '@tiptap/extension-document';
+import Heading from '@tiptap/extension-heading';
 import History from '@tiptap/extension-history';
 import Link from '@tiptap/extension-link';
 import Paragraph from '@tiptap/extension-paragraph';
 import {Placeholder} from '@tiptap/extension-placeholder';
 import Text from '@tiptap/extension-text';
 import {useEditor, EditorContent} from '@tiptap/react';
-import StarterKit from '@tiptap/starter-kit';
 
 import DOMPurify from 'dompurify';
 
@@ -59,6 +59,9 @@ export const TiptapEditor = ({
   const editor = useEditor({
     extensions: [
       CustomDocument,
+      Heading.configure({
+        levels: [2, 3], // turning the first element into <h2>, not <h1>
+      }),
       Link.configure({
         HTMLAttributes: {
           rel: 'nofollow noreferrer', // to override the default of "noopener noreferrer nofollow"; see https://tiptap.dev/api/marks/link;
@@ -66,12 +69,9 @@ export const TiptapEditor = ({
         // for nofollow, see https://developers.google.com/search/docs/fundamentals/seo-starter-guide?hl=en&visit_id=638148628535504987-2673944290&rd=1#linkwithcaution
         // we drop noopener as we don't need to support legacy browsers (Google Maps doesn't support them); for modern browsers, noreferrer implies noopener; see https://html.spec.whatwg.org/multipage/links.html#link-type-noreferrer
       }),
-      StarterKit.configure({
-        document: false, // to use CustomDocument, not the default Document extension included in StarterKit
-        heading: {
-          levels: [2, 3], // turning the first element into <h2>, not <h1>
-        },
-      }),
+      Paragraph,
+      Text,
+      History,
       Placeholder.configure({
         placeholder: ({node}) => {
           if (node.type.name === 'heading') {
@@ -152,7 +152,7 @@ export const TiptapEditor = ({
     }
     // handle place note (including place name)
     const userPlaceNote = DOMPurify.sanitize(
-      generateHTML(json, [CustomDocument, Link, StarterKit]), // docs: https://tiptap.dev/api/utilities/html#generate-html-from-json
+      generateHTML(json, [CustomDocument, Heading, Link, Paragraph, Text]), // docs: https://tiptap.dev/api/utilities/html#generate-html-from-json
       {ADD_ATTR: ['target']}, // see https://github.com/cure53/DOMPurify/issues/317#issuecomment-470429778
     ); // editor.getHTML() would include an empty <h2> element whose text content (apparently) cannot be modified...
     // handle address
