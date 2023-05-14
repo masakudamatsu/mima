@@ -43,6 +43,16 @@ describe('Saving feature', () => {
     cy.findByRole('textbox', {name: editorLabel.ariaLabel.note}).contains(
       searchedPlace.name,
     );
+    cy.log(
+      '...shows the placeholder text for where the user can enter their notes',
+    );
+    cy.findByRole('textbox', {name: editorLabel.ariaLabel.note})
+      .children('p')
+      .should(
+        'have.attr',
+        'data-placeholder',
+        editorLabel.placeholder.placeNote,
+      ); // see https://github.com/masakudamatsu/mima/issues/453#issuecomment-1546767334
     cy.log('Clicking the save button in the text editor');
     cy.findByRole('button', {name: buttonLabel.saveEdit}).click();
     cy.log('...initially shows a loading message');

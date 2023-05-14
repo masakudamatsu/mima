@@ -18,7 +18,7 @@ import {H2} from 'src/elements/H2';
 import {buttonLabel, editorLabel} from 'src/utils/uiCopies';
 
 const CustomDocument = Document.extend({
-  content: 'heading block*', // turning the first element into <h1>
+  content: 'heading block+', // turning the first element into <h1>
 });
 
 const SingleBlockDocument = Document.extend({
@@ -49,7 +49,6 @@ export const TiptapEditor = ({
         },
         {
           type: 'paragraph',
-          content: [{type: 'text', text: 'your note...'}],
         },
       ],
     };
@@ -80,6 +79,7 @@ export const TiptapEditor = ({
 
           return editorLabel.placeholder.placeNote; // Shown when no note is provided
         },
+        showOnlyCurrent: false, // Show placeholder text for notes when the cursor is on place name (and vice versa)
       }),
     ],
     content: content,
