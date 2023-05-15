@@ -43,7 +43,7 @@ const setColorScheme = `
     --popup-background-color-fallback: ${color['white 93']};
     --popup-glow-color-fallback: ${color['white 93']};
     --popup-text-color: ${color['dark-grey 100']};
-    --placeholder-text-color: ${color['dark-grey 100']}; /* TODO: #429 Make it lighter than --popup-text-color */
+    --placeholder-text-color: ${color['placeholder-grey 100']}; /* TODO: #429 Fine-tune this grey; keep it lighter than --popup-text-color */
     --popup-background-highlighted: ${color['background for dark-grey text 100']};
     --ripple-color: ${color['black 33']};
     --login-background-image-url: url(/login-background-light.png);
