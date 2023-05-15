@@ -13,7 +13,7 @@ export const color = {
   'day-mid-grey 100': 'rgb(137, 137, 137)', // '#898989', // 6 = pale-cyan 100 / 1.5
   'day-dark-grey 100': '#767676', // 4.62 = white 100 / 4.5
   'placeholder-grey 100': 'rgb(100,100,100)', // 4.5 * rgb(225, 225, 225) (popup background above the grey city block)
-  'dark-grey 100': `rgb(90,90,90)`, // 3.04 = 3 * black
+  'dark-grey 100': `rgb(74,74,74)`, // 1.5 * placeholder-grey 100
   'background for dark-grey text 100': `rgb(209, 209, 209)`, // 4.51 * dark-grey 100
   'pale-green 100': '#c0dac0', // 14.03 = white 100 / 1.5
   'pale-cyan 100': '#99b2b2', // 9.36 = pale-green 100 / 1.5
