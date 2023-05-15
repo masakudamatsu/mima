@@ -1,6 +1,7 @@
 import {keyframes} from 'styled-components';
 import {round} from './round';
 
+// TODO #455: Streamline the following color scheme
 export const color = {
   // both
   'white 100': `rgb(255,255,255)`,
