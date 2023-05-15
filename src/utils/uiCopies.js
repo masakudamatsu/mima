@@ -129,17 +129,18 @@ export const buttonLabel = {
 export const menuLabel = 'Menu';
 export const editorLabel = {
   title: 'Edit place info',
-  address: 'Street address',
+  address: 'Street address (optional)',
   ariaLabel: {
     note: 'Edit the name of and notes on the place',
     address: 'Edit the address of the place',
     url: 'Edit the URL for more information on the place',
   },
   placeholder: {
-    placeAddress: 'Enter the address of the place (optional)',
-    placeName: 'Enter the place name',
+    placeAddress: 'e.g., 221B Baker Street',
+    placeName: 'Enter the name...',
     placeNote: 'Your notes...',
-    placeUrl: 'Enter the URL for more information on the place (optional)',
+    placeUrl:
+      'e.g., https://maps.google.com/?ftid=0x48761acf33628211:0x445d7677a88322e1',
   },
   unnamedPlace: 'Unnamed place',
   url: 'URL for More Info button (optional)',
