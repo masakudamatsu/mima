@@ -26,7 +26,8 @@ export const color = {
 
   // nighttime
   'white 40': `rgba(255,255,255,0.4)`,
-  'off-white 100': `rgb(218,218,218)`, // 15.02 = white 100 / 1.5
+  'off-white 100': `rgb(249,249,249)`, // 4.5 * rgb(129, 112, 98) (popup background above the orange streets)
+  'placeholder-white 100': `rgb(228,228,228)`, // 4.5 * rgb(102, 102, 102) (popup background above city blocks)
   'night-light-grey 100': '#929292', // 6.74 = off-black 100 * 4.5
   'mid-grey 80': `rgba(123,123,123,0.8)`, // 4.96 = dull-orange 100
   'glass-grey 90': `rgba(113,113,113,0.9)`, // to ensure 4.5:1 contrast against `off-white 100` when blurred with dull-orange 100

@@ -66,7 +66,7 @@ const setColorScheme = `
     --popup-background-color-fallback: ${color['glass-grey 90']};
     --popup-glow-color-fallback: ${color['glass-grey 90']};
     --popup-text-color: ${color['off-white 100']};
-    --placeholder-text-color: ${color['off-white 100']}; /* TODO: #429 Make it dimmer than --popup-text-color */
+    --placeholder-text-color: ${color['placeholder-white 100']};
     --popup-background-highlighted: ${color['off-black 100']};
     --ripple-color: ${color['white 40']};
     --login-background-image-url: url(/login-background-dark.png);
