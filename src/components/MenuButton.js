@@ -10,7 +10,7 @@ import {CloseButton} from './CloseButton';
 
 import {Button} from 'src/elements/Button';
 import {DivMenuBackground} from 'src/elements/DivMenuBackground';
-import {Heading} from 'src/elements/Heading';
+import {H2} from 'src/elements/H2';
 import {ListMenu} from 'src/elements/ListMenu';
 import {ParagraphMenu} from 'src/elements/ParagraphMenu';
 import {SpanRipple} from 'src/elements/SpanRipple';
@@ -142,9 +142,7 @@ export const MenuButton = ({
               aria-labelledby="menu-label"
               ref={menu}
             >
-              <Heading as="h2" id="menu-label">
-                {menuLabel}
-              </Heading>
+              <H2 id="menu-label">{menuLabel}</H2>
               <CloseButton
                 ariaLabel={buttonLabel.close}
                 handleClick={handleClickCloseButton}

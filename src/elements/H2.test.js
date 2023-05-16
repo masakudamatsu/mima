@@ -1,12 +1,12 @@
 // eslint-disable-next-line no-unused-vars
 import {render, screen} from '@testing-library/react';
 
-import {Heading} from './Heading';
+import {H2} from './H2';
 
 const mockProps = {};
 
 test('renders UI correctly', () => {
-  const {container} = render(<Heading {...mockProps} />);
+  const {container} = render(<H2 {...mockProps} />);
   expect(container).toMatchInlineSnapshot(`
 .c0 {
   font-family: 'Noto Sans Display',Georgia,sans-serif;
@@ -17,11 +17,18 @@ test('renders UI correctly', () => {
   padding-top: 0.9833rem;
 }
 
-.c0[data-editor] {
+.c0[data-editor],
+.c0[data-address-editor],
+.c0[data-url-editor] {
   font-size: 1.0504rem;
   line-height: 1.092;
   padding-bottom: 0.6197rem;
   padding-top: 0.5546rem;
+}
+
+.c0[data-address-editor] {
+  border-top: 1px solid var(--button-outline-color);
+  margin-top: 10px;
 }
 
 @media screen and (min-width:540px) {
@@ -34,7 +41,7 @@ test('renders UI correctly', () => {
 }
 
 <div>
-  <h1
+  <h2
     class="c0"
   />
 </div>
@@ -43,8 +50,8 @@ test('renders UI correctly', () => {
 
 // describe('Props change style correctly', () => {
 //   test('testProp', () => {
-//     render(<Heading testProp data-testid="Heading" />);
-//     expect(screen.getByTestId('Heading')).toHaveStyle(
+//     render(<H2 testProp data-testid="H2" />);
+//     expect(screen.getByTestId('H2')).toHaveStyle(
 //       `display: block`,
 //     );
 //   });
