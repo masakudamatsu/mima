@@ -72,6 +72,7 @@ const styleButton = `
 
 const setComponentSize = `
   & form,
+  & header,
   & main {
     max-width: ${dimension.searchBox['max-width']};
     width: 100%;

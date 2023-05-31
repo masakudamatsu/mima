@@ -20,17 +20,14 @@ export const modal = {
 };
 
 export const signupPage = {
-  titleText: 'My Ideal Map',
   buttonLabel: 'Start your free 14-day trial',
 };
 
 export const loginPage = {
-  titleText: 'My Ideal Map',
   buttonLabel: 'Log in',
 };
 
 export const subscribePage = {
-  titleText: 'My Ideal Map',
   offer: {
     h2: 'Free trial period expires',
     bodyText: {
@@ -81,7 +78,6 @@ export const subscribePage = {
 };
 
 export const renewalPage = {
-  titleText: 'My Ideal Map',
   offer: {
     h2: 'Subscription renewal has failed',
     bodyText: {
