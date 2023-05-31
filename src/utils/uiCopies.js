@@ -21,7 +21,7 @@ export const modal = {
 
 export const signupPage = {
   titleText: 'My Ideal Map',
-  buttonLabel: 'Start free trial',
+  buttonLabel: 'Start your free 14-day trial',
 };
 
 export const loginPage = {
