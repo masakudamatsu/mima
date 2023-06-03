@@ -39,6 +39,8 @@ export default class MyDocument extends Document {
             href="https://fonts.googleapis.com/css2?family=Noto+Sans&family=Noto+Sans+Display:wght@700&display=swap"
             rel="stylesheet"
           />{' '}
+          {/* Favicon */}
+          <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
         </Head>{' '}
         <body>
           <Main />
