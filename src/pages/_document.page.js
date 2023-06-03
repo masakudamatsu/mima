@@ -47,6 +47,7 @@ export default class MyDocument extends Document {
             sizes="any"
             type="image/svg+xml"
           />
+          <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
         </Head>{' '}
         <body>
           <Main />
