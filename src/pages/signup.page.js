@@ -5,6 +5,7 @@ import {Logo} from 'src/components/Logo';
 import {ButtonDialog} from 'src/elements/ButtonDialog';
 import {ComposeLoginPage} from 'src/elements/ComposeLoginPage';
 import {DivLoginPageBackground} from 'src/elements/DivLoginPageBackground';
+import {VisuallyHidden} from 'src/elements/VisuallyHidden';
 
 import {NightModeContext} from 'src/wrappers/NightModeContext';
 import {useNightMode} from 'src/hooks/useNightMode';
@@ -23,6 +24,7 @@ export default function Signup() {
       <DivLoginPageBackground>
         <ComposeLoginPage>
           <header>
+            <VisuallyHidden as="h1">{signup.title}</VisuallyHidden>
             <Logo />
           </header>
           <main>
