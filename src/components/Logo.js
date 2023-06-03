@@ -1,8 +1,9 @@
 import {useContext, useEffect, useState} from 'react';
+import Image from 'next/image';
+import logoDay from '../../public/logo-full-day.svg';
+import logoNight from '../../public/logo-full-night.svg';
 
 import {NightModeContext} from 'src/wrappers/NightModeContext';
-
-import {ImgLogo} from 'src/elements/ImgLogo';
 
 // import PropTypes from 'prop-types';
 
@@ -12,13 +13,13 @@ export const Logo = () => {
     setClientSideRendering(true);
   }, []);
   const nightMode = useContext(NightModeContext);
-  const logoFilePath = nightMode
-    ? '/logo-full-night.svg'
-    : '/logo-full-day.svg';
+  const logoFilePath = nightMode ? logoNight : logoDay;
   return (
-    <>
-      {clientSideRendering && <ImgLogo data-logo src={logoFilePath} alt="" />}
-    </>
+    clientSideRendering && (
+      <div data-logo>
+        <Image alt="" data-logo fill priority src={logoFilePath} />
+      </div>
+    )
   );
 };
 

@@ -39,7 +39,7 @@ describe('DivMenuBackground component', () => {
   transform-origin: top left;
 }
 
-.c1 img[data-logo] {
+.c1 div[data-logo] {
   max-width: 290px;
   width: calc(100% - var(--popup-margin) * 2 - 48px);
 }
@@ -149,7 +149,7 @@ describe('DivMenuBackground component', () => {
 }
 
 @media screen and (min-width:540px) {
-  .c1 img[data-logo] {
+  .c1 div[data-logo] {
     width: auto;
   }
 }

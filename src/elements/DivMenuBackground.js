@@ -59,12 +59,12 @@ const setPadding = `
 `;
 
 const setLogoSize = `
-img[data-logo] {
+div[data-logo] {
   max-width: 290px;
   width: calc(100% - var(--popup-margin) * 2 - ${dimension.button['minimum target size 100']});
 }
 @media screen and (min-width: ${dimension.breakpoint.divPopup.padding}) {
-  img[data-logo] {
+  div[data-logo] {
     width: auto;
   }
 }

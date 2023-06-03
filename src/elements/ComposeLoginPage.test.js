@@ -82,7 +82,7 @@ describe('ComposeLoginPage component', () => {
 .c0 form,
 .c0 header,
 .c0 main {
-  max-width: 561px;
+  max-width: 495px;
   width: 100%;
 }
 

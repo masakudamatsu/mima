@@ -74,7 +74,7 @@ const setComponentSize = `
   & form,
   & header,
   & main {
-    max-width: ${dimension.searchBox['max-width']};
+    max-width: 495px; /* Next.js Image component for the logo cannot be wider than this value for some reason... */
     width: 100%;
   }
 `;
