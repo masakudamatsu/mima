@@ -19,7 +19,7 @@ describe('DivMenuBackground component', () => {
   position: absolute;
   right: 0;
   top: 0;
-  padding: 0 10px 10px 10px;
+  padding: calc(2 * var(--popup-margin)) 10px 10px 10px;
   --popup-margin: 8px;
   color: var(--popup-text-color);
   font-family: 'Noto Sans',Verdana,sans-serif;
@@ -37,6 +37,11 @@ describe('DivMenuBackground component', () => {
   -webkit-transform-origin: top left;
   -ms-transform-origin: top left;
   transform-origin: top left;
+}
+
+.c1 img[data-logo] {
+  max-width: 290px;
+  width: calc(100% - var(--popup-margin) * 2 - 48px);
 }
 
 .c1 button[aria-label="Close"] {
@@ -139,7 +144,13 @@ describe('DivMenuBackground component', () => {
 
 @media screen and (min-width:540px) {
   .c1 {
-    padding: 0 48px 48px 48px;
+    padding: 48px 48px 48px 48px;
+  }
+}
+
+@media screen and (min-width:540px) {
+  .c1 img[data-logo] {
+    width: auto;
   }
 }
 

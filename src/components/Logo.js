@@ -15,7 +15,11 @@ export const Logo = () => {
   const logoFilePath = nightMode
     ? '/logo-full-night.svg'
     : '/logo-full-day.svg';
-  return <>{clientSideRendering && <ImgLogo src={logoFilePath} alt="" />}</>;
+  return (
+    <>
+      {clientSideRendering && <ImgLogo data-logo src={logoFilePath} alt="" />}
+    </>
+  );
 };
 
 // Logo.propTypes = {};

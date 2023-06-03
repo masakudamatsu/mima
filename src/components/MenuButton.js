@@ -7,10 +7,10 @@ import {useOnClickOutside} from 'src/hooks/useOnClickOutside';
 import {useOnEscKeyDown} from 'src/hooks/useOnEscKeyDown';
 
 import {CloseButton} from './CloseButton';
+import {Logo} from './Logo';
 
 import {Button} from 'src/elements/Button';
 import {DivMenuBackground} from 'src/elements/DivMenuBackground';
-import {H2} from 'src/elements/H2';
 import {ListMenu} from 'src/elements/ListMenu';
 import {ParagraphMenu} from 'src/elements/ParagraphMenu';
 import {SpanRipple} from 'src/elements/SpanRipple';
@@ -24,6 +24,7 @@ import {SvgFlightTakeoff} from 'src/elements/SvgFlightTakeoff';
 import {SvgLogout} from 'src/elements/SvgLogout';
 import {SvgRefresh} from 'src/elements/SvgRefresh';
 import {SvgSearch} from 'src/elements/SvgSearch';
+import {VisuallyHidden} from 'src/elements/VisuallyHidden';
 
 import {buttonLabel, menuLabel} from 'src/utils/uiCopies';
 import {statusType} from 'src/utils/type';
@@ -142,7 +143,10 @@ export const MenuButton = ({
               aria-labelledby="menu-label"
               ref={menu}
             >
-              <H2 id="menu-label">{menuLabel}</H2>
+              <Logo />
+              <VisuallyHidden as="h2" id="menu-label">
+                {menuLabel}
+              </VisuallyHidden>
               <CloseButton
                 ariaLabel={buttonLabel.close}
                 handleClick={handleClickCloseButton}
