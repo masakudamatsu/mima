@@ -12,7 +12,7 @@ import {NightModeContext} from 'src/wrappers/NightModeContext';
 import {useNightMode} from 'src/hooks/useNightMode';
 
 import {subscribe} from 'src/utils/metadata';
-import {subscribePage} from 'src/utils/uiCopies';
+import {successPage} from 'src/utils/uiCopies';
 
 export default function Success() {
   useNightMode(NightModeContext);
@@ -27,10 +27,10 @@ export default function Success() {
             <Logo />
           </header>
           <main aria-labelledby="success">
-            <h2 id="success">{subscribePage.success.h2}</h2>
-            <p>{subscribePage.success.bodyText}</p>
+            <h2 id="success">{successPage.h2}</h2>
+            <p>{successPage.bodyText}</p>
             <ButtonDialog as="a" data-reset-link-style="true" href="/">
-              {subscribePage.success.buttonLabel}
+              {successPage.buttonLabel}
             </ButtonDialog>
           </main>
         </ComposeLoginPage>{' '}

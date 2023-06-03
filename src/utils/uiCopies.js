@@ -38,12 +38,6 @@ export const subscribePage = {
     },
     buttonLabel: 'Subscribe',
   },
-  success: {
-    h2: 'Payment received',
-    bodyText:
-      'Thank you for subscribing to My Ideal Map! You will receive an email confirmation.',
-    buttonLabel: 'Go to App',
-  },
   canceled: {
     h2: 'Payment canceled',
     bodyText: {
@@ -75,6 +69,13 @@ export const subscribePage = {
     },
     buttonLabel: 'Subscribe',
   },
+};
+
+export const successPage = {
+  h2: 'Payment received',
+  bodyText:
+    'Thank you for subscribing to My Ideal Map! You will receive an email confirmation.',
+  buttonLabel: 'Go to App',
 };
 
 export const renewalPage = {
