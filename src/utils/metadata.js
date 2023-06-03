@@ -20,3 +20,7 @@ export const subscribe = {
 export const renewal = {
   title: 'Renew subscription to My Ideal Map',
 };
+
+export const success = {
+  title: 'Thank you for subscribing to My Ideal Map!',
+};

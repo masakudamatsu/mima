@@ -11,7 +11,7 @@ import {DivLoginPageBackground} from 'src/elements/DivLoginPageBackground';
 import {NightModeContext} from 'src/wrappers/NightModeContext';
 import {useNightMode} from 'src/hooks/useNightMode';
 
-import {subscribe} from 'src/utils/metadata';
+import {success} from 'src/utils/metadata';
 import {successPage} from 'src/utils/uiCopies';
 
 export default function Success() {
@@ -19,7 +19,7 @@ export default function Success() {
   return (
     <>
       <Head>
-        <title>{subscribe.title}</title>
+        <title>{success.title}</title>
       </Head>
       <DivLoginPageBackground>
         <ComposeLoginPage>
