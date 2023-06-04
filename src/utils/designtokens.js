@@ -37,6 +37,7 @@ export const color = {
   'dull-orange 100': '#ae6f2f', // 5.11 = greyish-green 100 * 1.5
   'greyish-green 100': '#4c664c', // 3.31 = greyish-cyan 100 * 1.5
   'greyish-cyan 100': '#344d4d', // 2.31 = off-black 100 * 1.5
+  'moonlight 100': '#d9d982', // 18.81, which is over 13.18 = 3 * 4.39 (lightness of popup background above the orange street)
   'off-black 100': 'rgb(43, 43, 43)', // `#2b2b2b`, // 1.48 = black * 1.5
   'black 60': `rgba(3,3,3,0.6)`,
 
