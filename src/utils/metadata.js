@@ -1,5 +1,5 @@
 export const index = {
-  title: 'My Ideal Map App',
+  title: 'My Ideal Map',
   description:
     'Progressive web app that allows you to customize Google Maps with placemarks of your own interest that can be linked to web pages of your choice',
 };
@@ -19,4 +19,8 @@ export const subscribe = {
 
 export const renewal = {
   title: 'Renew subscription to My Ideal Map',
+};
+
+export const success = {
+  title: 'Thank you for subscribing to My Ideal Map!',
 };

@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-import {color, dimension} from 'src/utils/designtokens';
+import {dimension} from 'src/utils/designtokens';
 
 const setShape = `
   border-radius: ${dimension.button['border radius 100']};
@@ -18,7 +18,7 @@ const setColor = `
 const setFocusStyle = `
   &:focus {
     outline: ${dimension.button['border width 200']} solid
-      ${color['focus-blue 100']};
+      var(--dialog-button-color);
     outline-offset: ${dimension.button['border width 200']};
   }
   &:focus:not(:focus-visible) {

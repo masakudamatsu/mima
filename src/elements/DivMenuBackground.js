@@ -52,10 +52,22 @@ const positionCloseButton = `
 `;
 
 const setPadding = `
-  padding: 0 10px 10px 10px;
+  padding: calc(2 * var(--popup-margin)) 10px 10px 10px; 
   @media screen and (min-width: ${dimension.breakpoint.divPopup.padding}) {
-    padding: 0 ${buttonCircle.clickableArea} ${buttonCircle.clickableArea} ${buttonCircle.clickableArea};
+    padding: ${buttonCircle.clickableArea} ${buttonCircle.clickableArea} ${buttonCircle.clickableArea} ${buttonCircle.clickableArea};
   }
+`;
+
+const setLogoSize = `
+div[data-logo] {
+  max-width: 290px;
+  width: calc(100% - var(--popup-margin) * 2 - ${dimension.button['minimum target size 100']});
+}
+@media screen and (min-width: ${dimension.breakpoint.divPopup.padding}) {
+  div[data-logo] {
+    width: auto;
+  }
+}
 `;
 
 const setFontStyle = `
@@ -109,6 +121,7 @@ export const DivMenuBackground = styled.div`
   ${setBackground}
   ${setInnerSize}
   ${setPadding}
+  ${setLogoSize}
   ${positionCloseButton}
   ${setFontStyle}
   ${animateTransitionIn}

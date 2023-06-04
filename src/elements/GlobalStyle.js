@@ -35,6 +35,7 @@ const setColorScheme = `
     --button-shadow-color: ${color['black 33']};
     --button-shadow-color-focus: ${color['focus-blue 100']};
     --dialog-button-color: ${color['google-blue 100']};
+    --primary-button-text-color: ${color['white 93']};
     --link-text-color: ${color['google-blue 100']};
     --menu-border-color: ${color['google-blue 100']};
     --menu-item-color: ${color['dark-grey 100']};
@@ -57,9 +58,10 @@ const setColorScheme = `
     --button-shadow-blur-radius-focus: ${dimension.glow['blur nighttime']};
     --button-shadow-color: ${color['black 60']};
     --button-shadow-color-focus: ${color['white 100']};
-    --dialog-button-color: ${color['google-blue-light 100']};
-    --link-text-color: ${color['google-blue-light 100']}; 
-    --menu-border-color: ${color['google-blue-light 100']};
+    --dialog-button-color: ${color['moonlight 100']};
+    --primary-button-text-color: #5c5c5c;
+    --link-text-color: ${color['moonlight 100']}; 
+    --menu-border-color: ${color['moonlight 100']};
     --menu-item-color: ${color['off-white 100']};
     --popup-background-color: ${color['glass-grey 75']};
     --popup-glow-color: ${color['glass-grey 75']};

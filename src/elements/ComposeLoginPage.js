@@ -65,15 +65,16 @@ const styleButton = `
   & a[data-button-purpose="signup"],
   & button[data-button-purpose="signup"] {
     background-color: var(--dialog-button-color);
-    color: white; /* TODO #344: Make button label text see-through the background */
+    color: var(--primary-button-text-color); /* TODO #344: Make button label text see-through the background */
     width: 100%;
   }
 `;
 
 const setComponentSize = `
   & form,
+  & header,
   & main {
-    max-width: ${dimension.searchBox['max-width']};
+    max-width: 495px; /* Next.js Image component for the logo cannot be wider than this value for some reason... */
     width: 100%;
   }
 `;

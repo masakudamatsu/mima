@@ -16,6 +16,8 @@ import {Places} from 'src/components/Places';
 import {SavedPlaces} from 'src/components/SavedPlaces';
 import {SearchedPlace} from 'src/components/SearchedPlace';
 
+import {VisuallyHidden} from 'src/elements/VisuallyHidden';
+
 import {useNightMode} from 'src/hooks/useNightMode';
 
 const prisma = require('src/utils/prisma');
@@ -37,6 +39,9 @@ export default withPageAuthRequired(function HomePage({
       </Head>
       <Noscript />
       <PlaceIdProvider>
+        <header>
+          <VisuallyHidden as="h1">{index.title}</VisuallyHidden>
+        </header>
         <Controls mapObject={mapObject} userStatus={userStatus} />
         <main
           id="index-page-main" // used in GlobalStyle.js

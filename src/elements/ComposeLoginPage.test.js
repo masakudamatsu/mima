@@ -75,13 +75,14 @@ describe('ComposeLoginPage component', () => {
 .c0 a[data-button-purpose="signup"],
 .c0 button[data-button-purpose="signup"] {
   background-color: var(--dialog-button-color);
-  color: white;
+  color: var(--primary-button-text-color);
   width: 100%;
 }
 
 .c0 form,
+.c0 header,
 .c0 main {
-  max-width: 561px;
+  max-width: 495px;
   width: 100%;
 }
 

@@ -20,17 +20,14 @@ export const modal = {
 };
 
 export const signupPage = {
-  titleText: 'My Ideal Map',
-  buttonLabel: 'Start free trial',
+  buttonLabel: 'Start your free 14-day trial',
 };
 
 export const loginPage = {
-  titleText: 'My Ideal Map',
   buttonLabel: 'Log in',
 };
 
 export const subscribePage = {
-  titleText: 'My Ideal Map',
   offer: {
     h2: 'Free trial period expires',
     bodyText: {
@@ -40,12 +37,6 @@ export const subscribePage = {
         'Or you can logout for now. You will be redirected to this page next time you log in.',
     },
     buttonLabel: 'Subscribe',
-  },
-  success: {
-    h2: 'Payment received',
-    bodyText:
-      'Thank you for subscribing to My Ideal Map! You will receive an email confirmation.',
-    buttonLabel: 'Go to App',
   },
   canceled: {
     h2: 'Payment canceled',
@@ -80,8 +71,14 @@ export const subscribePage = {
   },
 };
 
+export const successPage = {
+  h2: 'Payment received',
+  bodyText:
+    'Thank you for subscribing to My Ideal Map! You will receive an email confirmation.',
+  buttonLabel: 'Go to App',
+};
+
 export const renewalPage = {
-  titleText: 'My Ideal Map',
   offer: {
     h2: 'Subscription renewal has failed',
     bodyText: {
