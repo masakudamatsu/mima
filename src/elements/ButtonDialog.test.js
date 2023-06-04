@@ -18,7 +18,7 @@ describe('ButtonDialog component', () => {
 }
 
 .c0:focus {
-  outline: 2px solid rgb(69,159,189);
+  outline: 2px solid var(--dialog-button-color);
   outline-offset: 2px;
 }
 
