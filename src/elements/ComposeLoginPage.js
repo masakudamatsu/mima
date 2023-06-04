@@ -65,7 +65,7 @@ const styleButton = `
   & a[data-button-purpose="signup"],
   & button[data-button-purpose="signup"] {
     background-color: var(--dialog-button-color);
-    color: white; /* TODO #344: Make button label text see-through the background */
+    color: var(--primary-button-text-color); /* TODO #344: Make button label text see-through the background */
     width: 100%;
   }
 `;

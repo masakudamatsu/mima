@@ -75,7 +75,7 @@ describe('ComposeLoginPage component', () => {
 .c0 a[data-button-purpose="signup"],
 .c0 button[data-button-purpose="signup"] {
   background-color: var(--dialog-button-color);
-  color: white;
+  color: var(--primary-button-text-color);
   width: 100%;
 }
 
