@@ -14,8 +14,7 @@ import {DivMenuBackground} from 'src/elements/DivMenuBackground';
 import {ListMenu} from 'src/elements/ListMenu';
 import {ParagraphMenu} from 'src/elements/ParagraphMenu';
 import {SpanRipple} from 'src/elements/SpanRipple';
-// TODO #465: Put back the save place button
-// import {SvgAdd} from 'src/elements/SvgAdd';
+import {SvgAdd} from 'src/elements/SvgAdd';
 import {SvgCloud} from 'src/elements/SvgCloud';
 import {SvgCreditCard} from 'src/elements/SvgCreditCard';
 import {SvgDeleteForever} from 'src/elements/SvgDeleteForever';
@@ -194,14 +193,11 @@ export const MenuButton = ({
                     {buttonLabel.locator.deactivate}
                   </button>
                 </li>
-                {/* 
-                  // TODO #465: Put back the save place button
-                  <li>
-                    <button>
-                      <SvgAdd aria-hidden="true" /> {buttonLabel.save}
-                    </button>
-                  </li> 
-                */}
+                <li>
+                  <button>
+                    <SvgAdd aria-hidden="true" /> {buttonLabel.save}
+                  </button>
+                </li>
                 <li>
                   <a href={process.env.NEXT_PUBLIC_CUSTOMER_PORTAL_URL}>
                     <SvgCreditCard aria-hidden="true" />
