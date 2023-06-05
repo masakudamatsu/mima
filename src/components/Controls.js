@@ -4,7 +4,8 @@ import {statusType} from 'src/utils/type';
 
 import {LocatorButton} from 'src/components/LocatorButton';
 import {MenuButton} from 'src/components/MenuButton';
-import {SavePlaceButton} from 'src/components/SavePlaceButton';
+// TODO #465: Put back the save place button
+// import {SavePlaceButton} from 'src/components/SavePlaceButton';
 import {Search} from 'src/components/Search';
 
 import {color} from 'src/utils/designtokens';
@@ -229,7 +230,10 @@ export const Controls = ({mapObject, userStatus}) => {
             trackUserLocation={trackUserLocation}
           />
         )}
-        {clientSideRendering && <SavePlaceButton />}
+        {/* 
+          // TODO #465: Put back the save place button
+          {clientSideRendering && <SavePlaceButton />}
+        */}
       </section>
     </>
   );

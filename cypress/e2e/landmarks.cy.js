@@ -13,10 +13,11 @@ describe('Landmark roles', () => {
     cy.findByRole('navigation').findByRole('button', {name: buttonLabel.menu});
     cy.log('Search role for search button');
     cy.findByRole('search').findByRole('button', {name: buttonLabel.search});
-    cy.log('Region role for save button');
-    cy.findByRole('region', {name: 'controls'}).findByRole('button', {
-      name: buttonLabel.save,
-    });
+    // TODO #465: Put back the save place button
+    // cy.log('Region role for save button');
+    // cy.findByRole('region', {name: 'controls'}).findByRole('button', {
+    //   name: buttonLabel.save,
+    // });
     cy.log('Region role for locator button');
     cy.findByRole('region', {name: 'controls'}).findByRole('button', {
       name: buttonLabel.locator.default,
