@@ -203,13 +203,7 @@ export const MenuButton = ({
                   </li> 
                 */}
                 <li>
-                  <a
-                    href={
-                      userStatus === statusType.trial
-                        ? false
-                        : process.env.NEXT_PUBLIC_CUSTOMER_PORTAL_URL
-                    }
-                  >
+                  <a href={process.env.NEXT_PUBLIC_CUSTOMER_PORTAL_URL}>
                     <SvgCreditCard aria-hidden="true" />
                     {buttonLabel.customerPortal.update}
                   </a>
@@ -217,11 +211,7 @@ export const MenuButton = ({
                 <li>
                   <a
                     data-testid="last-focusable-element" // to be used in menu.cy.js for testing focus trap
-                    href={
-                      userStatus === statusType.trial
-                        ? false
-                        : process.env.NEXT_PUBLIC_CUSTOMER_PORTAL_URL
-                    }
+                    href={process.env.NEXT_PUBLIC_CUSTOMER_PORTAL_URL}
                   >
                     {userStatus === statusType.cancelled ? (
                       <SvgRefresh aria-hidden="true" />
