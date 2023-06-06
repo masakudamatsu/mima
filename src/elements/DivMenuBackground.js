@@ -24,7 +24,7 @@ const setOuterSize = `
   right: 0;
   top: 0;
   @media (min-width: ${breakpoint}px) {
-    right: ${(1 - popupWidthShare) * 100}%;
+    right: ${Math.round((1 - popupWidthShare) * 100)}%;
   }
 `;
 
