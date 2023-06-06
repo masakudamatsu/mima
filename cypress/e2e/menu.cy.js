@@ -44,3 +44,34 @@ describe('Menu feature', () => {
     cy.findByRole('dialog', {name: menuLabel}).should('not.exist');
   });
 });
+describe('Trial users', () => {
+  beforeEach(() => {
+    cy.auth('trial_user', {
+      username: Cypress.env('auth0UserTrial'),
+      password: Cypress.env('auth0PassTrial'),
+    });
+    cy.visitAtDaytime('/');
+    cy.waitForMapToLoad();
+  });
+  it('see Stripe Customer Portal links disabled', () => {
+    cy.findByRole('button', {name: buttonLabel.menu}).click();
+    cy.findByText(buttonLabel.customerPortal.update).should(
+      'not.have.attr',
+      'href',
+    ); // see https://github.com/masakudamatsu/mima/issues/453#issuecomment-1546766926
+    cy.findByText(buttonLabel.customerPortal.update).should(
+      'have.css',
+      'cursor',
+      'not-allowed',
+    ); // see https://github.com/masakudamatsu/mima/issues/453#issuecomment-1546766926
+    cy.findByText(buttonLabel.customerPortal.cancel).should(
+      'not.have.attr',
+      'href',
+    ); // see https://github.com/masakudamatsu/mima/issues/453#issuecomment-1546766926
+    cy.findByText(buttonLabel.customerPortal.cancel).should(
+      'have.css',
+      'cursor',
+      'not-allowed',
+    ); // see https://github.com/masakudamatsu/mima/issues/453#issuecomment-1546766926
+  });
+});
