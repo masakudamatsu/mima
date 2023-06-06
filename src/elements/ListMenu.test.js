@@ -50,8 +50,8 @@ test('renders UI correctly', () => {
 }
 
 .c0 button[disabled] {
+  cursor: not-allowed;
   opacity: 0.2;
-  pointer-events: none;
 }
 
 .c0 a {
