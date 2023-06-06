@@ -14,8 +14,7 @@ import {DivMenuBackground} from 'src/elements/DivMenuBackground';
 import {ListMenu} from 'src/elements/ListMenu';
 import {ParagraphMenu} from 'src/elements/ParagraphMenu';
 import {SpanRipple} from 'src/elements/SpanRipple';
-// TODO #465: Put back the save place button
-// import {SvgAdd} from 'src/elements/SvgAdd';
+import {SvgAdd} from 'src/elements/SvgAdd';
 import {SvgCloud} from 'src/elements/SvgCloud';
 import {SvgCreditCard} from 'src/elements/SvgCreditCard';
 import {SvgDeleteForever} from 'src/elements/SvgDeleteForever';
@@ -166,12 +165,11 @@ export const MenuButton = ({
                     <SvgLogout aria-hidden="true" /> {buttonLabel.logout}
                   </a>
                 </li>
-                {/* TODO #368: Open the search box from the menu
                 <li>
                   <button>
                     <SvgSearch aria-hidden="true" /> {buttonLabel.search}
                   </button>
-                </li> */}
+                </li>
                 <li>
                   {!watchID ? (
                     <button type="button" onClick={handleClickFlightTakeoff}>
@@ -195,22 +193,13 @@ export const MenuButton = ({
                     {buttonLabel.locator.deactivate}
                   </button>
                 </li>
-                {/* 
-                  // TODO #465: Put back the save place button
-                  <li>
-                    <button>
-                      <SvgAdd aria-hidden="true" /> {buttonLabel.save}
-                    </button>
-                  </li> 
-                */}
                 <li>
-                  <a
-                    href={
-                      userStatus === statusType.trial
-                        ? false
-                        : process.env.NEXT_PUBLIC_CUSTOMER_PORTAL_URL
-                    }
-                  >
+                  <button>
+                    <SvgAdd aria-hidden="true" /> {buttonLabel.save}
+                  </button>
+                </li>
+                <li>
+                  <a href={process.env.NEXT_PUBLIC_CUSTOMER_PORTAL_URL}>
                     <SvgCreditCard aria-hidden="true" />
                     {buttonLabel.customerPortal.update}
                   </a>
@@ -218,11 +207,7 @@ export const MenuButton = ({
                 <li>
                   <a
                     data-testid="last-focusable-element" // to be used in menu.cy.js for testing focus trap
-                    href={
-                      userStatus === statusType.trial
-                        ? false
-                        : process.env.NEXT_PUBLIC_CUSTOMER_PORTAL_URL
-                    }
+                    href={process.env.NEXT_PUBLIC_CUSTOMER_PORTAL_URL}
                   >
                     {userStatus === statusType.cancelled ? (
                       <SvgRefresh aria-hidden="true" />

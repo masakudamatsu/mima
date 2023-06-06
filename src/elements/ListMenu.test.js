@@ -49,10 +49,9 @@ test('renders UI correctly', () => {
   fill: var(--menu-item-color);
 }
 
-.c0 button[disabled],
-.c0 a:not([href]) {
-  cursor: not-allowed;
+.c0 button[disabled] {
   opacity: 0.2;
+  pointer-events: none;
 }
 
 .c0 a {

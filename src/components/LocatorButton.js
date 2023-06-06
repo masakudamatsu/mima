@@ -26,7 +26,7 @@ export const LocatorButton = ({
         <Button
           aria-label={buttonLabel.locator.default}
           data-loading={status === 'loading'}
-          data-position="bottom-right" // TODO #465 Revert to "bottom-right-second"
+          data-position="bottom-right-second"
           data-testid="locator-button"
           onClick={trackUserLocation}
           type="button"
@@ -36,7 +36,7 @@ export const LocatorButton = ({
       ) : (
         <Button
           aria-label={buttonLabel.locator.activated}
-          data-position="bottom-right" // TODO #465 Revert to "bottom-right-second"
+          data-position="bottom-right-second"
           onClick={moveToCurrentLocation}
           type="button"
         >

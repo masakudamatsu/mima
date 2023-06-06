@@ -136,7 +136,7 @@ describe('DivMenuBackground component', () => {
   }
 }
 
-@media (min-width:1104px) {
+@media (min-width:1095px) {
   .c1 {
     right: calc(var(--blur-radius) * 2);
   }
@@ -170,9 +170,9 @@ describe('DivMenuBackground component', () => {
   }
 }
 
-@media (min-width:1104px) {
+@media (min-width:1095px) {
   .c0 {
-    right: 66.66666666666667%;
+    right: 67%;
   }
 }
 
