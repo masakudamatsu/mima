@@ -43,12 +43,12 @@ const styleListItemText = `
 `;
 
 const styleDisabledState = `
-  & button[disabled] {
+  & button[disabled],
+  & a:not([href]) {
     cursor: not-allowed;
     opacity: 0.2;
   }
 `;
-
 const styleListItemLink = `
   & a {
     color: var(--menu-item-color);
