@@ -129,7 +129,7 @@ export const dimension = {
 };
 
 // For calculating Menu and Searchbox popup breakpoint
-export const minPopupWidth = 365;
+export const minPopupWidth = 368; // the minimum width for "Track your location" not to be wrapped
 export const popupWidthShare = 1 / 3; // rule of the third
 
 export const animation = {

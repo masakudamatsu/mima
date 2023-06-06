@@ -140,7 +140,7 @@ describe('DivSearchBackground component', () => {
   }
 }
 
-@media (min-width:1095px) {
+@media (min-width:1104px) {
   .c1 {
     left: calc(var(--blur-radius) * 2);
   }
@@ -162,9 +162,9 @@ describe('DivSearchBackground component', () => {
   }
 }
 
-@media (min-width:1095px) {
+@media (min-width:1104px) {
   .c0 {
-    left: 67%;
+    left: 66.66666666666667%;
   }
 }
 
