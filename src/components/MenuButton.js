@@ -166,11 +166,12 @@ export const MenuButton = ({
                     <SvgLogout aria-hidden="true" /> {buttonLabel.logout}
                   </a>
                 </li>
+                {/* TODO #368: Open the search box from the menu
                 <li>
                   <button>
                     <SvgSearch aria-hidden="true" /> {buttonLabel.search}
                   </button>
-                </li>
+                </li> */}
                 <li>
                   {!watchID ? (
                     <button type="button" onClick={handleClickFlightTakeoff}>
