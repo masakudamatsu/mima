@@ -44,8 +44,8 @@ const styleListItemText = `
 
 const styleDisabledState = `
   & button[disabled] {
+    cursor: not-allowed;
     opacity: 0.2;
-    pointer-events: none;
   }
 `;
 
