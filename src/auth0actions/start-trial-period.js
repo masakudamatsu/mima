@@ -6,7 +6,7 @@
  */
 exports.onExecutePreUserRegistration = async (event, api) => {
   const today = new Date();
-  const expirationDate = addOneMonth(today);
+  const expirationDate = add14days(today);
 
   api.user.setAppMetadata('expiration_date', expirationDate);
   api.user.setAppMetadata('status', 'trial');
@@ -15,15 +15,19 @@ exports.onExecutePreUserRegistration = async (event, api) => {
 /**
  * @param {Date} date
  */
-function addOneMonth(date) {
-  // adapted from https://stackoverflow.com/a/12793246
-  var d = date.getDate();
-  date.setMonth(date.getMonth() + 1);
-  if (date.getDate() !== d) {
-    date.setDate(0);
+function add14days(date) {
+  // Type checking
+  if (date === undefined) {
+    throw new Error('The input is missing. Provide a Date object.');
   }
-  return date;
+  if (Object.prototype.toString.call(date) !== '[object Date]') {
+    throw new Error(
+      `'The input must be a Date object, but you provided a ${typeof date}`,
+    );
+  }
+  // Main code
+  return new Date(date.setDate(date.getDate() + 14));
 }
 
 // For the purpose of testing locally
-export {addOneMonth};
+export {add14days};
