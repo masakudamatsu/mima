@@ -77,8 +77,8 @@ export const SearchedPlace = ({mapObject}) => {
       ],
     };
     service.getDetails(request, handleResponse);
-    function handleResponse(place, status) {
-      if (status === 'OK') {
+    function handleResponse(place, placesServiceStatus) {
+      if (placesServiceStatus === 'OK') {
         // Retrieve data to be used
         const searchedPlace = {
           address: place.formatted_address,
@@ -125,7 +125,7 @@ export const SearchedPlace = ({mapObject}) => {
         setState({status: 'open', placeData: searchedPlace});
       } else {
         console.error('Google Maps Place Details API call has failed.');
-        setState({status: 'error', error: status});
+        setState({status: 'error', error: placesServiceStatus});
       }
     }
   }, [mapObject, nightMode, placeId, setState]);
