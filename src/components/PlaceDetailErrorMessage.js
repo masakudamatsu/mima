@@ -8,6 +8,7 @@ export const PlaceDetailErrorMessage = ({status}) => {
     status === 'INVALID_REQUEST' ||
     status === 'NOT_FOUND' ? (
     // TODO: #263 Include "Contact us" button
+    // TODO: #468 Include Try Again button to fetch the place detail again
     <>
       <p>
         Google Maps server appears to be not operating correctly at this moment.
