@@ -134,14 +134,6 @@ export const SearchedPlace = ({mapObject}) => {
     }
   }, [mapObject, nightMode, placeId, setState]);
 
-  // For autofocusing the close button when opened
-  const closeButton = useRef();
-  useEffect(() => {
-    if (status === 'open') {
-      closeButton.current.focusButton();
-    }
-  }, [status]);
-
   // handle clicking the close button
   const closePlaceInfo = ({
     rippleDiameter,
@@ -265,13 +257,13 @@ export const SearchedPlace = ({mapObject}) => {
             <CloseButton
               ariaLabel={buttonLabel.closePlaceDetail}
               handleClick={closePlaceInfo}
-              ref={closeButton}
             />
             <div id="place-detail">
               <h2>{placeData.name}</h2>
               <p>{placeData.address}</p>
               <DivButtonsRow data-buttons-row>
                 <ButtonDialog
+                  data-autofocus
                   onClick={openEditor}
                   onFocus={importTiptapEditor}
                   onMouseEnter={importTiptapEditor}

@@ -114,16 +114,10 @@ describe('Place search feature', () => {
             cy.request(link.prop('href')).its('status').should('eq', 200);
           }); // exact URL cannot be tested because place ID changes every time
 
-        cy.log('...Focuses the close button');
-        cy.focused().should(
-          'have.attr',
-          'aria-label',
-          buttonLabel.closePlaceDetail,
-        );
+        cy.log('...Focuses the save button');
+        cy.focused().should('have.text', buttonLabel.saveSearchedPlace);
 
         cy.log('...traps the focus within the popup');
-        cy.realPress('Tab');
-        cy.focused().should('have.text', buttonLabel.saveSearchedPlace);
         cy.realPress('Tab');
         cy.focused().should('have.text', linkText.searchedPlace);
         cy.realPress('Tab');
@@ -134,6 +128,8 @@ describe('Place search feature', () => {
           'aria-label',
           buttonLabel.closePlaceDetail,
         );
+        cy.realPress('Tab');
+        cy.focused().should('have.text', buttonLabel.saveSearchedPlace);
 
         cy.log('Clicking the close button closes the place info');
         cy.findByRole('button', {name: buttonLabel.closePlaceDetail}).click();
@@ -143,12 +139,8 @@ describe('Place search feature', () => {
         cy.findByRole('button', {name: placeName}).click();
         cy.log('...reopens the place info');
         cy.findByRole('heading', {name: placeName}).should('be.visible');
-        cy.log('...focuses the close button');
-        cy.focused().should(
-          'have.attr',
-          'aria-label',
-          buttonLabel.closePlaceDetail,
-        );
+        cy.log('...focuses the save button');
+        cy.focused().should('have.text', buttonLabel.saveSearchedPlace);
 
         cy.log('Pressing Esc key closes the place info');
         cy.get('body').type('{esc}');
