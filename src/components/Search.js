@@ -19,7 +19,11 @@ import dynamic from 'next/dynamic';
 const importSearchBox = () =>
   import('src/components/SearchBox').then(module => module.SearchBox);
 const SearchBox = dynamic(importSearchBox, {
-  loading: () => <ParagraphLoading>Loading...</ParagraphLoading>,
+  loading: () => (
+    <ParagraphLoading aria-live="polite" role="status">
+      Loading search box...
+    </ParagraphLoading>
+  ),
 });
 
 export const Search = () => {

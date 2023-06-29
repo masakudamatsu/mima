@@ -30,7 +30,11 @@ import dynamic from 'next/dynamic';
 const importTiptapEditor = () =>
   import('src/components/TiptapEditor').then(module => module.TiptapEditor);
 const TiptapEditor = dynamic(importTiptapEditor, {
-  loading: () => <ParagraphLoading>Loading text editor...</ParagraphLoading>,
+  loading: () => (
+    <ParagraphLoading aria-live="polite" role="status">
+      Loading text editor...
+    </ParagraphLoading>
+  ),
 });
 
 export const SearchedPlace = ({mapObject}) => {
