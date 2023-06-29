@@ -260,7 +260,6 @@ export const SavedPlaces = ({mapObject}) => {
                 ariaLabel={buttonLabel.closePlaceDetail}
                 handleClick={closePlaceInfo}
                 ref={closeButton}
-                testId="close-button-saved-place"
               />
               <div id="selected-place-detail">
                 <div

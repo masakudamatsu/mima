@@ -266,7 +266,6 @@ export const SearchedPlace = ({mapObject}) => {
               ariaLabel={buttonLabel.closePlaceDetail}
               handleClick={closePlaceInfo}
               ref={closeButton}
-              testId="close-button-saved-place"
             />
             <div id="place-detail">
               <h2>{placeData.name}</h2>

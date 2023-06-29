@@ -39,7 +39,11 @@ describe('Saved place detail feature', () => {
     // while should('be.visible') won't fail in that case
     // DO NOT ADD ANY MORE ASSERTIONS HERE; place detail is now hidden.
     cy.log(`...autofocuses the close button`);
-    cy.focused().should('have.attr', 'data-testid', 'close-button-saved-place');
+    cy.focused().should(
+      'have.attr',
+      'aria-label',
+      buttonLabel.closePlaceDetail,
+    );
     cy.log(`...traps the focus within the popup`);
     cy.findByRole('button', {name: buttonLabel.edit}).focus();
     cy.realPress('Tab');
@@ -259,8 +263,8 @@ describe('Editing notes on saved places', () => {
         cy.log(`...autofocuses the close button`);
         cy.focused().should(
           'have.attr',
-          'data-testid',
-          'close-button-saved-place',
+          'aria-label',
+          buttonLabel.closePlaceDetail,
         );
 
         cy.log(`Reloading the page...`);
@@ -418,7 +422,11 @@ describe('Editing notes on saved places', () => {
       'be.visible',
     );
     cy.log(`...autofocuses the close button`);
-    cy.focused().should('have.attr', 'data-testid', 'close-button-saved-place');
+    cy.focused().should(
+      'have.attr',
+      'aria-label',
+      buttonLabel.closePlaceDetail,
+    );
   });
 });
 describe('Edge cases', () => {
