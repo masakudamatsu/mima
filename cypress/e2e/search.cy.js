@@ -112,13 +112,13 @@ describe('Place search feature', () => {
           .then(link => {
             cy.request(link.prop('href')).its('status').should('eq', 200);
           }); // exact URL cannot be tested because place ID changes every time
-        // TODO #207: Make the following test pass
-        // cy.log('...Focuses the close button');
-        // cy.focused().should(
-        //   'have.attr',
-        //   'aria-label',
-        //   buttonLabel.closePlaceDetail,
-        // );
+
+        cy.log('...Focuses the close button');
+        cy.focused().should(
+          'have.attr',
+          'aria-label',
+          buttonLabel.closePlaceDetail,
+        );
 
         cy.log('Clicking the close button closes the place info');
         cy.findByRole('button', {name: buttonLabel.closePlaceDetail}).click();
