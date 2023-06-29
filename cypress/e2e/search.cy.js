@@ -93,6 +93,7 @@ describe('Place search feature', () => {
         cy.log('...Shows the place on the map');
         cy.findByRole('button', {name: placeName}).should('be.visible');
         cy.log('...Shows the place info');
+        cy.findByRole('dialog', {name: placeName}).should('be.visible');
         cy.findByRole('heading', {name: placeName}).should('be.visible');
         cy.findByText(placeAddress).should('be.visible');
         cy.log(

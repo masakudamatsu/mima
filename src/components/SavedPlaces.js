@@ -258,7 +258,7 @@ export const SavedPlaces = ({mapObject}) => {
               aria-hidden={deleteUi === 'confirm'}
               data-closing={ui === 'closing'}
               ref={dialogDiv}
-              role="dialog"
+              role="dialog" // TODO #431: Fix accessibility
             >
               <CloseButton
                 ariaLabel={buttonLabel.closePlaceDetail}

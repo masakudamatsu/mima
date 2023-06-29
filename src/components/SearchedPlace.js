@@ -249,7 +249,7 @@ export const SearchedPlace = ({mapObject}) => {
           onAnimationEnd={handleAnimationEnd}
         >
           <DivPlaceInfoBackground
-            aria-describedby="place-detail"
+            aria-label={placeData.name}
             data-closing={status === 'closing'}
             ref={dialogDiv}
             role="dialog"
@@ -258,7 +258,7 @@ export const SearchedPlace = ({mapObject}) => {
               ariaLabel={buttonLabel.closePlaceDetail}
               handleClick={closePlaceInfo}
             />
-            <div id="place-detail">
+            <div>
               <h2>{placeData.name}</h2>
               <p>{placeData.address}</p>
               <DivButtonsRow data-buttons-row>
