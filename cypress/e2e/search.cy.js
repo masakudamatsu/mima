@@ -85,6 +85,7 @@ describe('Place search feature', () => {
     cy.log('...initially shows a loading message');
     cy.findByText(loadingMessage.search)
       .should('be.visible')
+      .should('have.attr', 'aria-live', 'polite')
       .then(() => {
         cy.log(`And then...`);
         interception.sendResponse();

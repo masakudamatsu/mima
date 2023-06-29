@@ -350,7 +350,7 @@ export const SavedPlaces = ({mapObject}) => {
             </ClientOnlyPortal>
           ) : deleteUi === 'deleting' ? (
             <DivCloud data-delete>
-              <ParagraphLoading>
+              <ParagraphLoading aria-live="polite" role="status">
                 {loadingMessage.delete(selectedPlaceName)}
               </ParagraphLoading>
             </DivCloud>
@@ -385,12 +385,8 @@ export const SavedPlaces = ({mapObject}) => {
     } else if (ui === 'saving') {
       return (
         <DivPlaceInfoBackground.Wrapper data-fullscreen>
-          <DivPlaceInfoBackground
-            aria-labelledby="saving-changes"
-            data-fullscreen
-            role="dialog"
-          >
-            <ParagraphLoading id="saving-changes">
+          <DivPlaceInfoBackground data-fullscreen>
+            <ParagraphLoading aria-live="polite" role="status">
               {loadingMessage.update}
             </ParagraphLoading>
           </DivPlaceInfoBackground>

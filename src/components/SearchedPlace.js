@@ -213,12 +213,8 @@ export const SearchedPlace = ({mapObject}) => {
   } else if (status === 'loading') {
     return (
       <DivPlaceInfoBackground.Wrapper data-fullscreen>
-        <DivPlaceInfoBackground
-          aria-labelledby="loading-searched-place"
-          data-fullscreen
-          role="dialog"
-        >
-          <ParagraphLoading id="loading-searched-place">
+        <DivPlaceInfoBackground data-fullscreen>
+          <ParagraphLoading aria-live="polite" role="status">
             {loadingMessage.search}
           </ParagraphLoading>
         </DivPlaceInfoBackground>
@@ -351,12 +347,8 @@ export const SearchedPlace = ({mapObject}) => {
   } else if (status === 'saving') {
     return (
       <DivPlaceInfoBackground.Wrapper data-fullscreen>
-        <DivPlaceInfoBackground
-          aria-labelledby="saving-place"
-          data-fullscreen
-          role="dialog"
-        >
-          <ParagraphLoading id="saving-place">
+        <DivPlaceInfoBackground data-fullscreen>
+          <ParagraphLoading aria-live="polite" role="status">
             {loadingMessage.create}
           </ParagraphLoading>
         </DivPlaceInfoBackground>

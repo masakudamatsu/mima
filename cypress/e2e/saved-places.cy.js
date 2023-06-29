@@ -136,6 +136,7 @@ describe('Saved place detail feature', () => {
     cy.log('...initially shows a loading message');
     cy.findByText(loadingMessage.delete(mockPlace5.properties.name))
       .should('be.visible')
+      .should('have.attr', 'aria-live', 'polite')
       .then(() => {
         cy.log(`And then...`);
         interception.sendResponse();
@@ -243,6 +244,7 @@ describe('Editing notes on saved places', () => {
     cy.log('...initially shows a loading message');
     cy.findByText(loadingMessage.update)
       .should('be.visible')
+      .should('have.attr', 'aria-live', 'polite')
       .then(() => {
         cy.log(`And then...`);
         interception.sendResponse();
