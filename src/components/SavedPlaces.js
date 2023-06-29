@@ -244,7 +244,7 @@ export const SavedPlaces = ({mapObject}) => {
     // UI rendering
     if (ui === 'open' || ui === 'closing') {
       return (
-        <>
+        <FocusLock>
           <DivPlaceInfoBackground.Wrapper
             data-closing={ui === 'closing'}
             onAnimationEnd={handleAnimationEnd}
@@ -352,7 +352,7 @@ export const SavedPlaces = ({mapObject}) => {
               </ParagraphLoading>
             </DivCloud>
           ) : null}
-        </>
+        </FocusLock>
       );
     } else if (ui === 'editing') {
       return (

@@ -20,12 +20,10 @@ describe('Saved place detail feature', () => {
     cy.visit('/');
     cy.waitForMapToLoad();
   });
-  it('Clicking place mark shows correct UI', () => {
+  it('Clicking place mark shows correct UI/UX', () => {
     cy.log(`Clicking place mark...`);
     cy.findByRole('button', {name: mockPlace5.properties.name}).click();
 
-    cy.log(`...autofocuses the close button`);
-    cy.focused().should('have.attr', 'data-testid', 'close-button-saved-place');
     cy.log(`...shows place name (as heading)`);
     cy.findByRole('heading', {name: mockPlace5.properties.name}).should(
       'be.visible',
@@ -40,6 +38,22 @@ describe('Saved place detail feature', () => {
     // this fails if another element covers it up
     // while should('be.visible') won't fail in that case
     // DO NOT ADD ANY MORE ASSERTIONS HERE; place detail is now hidden.
+    cy.log(`...autofocuses the close button`);
+    cy.focused().should('have.attr', 'data-testid', 'close-button-saved-place');
+    cy.log(`...traps the focus within the popup`);
+    cy.findByRole('button', {name: buttonLabel.edit}).focus();
+    cy.realPress('Tab');
+    cy.focused().should('have.text', linkText.searchedPlace);
+    cy.realPress('Tab');
+    cy.focused().should('have.text', linkText.directions);
+    cy.realPress('Tab');
+    cy.focused().should('have.text', buttonLabel.delete);
+    cy.realPress('Tab');
+    cy.focused().should(
+      'have.attr',
+      'aria-label',
+      buttonLabel.closePlaceDetail,
+    );
   });
   it('Place marks without Google Maps URL', () => {
     cy.log(`Clicking place mark...`);
