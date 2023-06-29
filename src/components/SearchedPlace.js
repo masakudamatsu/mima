@@ -251,69 +251,72 @@ export const SearchedPlace = ({mapObject}) => {
     );
   } else if (status === 'open' || status === 'closing') {
     return (
-      <DivPlaceInfoBackground.Wrapper
-        data-closing={status === 'closing'}
-        onAnimationEnd={handleAnimationEnd}
-      >
-        <DivPlaceInfoBackground
-          aria-describedby="place-detail"
+      <FocusLock>
+        <DivPlaceInfoBackground.Wrapper
           data-closing={status === 'closing'}
-          ref={dialogDiv}
-          role="dialog"
+          onAnimationEnd={handleAnimationEnd}
         >
-          <CloseButton
-            ariaLabel={buttonLabel.closePlaceDetail}
-            handleClick={closePlaceInfo}
-            ref={closeButton}
-            testId="close-button-saved-place"
-          />
-          <div id="place-detail">
-            <h2>{placeData.name}</h2>
-            <p>{placeData.address}</p>
-            <DivButtonsRow data-buttons-row>
-              <ButtonDialog
-                onClick={openEditor}
-                onFocus={importTiptapEditor}
-                onMouseEnter={importTiptapEditor}
-                type="button"
-              >
-                {buttonLabel.saveSearchedPlace}
-              </ButtonDialog>
-              <ButtonDialog
-                as="a"
-                data-reset-link-style
-                href={placeData.url}
-                rel="noreferrer"
-                target="_blank"
-              >
-                {linkText.searchedPlace}
-              </ButtonDialog>
-              <ButtonDialog
-                as="a"
-                data-reset-link-style
-                href={`https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(
-                  placeData.name,
-                )}&destination_id=${placeId}`} // See Issue #122
-                rel="noreferrer"
-                target="_blank"
-              >
-                {linkText.directions}
-              </ButtonDialog>
-            </DivButtonsRow>
-          </div>
-          {status === 'closing' ? (
-            <SpanRipple
-              id="ripple"
-              style={{
-                height: ripple.diameter,
-                left: ripple.positionLeft,
-                top: ripple.positionTop,
-                width: ripple.diameter,
-              }}
+          <DivPlaceInfoBackground
+            aria-describedby="place-detail"
+            data-closing={status === 'closing'}
+            ref={dialogDiv}
+            role="dialog"
+          >
+            <CloseButton
+              ariaLabel={buttonLabel.closePlaceDetail}
+              handleClick={closePlaceInfo}
+              ref={closeButton}
+              testId="close-button-saved-place"
             />
-          ) : null}
-        </DivPlaceInfoBackground>
-      </DivPlaceInfoBackground.Wrapper>
+            <div id="place-detail">
+              <h2>{placeData.name}</h2>
+              <p>{placeData.address}</p>
+              <DivButtonsRow data-buttons-row>
+                <ButtonDialog
+                  onClick={openEditor}
+                  onFocus={importTiptapEditor}
+                  onMouseEnter={importTiptapEditor}
+                  type="button"
+                >
+                  {buttonLabel.saveSearchedPlace}
+                </ButtonDialog>
+                <ButtonDialog
+                  as="a"
+                  data-reset-link-style
+                  href={placeData.url}
+                  rel="noreferrer"
+                  target="_blank"
+                >
+                  {linkText.searchedPlace}
+                </ButtonDialog>
+                <ButtonDialog
+                  as="a"
+                  data-reset-link-style
+                  data-searched-place-last-focusable-element
+                  href={`https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(
+                    placeData.name,
+                  )}&destination_id=${placeId}`} // See Issue #122
+                  rel="noreferrer"
+                  target="_blank"
+                >
+                  {linkText.directions}
+                </ButtonDialog>
+              </DivButtonsRow>
+            </div>
+            {status === 'closing' ? (
+              <SpanRipple
+                id="ripple"
+                style={{
+                  height: ripple.diameter,
+                  left: ripple.positionLeft,
+                  top: ripple.positionTop,
+                  width: ripple.diameter,
+                }}
+              />
+            ) : null}
+          </DivPlaceInfoBackground>
+        </DivPlaceInfoBackground.Wrapper>
+      </FocusLock>
     );
   } else if (status === 'editing') {
     return (

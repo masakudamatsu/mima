@@ -120,6 +120,20 @@ describe('Place search feature', () => {
           buttonLabel.closePlaceDetail,
         );
 
+        cy.log('...traps the focus within the popup');
+        cy.realPress('Tab');
+        cy.focused().should('have.text', buttonLabel.saveSearchedPlace);
+        cy.realPress('Tab');
+        cy.focused().should('have.text', linkText.searchedPlace);
+        cy.realPress('Tab');
+        cy.focused().should('have.text', linkText.directions);
+        cy.realPress('Tab');
+        cy.focused().should(
+          'have.attr',
+          'aria-label',
+          buttonLabel.closePlaceDetail,
+        );
+
         cy.log('Clicking the close button closes the place info');
         cy.findByRole('button', {name: buttonLabel.closePlaceDetail}).click();
         cy.findByRole('heading', {name: placeName}).should('not.exist');
