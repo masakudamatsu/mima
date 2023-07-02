@@ -30,7 +30,11 @@ import dynamic from 'next/dynamic';
 const importTiptapEditor = () =>
   import('src/components/TiptapEditor').then(module => module.TiptapEditor);
 const TiptapEditor = dynamic(importTiptapEditor, {
-  loading: () => <ParagraphLoading>Loading text editor...</ParagraphLoading>,
+  loading: () => (
+    <ParagraphLoading aria-live="polite" role="status">
+      Loading text editor...
+    </ParagraphLoading>
+  ),
 });
 
 export const SearchedPlace = ({mapObject}) => {
@@ -130,14 +134,6 @@ export const SearchedPlace = ({mapObject}) => {
     }
   }, [mapObject, nightMode, placeId, setState]);
 
-  // For autofocusing the close button when opened
-  const closeButton = useRef();
-  useEffect(() => {
-    if (status === 'open') {
-      closeButton.current.focusButton();
-    }
-  }, [status]);
-
   // handle clicking the close button
   const closePlaceInfo = ({
     rippleDiameter,
@@ -209,12 +205,8 @@ export const SearchedPlace = ({mapObject}) => {
   } else if (status === 'loading') {
     return (
       <DivPlaceInfoBackground.Wrapper data-fullscreen>
-        <DivPlaceInfoBackground
-          aria-labelledby="loading-searched-place"
-          data-fullscreen
-          role="dialog"
-        >
-          <ParagraphLoading id="loading-searched-place">
+        <DivPlaceInfoBackground data-fullscreen>
+          <ParagraphLoading aria-live="polite" role="status">
             {loadingMessage.search}
           </ParagraphLoading>
         </DivPlaceInfoBackground>
@@ -251,69 +243,71 @@ export const SearchedPlace = ({mapObject}) => {
     );
   } else if (status === 'open' || status === 'closing') {
     return (
-      <DivPlaceInfoBackground.Wrapper
-        data-closing={status === 'closing'}
-        onAnimationEnd={handleAnimationEnd}
-      >
-        <DivPlaceInfoBackground
-          aria-describedby="place-detail"
+      <FocusLock>
+        <DivPlaceInfoBackground.Wrapper
           data-closing={status === 'closing'}
-          ref={dialogDiv}
-          role="dialog"
+          onAnimationEnd={handleAnimationEnd}
         >
-          <CloseButton
-            ariaLabel={buttonLabel.closePlaceDetail}
-            handleClick={closePlaceInfo}
-            ref={closeButton}
-            testId="close-button-saved-place"
-          />
-          <div id="place-detail">
-            <h2>{placeData.name}</h2>
-            <p>{placeData.address}</p>
-            <DivButtonsRow data-buttons-row>
-              <ButtonDialog
-                onClick={openEditor}
-                onFocus={importTiptapEditor}
-                onMouseEnter={importTiptapEditor}
-                type="button"
-              >
-                {buttonLabel.saveSearchedPlace}
-              </ButtonDialog>
-              <ButtonDialog
-                as="a"
-                data-reset-link-style
-                href={placeData.url}
-                rel="noreferrer"
-                target="_blank"
-              >
-                {linkText.searchedPlace}
-              </ButtonDialog>
-              <ButtonDialog
-                as="a"
-                data-reset-link-style
-                href={`https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(
-                  placeData.name,
-                )}&destination_id=${placeId}`} // See Issue #122
-                rel="noreferrer"
-                target="_blank"
-              >
-                {linkText.directions}
-              </ButtonDialog>
-            </DivButtonsRow>
-          </div>
-          {status === 'closing' ? (
-            <SpanRipple
-              id="ripple"
-              style={{
-                height: ripple.diameter,
-                left: ripple.positionLeft,
-                top: ripple.positionTop,
-                width: ripple.diameter,
-              }}
+          <DivPlaceInfoBackground
+            aria-label={placeData.name}
+            data-closing={status === 'closing'}
+            ref={dialogDiv}
+            role="dialog"
+          >
+            <CloseButton
+              ariaLabel={buttonLabel.closePlaceDetail}
+              handleClick={closePlaceInfo}
             />
-          ) : null}
-        </DivPlaceInfoBackground>
-      </DivPlaceInfoBackground.Wrapper>
+            <div>
+              <h2>{placeData.name}</h2>
+              <p>{placeData.address}</p>
+              <DivButtonsRow data-buttons-row>
+                <ButtonDialog
+                  data-autofocus
+                  onClick={openEditor}
+                  onFocus={importTiptapEditor}
+                  onMouseEnter={importTiptapEditor}
+                  type="button"
+                >
+                  {buttonLabel.saveSearchedPlace}
+                </ButtonDialog>
+                <ButtonDialog
+                  as="a"
+                  data-reset-link-style
+                  href={placeData.url}
+                  rel="noreferrer"
+                  target="_blank"
+                >
+                  {linkText.searchedPlace}
+                </ButtonDialog>
+                <ButtonDialog
+                  as="a"
+                  data-reset-link-style
+                  data-searched-place-last-focusable-element
+                  href={`https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(
+                    placeData.name,
+                  )}&destination_id=${placeId}`} // See Issue #122
+                  rel="noreferrer"
+                  target="_blank"
+                >
+                  {linkText.directions}
+                </ButtonDialog>
+              </DivButtonsRow>
+            </div>
+            {status === 'closing' ? (
+              <SpanRipple
+                id="ripple"
+                style={{
+                  height: ripple.diameter,
+                  left: ripple.positionLeft,
+                  top: ripple.positionTop,
+                  width: ripple.diameter,
+                }}
+              />
+            ) : null}
+          </DivPlaceInfoBackground>
+        </DivPlaceInfoBackground.Wrapper>
+      </FocusLock>
     );
   } else if (status === 'editing') {
     return (
@@ -345,12 +339,8 @@ export const SearchedPlace = ({mapObject}) => {
   } else if (status === 'saving') {
     return (
       <DivPlaceInfoBackground.Wrapper data-fullscreen>
-        <DivPlaceInfoBackground
-          aria-labelledby="saving-place"
-          data-fullscreen
-          role="dialog"
-        >
-          <ParagraphLoading id="saving-place">
+        <DivPlaceInfoBackground data-fullscreen>
+          <ParagraphLoading aria-live="polite" role="status">
             {loadingMessage.create}
           </ParagraphLoading>
         </DivPlaceInfoBackground>

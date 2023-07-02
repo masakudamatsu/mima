@@ -58,6 +58,7 @@ describe('Saving feature', () => {
     cy.log('...initially shows a loading message');
     cy.findByText(loadingMessage.create)
       .should('be.visible')
+      .should('have.attr', 'aria-live', 'polite')
       .then(() => {
         cy.log(`And then...`);
         interception.sendResponse();

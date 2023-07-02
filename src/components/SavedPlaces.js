@@ -28,7 +28,11 @@ import dynamic from 'next/dynamic';
 const importTiptapEditor = () =>
   import('src/components/TiptapEditor').then(module => module.TiptapEditor);
 const TiptapEditor = dynamic(importTiptapEditor, {
-  loading: () => <ParagraphLoading>Loading text editor...</ParagraphLoading>,
+  loading: () => (
+    <ParagraphLoading aria-live="polite" role="status">
+      Loading text editor...
+    </ParagraphLoading>
+  ),
 });
 
 // Prepare for converting URL text into link
@@ -244,7 +248,7 @@ export const SavedPlaces = ({mapObject}) => {
     // UI rendering
     if (ui === 'open' || ui === 'closing') {
       return (
-        <>
+        <FocusLock>
           <DivPlaceInfoBackground.Wrapper
             data-closing={ui === 'closing'}
             onAnimationEnd={handleAnimationEnd}
@@ -254,13 +258,12 @@ export const SavedPlaces = ({mapObject}) => {
               aria-hidden={deleteUi === 'confirm'}
               data-closing={ui === 'closing'}
               ref={dialogDiv}
-              role="dialog"
+              role="dialog" // TODO #431: Fix accessibility
             >
               <CloseButton
                 ariaLabel={buttonLabel.closePlaceDetail}
                 handleClick={closePlaceInfo}
                 ref={closeButton}
-                testId="close-button-saved-place"
               />
               <div id="selected-place-detail">
                 <div
@@ -347,12 +350,12 @@ export const SavedPlaces = ({mapObject}) => {
             </ClientOnlyPortal>
           ) : deleteUi === 'deleting' ? (
             <DivCloud data-delete>
-              <ParagraphLoading>
+              <ParagraphLoading aria-live="polite" role="status">
                 {loadingMessage.delete(selectedPlaceName)}
               </ParagraphLoading>
             </DivCloud>
           ) : null}
-        </>
+        </FocusLock>
       );
     } else if (ui === 'editing') {
       return (
@@ -382,12 +385,8 @@ export const SavedPlaces = ({mapObject}) => {
     } else if (ui === 'saving') {
       return (
         <DivPlaceInfoBackground.Wrapper data-fullscreen>
-          <DivPlaceInfoBackground
-            aria-labelledby="saving-changes"
-            data-fullscreen
-            role="dialog"
-          >
-            <ParagraphLoading id="saving-changes">
+          <DivPlaceInfoBackground data-fullscreen>
+            <ParagraphLoading aria-live="polite" role="status">
               {loadingMessage.update}
             </ParagraphLoading>
           </DivPlaceInfoBackground>
