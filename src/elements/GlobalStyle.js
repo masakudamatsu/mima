@@ -12,6 +12,12 @@ const disableSafariSubpixelFontSmoothing = `
   }
 `;
 
+const hardwrapLongWord = `
+  p, h1, h2, h3, h4, h5, h6 {
+    overflow-wrap: break-word;
+  }
+`;
+
 const makeMapFullscreen = `
   :root,
   body,
@@ -97,6 +103,7 @@ export const GlobalStyle = createGlobalStyle`
   ${resetRangeInput}
   ${resetSearchInput}
   ${disableSafariSubpixelFontSmoothing}
+  ${hardwrapLongWord}
 
   input {
     color: inherit; /* Prevent Chrome from applying "internal-light-dark" to override the body element's color property */
