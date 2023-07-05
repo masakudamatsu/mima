@@ -6,6 +6,12 @@ import {ress} from 'src/utils/cssRess';
 import {resetRangeInput} from 'src/utils/cssResetRangeInput';
 import {resetSearchInput} from 'src/utils/cssResetSearchInput';
 
+const disableSafariSubpixelFontSmoothing = `
+  body {
+    -webkit-font-smoothing: antialiased;
+  }
+`;
+
 const makeMapFullscreen = `
   :root,
   body,
@@ -90,6 +96,7 @@ export const GlobalStyle = createGlobalStyle`
   ${ress}
   ${resetRangeInput}
   ${resetSearchInput}
+  ${disableSafariSubpixelFontSmoothing}
 
   input {
     color: inherit; /* Prevent Chrome from applying "internal-light-dark" to override the body element's color property */
