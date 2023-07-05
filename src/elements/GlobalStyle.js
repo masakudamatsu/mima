@@ -18,6 +18,13 @@ const hardwrapLongWord = `
   }
 `;
 
+const setRootStackingContext = `
+  /* See Section 8 of https://www.joshwcomeau.com/css/custom-css-reset/ */
+  #__next {
+    isolation: isolate;
+  }
+`;
+
 const makeMapFullscreen = `
   :root,
   body,
@@ -104,6 +111,7 @@ export const GlobalStyle = createGlobalStyle`
   ${resetSearchInput}
   ${disableSafariSubpixelFontSmoothing}
   ${hardwrapLongWord}
+  ${setRootStackingContext}
 
   input {
     color: inherit; /* Prevent Chrome from applying "internal-light-dark" to override the body element's color property */
