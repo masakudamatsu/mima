@@ -6,8 +6,9 @@ import {ress} from 'src/utils/cssRess';
 import {resetRangeInput} from 'src/utils/cssResetRangeInput';
 import {resetSearchInput} from 'src/utils/cssResetSearchInput';
 
-const disableSafariSubpixelFontSmoothing = `
+const disableMacOSSubpixelFontSmoothing = `
   body {
+    -moz-osx-font-smoothing: grayscale; 
     -webkit-font-smoothing: antialiased;
   }
 `;
@@ -109,7 +110,7 @@ export const GlobalStyle = createGlobalStyle`
   ${ress}
   ${resetRangeInput}
   ${resetSearchInput}
-  ${disableSafariSubpixelFontSmoothing}
+  ${disableMacOSSubpixelFontSmoothing}
   ${hardwrapLongWord}
   ${setRootStackingContext}
 
