@@ -6,6 +6,26 @@ import {ress} from 'src/utils/cssRess';
 import {resetRangeInput} from 'src/utils/cssResetRangeInput';
 import {resetSearchInput} from 'src/utils/cssResetSearchInput';
 
+const disableMacOSSubpixelFontSmoothing = `
+  body {
+    -moz-osx-font-smoothing: grayscale; 
+    -webkit-font-smoothing: antialiased;
+  }
+`;
+
+const hardwrapLongWord = `
+  p, h1, h2, h3, h4, h5, h6 {
+    overflow-wrap: break-word;
+  }
+`;
+
+const setRootStackingContext = `
+  /* See Section 8 of https://www.joshwcomeau.com/css/custom-css-reset/ */
+  #__next {
+    isolation: isolate;
+  }
+`;
+
 const makeMapFullscreen = `
   :root,
   body,
@@ -90,6 +110,9 @@ export const GlobalStyle = createGlobalStyle`
   ${ress}
   ${resetRangeInput}
   ${resetSearchInput}
+  ${disableMacOSSubpixelFontSmoothing}
+  ${hardwrapLongWord}
+  ${setRootStackingContext}
 
   input {
     color: inherit; /* Prevent Chrome from applying "internal-light-dark" to override the body element's color property */
