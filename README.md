@@ -2,6 +2,9 @@
 
 A full-stack web app for those who love exploring cities to save places on the embedded Google Maps _with links to external sites_—a feature unavailable with Google Maps’s official app unless you use clunky [Google My Maps](https://www.google.com/maps/about/mymaps/).
 
+## Demo
+https://github.com/masakudamatsu/mima/assets/36348559/17adb69f-1776-4d47-bf2f-b78c51317dc6
+
 ## URL
 
 https://my-ideal-map.app
