@@ -71,8 +71,8 @@ For more detail, see my blog post “[Showing user’s direction of movement on 
 
 ### Dynamic import
 
-To reduce the initial bundle size, I use Next.js’s [`next/dynamic` module](https://nextjs.org/docs/pages/building-your-application/optimizing/lazy-loading#nextdynamic) to lazy-load the React components for place search ([Lines 18-27 in Search.js](https://github.com/masakudamatsu/mima/blob/a1393e34bad0aa7f8139e4197110fd5009a64928/src/components/Search.js#L18))and for editing notes on saved places ([Lines 27-36 in SavedPlaces.js](https://github.com/masakudamatsu/mima/blob/a1393e34bad0aa7f8139e4197110fd5009a64928/src/components/SavedPlaces.js#L26)).
+To reduce the initial bundle size, I use Next.js’s [`next/dynamic` module](https://nextjs.org/docs/pages/building-your-application/optimizing/lazy-loading#nextdynamic) to lazy-load the React components for place search ([Lines 18-27 in Search.js](https://github.com/masakudamatsu/mima/blob/a1393e34bad0aa7f8139e4197110fd5009a64928/src/components/Search.js#L18)) and for editing notes on saved places ([Lines 27-36 in SavedPlaces.js](https://github.com/masakudamatsu/mima/blob/a1393e34bad0aa7f8139e4197110fd5009a64928/src/components/SavedPlaces.js#L26)).
 
 ### Avoid `props` in Styled Components
 
-I use Styled Components for generating CSS stylesheets. It is now widely known that performance can suffer from the use of CSS-in-JS. Following the [advice from Aggelos Arvanitakis in 2019](https://calendar.perfplanet.com/2019/the-unseen-performance-costs-of-css-in-js-in-react-apps/), I avoid the use of `props`, which causes the rendering of additional components (i.e., React context consumers).
+I use Styled Components for generating CSS stylesheets ([src/elements/](https://github.com/masakudamatsu/mima/tree/main/src/elements)). It is now widely known that performance can suffer from the use of CSS-in-JS. Following the [advice from Aggelos Arvanitakis in 2019](https://calendar.perfplanet.com/2019/the-unseen-performance-costs-of-css-in-js-in-react-apps/), I avoid the use of `props`, which causes the rendering of additional components (i.e., React context consumers).
